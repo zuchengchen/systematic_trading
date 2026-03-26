@@ -1,0 +1,24 @@
+# LaTeX build artifacts
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.xdv
+*.synctex.gz
+
+# Built PDFs
+/main.pdf
+/main_bilingual.pdf
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Local reference source
+/Systematic Trading A unique new method for designing trading and investing systems-Robert.pdf

@@ -1,0 +1,26 @@
+page   num  type   width height color comp bpc  enc interp  object ID x-ppi y-ppi size ratio
+--------------------------------------------------------------------------------------------
+   1     0 image    1040  1500  rgb     3   8  jpeg   no      3661  0   150   150  310K 6.8%
+  19     1 image    4646  2988  gray    1   8  image  no       103  0   889   889  554K 4.1%
+  31     2 image    4769  2998  gray    1   8  image  no       176  0   913   913  395K 2.8%
+  32     3 image    4769  2998  gray    1   8  image  no       185  0   913   913  448K 3.2%
+  39     4 image    4435  2944  gray    1   8  image  no       234  0   925   930  466K 3.7%
+  50     5 image    4435  2944  gray    1   8  image  no       313  0   925   930  300K 2.4%
+  70     6 image    4646  2988  gray    1   8  image  no       454  0   889   889  676K 5.0%
+  72     7 image    1135   516  rgb     3   8  image  no       469  0   218   218 38.4K 2.2%
+  73     8 image    1133   519  rgb     3   8  image  no       479  0   217   217 34.4K 2.0%
+  74     9 image    1138   521  rgb     3   8  image  no       487  0   218   218 41.0K 2.4%
+  74    10 image    1141   519  rgb     3   8  image  no       488  0   219   219 40.9K 2.4%
+  78    11 image    4710  2950  gray    1   8  image  no       524  0   901   901  763K 5.6%
+  79    12 image    4710  2950  gray    1   8  image  no       534  0   901   901  732K 5.4%
+  80    13 image    4646  3002  gray    1   8  image  no       543  0   889   889  643K 4.7%
+  89    14 image    4710  3000  gray    1   8  image  no       609  0   901   901  252K 1.8%
+  91    15 image    4555  2957  gray    1   8  image  no       625  0   872   872  279K 2.1%
+  92    16 image    4555  2957  gray    1   8  image  no       635  0   872   872  255K 1.9%
+  93    17 image    4690  2951  gray    1   8  image  no       644  0   897   897  251K 1.9%
+ 135    18 image    4646  2988  gray    1   8  image  no       964  0   889   889  382K 2.8%
+ 137    19 image    4710  2978  gray    1   8  image  no       979  0   901   901  471K 3.4%
+ 147    20 image    4546  3036  gray    1   8  image  no      1056  0   949   954  673K 5.0%
+ 161    21 image    4646  2988  gray    1   8  image  no      1172  0   889   889  243K 1.8%
+ 174    22 image    4646  2988  gray    1   8  image  no      1272  0   889   889  811K 6.0%
+ 174    23 image    4646  2988  gray    1   8  image  no      1273  0   889   889  638K 4.7%

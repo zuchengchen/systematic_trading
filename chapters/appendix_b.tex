@@ -1,0 +1,199 @@
+\chapter{Trading Rules}
+
+\section*{The A and B system: Early profit taker and early loss taker}
+\phantomsection
+\addcontentsline{toc}{section}{The A and B system: Early profit taker and early loss taker}
+
+I USE TWO SIMPLE TRADING RULES IN EXAMPLES THROUGHOUT THE book -- the early profit taker and the early loss taker. These are both variations of a more general rule: the ‘A and B' system. For the profit taker I use A = 5 and B = 20. The loss taker has these values reversed, A = 20 and B = 5. I don't recommend using the A and B system for actual trading, but I've included the specification here to satisfy the curious.
+
+\subsection*{Specification}
+
+Parameters A and B For a given variation you need two parameters, A and B.
+
+Standard position A standard position size is \$100,000, divided by the instrument size value volatility (as defined on ‘"What's that in real money?" on page 158) measured in dollars at the time you take on your position.
+
+Initial position You go long one standard position size.
+
+Deviation A deviation is one daily standard deviation of returns, as measured at your last entry point. Note we use volatility in price points, not percentage points as normal. The volatility in price points is equal to the percentage point volatility (price volatility as defined in chapter ten, ‘Position sizing', on page 155), multiplied by the current price.
+
+Profit target when If the price rises by more than A deviations from your last entry price, long then you should sell out and go short one standard position size (reverse your position). You are always long or short.
+
+Trailing stop loss If the price of the instrument falls by more than B deviations from its when long high since you entered, then sell and go short one standard position size.
+
+On reversal When you reverse your position re-measure the deviation level to set your stop loss and profit target levels, and to determine the new standard position size.
+
+Profit target when When currently short you would generate a profit taking trade when short the price falls by more than A deviations from your last entry price; and then go long.
+
+Stop loss when You will generate a stop loss trade when a price rises by more than B short deviations from its low, and then reverse your position by going long.
+
+Notice that this is a complete trading system, not just a trading rule, since it tells you exactly what size positions to take. If you've read part three of the book you can probably see that the system does position sizing correctly, but for an arbitrary volatility target on a single instrument. Here are some interesting characteristics of the A and B system.
+
+If A is larger than B The system will tend to hit stop losses more frequently, but when trends occur it will exploit them. This is the case for the early loss taker.
+
+If B is larger than A The system will take profits frequently but suffer losses on large adverse movements. This will be profitable if prices remain range bound. This is how the early profit taker behaves.
+
+Larger values of B Will mean that slower trends will be more profitable than faster ones.
+
+Smaller values of B The system will exploit faster trends better.
+
+The stop loss rule defined for semi-automatic traders in part four of the book is based on the stop loss component of the A and B system.
+
+\section*{The exponentially weighted moving average crossover (EWMAC) rule}
+\phantomsection
+\addcontentsline{toc}{section}{The exponentially weighted moving average crossover (EWMAC) rule}
+
+The EWMAC trading rule was briefly introduced in chapter seven. The forecast is the difference, or crossover, between two exponentially weighted moving averages (EWMA) of the price, one fast and one slow. The difference is then standardised by the recent standard deviation of prices, and a forecast scalar applied to ensure we get an average absolute value of 10 for our forecasts.
+
+In this version of the rule I assume you are working with daily prices for the relevant instrument, with no weekends in the price series. It is possible to work with intra-day prices, but this is slightly more involved.
+
+Look-back To pick up trends over different time periods you're going to want EWMAC windows, variations which work over different horizons. For each variation you need to fast and specify two look-back windows, in days: a shorter window for the fast EWMA slow Lfast, and a larger one Lslow for the slow EWMA. Lfast should be larger than 1, or you will only have one price in your average. For reasons I discuss below, I use the following pairs of look-back values for Lfast and Lslow 2:8, 4:16, 8:32, 16:64, 32: 128 and 64:256.
+
+Decay The EWMA formula uses a decay parameter, A, which is between 0 and 1. This parameters, is equal to 2 ÷ (L+1) where L is the look-back window.* So you will have Afast fast and and Aslow. slow A short look-back and a high value of A means you are giving more weight to more recent prices, so the EWMA adjusts faster; and vice versa. * I use a look-back window to calculate the decay rather than specifying the latter directly, because it's more natural to think in terms of windows. If you're interested this formulation comes from the Python language's ‘Pandas' package specification for an EWMA, which uses the term span rather than look-back window.
+
+EWMA If Pt is the most recent price of the instrument then the EWMA is: formula (A × Pt) + (A × (1-A) × Pt-1) + (A × (1-A)2 × Pt-1) + ((A × (1-A)3 × Pt-2)... You can also calculate this recursively. With yesterday's EWMA Et-1 then today's EWMA is: (A × Pt) + (Et-1 × (1-A)) Note that if A = 1 then you are using only the current price in your EWMA, hence why I require L to be 2 or more.
+
+Slow EWMA The slow EWMA Eslow will be an EWMA using Aslow based on the price history.
+
+Fast EWMA The fast EWMA Efast will be an EWMA using Afast based on the price history.
+
+Raw EWMA Efast minus Eslow is the raw EWMA crossover. crossover If this is positive then there has been a recent price uptrend, if it's negative then prices are trending down. Since both the EWMAs are measurements of price, the crossover tells you by how much prices have changed recently.
+
+Standard This is the standard deviation of returns in price points, not percentage deviation points as normal. The volatility in price points is equal to the percentage point adjustment volatility (price volatility as defined in chapter ten, ‘Position sizing', on page 155), multiplied by the current price.
+
+Volatility You should divide the raw EWMA crossover by the standard deviation of daily adjusted price changes (in price terms, not percentage points). As I pointed out in EWMA chapter seven, you usually need forecasts to be adjusted for return standard crossover deviation.
+
+Forecast The forecast scalar depends on the look-back window and is shown in table scalar 49.
+
+Forecast The forecast is the forecast scalar multiplied by the volatility adjusted EWMA crossover. It should have an average absolute value of around 10.
+
+Capped This is the forecast with capping of values above +20 and below -20. forecast
+
+What ratio of fast and slow look-backs to use? To reduce the set of parameters to consider for evaluation, I first fixed the ratio of fast and slow look-backs. As this requires looking at performance to avoid over-fitting I initially used artificial data which contained trends of various lengths plus an element of noise. There was not much difference in performance over look-backs between 2 and 6, so I selected a ratio of 4. A subsequent check on real data confirmed this was reasonable. This reduces the set of possible look-backs to 2:8, 3:12, 4:16, 5:20 and so on.
+
+\subsection*{Which pairs of look-backs to use?}
+
+Different look-back pairs will capture different length trends. Since we don't know what length trends will occur in reality, I advise using a reasonable number of pairs. However it turns out that using the series of look-backs 2:8, 4:16, 8:32... gives enough coverage. As table 57 in appendix C (page 295) shows, the adjacent look-backs in this set have correlations of 0.90. Any intervening values that are added would have correlations above the cutoff of 0.95 which I recommend using to prune trading rule variations in chapter six, ‘Forecasts'. Beyond the pair 64:256 turnover the holding period gets excessively long, and as the law of active management suggests performance will be poor, it isn't worth adding any more pairs beyond this.
+
+\subsection*{Which forecast scalars to use?}
+
+I use the technique in appendix D on page 297 with data from a large number of futures markets, which isn't likely to lead to over-fitting as I'm not looking at performance. This gives the forecast scalars shown in table 49.
+
+\rawtablecaption{FORECAST SCALARS FOR DIFFERENT EWMAC LOOK-BACK PAIRS}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}Y@{}}
+\toprule
+\textbf{Look-back pair} & \textbf{Forecast scalar} \\
+\midrule
+EWMAC 2,8 & 10.6 \\
+EWMAC 4,16 & 7.5 \\
+EWMAC 8,32 & 5.3 \\
+EWMAC 16,64 & 3.75 \\
+EWMAC 32,128 & 2.65 \\
+EWMAC 64,256 & 1.87 \\
+\bottomrule
+\end{tabularx}
+}
+
+\section*{The carry trading rule}
+\phantomsection
+\addcontentsline{toc}{section}{The carry trading rule}
+
+I introduced the carry rule in chapter seven. The rule calculates an annualised volatility standardised expected return for the asset, assuming nothing happens to prices. Because the carry rule is slightly different for various asset classes, the definition here is in two parts. The first part calculates the annualised net expected return in price points for different assets. Then in the second part, which applies to all assets, this is converted to a forecast.
+
+\subsection*{Equities, bought with cash or on margin}
+
+Dividend yield, \% The expected dividend yield per year during the holding period, or for simplicity the historic dividend divided by current price.
+
+\subsection*{Funding cost, \% Either:}
+
+On a cash purchase the interest you could have received on your money if you had not invested it. If borrowing on margin your cost of funding.
+
+Net expected return, \% Dividend yield minus funding cost.
+
+Net expected return in Net expected return \% points, multiplied by the current price. price units
+
+\subsection*{Equities, contracts for difference (CFD)}
+
+Dividend yield, \% The expected dividend yield per year during the holding period, or for simplicity just the historic dividend divided by current price.
+
+Funding cost, \% The average of the interest you pay to fund a long position and what you receive on short positions.
+
+Net expected return, \% Dividend yield minus funding cost.
+
+Net expected return in Net expected return \% points, multiplied by the current price. price units
+
+\subsection*{Foreign exchange, cash}
+
+Interest, \% The interest you get in the foreign currency.
+
+Funding cost, \% The interest you pay to borrow the domestic currency.
+
+Net expected return, \% Interest minus funding cost.
+
+Net expected return in Net expected return \% multiplied by current price. price units
+
+\subsection*{Spread bet, e.g. on FX or equities}
+
+Spread bet level The level of the spread bet (mid-price). (I assume that the financing cost is wrapped up in the relationship between the spot and spread bet price.)
+
+Spot level The level of the spot price of the relevant instrument at the same time.
+
+Net expected return Spot level minus spread bet level. over bet period
+
+Time to maturity Time to expiry of the bet, in years. So a quarterly three-month bet would be 0.25.
+
+Net expected return in Net expected return over bet period divided by time to maturity. price units
+
+\subsection*{Futures: If not trading nearest contract (preferred)}
+
+Current contract price The price of the contract you are trading.
+
+Nearer contract price The price of the next closest contract. So if you are trading June 2017 Eurodollar it would be March 2017.
+
+Price differential Current contract price minus nearer contract price.
+
+Distance between The time in years between the two contracts (current and nearer). contracts For adjacent quarterly expiries it is 0.25 and for monthly 0.083.
+
+Net expected return in You need to annualise the price differential by dividing by the price units distance between contracts.
+
+If you are already trading the nearest contract you obviously can't use this method.\footnote{Ideally you'd use the spot price relative to the future, but this isn't easily available except for equity indices.} Instead there is an approximation below, which assumes you get the same amount of expected return for the first two available contracts.
+
+\subsection*{Futures: If trading nearest contract (approximation)}
+
+Current contract price The price of the contract you are trading.
+
+Next contract price The price of the contract with the next expiry. So if you had June 2017 Treasury bonds it would be September 2017.
+
+Price differential Next contract price minus current contract price.
+
+Distance between The time in years between the two contracts (current and next). contracts For adjacent quarterly expiries it would be 0.25, for monthly 0.083 and so on.
+
+Net expected return in You need to annualise the price differential by dividing by the price units distance between contracts.
+
+Now let us turn to the actual forecast calculation, which is the same for all assets.
+
+\subsection*{Forecast calculation}
+
+Net expected return in From relevant information above. Note this is an annualised price units measure.
+
+Standard deviation of This is the standard deviation of returns in price points, not returns percentage points as normal. The volatility in price points is equal to the percentage point volatility (price volatility as defined in chapter ten, ‘Position sizing', on page 155), multiplied by the current price.
+
+Annualised standard Multiply the standard deviation of returns by the ‘square root of deviation of returns time' to annualise it. Assuming 256 business days in a year you should multiply by 16.
+
+Raw carry: Volatility As I pointed out in chapter seven, you want forecasts to be standardised expected adjusted for return standard deviation. So this is the net expected return return in price units divided by the annualised standard deviation of returns.
+
+Forecast scalar The forecast scalar is 30. I explain below where the multiplier comes from.
+
+Forecast The forecast will be the forecast scalar times the raw carry.
+
+Capped forecast This is the forecast with values outside the range -20, +20 capped.
+
+\subsection*{Which forecast scalar to use?}
+
+The raw carry measure is effectively an annualised Sharpe ratio (SR), an expected return divided by standard deviation. I used the technique in appendix D and data from a large number of markets across different asset classes to work out the right forecast scalar. This gives a forecast scalar of around 30.
+
+\subsection*{What is the turnover of carry?}
+
+It's hard to generalise about the turnover (round trips per year) of carry since it depends on the asset class and how often you update the value of the forecast. I suggest checking the forecast weekly to avoid spurious noise which can otherwise be a problem. If you do this then it is reasonable to use a rule of thumb value of 10 for the turnover of the carry rule.

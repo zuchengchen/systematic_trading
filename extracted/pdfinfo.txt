@@ -1,0 +1,21 @@
+Title:           Systematic Trading
+Keywords:        Systematic Trading
+Author:          陈祖成
+Creator:         SPDF
+Producer:        SPDF
+CreationDate:    Sat May 27 08:00:15 2017 CST
+ModDate:         Mon Sep 25 04:16:42 2023 CST
+Custom Metadata: yes
+Metadata Stream: yes
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            AcroForm
+JavaScript:      no
+Pages:           326
+Encrypted:       no
+Page size:       499.2 x 720 pts
+Page rot:        0
+File size:       12563689 bytes
+Optimized:       no
+PDF version:     1.6

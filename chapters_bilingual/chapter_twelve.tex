@@ -1,0 +1,625 @@
+\chapter{Speed and Size}
+\bichaptertitle{速度与规模}
+
+SO FAR EVERYTHING YOU'VE SEEN IN THE FRAMEWORK IS EQUALLY relevant to a nimble amateur trader, holding 100 share positions for a few hours, and the portfolio manager of a massive hedge fund, following trends lasting for months. However in practice these two people will need to trade quite differently to account for the frequency and size of their trades. In this chapter I will look at how you should design your trading systems given these two interrelated issues of speed and account size.
+
+到目前为止，你在框架中看到的内容，既适用于那种灵活的业余交易者
+--- 他们可能只持有 100 股、几个小时后就平仓
+--- 也适用于大型对冲基金的投资组合经理
+--- 他们可能追踪一个持续数月的趋势。
+但在现实中，这两类人显然必须以非常不同的方式去交易，因为他们的交易频率和交易规模完全不同。
+本章讨论的，就是在这两个相互关联的问题
+--- 交易速度与账户规模
+--- 之下，你究竟应当如何设计自己的交易系统。
+
+\section*{Chapter overview}
+\phantomsection
+\addcontentsline{toc}{section}{Chapter overview}
+\bisectiontitle{本章概览}
+
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
+\textbf{Speed of trading} & The thorny question of how quickly you should trade given the costs of doing so. \\
+\textbf{Decomposing and calculating the cost of trading} & How to work out what you expect to pay in costs, given which instruments you are trading and the characteristics of your trading system. \\
+\textbf{Using trading costs to make design decisions} & Once you know your costs, how you should adjust your system to cope. \\
+\textbf{Trading with more or less capital} & The issues of trading with relatively small or large amounts of capital. \\
+\textbf{Determining overall portfolio size} & Having a smaller account of capital limits how many instruments you can trade. I’ll explain how best to determine the size and shape of your portfolio. \\
+\end{tabularx}
+
+\medskip
+
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
+\textbf{交易速度} & 在考虑交易成本之后，你到底该交易多快，这是个棘手问题。 \\
+\textbf{分解并计算交易成本} & 在已知你交易哪些工具、以及系统具有什么特征的情况下， 如何估算你将支付多少成本。 \\
+\textbf{利用交易成本做设计决策} & 一旦知道了成本，你该如何调整系统以适应它们。 \\
+\textbf{大资金与小资金交易} & 使用相对较大或较小资金交易时会遇到哪些问题。 \\
+\textbf{确定整体投资组合规模} & 资金账户越小，你能交易的品种就越少。 我会解释如何更合理地确定组合的规模和形状。 \\
+\end{tabularx}
+
+\section*{Speed of trading}
+\phantomsection
+\addcontentsline{toc}{section}{Speed of trading}
+\bisectiontitle{交易速度}
+
+How fast should you trade? If you go long USD/EUR FX at 11:05am on Tuesday 23 September 2014, should you expect to be selling at 11:06? Or by Thursday? Perhaps you will be holding on until December, or even March the following year? The answer to this question depends on two things: how you expect prices to behave and the cost of each trade. Suppose you have a crystal ball and know with certainty that prices will increase by 10 cents in the next week. If it costs you 1 cent to trade then you should buy as you'll definitely make 8 cents by next Tuesday.\footnote{10 cents raw profit, less 1 cent to buy in and 1 cent to sell out.\par 原始利润 10 美分，
+减去买入 1 美分、卖出 1 美分的成本后，
+净赚 8 美分。} Unfortunately crystal balls are in short supply. Instead we have forecasts which don't provide certainty, but hopefully shift the odds in our favour. You might have a trading rule where after looking at the back-test you expect to get a Sharpe ratio (SR) of 1.5 before costs. But this strategy pays out two-thirds of its profits in trading costs, so the after-cost SR is just 0.5. If you were running at a 20\% volatility target you'd be expecting pre-cost returns of 30\% a year, annual costs of 20\% and net returns of just 10\%.\footnote{Annual returns are the expected annualised standard deviation of percentage returns (percentage volatility target) multiplied by Sharpe ratio. For pre-cost returns 20\% × 1.5 = 30\%. For after cost returns 20\% × 0.5 = 10\%. Hence you must be paying 30\% - 10\% = 20\% in costs.\par 年化收益等于年化百分比波动率目标乘以夏普比率。
+成本前收益是 20\% × 1.5 = 30\%，
+成本后收益是 20\% × 0.5 = 10\%，
+因此成本就是 20\%。} Is it wise to trade this rule?
+
+你到底该交易多快？假设你在 2014 年 9 月 23 日周二上午 11:05 做多 USD/EUR，你应该预期自己在 11:06 就卖掉吗？还是等到周四？
+又或者，你会一直持有到 12 月，甚至到来年 3 月？这个问题的答案只取决于两件事：你预期价格会如何运动，以及每一笔交易的成本是多少。
+如果你真有一颗水晶球，并且确定价格在下一周会上涨 10 美分，那么只要交易成本是 1 美分，你当然应该买，因为到下周二你一定能净赚 8 美分。
+可惜水晶球并不常见。现实里我们拥有的是“预测”，它们不会给你确定性，但至少能让胜率向你倾斜。
+假设你有一条交易规则，回测显示它的成本前夏普比率
+（SR）可以达到 1.5；但这条规则会把三分之二的利润都花在交易成本上，因此成本后的 SR 只剩下 0.5。
+如果你以 20\% 的波动率目标来运行它，那么你预期的成本前收益是每年 30\%，成本则高达每年 20\%，最终净收益只剩 10\%。
+你真的应该去交易这样一条规则吗？
+
+Personally I think it is very unwise indeed. If the actual pre-cost SR turned out to be less than 1.0, giving raw returns below 20\% a year, then the strategy will lose money after costs. You'd be trading far too quickly relative to the available pre-cost performance. Overtrading is a result of overconfidence, one of the cognitive biases I discussed in chapter one. Only someone who was very bullish would assume the realised pre-cost SR would definitely be 1.0 or over in actual trading. You shouldn't trade systems like this and hope for the best. Instead it's much better to design trading systems that aren't vulnerable to such high levels of costs. In the next part of the chapter I'm going to show you how to calculate the cost of trading a particular instrument at a given speed, and how to work out the likely costs you'll face. Then you'll see how to construct trading systems to ensure you won't be making more money for brokers and market makers, than for yourself.
+
+我个人认为，这样做非常不明智。如果这条规则最终实现的成本前 SR 低于 1.0，也就是原始收益低于每年 20\%，那么扣除成本后它就会直接亏钱。
+这意味着，你相对于可实现的成本前表现，交易得太快了。过度交易，本质上是过度自信的产物，而过度自信正是我在第一章里讨论过的认知偏差之一。
+只有一个极度乐观的人，才会假设自己的实际成本前 SR 一定会达到 1.0 或更高。你不应该运行这种系统，然后寄希望于好运。
+更好的做法，是设计那些不会被高成本轻易击穿的交易系统。本章后面我会展示：如何计算某个品种在某个速度下的交易成本，
+以及如何估算你真正要面对的成本。之后你就会看到，如何据此构建交易系统，从而避免最后赚得最多的不是你，而是经纪商和做市商。
+
+\section*{Calculating the cost of trading}
+\phantomsection
+\addcontentsline{toc}{section}{Calculating the cost of trading}
+\bisectiontitle{计算交易成本}
+
+本节的核心思想很直接：只知道“某次交易花了多少钱”是没有意义的，你还必须知道，为了达到同样的风险暴露，
+不同工具到底要交易多大规模。也就是说，成本必须经过风险标准化之后，才具有可比性。
+
+\subsection*{The cost of execution}
+\bisubsectiontitle{执行成本}
+
+The first kind of cost we'll analyse is execution cost. Back-tests nearly always assume that when you trade you get the mid-price. In practice the difference between the mid and the price you actually achieve depends on your order size relative to the available liquidity. Smaller traders can often conservatively assume that they will pay half the usual bid-offer spread. Larger traders, or those operating in less liquid markets, cannot safely make that assumption.
+
+\rawfigurecaption{ORDER BOOK FOR EURO STOXX INDEX MARCH 2015 FUTURES, AS OF 23 JANUARY 2015 11:13 GMT\\2015 年 1 月 23 日 11:13 GMT 的 Euro Stoxx 50 指数 2015 年 3 月期货订单簿}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\noindent\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\textbf{Product} & Euro Stoxx 50 Index Futures & \textbf{Product ID:} FESX \\
+\textbf{Contract} & Mar 2015 & \textbf{Last / Volume:} 3,368.00 / 652,226 \\
+\end{tabularx}
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{Bid Side}
+
+\smallskip
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+Avg. Pr. & Cum. Qty. & Quantity & Bid \\
+\midrule
+3,369.00 & 437 & 437 & 3,369.00 \\
+3,368.43 & 1,013 & 576 & 3,368.00 \\
+3,367.89 & 1,633 & 620 & 3,367.00 \\
+3,367.32 & 2,330 & 697 & 3,366.00 \\
+3,366.81 & 2,988 & 658 & 3,365.00 \\
+3,366.30 & 3,659 & 671 & 3,364.00 \\
+3,365.91 & 4,144 & 485 & 3,363.00 \\
+3,365.37 & 4,814 & 670 & 3,362.00 \\
+3,364.63 & 5,797 & 983 & 3,361.00 \\
+3,364.07 & 6,587 & 790 & 3,360.00 \\
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{Ask Side}
+
+\smallskip
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+Ask & Quantity & Cum. Qty. & Avg. Pr. \\
+\midrule
+3,370.00 & 7 & 7 & 3,370.00 \\
+3,371.00 & 540 & 577 & 3,370.99 \\
+3,372.00 & 1,147 & 1,724 & 3,371.66 \\
+3,373.00 & 696 & 2,420 & 3,372.05 \\
+3,374.00 & 647 & 3,067 & 3,372.46 \\
+3,375.00 & 1,017 & 4,084 & 3,373.09 \\
+3,376.00 & 831 & 4,915 & 3,373.58 \\
+3,377.00 & 502 & 5,417 & 3,373.90 \\
+3,378.00 & 1,131 & 6,548 & 3,374.61 \\
+3,379.00 & 571 & 7,119 & 3,374.96 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\endgroup
+
+\medskip
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.08}
+\noindent\begin{tabularx}{\textwidth}{@{}lXl@{}}
+\textbf{产品} & Euro Stoxx 50 指数期货 & \textbf{产品代码：} FESX \\
+\textbf{合约} & 2015 年 3 月 & \textbf{最新价 / 成交量：} 3,368.00 / 652,226 \\
+\end{tabularx}
+
+\medskip
+
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{买盘}
+
+\smallskip
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+均价 & 累计数量 & 数量 & 买价 \\
+\midrule
+3,369.00 & 437 & 437 & 3,369.00 \\
+3,368.43 & 1,013 & 576 & 3,368.00 \\
+3,367.89 & 1,633 & 620 & 3,367.00 \\
+3,367.32 & 2,330 & 697 & 3,366.00 \\
+3,366.81 & 2,988 & 658 & 3,365.00 \\
+3,366.30 & 3,659 & 671 & 3,364.00 \\
+3,365.91 & 4,144 & 485 & 3,363.00 \\
+3,365.37 & 4,814 & 670 & 3,362.00 \\
+3,364.63 & 5,797 & 983 & 3,361.00 \\
+3,364.07 & 6,587 & 790 & 3,360.00 \\
+\bottomrule
+\end{tabular}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}
+\centering
+\textbf{卖盘}
+
+\smallskip
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+卖价 & 数量 & 累计数量 & 均价 \\
+\midrule
+3,370.00 & 7 & 7 & 3,370.00 \\
+3,371.00 & 540 & 577 & 3,370.99 \\
+3,372.00 & 1,147 & 1,724 & 3,371.66 \\
+3,373.00 & 696 & 2,420 & 3,372.05 \\
+3,374.00 & 647 & 3,067 & 3,372.46 \\
+3,375.00 & 1,017 & 4,084 & 3,373.09 \\
+3,376.00 & 831 & 4,915 & 3,373.58 \\
+3,377.00 & 502 & 5,417 & 3,373.90 \\
+3,378.00 & 1,131 & 6,548 & 3,374.61 \\
+3,379.00 & 571 & 7,119 & 3,374.96 \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\endgroup
+
+\subsection*{Source: EUREX}
+\bisubsectiontitle{来源：EUREX}
+
+回测几乎总是假设，你成交的价格就是中间价。但现实里，你真正拿到的成交价取决于委托簿深度、你的订单大小以及流动性情况。
+这两者之间的差额，就是执行成本。对于小规模交易者而言，一个合理而保守的假设是：每次交易至少会付出半个买卖价差。
+而对于大资金、流动性差的市场、或者交易得非常快的人来说，情况就复杂得多，此时绝不能轻率地假设“只付半个点差”。
+
+\subsection*{Types of cost}
+\bisubsectiontitle{成本的类型}
+
+Execution cost is only one part of trading cost. You may also face per-ticket commissions, fees based on traded size, and value-based taxes such as stamp duty. Certain instruments also have holding costs, but for decisions about trading speed the most important items are the direct costs you incur every time you enter and exit a position.
+
+执行成本只是交易成本的一部分。除此之外，还有佣金、固定手续费、按交易规模计费的费用、印花税等按成交金额征收的税费，
+以及某些工具在持有期间本身就会持续产生的持有成本。对于交易速度设计来说，真正决定性的是前者
+--- 也就是每一次进出场所付出的直接交易成本。
+
+\subsection*{Standardising cost measurement}
+\bisubsectiontitle{标准化成本度量}
+
+Suppose it costs EUR8 to trade one Euro Stoxx future and EUR5 to trade one Schatz future. The smaller absolute number does not automatically mean the Schatz is cheaper if you need more contracts to achieve the same level of risk. That is why costs must be volatility standardised. The key question is: how much Sharpe ratio do I lose by buying and then selling a risk-adjusted amount of this instrument? The standardised cost is
+\[
+\text{standardised cost} = \frac{2 \times C}{16 \times ICV}
+\]
+where \(C\) is the cost of trading one instrument block and \(ICV\) is the daily instrument currency volatility of that block.
+
+如果交易一手 Euro Stoxx 期货总共花费 €8，而交易一手德国 Schatz 国债期货只花 €5，那么后者就一定更便宜吗？不一定。
+因为也许为了达到同样的风险暴露，你需要买 20 手 Schatz，却只需要 10 手 Euro Stoxx。于是，看似单手更便宜的 Schatz，
+最终反而在总成本上更贵。解决办法，依然是波动率标准化。你真正需要的度量是：
+“买入再卖出一个风险标准化后的头寸，会花掉多少年化夏普比率单位？”
+我把这称为标准化成本。它的公式是：
+\[
+\text{standardised cost} = \frac{2 \times C}{16 \times ICV}
+\]
+其中 \(C\) 是交易一个 instrument block 的成本，\(ICV\) 是该 instrument block 的日品种货币波动率，而 16 是日波动率年化时的时间平方根因子。
+
+这一公式有一个重要含义：对于低波动率工具，交易成本在风险标准化之后会显得更高。这也是为什么我反复建议你避开那些天然波动率极低的工具。
+它们不但需要夸张的杠杆，而且在标准化成本维度上往往也更糟。
+
+\subsection*{Introducing turnover}
+\bisubsectiontitle{引入换手率}
+
+Knowing the cost of a standardised round trip is not enough; you also need to know how many such round trips you make each year. Turnover measures the number of annualised buy-and-sell cycles done in an average sized, risk-adjusted position. If standardised cost is 0.01 SR and turnover is 10, then costs remove 0.10 Sharpe ratio from annual performance.
+
+一旦你知道了每次“标准化 round trip”要花多少 SR 单位，下一步就要知道你一年会做多少次这样的 round trip。
+这就是换手率
+（turnover）。一个系统的换手率，是按“标准化头寸每年完成多少次买入 + 卖出”来衡量的。
+例如，如果某个品种的标准化成本是 0.01 SR，而你的换手率是每年 10 次，那么一年之后，你就会在成本上失去 10 × 0.01 = 0.10 SR。
+也就是说，一条原本 0.5 SR 的规则，净下来只剩 0.4 SR。
+
+\subsection*{Where does turnover come from?}
+\bisubsectiontitle{换手率从哪里来？}
+
+Turnover mainly comes from five sources: forecast changes, changes in instrument volatility, changes in trading capital, exchange rate changes, and changes to system parameters such as weights or targets. In practice the most important sources are usually forecast changes and updates to price volatility, which is why later in the chapter I focus on those.
+
+换手率主要来自以下几个来源：
+1. 预测值变化。这通常是最主要的来源，尤其是对坚定系统化交易者和半自动交易者来说。
+2. 品种货币波动率变化。你的价格波动率估计一旦改变，就会触发仓位调整。
+3. 交易资本变化。盈亏滚动、资金申购赎回都会改变风险资本，从而改变目标仓位。
+4. 汇率变化。对于跨货币资产，汇率变化也会带来额外微小调整。
+5. 系统参数变化。包括预测权重、品种权重、分散化乘数以及百分比波动率目标等。最好的办法通常是不去碰它们。
+
+本章后面重点讨论的，其实主要是前两项：预测变化和价格波动率估计变化，因为它们既最重要，也最可以被系统设计所调整。
+
+\subsection*{Estimating the number of round trips}
+\bisubsectiontitle{估算 round trips 的数量}
+
+Once you know standardised cost, the remaining task is to estimate turnover. You can do that in three broad ways: directly from a sophisticated back-test, approximately from a simpler back-test using traded blocks divided by average held blocks, or by rules of thumb. The rules-of-thumb route is often sufficient for semi-automatic traders, for asset allocating investors whose forecasts do not change, and for staunch systems traders using the relatively standard rules advocated in this book.
+
+一旦标准化成本确定下来，剩下要估计的就是换手率。大体有三种方法：第一，直接让较完整的回测系统输出 turnover；第二，用简化回测得到“每年交易的 instrument blocks 数量”和“平均持有的绝对头寸大小”，再近似换算；第三，使用经验法则。对于半自动交易者、预测不变化的资产配置型投资者，以及使用本书推荐那类较标准规则的坚定系统化交易者来说，经验法则往往已经够用了。
+
+\section*{Using trading costs to make design decisions}
+\phantomsection
+\addcontentsline{toc}{section}{Using trading costs to make design decisions}
+\bisectiontitle{利用交易成本来做设计决策}
+
+\subsection*{Setting a speed limit}
+\bisubsectiontitle{设定速度上限}
+
+本章最重要的设计原则之一，是你必须给系统设定一个“速度上限”。我自己的原则是：
+一套系统每年花在成本上的 SR 单位，不应超过其保守预估成本前 SR 的三分之一。
+对坚定系统化交易者而言，我建议把单个品种上的最大可实现成本前 SR 保守看作 0.40，因此成本上限就是 0.13 SR；
+对于半自动交易者和资产配置型投资者，则应把这个值保守看作 0.25，因此成本上限就是 0.08 SR。
+
+一旦你知道某个工具的标准化成本，再用“成本上限 ÷ 标准化成本”，就可以直接得到它允许的最大换手率。于是你立刻就能反推出：
+哪些工具能交易得快，
+哪些工具只能慢慢来，
+哪些工具压根就不值得碰。
+
+\rawtablecaption{WHAT SPEEDS AND HOLDING PERIODS CAN SEMI-AUTOMATIC TRADERS AND ASSET ALLOCATING INVESTORS TRADE WITH PARTICULAR INSTRUMENTS?\\半自动交易者与资产配置型投资者，在不同工具上能承受怎样的速度与持仓周期？}
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.12\textwidth}p{0.14\textwidth}Yp{0.18\textwidth}@{}}
+\toprule
+\textbf{Holding period} & \textbf{Typical turnover} & \textbf{Maximum cost SR} & \textbf{Likely instruments} & \textbf{Notes} \\
+\midrule
+1 day & 256 & 0.00031 & None & \\
+3 days & 85 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
+1 month & 12 & 0.0067 & Nearly all futures except short maturity bonds, STIR* & \\
+6.5 weeks & 8 & 0.01 & Index spread bets, e.g. FTSE & \\
+3 months & 4 & 0.02 & Individual equity spread bets & \\
+6 months & 2.0 & 0.04 & Cheapest ETFs, e.g. equity indices & Slowest semi-automatic trader \\
+One year & 1.0 & 0.08 & Benchmark inflation linked bond ETF & \\
+2.5 years & 0.4 & 0.20 & Most individual equities & Slowest asset allocating investor \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.12\textwidth}p{0.14\textwidth}Yp{0.18\textwidth}@{}}
+\toprule
+\textbf{持有期} & \textbf{典型换手率} & \textbf{最大成本 SR} & \textbf{典型可用品种} & \textbf{备注} \\
+\midrule
+1 天 & 256 & 0.00031 & 无 & \\
+3 天 & 85 & 0.001 & 最便宜的期货，例如 NASDAQ & \\
+1 个月 & 12 & 0.0067 & 几乎所有期货，但不包括短久期债券、STIR* & \\
+6.5 周 & 8 & 0.01 & 指数点差投注，例如 FTSE & \\
+3 个月 & 4 & 0.02 & 个股点差投注 & \\
+6 个月 & 2.0 & 0.04 & 最便宜的 ETF，例如股票指数 ETF & 最慢的半自动交易者 \\
+1 年 & 1.0 & 0.08 & 基准通胀挂钩债券 ETF & \\
+2.5 年 & 0.4 & 0.20 & 大多数个股 & 最慢的资产配置型投资者 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\smallskip
+\noindent\textit{这张表展示的是：在不同持仓周期下，每年的 round trips 换手率、在“每年成本不超过 0.08 SR”前提下允许的最大工具成本，以及各成本层级上典型可交易的工具
+（2015 年 1 月估计值）。}
+
+\smallskip
+\noindent\textit{* 短期利率期货}
+
+资产配置型投资者可以交易得非常慢，因此即便是价格中等偏贵的工具，也仍然可能可行。
+相比之下，半自动交易者通常不可能把速度放慢到每年只有一两次 round trip 以下，
+因为止损机制仍然必须存在。
+这自然会把那些更昂贵的工具排除在他们的可交易范围之外。
+
+\rawtablecaption{WHAT SPEED SYSTEMS CAN STAUNCH SYSTEMS TRADERS USE?\\坚定系统化交易者能运行怎样速度的系统？}
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.14\textwidth}Yp{0.30\textwidth}@{}}
+\toprule
+\textbf{Typical turnover} & \textbf{Maximum cost SR} & \textbf{Likely instruments} & \textbf{Notes} \\
+\midrule
+128 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
+54 & 0.0024 & Average future, e.g. WTI Crude & Fastest single trend following rule I use, the EWMAC 2, 8 rule* \\
+28 & 0.0046 & Most futures except short end bonds, equity volatility indices, STIR & Second fastest single trend following rule, the EWMAC 4, 16 rule \\
+12.5 & 0.01 & Nearly all futures, index spread bets & Set of rules used in chapter 15 \\
+7.5 & 0.017 & Cheaper individual equity spread bets & Slowest trend following rule I use, the EWMAC 64, 256 rule \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.08}
+\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.14\textwidth}Yp{0.30\textwidth}@{}}
+\toprule
+\textbf{典型换手率} & \textbf{最大成本 SR} & \textbf{典型可用品种} & \textbf{备注} \\
+\midrule
+128 & 0.001 & 最便宜的期货，例如 NASDAQ & \\
+54 & 0.0024 & 平均水平的期货，例如 WTI 原油 & 我使用过的最快单条趋势规则，EWMAC 2, 8 规则* \\
+28 & 0.0046 & 大多数期货，但不包括短端债券、股票波动率指数、STIR & 第二快的单条趋势规则，EWMAC 4, 16 规则 \\
+12.5 & 0.01 & 几乎所有期货、指数点差投注 & 第 15 章使用的那组规则 \\
+7.5 & 0.017 & 较便宜的个股点差投注 & 我使用过的最慢趋势规则，EWMAC 64, 256 规则 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\smallskip
+\noindent\textit{这张表展示的是：对于坚定系统化交易者，在“每年成本不超过 0.13 SR”的建议下，不同年换手率所对应的最大可接受标准化工具成本，以及各成本水平下的典型工具
+（2015 年 1 月估计值）。}
+
+\smallskip
+\noindent\textit{* 定义见第七章“预测值”和附录 B。}
+
+这张表还说明，我为坚定系统化交易者推荐的那组规则本身是相对较慢的。
+这也正是为什么：对于范围很广的主要期货和指数点差投注而言，
+大约 0.01 SR 的标准化成本仍然是可以接受的。
+
+\subsection*{Which instruments to trade?}
+\bisubsectiontitle{该交易哪些工具？}
+
+利用上面的速度上限表，你可以从两个方向来设计系统。
+第一种，是先决定你想交易得多快，然后反过来挑选那些足够便宜、支撑这一速度的工具。
+第二种，则是先决定你偏好哪些工具，再倒推出它们最多只能以多快的速度去交易。
+例如，如果你不能碰期货、又偏爱 ETF，那么你的交易速度就必然非常慢；如果你交易的是指数点差投注，
+那么你的系统就不可能做成接近日内级别的快系统。
+
+\subsection*{Deciding average holding period by setting stop losses}
+\bisubsectiontitle{通过止损设置平均持仓周期}
+
+\subsection*{Semi-automatic trader}
+\bisubsectiontitle{半自动交易者}
+
+对半自动交易者来说，平均持仓周期并不是由“你今天有多想点一下鼠标”决定的，而主要是由止损有多紧决定的。
+止损越紧，持仓期越短，换手越高，成本越大。于是，你必须让自己的预测期限与止损宽度相互匹配。
+如果你做的是六周左右的趋势判断，
+那么像本书建议的 \(X=4\) 这类较宽止损就更合理；
+如果你用的是点差投注这样的昂贵工具，
+那么也几乎只能接受这种相对慢一些的风格。
+
+\subsection*{Selecting trading rules}
+\bisubsectiontitle{筛选交易规则}
+
+\subsection*{Staunch systems trader}
+\bisubsectiontitle{坚定系统化交易者}
+
+对坚定系统化交易者来说，我不希望你根据“成本前表现”来拟合规则，
+但我强烈鼓励你根据“成本后可行性”来剔除规则。
+也就是说，
+如果某条规则在某个工具上的换手率太高，
+高到其年度成本会突破我建议的 0.13 SR 上限，
+那它就应当被排除。
+如果你想让所有工具都使用同一套规则，
+那么你最终应当依据“最昂贵的那个工具”来做筛选；
+这样留下来的规则，
+自动也会适用于那些更便宜的工具。
+
+\subsection*{Trading slower rules -- Weights to trading rules}
+\bisubsectiontitle{更慢的规则，以及如何给规则分配权重}
+
+\subsection*{Staunch systems trader}
+\bisubsectiontitle{坚定系统化交易者}
+
+If faster rules are not demonstrably better before costs, they should usually carry less weight once costs are included. Bootstrapping can incorporate this naturally. If you are handcrafting weights, assume pre-cost Sharpe ratios are broadly similar and make only modest adjustments based on relative trading cost.
+
+一旦成本被纳入视野，你就不能再假设所有规则变体的权重都应当相同。通常情况下，
+高换手、成本高的规则，除非你有充分证据表明它们在成本前就显著更强，否则它们应当被降权。
+如果你用 bootstrapping 做权重分配，那么成本可以自然地被纳入进去；
+如果你用 handcrafting，
+那么我建议你假设所有规则成本前 SR 都差不多，
+只根据“成本相对平均值高出多少”来做轻微降权。
+需要强调的是，这种调整通常都不应太激烈；大多数情况下，规则权重真正的大差异并不来自成本，而来自相关性与分散化。
+
+\subsection*{Slower estimation of price volatility}
+\bisubsectiontitle{更慢地估计价格波动率}
+
+\subsection*{This section is relevant to all readers}
+\bisubsectiontitle{本节与所有读者相关}
+
+\subsection*{Asset allocating investor / Staunch systems trader}
+\bisubsectiontitle{资产配置型投资者 / 坚定系统化交易者}
+
+在预测值之后，第二大换手来源就是价格波动率估计的变化。
+如果你把波动率估计窗口设得很短，那么仓位就会频繁变化，成本自然随之上升。
+因此，
+资产配置型投资者和坚定系统化交易者，
+都应根据自己工具的成本来决定波动率估计窗口是否需要放慢。
+而半自动交易者如果采用的是“目测法”，
+那么一个很实用的规则是：
+除非你新的波动率判断与上次相比变化超过 25\%，
+否则就不要更新它。
+
+\rawtablecaption{WHAT EFFECT DOES SLOWING DOWN YOUR ESTIMATE OF PRICE VOLATILITY HAVE? A SLOWER ESTIMATE CAN REDUCE FINAL SYSTEM TURNOVER, IF UNDERLYING TRADING RULES ARE ALSO SLOW\\放慢价格波动率估计会带来什么影响？若底层交易规则本身也较慢，则更慢的估计会降低最终系统换手}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.32\textwidth}*{3}{>{\centering\arraybackslash}X}@{}}
+\toprule
+\textbf{Starting turnover of trading rules} & \textbf{20 weeks} & \textbf{10 weeks} & \textbf{5 weeks} \\
+\midrule
+0 (no-rule rule) & 0.4 & 0.8 & 1.6 \\
+1 & 1.2 & 1.5 & 2.5 \\
+5 & 4.7 & 5.0 & 5.7 \\
+10 & 9.4 & 9.8 & 10.2 \\
+12.5 & 11.7 & 12.2 & 12.6 \\
+20 & 19.1 & 19.2 & 19.7 \\
+40 & 39.2 & 39.2 & 39.4 \\
+60 & 60 & 60 & 60 \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.32\textwidth}*{3}{>{\centering\arraybackslash}X}@{}}
+\toprule
+\textbf{交易规则原始换手率} & \textbf{20 周} & \textbf{10 周} & \textbf{5 周} \\
+\midrule
+0（无规则规则） & 0.4 & 0.8 & 1.6 \\
+1 & 1.2 & 1.5 & 2.5 \\
+5 & 4.7 & 5.0 & 5.7 \\
+10 & 9.4 & 9.8 & 10.2 \\
+12.5 & 11.7 & 12.2 & 12.6 \\
+20 & 19.1 & 19.2 & 19.7 \\
+40 & 39.2 & 39.2 & 39.4 \\
+60 & 60 & 60 & 60 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent\textit{The table shows the final turnover, in round trips per year, we get from changing the look-back for price volatility (columns) given a starting level of turnover from trading rules (rows). Five weeks (25 business days) is the default look-back. Starting turnover is the average turnover of your trading rules, weighted by forecast weights, multiplied by forecast diversification multiplier. Position inertia is used to slow down trading.}
+
+\smallskip
+\noindent\textit{表中展示的是：在给定交易规则原始换手率
+（行）的前提下，如果改变价格波动率估计的回看窗口
+（列），最终系统的年 round trips 会变成多少。五周
+（25 个交易日）是默认回看期。原始换手率等于交易规则换手率按预测权重加权后的平均值，再乘以预测分散化乘数。表中的结果已经考虑了仓位惯性。}
+
+\smallskip
+\noindent\textit{* Using a simple moving average. For an exponentially weighted moving average, the equivalent look-backs are longer.}
+
+\smallskip
+\noindent\textit{* 这里使用的是简单移动平均。若改用指数加权移动平均，则等效回看期会更长。}
+
+\subsection*{Semi-automatic Trader}
+\bisubsectiontitle{半自动交易者}
+
+\subsection*{Choice of instrument weights}
+\bisubsectiontitle{品种权重的选择}
+
+\subsection*{Asset allocating investor / Staunch systems trader}
+\bisubsectiontitle{资产配置型投资者 / 坚定系统化交易者}
+
+半自动交易者经常会用目测方式估计波动率。一个务实的折中方案是：继续使用大致覆盖一个月的图表视角，但不要因为一点点变化就更新既有头寸的波动率估计，除非它已经发生了实质性变化。这样做相当于一种仓位惯性，有助于把交易成本压低。
+
+原则上，如果某些工具在扣除成本后的表现更差，那它们也许应该被赋予较低权重。可在实践中，只要你遵守合理的速度上限，这种影响通常远没有大家想象得那么大。因此，我的一般建议是：不要仅仅因为某个工具稍微更贵，就机械地对它低配，除非你自己的 bootstrapping 证据明确告诉你应该这么做。
+
+\section*{Trading with more or less capital}
+\phantomsection
+\addcontentsline{toc}{section}{Trading with more or less capital}
+\bisectiontitle{资本过多或过少时的交易问题}
+
+\audiencebox{This section is relevant to all readers}{本节与所有读者都相关。}
+
+\subsection*{Trading with a lot of capital}
+\bisubsectiontitle{资金很多时怎么交易}
+
+对于大资金来说，问题在于你不能总是假设自己能用“半个点差”成交。你的订单可能已经大到足以吃掉盘口深度，
+于是真实执行成本会显著高于简单模型。对此，你必须建立更复杂的执行成本模型，
+并认真优化执行方式。
+
+\subsection*{Trading with relatively little capital}
+\bisubsectiontitle{资金较少时怎么交易}
+
+对于小资金来说，问题则相反：你很可能根本无法把系统给出的“理想仓位”实现出来，因为它小到不足一个合约、一手期货、或者一个经济可交易的股票单位。
+这样一来，
+你的风险就会变得“颗粒化”，
+仓位只能在几个粗糙级别之间跳跃。
+我建议，
+如果某个品种在“最大预测值”情景下，
+最大可能仓位还不到四个 instrument blocks，
+你就应当考虑：
+1. 略微提高它的权重
+（但不要太夸张）；
+2. 减少整个组合中的品种数量；
+3. 干脆把这个品种从组合里删掉；
+4. 如果只有极少数品种存在这个问题，也可以接受整体组合层面上的一点“粗糙感”。
+
+\section*{Determining overall portfolio size}
+\phantomsection
+\addcontentsline{toc}{section}{Determining overall portfolio size}
+\bisectiontitle{确定整体投资组合规模}
+
+\subsection*{Asset Allocating Investor / Staunch Systems Trader}
+\bisubsectiontitle{资产配置型投资者 / 坚定系统化交易者}
+
+\subsection*{Semi-automatic Trader}
+\bisubsectiontitle{半自动交易者}
+
+小账户规模会逼着你减少持仓品种数。你的目标应当是：
+在“不出现最大仓位过小问题”的前提下，
+尽可能持有最分散的组合。
+对于资产配置型投资者和坚定系统化交易者，这意味着优先保留那些来自不同大类资产、
+同时又不会因最小单位问题而失真的品种；
+对于半自动交易者，这意味着你在设定“最大下注数”之前，
+应先确认自己不会在常见交易品种上遇到仓位颗粒度过大的问题。
+
+\section*{Summary of tailoring systems for costs and capital}
+\phantomsection
+\addcontentsline{toc}{section}{Summary of tailoring systems for costs and capital}
+\bisectiontitle{根据成本与资本调整系统的总结}
+
+\subsection*{Standardised cost estimate}
+\bisubsectiontitle{标准化成本估计}
+
+先估计交易一个 instrument block 的总成本，其中包括执行成本、佣金和税费。然后再把一笔完整 round trip 的成本除以年化后的品种货币波动率。这样得到的，就是用 Sharpe 比率单位表示的标准化成本。
+
+\subsection*{Calculating cost of trading rules and trading subsystems}
+\bisubsectiontitle{计算交易规则与交易子系统的成本}
+
+在交易规则层面，成本等于换手率乘以标准化成本；在交易子系统层面，还要额外把预测值变化、波动率估计变化以及仓位惯性等因素考虑进去。核心思想始终不变：你要把“速度”和“成本”结合起来看，而不是孤立地只看其中一个。
+
+\subsection*{Taking action to cope with costs}
+\bisubsectiontitle{如何应对成本}
+
+要设定速度上限，选择那些对你的交易风格而言足够便宜的工具；在必要时放慢止损规则或波动率估计的速度；并避免对那些成本后表现很可能较差的规则或工具赋予过高权重。
+
+\subsection*{Too much capital}
+\bisubsectiontitle{资金太多}
+
+如果你的订单相对于可见盘口深度已经很大，那么基于简单价差的成本假设就会失效。在这种情况下，你就必须使用更现实的执行模型。
+
+\subsection*{Too little capital}
+\bisubsectiontitle{资金太少}
+
+如果某个品种四舍五入后的最大仓位过小，那么风险就会变得颗粒化、难以处理。我的经验法则是：当最大仓位低于大约四个 instrument blocks 时，你就应该认真警惕了。
+
+\subsection*{Determining portfolio size and make-up}
+\bisubsectiontitle{决定组合规模与构成}
+
+在保证仓位仍然有意义、且可以实际交易的前提下，尽可能构建最分散的投资组合。对小账户来说，这通常意味着持有的工具数量会更少，但在挑选时必须更加谨慎。
+
+这一章最终给出的结论可以压缩成几条：
+1. 成本必须做风险标准化之后再比较。
+2. 速度必须有上限，不能因为回测看起来漂亮就无限加快。
+3. 选工具、定止损、选规则、定权重以及设定风险比例时，都要把成本纳入考虑。
+4. 对大资金，要小心真实执行成本；对小资金，要小心最小单位导致的仓位“颗粒化”。
+5. 最终应构建的是一个在你的成本结构和资本规模下，既能实现、又能存活、同时尽可能分散的系统。
+
+这就是第三部分的结尾。第四部分将进一步深入讨论如何定制这个框架，
+并通过三个详细示例来展开：
+半自动交易者、
+资产配置型投资者，
+以及坚定的系统化交易者。

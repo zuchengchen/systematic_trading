@@ -1,0 +1,807 @@
+\chapter{Staunch Systems Trader}
+\bichaptertitle{坚定的系统化交易者}
+
+THE LAST TWO CHAPTERS HAVE BEEN FOR THOSE WHO DON'T really believe that simple trading rules work, but are happy to use the systematic framework. However this chapter is for the staunch systems trader who wants to use both the framework and multiple systematic trading rules for predicting asset prices.
+
+前两章主要写给那些并不真正相信简单交易规则有效、但仍然愿意使用系统化框架的人。而本章则是写给坚定的系统化交易者的，
+他们既想使用这个框架，也想使用多条系统化交易规则来预测资产价格。
+
+\section*{Chapter overview}
+\phantomsection
+\addcontentsline{toc}{section}{Chapter overview}
+\bisectiontitle{本章概览}
+
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
+\textbf{Who are you?} & Introducing the staunch systems trader. \\
+\textbf{Using the framework} & How you will use the systematic trading rules and framework. \\
+\textbf{Daily process} & The daily process you need to follow to run your system. \\
+\textbf{Trading diary} & A diary showing how the example system traded the market in late 2014. \\
+\end{tabularx}
+
+\medskip
+
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
+\textbf{你是谁？} & 介绍“坚定的系统化交易者”这一类人。 \\
+\textbf{如何使用框架} & 说明你将如何使用系统化交易规则与整体框架。 \\
+\textbf{每日流程} & 运行这套系统时，你每天需要遵循的流程。 \\
+\textbf{交易日记} & 一份交易日记，展示示例系统在 2014 年末 是如何实际交易市场的。 \\
+\end{tabularx}
+
+\section*{Who are you?}
+\phantomsection
+\addcontentsline{toc}{section}{Who are you?}
+\bisectiontitle{你是谁？}
+
+The specific example in this chapter will cover futures trading, but in principle any leveraged instruments could be operated in a similar way. Trading futures is a complex task and I'm not covering a lot of the mechanics around practicalities like getting data, execution and optimal rolling.\footnote{Appendix A provides pointers to where you can find further help and advice, including the website for this book: \url{www.systematictrading.org}.\par 附录 A 给出了一些进一步帮助与建议的来源，包括本书网站：\url{www.systematictrading.org}。} I will assume that you have \$250,000 of initial trading capital. The example will focus on building a system suitable for part-time traders which trades daily and for which data can be obtained for free.
+
+本章的具体示例将以期货交易为核心，但原则上，任何带杠杆的工具都可以用类似方式来运行。期货交易本身是一项复杂工作，
+而我不会在这里详细展开许多实际操作层面的细节，例如如何获取数据、如何执行交易以及如何做最优换月。这里我会假设，你拥有 \$250,000 的初始交易资本。
+本示例将聚焦于构建一套适合兼职交易者的系统，它按日交易，而且数据可以免费获得。
+
+\section*{Using the framework}
+\phantomsection
+\addcontentsline{toc}{section}{Using the framework}
+\bisectiontitle{使用框架}
+
+\subsection*{Instrument choice: Size, diversification and costs}
+\bisubsectiontitle{品种选择：规模、分散化与成本}
+
+Unless you have many millions of dollars, choosing which futures to trade is mostly a balance between getting reasonable diversification and running into the issues with large minimum instrument block sizes discussed in chapter twelve, ‘Speed and Size'. These issues are common with an account of this size given that you can't trade less than one futures contract, and many contracts are quite large.\footnote{This issue was discussed in chapter twelve from ‘Trading with relatively little capital' on page 200 onwards.\par 这个问题已经在第十二章“速度与规模”中“以较少资本进行交易”一节
+（第 200 页起）讨论过。} You should also avoid instruments that are very expensive to trade and as always those with low volatility. In my opinion the set shown in table 42 is a good selection for this account size.\footnote{These instruments also have the advantage that long histories of daily prices can be obtained for free from the sources listed in appendix A, and live data is relatively cheap through most brokers.\par 这些品种还有一个额外优点：
+它们都可以通过附录 A 中列出的数据源免费获得较长的日度价格历史，而且通过大多数经纪商获取实时数据的成本也相对较低。} It is highly diversified since it contains one future from each major asset class.\footnote{In an ideal world I'd add a metal like gold, and an energy future like WTI Crude. However all the contracts in these asset classes have relatively large minimum sizes.\par 如果条件理想，
+我还会加入像黄金这样的金属期货，以及像 WTI 原油这样的能源期货。不过，这些资产类别中的合约最小交易单位都相对较大。} You wouldn't have any maximum positions of less than the four contracts threshold suggested in chapter twelve, although Euro Stoxx is close. It might seem strange that a US investor would prefer the European stock market (Euro Stoxx) and equity volatility index (V2TX), but these are the only liquid futures in these categories where you can avoid maximum positions that are too small.
+
+除非你拥有数百万美元以上的资本，否则，选择交易哪些期货，本质上就是在两件事之间求平衡：一方面要获得足够合理的分散化，
+另一方面又要避免第十二章“速度与规模”里讨论过的、大额最小品种单位带来的问题。对于这种规模的账户而言，这些问题很常见，
+因为你不可能交易少于一份期货合约，而很多合约本身又相当大。你还应当避开那些交易成本非常高的品种，以及一如既往地避开那些波动率特别低的工具。
+在我看来，表 42 中给出的那组品种，对于这样的账户规模来说是一个不错的选择。它的分散化程度很高，因为其中每个主要资产类别都包含了一个代表性期货品种。
+在这个组合里，你不会碰到任何最大可能仓位低于第十二章建议的“四份合约门槛”的品种，虽然 Euro Stoxx 已经比较接近这个边界了。
+一个美国投资者偏好欧洲股市
+（Euro Stoxx）和欧洲股票波动率指数
+（V2TX）看起来可能有些奇怪，但在这些类别中，它们是唯一流动性足够好、同时又能避免最大仓位过小问题的期货工具。
+
+\rawtablecaption{WHAT INSTRUMENTS SHOULD YOU USE FOR THE STAUNCH SYSTEMS TRADER EXAMPLE?\\坚定的系统化交易者示例应使用哪些品种？}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.16\textwidth}Y@{}}
+\toprule
+\textbf{Instrument} & \textbf{Standard cost SR} & \textbf{Currency} & \textbf{Maximum position} \\
+\midrule
+Eurodollar & 0.008 & USD & 8 \\
+US 5 year note & 0.004 & USD & 5 \\
+Euro Stoxx & 0.002 & EUR & 4 \\
+V2TX & 0.009 & EUR & 11 \\
+MXP/USD & 0.007 & USD & 15 \\
+Corn & 0.005 & USD & 9 \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.16\textwidth}Y@{}}
+\toprule
+\textbf{品种} & \textbf{标准化成本 SR} & \textbf{货币} & \textbf{最大可能仓位} \\
+\midrule
+Eurodollar & 0.008 & USD & 8 \\
+美国 5 年期国债 & 0.004 & USD & 5 \\
+Euro Stoxx & 0.002 & EUR & 4 \\
+V2TX & 0.009 & EUR & 11 \\
+MXP/USD & 0.007 & USD & 15 \\
+玉米 & 0.005 & USD & 9 \\
+\bottomrule
+\end{tabularx}
+}
+
+The table shows my selected instruments (rows), standardised costs (using the method in chapter twelve), traded currency and maximum possible positions (calculated with a forecast of +20 using the formula on page 201).
+
+这张表展示了我所选择的品种
+（行）、它们的标准化成本
+（使用第十二章中的方法计算）、交易货币以及最大可能仓位
+（在预测值为 +20 的情况下，使用第 201 页公式算出）。
+
+As well as the maximum expected position, the volatility standardised costs and currency for each future are also shown in table 42.\footnote{Costs are based on average price volatility and bid-offer spreads during 2014. Maximum position depends on the current level of price volatility and is correct as of December 2014.\par 成本数据基于 2014 年期间的平均价格波动率和买卖价差。
+最大仓位取决于当前价格波动率水平，其数值对应 2014 年 12 月。} All of these instruments have costs that are less than the maximum of 0.01 Sharpe ratio units which I recommended for staunch systems traders in chapter twelve, ‘Speed and Size'. In chapter six, ‘Instruments', I said you should also consider skew and volatility when choosing instruments. With a short position the European equity volatility index future (V2TX) is a markedly negative skew instrument (as discussed in the skew concept box, page 32), but as you'll see later you'll only allocate 10\% of your portfolio to it. None of the instruments have especially low volatility as I write this chapter, as long as you avoid trading the closest Eurodollar delivery months (where volatility is very low due to zero interest rate policies). For this reason I recommend trading Eurodollar around three years out; much beyond that and the liquidity starts to drop off.
+
+除了最大预期仓位之外，表 42 还列出了每个期货的波动率标准化成本和计价货币。所有这些品种的成本都低于我在第十二章“速度与规模”中为坚定系统化交易者建议的上限，
+也就是 0.01 个夏普比率单位。在第六章“品种”中我说过，选择品种时你还应考虑偏度和波动率。欧洲股票波动率指数期货
+（V2TX）在做空时是一个明显的负偏度工具
+（见第 32 页偏度概念框），但正如你后面会看到的，你最终只会把投资组合中的 10\% 分配给它。
+在我写这一章的时候，这些品种里没有哪一个的波动率特别低，只要你避免交易最近月的 Eurodollar 合约
+（在零利率政策下，这些近月合约的波动率会非常低）。因此，我建议交易大约三年后的 Eurodollar 合约；再往后走，流动性就会明显下降。
+
+\subsection*{Selecting trading rules}
+\bisubsectiontitle{选择交易规则}
+
+You will use both of the trading rules introduced in chapter six: the trend following EWMAC rule and the carry rule. Your trend following rules and measures of price volatility will be based on a series of stitched futures prices using the ‘Panama method'.\footnote{Very briefly, the Panama method involves first taking the price series of the currently traded future. You then take the price series of the future you traded before the last roll. The prices of the previous future are shifted up or down in parallel, until the adjusted price of the previous future aligns with the actual price of the current future on the day when you would have rolled from one contract to the next. You then repeat this for all the futures contracts you could have traded in the past. Other methods of stitching are also available, and as long as they do not leave a discontinuous jump in the price when a roll occurs, they will give roughly similar results. There's much more detail about stitching methods available on my blog, which can be accessed from the book's website (\url{www.systematictrading.org}).\par 简单来说，Panama 方法首先取当前正在交易的期货价格序列。
+然后，再取你上一次换月之前所交易合约的价格序列。你需要把前一份合约的价格整体平移，
+直到在你本应从一份合约滚动到下一份合约的那一天，
+调整后的前一份合约价格与当前合约的真实价格对齐。
+接着，对你过去所有可能交易过的期货合约都重复这一过程。
+当然，也存在其他拼接方法；只要它们不会在换月时留下不连续的价格跳跃，
+通常得到的结果都大体相似。关于拼接方法的更多细节，
+可以在我的博客上找到，入口在本书网站
+（\url{www.systematictrading.org}）。} For carry, as appendix B explains, the optimal calculation requires that you're not trading the nearest contract, but one further in the future. This is achievable for volatility (V2TX), Eurodollar and corn.\footnote{I trade three years out in Eurodollar. For V2X I trade the second contract. For corn I always trade the December contract to avoid different seasonal effects influencing the price, and I usually roll to the following year by summer. There's a much longer discussion about optimal rolling available on my blog.\par 我在 Eurodollar 上会交易大约三年后的合约。
+对于 V2X，我交易第二近月合约。对于玉米，我总是交易 12 月合约，
+以避免不同季节性因素对价格的影响，而且我通常会在夏天左右换到下一年度合约。
+关于最优换月问题，我在博客中有更长篇幅的讨论。} However for the bond, equity and FX future you'll need to trade the nearest futures contract, as the subsequent deliveries aren't liquid enough. In table 43 I've shown the back-tested turnover in round trips per year for the trading rule variations you'll be using. You can also see the maximum standardised cost at which you could use each rule, if you stick to my recommended speed limit from chapter twelve of spending no more than 0.13 Sharpe ratio (SR) units on costs each year. Only the very cheapest futures instruments can use the fastest EWMAC variations. I strongly recommend that you use at least three of the EWMAC variations for trend following, as there is insufficient evidence to say that one or two of these variations would be better than the others. So the slowest portfolio you can construct will contain the carry rule and the three slower variations of EWMAC (fast look-backs of 16, 32 and 64).
+
+你将会使用第六章中介绍过的两条交易规则：趋势跟踪型 EWMAC 规则，以及 carry 规则。你的趋势跟踪规则与价格波动率度量，
+将建立在使用 “Panama method” 拼接出来的一串连续期货价格序列之上。至于 carry，正如附录 B 所解释的那样，最优计算方法要求你交易的不是最近月合约，
+而是更远月的一份合约。对于波动率期货
+（V2TX）、Eurodollar 和玉米，这都可以做到。不过，对债券、股票和外汇期货来说，
+你就必须交易最近月合约，因为更远月合约的流动性不够。在表 43 中，我列出了你将要使用的各个交易规则变体在回测中的换手率，
+也就是每年的 round trips。你还可以看到：如果你遵守我在第十二章中建议的“速度上限”
+--- 每年在成本上最多花费 0.13 个夏普比率单位
+--- 那么每条规则所能承受的最大标准化成本是多少。只有最便宜的期货品种，才适合使用最快的 EWMAC 变体。
+我强烈建议你至少使用三个 EWMAC 趋势跟踪变体，因为目前没有足够证据能表明：只选一两个变体会比其他变体更好。
+因此，你能构建出的最慢的组合，也应当包含 carry 规则，以及 EWMAC 中较慢的三个变体
+（快回看窗口分别为 16、32 和 64）。
+
+\rawtablecaption{CAN YOU USE ALL OF THE TRADING RULE VARIATIONS FOR EVERY INSTRUMENT? ONLY CHEAP INSTRUMENTS CAN TRADE VERY QUICK RULES\\每个品种都能使用所有交易规则变体吗？只有便宜的品种才能交易非常快的规则}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.20\textwidth}Y@{}}
+\toprule
+\textbf{Trading rule variation} & \textbf{Raw turnover} & \textbf{Maximum standardised cost} \\
+\midrule
+EWMAC 2,8 & 54 & 0.0024 \\
+EWMAC 4,16 & 28 & 0.0046 \\
+EWMAC 8,32 & 16 & 0.0081 \\
+EWMAC 16,64 & 11 & 0.012 \\
+EWMAC 32,128 & 8.5 & 0.015 \\
+EWMAC 64,256 & 7.5 & 0.017 \\
+Carry & 10 & 0.013 \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.20\textwidth}Y@{}}
+\toprule
+\textbf{交易规则变体} & \textbf{原始换手率} & \textbf{最大可接受标准化成本} \\
+\midrule
+EWMAC 2,8 & 54 & 0.0024 \\
+EWMAC 4,16 & 28 & 0.0046 \\
+EWMAC 8,32 & 16 & 0.0081 \\
+EWMAC 16,64 & 11 & 0.012 \\
+EWMAC 32,128 & 8.5 & 0.015 \\
+EWMAC 64,256 & 7.5 & 0.017 \\
+Carry & 10 & 0.013 \\
+\bottomrule
+\end{tabularx}
+}
+
+The table shows for each trading rule variation (rows) the turnover in round trips per year, and the maximum possible standardised cost to use the trading rule variation (assuming you stick to my recommended limit of spending no more than 0.13 Sharpe ratio units on costs).
+
+这张表展示的是：对每个交易规则变体
+（行）而言，其年换手率
+（以 round trips per year 计）以及能够使用该变体的最大标准化成本
+（前提是你遵守我建议的上限：每年花在成本上的支出不超过 0.13 个夏普比率单位）。
+
+Looking back at table 42 you could use the three slowest EWMAC variations for all of your instruments without having issues with costs. But EWMAC 2,8 would be limited to Euro Stoxx, EWMAC 4,16 to Euro Stoxx and the US 5 year note, and EWMAC 8,32 is too quick for the European volatility future (V2TX). For simplicity in this example chapter let's drop the fast variations and use the three slowest (EWMAC 16, 32 and 64), all of which are acceptable even with the most expensive instrument. Along with carry that makes a total of four trading rule variations.\footnote{Of course it would be equally valid to have different variations for the cheaper instruments, and this is the approach I use myself.\par 当然，对那些成本更低的品种，
+完全也可以使用不同的变体组合，而我自己实际上就是这么做的。}
+
+再看表 42，你会发现：对于所有这些品种而言，使用三个最慢的 EWMAC 变体都不会遇到成本问题。但 EWMAC 2,8 只能用于 Euro Stoxx；
+EWMAC 4,16 只能用于 Euro Stoxx 和美国 5 年期国债；而 EWMAC 8,32 对欧洲波动率期货
+（V2TX）来说又太快了。为了让这个示例章节保持简单，我们就把较快的变体全部去掉，只使用三个最慢的变体
+（EWMAC 16、32 和 64），因为即便对于最贵的品种，它们也仍然是可接受的。再加上 carry 规则，这样总共就有四个交易规则变体。
+
+\subsection*{Forecast weights and trading speed}
+\bisubsectiontitle{预测权重与交易速度}
+
+Now you need to blend your trading rule forecasts into a combined forecast, as in chapter eight. I'll show you how to determine the necessary forecast weights using the handcrafting method that I explained in chapter four, although you could also use the bootstrapping procedure. To use the handcrafting method I'll need correlations and some way of grouping the trading rule variations. Table 44 shows I first group variations
+
+现在，你需要像第八章中那样，把这些交易规则的预测值融合成一个合成预测值。接下来我会展示，如何使用第四章中解释过的手工构造方法来确定必要的预测权重，
+当然你也可以选择使用 bootstrapping 流程。若要使用手工构造法，我需要相关性以及一种对交易规则变体进行分组的方法。表 44 展示了我的做法：我先把变体
+
+within the same rule and then across rules. I'll use rule of thumb correlations as shown in table 45, which have come from appendix B.
+
+在同一条规则内部进行分组，然后再在不同规则之间进行分组。这里我将使用经验法则相关性，其数值如表 45 所示，并来自附录 B。
+
+\rawtablecaption{GROUPING FOR TRADING RULE VARIATIONS\\交易规则变体的分组方式}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.34\textwidth}p{0.24\textwidth}Y@{}}
+\toprule
+\textbf{Rule and variation} & \textbf{1st level} & \textbf{2nd level} \\
+\midrule
+EWMAC 16,64 &  &  \\
+EWMAC 32,128 & EWMAC & Across rules \\
+EWMAC 64,256 &  &  \\
+Carry & Carry rule & Across rules \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.34\textwidth}p{0.24\textwidth}Y@{}}
+\toprule
+\textbf{规则与变体} & \textbf{第一层分组} & \textbf{第二层分组} \\
+\midrule
+EWMAC 16,64 &  &  \\
+EWMAC 32,128 & EWMAC & 跨规则分组 \\
+EWMAC 64,256 &  &  \\
+Carry & Carry 规则 & 跨规则分组 \\
+\bottomrule
+\end{tabularx}
+}
+
+In line with the advice in chapter twelve, ‘Speed and Size’, I will assume all variations have the same pre-cost Sharpe ratio (SR), since consistent evidence of statistical outperformance by one rule or another is difficult to find. This implies that instruments with different costs, and so varying after-cost SR, would have different forecast weights once I'd adjusted the original handcrafted weights.
+
+按照第十二章“速度与规模”中的建议，我在这里会假设所有变体都拥有相同的成本前夏普比率
+（SR），因为很难找到足够一致、足够可靠的证据来证明某一条规则在统计意义上长期优于另一条规则。
+这意味着：一旦你对原始手工权重做了成本修正，那么不同成本水平的品种，也就会拥有不同的预测权重，因为它们的成本后 SR 会不同。
+
+But for brevity I've calculated a single set of weights using the cost of the most expensive instrument -- V2TX futures. The turnover in round trips per year of each trading rule and the resulting annual cost in SR units using the V2X standardised cost of 0.009 SR units is shown in table 45. Since the largest difference in costs is only 0.031 SR units, the resulting SR adjustments will be extremely small and I haven't made any Sharpe ratio adjustments in this example.
+
+不过，为了简洁起见，我只使用最昂贵的那个品种
+--- V2TX 期货
+--- 的成本，来计算出一组统一权重。表 45 展示了：每条交易规则每年的 round trips 换手率，以及在使用 V2X 的标准化成本
+0.009 个 SR 单位时，对应的年度成本
+（以 SR 单位表示）。由于最大成本差异也只有 0.031 个 SR 单位，因此最终对 SR 的调整会极其微小，
+在这个例子中我就不再专门做夏普比率调整了。
+
+\rawtablecaption{WHAT IS THE EXPECTED ANNUAL COST FOR EACH TRADING RULE?\\每条交易规则的预期年度成本是多少？}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.18\textwidth}p{0.22\textwidth}Y@{}}
+\toprule
+\textbf{Trading rule variation} & \textbf{Turnover} & \textbf{Annual cost, SR units} & \textbf{Forecast weight} \\
+\midrule
+EWMAC 16,64 & 11 & 0.099 & 21\% \\
+EWMAC 32,128 & 8.5 & 0.077 & 8\% \\
+EWMAC 64,256 & 7.5 & 0.068 & 21\% \\
+Carry & 10 & 0.09 & 50\% \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.18\textwidth}p{0.22\textwidth}Y@{}}
+\toprule
+\textbf{交易规则变体} & \textbf{换手率} & \textbf{年度成本，SR 单位} & \textbf{预测权重} \\
+\midrule
+EWMAC 16,64 & 11 & 0.099 & 21\% \\
+EWMAC 32,128 & 8.5 & 0.077 & 8\% \\
+EWMAC 64,256 & 7.5 & 0.068 & 21\% \\
+Carry & 10 & 0.09 & 50\% \\
+\bottomrule
+\end{tabularx}
+}
+
+The table shows for each trading rule variation (rows) the turnover in round trips per year, and resulting annual costs in Sharpe ratio (SR) units for most expensive instrument V2TX (European volatility futures) with standardised cost of 0.009 SR per round trip. It also shows the handcrafted forecast weights.
+
+这张表展示的是：对每个交易规则变体
+（行）而言，其每年的 round trips 换手率，以及在最昂贵品种 V2TX
+（欧洲波动率期货）上、假设标准化成本为每次 round trip 0.009 个 SR 时，对应的年度成本。同时表中也给出了手工构造的预测权重。
+
+This set of rules is identical to those I looked at in chapter eight, in the section from page 126 onwards. This means you can use the forecast weights and forecast diversification multiplier that I'd already worked out in that earlier chapter. To save you referring back I've repeated the weights in table 45 and the multiplier is 1.31. Notice again that the EWMAC 32 variation has a lower weight because it is more highly correlated with the 16 and 64 variations, than they are with each other.
+
+这组规则与我在第八章
+（第 126 页起）所讨论的那组规则是完全相同的。这意味着，你可以直接使用我在那一章已经算出来的预测权重和预测分散化乘数。
+为了避免你来回翻页，我在表 45 中重复给出了这些权重，而对应的乘数是 1.31。你再次会看到，EWMAC 32 这个变体的权重更低，
+因为它与 16 和 64 两个变体之间的相关性，比后两者彼此之间的相关性还要更高。
+
+\subsection*{Volatility target calculation}
+\bisubsectiontitle{波动率目标的计算}
+
+With predetermined trading capital of \$250,000 you need to determine how much of that you are willing to put at risk; your percentage volatility target. As I said in chapter nine, ‘Volatility targeting', this is a matter of determining your achievable performance, inferring from that a safe level of risk to take, and checking you are comfortable with the likely levels of losses. You'll be running a reasonably diversified system, with two trading rules drawn from different styles, and six instruments from different asset classes. When I back-tested this system using out of sample bootstrapping to ensure a conservative result, I got a Sharpe ratio (SR) after costs of 0.53. Using table 14 (page 90) suggests that about 75\% of this is achievable, for an SR of 0.40. There is a mixture of positive and negative skew trading rules and 90\% of the portfolio is in relatively benign assets, with only 10\% in the potentially negative skew V2TX volatility future. I'm happy to assume this is a slightly positive zero skew system, which the backtest confirms. From the achievable Sharpe ratio 0.4 row, column A, of table 25 (page 147), you would get a 20\% volatility target and hence an annualised cash volatility target of \$250,000 × 0.20 = \$50,000. This is slightly lower than the level I run my own system at; I assume you're also comfortable with the potential pain of a 20\% target, and with leveraged futures achieving the risk won't be an issue. With this relatively high volatility target you'll be checking your account value, and adjusting your risk, every day.
+
+在交易资本固定为 \$250,000 的前提下，你需要决定自己愿意拿其中多少去承担风险，也就是确定百分比波动率目标。正如我在第九章“波动率目标设定”中所说，
+这本质上是一个三步过程：先判断系统能够实现怎样的表现，再据此推导一个安全可接受的风险水平，最后确认你自己是否能承受这种风险下可能出现的亏损。
+你将运行的是一套分散化程度相当不错的系统，它包含两条来自不同风格的交易规则，以及六个来自不同资产类别的品种。
+当我用样本外 bootstrapping 对这套系统进行回测，以确保结果足够保守时，得到的成本后夏普比率
+（SR）是 0.53。根据表 14
+（第 90 页）的经验比例，大约只有其中 75\% 是现实可实现的，因此对应的现实 SR 大约是 0.40。
+这套系统混合了正偏度和负偏度规则，而且投资组合中有 90\% 分配在相对温和的资产上，只有 10\% 分配在可能带有负偏度的 V2TX 波动率期货上。
+因此，我愿意把它视为一套轻微正偏度、近似零偏度的系统，而回测结果也支持这一点。根据第 147 页表 25 中可实现夏普比率 0.4 这一行的 A 列，
+对应的波动率目标应为 20\%。于是，年化现金波动率目标就是 \$250,000 × 0.20 = \$50,000。
+这比我自己系统所运行的水平略低一点；我这里假设，你也能接受 20\% 波动率目标可能带来的痛苦，而且由于使用的是带杠杆的期货，
+实现这一风险水平并不会有实际障碍。采用这样一个相对较高的波动率目标时，你就需要每天检查账户价值，并相应调整风险。
+
+\subsection*{Position sizing and measuring price volatility}
+\bisubsectiontitle{仓位规模设定与价格波动率测量}
+
+Now you need to come up with a method for position sizing, which means calculating the instrument value volatility. This in turn depends on the value of each instrument block in USD (to match your hypothetical account), for which you need exchange rates, an estimate of price volatility and the block value, all of which were discussed in chapter ten, ‘Position sizing'. Currencies for each instrument are shown in table 42 and you'll update FX rates daily. You will be using a moving average of recent daily returns to find the price volatility of each instrument. However we need to determine what look-back to use for your moving averages.
+
+接下来，你需要确定一种仓位规模设定方法，这意味着你必须计算每个品种的价值波动率。反过来，这又取决于每个品种单位
+（instrument block）用美元表示的价值
+（以匹配你的假设账户），而要做到这一点，你就需要汇率、价格波动率估计以及单位价值，这些内容都已在第十章“仓位规模设定”中讨论过了。
+每个品种使用的计价货币都列在表 42 中，而你需要每天更新汇率。你将使用近期日收益的移动平均，来估计每个品种的价格波动率。
+不过，我们还需要进一步决定：这些移动平均到底应使用多长的回看窗口。
+
+As I discussed in chapter twelve, ‘Speed and Size', we need to compare the cost of the default look-back of five weeks versus a slower look-back. I'll do this conservatively using the costs of your most expensive instrument, the European volatility index future V2TX. Let's refer back to table 36 (page 197) in chapter twelve. First of all I need to find the turnover of your trading rules. With your portfolio of the carry rule and three EWMAC variations, and the relevant forecast weights from table 45, the weighted average turnover comes in at around 9.57 round trips per year.\footnote{Weights are 50\% to carry, 21\% to EWMAC16, 8\% to EWMAC 32, and 21\% to EWMAC 64. With trading rule turnovers from table 43 we get a weighted average of ([0.5 × 10] + [0.21 × 11] + [0.08 × 8.5] + [0.21 × 7.5]) = 9.57.\par 权重分别是：Carry 占 50\%，EWMAC16 占 21\%，EWMAC32 占 8\%，EWMAC64 占 21\%。
+结合表 43 中各规则的换手率，可得到加权平均值
+([0.5 × 10] + [0.21 × 11] + [0.08 × 8.5] + [0.21 × 7.5]) = 9.57。} Once I've multiplied this by the forecast diversification multiplier (1.31) the turnover of your combined forecast will be 9.57 × 1.31 = 12.5. From the relevant row in table 36, the final turnover will be 12.6 using the recommended default look-back of five weeks (or equivalent for exponentially weighted moving average), or 11.7 with a look-back of 20 weeks. Using the most expensive instrument (VT2X) with standardised costs of 0.009 Sharpe ratio (SR) units, the costs will be 12.6 × 0.009 = 0.113 SR units per year with the default look-back and 11.7 × 0.009 = 0.105 SR with the slower one. It isn't worth slowing down the estimation of price volatility for a saving of 0.008 SR in costs, so I recommend you stick to the default look-back of 25 days. Also I suggest using an exponentially weighted moving average (EWMA) of daily squared returns, for which a look-back of 36 business days is the equivalent of 25 days. With your 20\% volatility target a cost level of 0.113 SR equates to an annual performance drag of 20\% × 0.113 = 2.3\% on V2TX, and less on the cheaper instruments. There will also be a small additional cost for rolling open futures positions into new delivery months. It's also worth noting that 0.113 SR comes in safely under the maximum speed limit that I recommended in chapter twelve of 0.13 SR spent on costs each year.
+
+正如我在第十二章“速度与规模”中讨论过的，我们需要比较默认五周回看窗口与更慢回看窗口之间的成本差异。这里我会采用保守方法，
+直接使用你最昂贵的那个品种，也就是欧洲波动率指数期货 V2TX 的成本来做判断。我们回到第十二章表 36
+（第 197 页）。首先，我需要算出你这些交易规则的换手率。在你这个由 carry 规则和三个 EWMAC 变体组成的组合中，
+结合表 45 里的预测权重，得到的加权平均换手率大约是每年 9.57 个 round trips。再把它乘以预测分散化乘数
+（1.31）之后，你的合成预测换手率就会变成 9.57 × 1.31 = 12.5。
+根据表 36 中对应的那一行，如果你使用推荐的默认回看窗口五周
+（或其对应的 EWMA 版本），最终换手率大约是 12.6；而如果你把回看窗口放慢到 20 周，则会降到 11.7。
+以最贵的品种
+（V2TX）为例，其标准化成本是 0.009 个夏普比率
+（SR）单位，因此默认回看窗口对应的年度成本为 12.6 × 0.009 = 0.113 SR，
+而更慢的窗口则是 11.7 × 0.009 = 0.105 SR。为了仅仅节省 0.008 个 SR 成本，而故意放慢价格波动率估计速度，并不值得，
+因此我建议你坚持使用默认的 25 天回看窗口。同时，我还建议你使用日度平方收益的指数加权移动平均
+（EWMA）；对于它而言，36 个交易日的回看期大致等价于 25 天简单窗口。以你 20\% 的波动率目标来看，0.113 SR 的成本水平，
+意味着在 V2TX 上的年化表现拖累约为 20\% × 0.113 = 2.3\%，而在更便宜的品种上，这个拖累还会更低。此外，
+在把持有中的期货头寸滚动到新的交割月份时，还会有一点额外的小成本。也值得指出的是，0.113 SR 明显低于我在第十二章中建议的最大速度上限，
+也就是每年在成本上花费不超过 0.13 个 SR。
+
+\subsection*{Portfolio of trading subsystems}
+\bisubsectiontitle{交易子系统投资组合}
+
+You've now got a set of six trading subsystems, one for each instrument, which you need to put together into a portfolio by setting instrument weights as I discussed in chapter eleven. Again this is a job for handcrafting, so we need to think about how to group instruments. The correlation matrix of subsystem returns in table 46 implies some obvious groupings, which I've put into table 47. Additionally you are constrained by the minimum contract size problems which I discussed in chapter twelve, ‘Speed and Size'. In particular the Euro Stoxx future needs to have an instrument weight of at least 20\%. Less than this and even with the maximum possible position, at a combined forecast of 20, you wouldn't get the minimum of four instrument blocks that I recommended in chapter twelve.
+
+现在，你已经拥有了六个交易子系统，每个品种一个。接下来，你需要像第十一章中讨论过的那样，通过设定品种权重，把它们组装成一个投资组合。
+这又是一项适合用手工构造法来完成的工作，因此我们需要考虑如何对品种进行分组。表 46 中子系统收益的相关矩阵，已经暗示了一些明显的分组方式，
+我把它们列在了表 47 中。另外，你还受制于第十二章“速度与规模”中提到的最小合约规模问题。特别是，Euro Stoxx 期货的品种权重必须至少达到 20\%。
+如果低于这个水平，那么即便在合成预测值达到 20、且仓位已经放大到最大可能水平时，你也无法达到我在第十二章中建议的“至少四个品种单位”的门槛。
+
+To avoid distorting the instrument weights too much, I propose putting 30\% of the portfolio into the equities top level group, rather than the 25\% that handcrafting would otherwise suggest. I then suggest that you put two-thirds of that 30\% into Euro Stoxx, which gets it to the minimum 20\%. The remaining 10\% can go into VT2X equity volatility index futures. I'm comfortable with this adjustment, since the alternative is not to trade equities at all, but a larger shift in weights would concern me.
+
+为了不让品种权重被扭曲得太厉害，我建议把投资组合中的 30\% 分配给股票这一顶层分组，而不是采用手工构造法本来会给出的 25\%。
+然后，我建议你把这 30\% 中的三分之二分配给 Euro Stoxx，这样它的最终权重就正好达到所需的最低 20\%。剩余的 10\% 则可以分配给 V2TX 股票波动率指数期货。
+我对这种调整是可以接受的，因为不这么做的替代方案，就是根本不交易股票；不过，如果权重调整得再更激烈一些，我就会开始感到担心了。
+
+\rawtablecaption{WHAT ARE THE CORRELATIONS OF THE TRADING SUBSYSTEMS IN THIS EXAMPLE?\\这个示例中各交易子系统之间的相关性是多少？}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & Euro\$ & T-note & Estxx & V2X & MXP & Corn \\
+\midrule
+Eurodollar & 1 &  &  &  &  &  \\
+US T-note & 0.35 & 1 &  &  &  &  \\
+Euro Stoxx & 0.07 & 0.07 & 1 &  &  &  \\
+V2X & 0.07 & 0.07 & 0.42 & 1 &  &  \\
+MXP/USD & 0.07 & 0.07 & 0.07 & 0.14 & 1 &  \\
+Corn & 0.07 & 0.07 & 0.07 & 0.07 & 0.18 & 1 \\
+\bottomrule
+\end{tabular}%
+}
+\endgroup
+
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & Euro\$ & T-note & Estxx & V2X & MXP & Corn \\
+\midrule
+Eurodollar & 1 &  &  &  &  &  \\
+美国国债 & 0.35 & 1 &  &  &  &  \\
+Euro Stoxx & 0.07 & 0.07 & 1 &  &  &  \\
+V2X & 0.07 & 0.07 & 0.42 & 1 &  &  \\
+MXP/USD & 0.07 & 0.07 & 0.07 & 0.14 & 1 &  \\
+玉米 & 0.07 & 0.07 & 0.07 & 0.07 & 0.18 & 1 \\
+\bottomrule
+\end{tabular}%
+}
+\endgroup
+
+The table shows the correlation of trading subsystem returns in the example system. These are derived from instrument returns correlations in table 49 in appendix C, which were then multiplied by 0.7 because we have a dynamic trading system (as recommended in chapter 11).
+
+这张表展示的是这个示例系统中各交易子系统收益之间的相关性。这些相关性来自附录 C 表 49 中的品种收益相关性，
+随后因为我们运行的是动态交易系统
+（正如第十一章所建议的那样），所以又乘以了 0.7。
+
+\rawtablecaption{HOW DO WE GROUP FUTURES CONTRACTS FOR HANDCRAFTING INSTRUMENT WEIGHTS?\\我们该如何对期货合约分组，以手工构造品种权重？}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.24\textwidth}Y@{}}
+\toprule
+\textbf{Asset group} & \textbf{Asset class} & \textbf{Name of future} \\
+\midrule
+Interest rates & STIR & Eurodollar \\
+Interest rates & Bonds & 5 year T-note \\
+Equities & Equity indices & Euro Stoxx \\
+Equities & Volatility & V2X \\
+Foreign exchange &  & MXP/USD \\
+Commodities & Agricultural & Corn \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.24\textwidth}Y@{}}
+\toprule
+\textbf{资产分组} & \textbf{资产类别} & \textbf{期货名称} \\
+\midrule
+利率 & STIR & Eurodollar \\
+利率 & 债券 & 5 年期美国国债 \\
+股票 & 股票指数 & Euro Stoxx \\
+股票 & 波动率 & V2X \\
+外汇 &  & MXP/USD \\
+商品 & 农产品 & 玉米 \\
+\bottomrule
+\end{tabularx}
+}
+
+The table shows the grouping of instruments in the staunch systems trader example. STIR = short term interest rate futures.
+
+这张表展示的是坚定系统化交易者示例中各品种的分组方式。STIR = 短期利率期货。
+
+The handcrafting allocation process is shown below. Row numbers refer to table 8 (page 79). As I recommended in chapter twelve, I haven't adjusted these weights for different instrument costs, since there is no evidence that post-cost returns vary between instruments.
+
+下面展示的是手工构造配置过程。这里提到的行号对应的是表 8
+（第 79 页）。正如我在第十二章中建议的那样，我并没有根据不同品种的成本来调整这些权重，
+因为并没有证据表明不同品种在扣除成本后的收益会系统性不同。
+
+\noindent{\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}Y@{}}
+\textbf{First level grouping}\par Within asset groups &
+Interest rates: 50\% to US 5 year T-note, 50\% to Eurodollar. Row 2.\par
+Equities: 66.6\% to Euro Stoxx (constrained), 33.3\% to V2X European volatility future.\par
+FX: 100\% to MXPUSD. Row 1.\par
+Commodities: 100\% to Corn. Row 1. \\
+\addlinespace[0.6em]
+\textbf{Top level grouping}\par Across asset groups &
+Inter-asset correlations are between 0.07 and 0.18, all of which round to zero. In the absence of constraints, row 4 would apply and we'd have equal weighting.\par
+However we need at least 30\% in the equities group as discussed above. This leaves 70\% shared between three remaining groups, or with equal weighting 23.3\% each. \\
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}Y@{}}
+\textbf{第一层分组}\par 资产组内部 &
+利率：50\% 给美国 5 年期国债，50\% 给 Eurodollar。对应第 2 行。\par
+股票：66.6\% 给 Euro Stoxx
+（受约束），33.3\% 给欧洲波动率期货 V2X。\par
+外汇：100\% 给 MXPUSD。对应第 1 行。\par
+商品：100\% 给玉米。对应第 1 行。 \\
+\addlinespace[0.6em]
+\textbf{顶层分组}\par 资产组之间 &
+不同资产组之间的相关性介于 0.07 到 0.18 之间，四舍五入之后都接近于零。在没有约束的情况下，应采用第 4 行，也就是等权配置。\par
+不过，正如前面讨论的那样，我们需要让股票组至少占到 30\%。这样一来，剩下的 70\% 就由其余三个组来分享，平均下来每组 23.3\%。 \\
+\end{tabularx}
+}
+
+You can see the final weights in table 48. Using the weights, the correlations in table 46 and the formula on page 297 I get an instrument diversification multiplier of 1.89.
+
+你可以在表 48 中看到最终权重。利用这些权重、表 46 中的相关性以及第 297 页上的公式，我算出的品种分散化乘数是 1.89。
+
+\rawtablecaption{WHAT ARE THE FINAL INSTRUMENT WEIGHTS?\\最终的品种权重是多少？}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.22\textwidth}p{0.20\textwidth}Y@{}}
+\toprule
+\textbf{Instrument} & \textbf{Within asset group} & \textbf{Across asset groups} & \textbf{Final weight} \\
+\midrule
+Eurodollar & 50\% & 23.3\% & 11.7\% \\
+US T-note & 50\% & 23.3\% & 11.7\% \\
+Euro Stoxx & 66.6\% & 30\% & 20\% \\
+V2X & 33.3\% & 30\% & 9.8\% \\
+MXPUSD & 100\% & 23.3\% & 23.3\% \\
+Corn & 100\% & 23.3\% & 23.3\% \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.22\textwidth}p{0.20\textwidth}Y@{}}
+\toprule
+\textbf{品种} & \textbf{资产组内权重} & \textbf{资产组间权重} & \textbf{最终权重} \\
+\midrule
+Eurodollar & 50\% & 23.3\% & 11.7\% \\
+美国国债 & 50\% & 23.3\% & 11.7\% \\
+Euro Stoxx & 66.6\% & 30\% & 20\% \\
+V2X & 33.3\% & 30\% & 9.8\% \\
+MXPUSD & 100\% & 23.3\% & 23.3\% \\
+玉米 & 100\% & 23.3\% & 23.3\% \\
+\bottomrule
+\end{tabularx}
+}
+
+This table shows handcrafted instrument weights for the staunch systems trader example. Numbers in bold have been adjusted because of Euro Stoxx minimum size issues.
+
+这张表展示的是坚定系统化交易者示例中手工构造的品种权重。加粗的数字之所以被调整，是因为 Euro Stoxx 存在最小交易单位限制问题。
+
+\section*{Daily process}
+\phantomsection
+\addcontentsline{toc}{section}{Daily process}
+\bisectiontitle{每日流程}
+
+This process can be done using spreadsheets, or entirely automated if desired. Detailed calculations are shown in the trading diary below.
+
+这一流程既可以用电子表格完成，也可以在需要时彻底自动化。下面的交易日记中会展示详细计算。
+
+\noindent{\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
+\textbf{Get account value} & Get today's account value to calculate trading capital. \\
+\textbf{Volatility target} & Annualised cash volatility target equals percentage volatility target multiplied by trading capital. In this example we're using a 20\% volatility target. Divide by 16 for daily cash volatility target.\footnotemark \\
+\textbf{Get latest prices} & Get prices for all instruments. \\
+\textbf{Get latest FX rates} & Update FX rates. Only USD/EUR is needed in this example. \\
+\textbf{Calculate price volatility} & Using a 35 day look-back exponentially weighted moving average volatility as in appendix D (page 298), work out the price volatility of each instrument. With the FX rates and block values convert this to instrument value volatility using the formulas in chapter ten. \\
+\textbf{Calculate forecasts} & Calculate forecasts for each trading rule variation and instrument. Apply the recommended cap of 20 to each forecast. \\
+\textbf{Combined forecast} & Using forecast weights (such as those in table 45), and the forecast diversification multiplier (1.31 in this example), calculate the combined forecast for each instrument. Apply the recommended cap of 20. \\
+\textbf{Volatility scalar} & Daily cash volatility target divided by instrument value volatility for each instrument. \\
+\textbf{Subsystem position} & For each instrument the combined forecast multiplied by volatility scalar, divided by 10. \\
+\textbf{Portfolio instrument position} & Subsystem position multiplied by instrument weight (as in table 48), and by the instrument diversification multiplier (1.89 in this example). \\
+\textbf{Rounded target position} & Portfolio instrument position rounded to the nearest instrument block position (whole futures contract). \\
+\textbf{Issue trades} & Compare current position to rounded target position. If out by more than 10\% then trade to get to target (position inertia). \\
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
+\textbf{获取账户净值} & 获取当天账户净值，以计算交易资本。 \\
+\textbf{波动率目标} & 年化现金波动率目标等于百分比波动率目标乘以交易资本。本例中我们使用 20\% 的波动率目标。再除以 16，就得到日现金波动率目标。\footnotemark \\
+\textbf{获取最新价格} & 获取所有品种的最新价格。 \\
+\textbf{获取最新汇率} & 更新汇率。本例中只需要 USD/EUR。 \\
+\textbf{计算价格波动率} & 使用 35 天回看期的指数加权移动平均波动率
+（见附录 D，第 298 页），算出每个品种的价格波动率。再结合汇率与单位价值，按照第十章中的公式把它转换为品种价值波动率。 \\
+\textbf{计算预测值} & 为每条交易规则变体和每个品种计算预测值。对每个预测值应用建议的 20 封顶。 \\
+\textbf{合成预测} & 使用预测权重
+（例如表 45 中所示）以及预测分散化乘数
+（本例中为 1.31），计算每个品种的合成预测值，并同样应用 20 的封顶。 \\
+\textbf{波动率缩放因子} & 对每个品种，用日现金波动率目标除以品种价值波动率。 \\
+\textbf{子系统仓位} & 对每个品种，用合成预测值乘以波动率缩放因子，再除以 10。 \\
+\textbf{投资组合品种仓位} & 用子系统仓位乘以品种权重
+（如表 48 所示），再乘以品种分散化乘数
+（本例中为 1.89）。 \\
+\textbf{四舍五入后的目标仓位} & 将投资组合品种仓位四舍五入到最接近的品种单位仓位
+（整份期货合约）。 \\
+\textbf{发出交易指令} & 比较当前仓位与四舍五入后的目标仓位。如果偏离超过 10\%，就交易到目标位置
+（仓位惯性）。 \\
+\end{tabularx}
+}
+
+\footnotetext{As usual to go from annual to daily volatility you divide by ‘the square root of time', assuming around 256 business days in a year this is 16.\par 和以往一样，从年化波动率换算到日波动率时，
+你需要除以“时间平方根”；若假设一年有大约 256 个交易日，这个值就是 16。}
+
+\section*{Trading diary}
+\phantomsection
+\addcontentsline{toc}{section}{Trading diary}
+\bisectiontitle{交易日记}
+
+This diary is very close to reality, since I run a very similar system to this, albeit with many more instruments and a few extra trading rules. Spreadsheets detailing all the calculations are available on the website for this book, \url{www.systematictrading.org}.
+
+这份日记与现实非常接近，因为我自己运行的系统与它非常类似，只不过我的系统包含更多品种和若干额外的交易规则。
+记录了全部计算细节的电子表格，可以在本书网站
+\url{www.systematictrading.org}
+上找到。
+
+\subsection*{15 October 2014}
+\bisubsectiontitle{2014 年 10 月 15 日}
+
+I've chosen today as the nominal starting date, to match the semi-automatic trader example earlier.
+
+我把这一天选作名义上的起始日期，以便与前面半自动交易者的例子保持一致。
+
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+Daily volatility target (A) & \$3,125 & \$3,125 & \$3,125 & \$3,125 & \$3,125 & \$3,125 \\
+Price (B) & 97.35 & 118.9 & 2760 & 18.9 & 0.0726 & 399 \\
+Each point is worth (C) & \$2,500 & \$1000 & €10 & €100 & \$500,000 & \$50 \\
+FX (D) & 1 & 1 & 1.1 & 1.1 & 1 & 1 \\
+Block value (E = C × B ÷ 100) & \$2433.8 & \$1189 & €276 & €18.9 & \$363 & \$199.5 \\
+Price volatility, \% (G) & 0.07 & 0.24 & 1.8 & 5.13 & 0.51 & 1.48 \\
+Instrument currency volatility (H = G × E) & \$170.4 & \$285.4 & €496.8 & €97.0 & \$185.1 & \$295.3 \\
+Instrument value volatility (I = H × D) & \$170.4 & \$285.4 & \$546.5 & \$106.7 & \$185.1 & \$295.3 \\
+Volatility scalar (J = A ÷ I) & 18.3 & 11.0 & 5.7 & 29.3 & 16.9 & 10.6 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+日波动率目标 (A) & \$3,125 & \$3,125 & \$3,125 & \$3,125 & \$3,125 & \$3,125 \\
+价格 (B) & 97.35 & 118.9 & 2760 & 18.9 & 0.0726 & 399 \\
+每一点价值 (C) & \$2,500 & \$1000 & €10 & €100 & \$500,000 & \$50 \\
+汇率 (D) & 1 & 1 & 1.1 & 1.1 & 1 & 1 \\
+单位价值 (E = C × B ÷ 100) & \$2433.8 & \$1189 & €276 & €18.9 & \$363 & \$199.5 \\
+价格波动率，\% (G) & 0.07 & 0.24 & 1.8 & 5.13 & 0.51 & 1.48 \\
+品种货币波动率 (H = G × E) & \$170.4 & \$285.4 & €496.8 & €97.0 & \$185.1 & \$295.3 \\
+品种价值波动率 (I = H × D) & \$170.4 & \$285.4 & \$546.5 & \$106.7 & \$185.1 & \$295.3 \\
+波动率缩放因子 (J = A ÷ I) & 18.3 & 11.0 & 5.7 & 29.3 & 16.9 & 10.6 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent\textit{I've kept the row identifiers the same in all three example chapters so that comparisons can easily be made. Row F has been omitted as you don't require volatility in points per day here.}
+
+\smallskip
+\noindent\textit{我在三个示例章节中都保留了相同的行标识，便于你直接进行比较。由于这里不需要“以点数表示的日波动率”，所以省略了 F 行。}
+
+\medskip
+
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+Combined forecast (K) & 15.8 & 20 & -2.1 & -11.7 & 2 & -11.6 \\
+Subsystem position, contracts (L = K × J ÷ 10) & 29.0 & 21.9 & -1.2 & -34.3 & 3.4 & -12.3 \\
+Instrument weight (M) & 11.7\% & 11.7\% & 20\% & 10\% & 23.3\% & 23.3\% \\
+Instrument diversification multiplier (N) & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 \\
+Portfolio instrument position, contracts (O = L × M × N) & 6.40 & 4.83 & -0.45 & -6.45 & 1.49 & -5.42 \\
+Rounded target position, contracts (P = round O) & 6 & 5 & 0 & -6 & 1 & -5 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+合成预测值 (K) & 15.8 & 20 & -2.1 & -11.7 & 2 & -11.6 \\
+子系统仓位，合约数 (L = K × J ÷ 10) & 29.0 & 21.9 & -1.2 & -34.3 & 3.4 & -12.3 \\
+品种权重 (M) & 11.7\% & 11.7\% & 20\% & 10\% & 23.3\% & 23.3\% \\
+品种分散化乘数 (N) & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 \\
+投资组合品种仓位，合约数 (O = L × M × N) & 6.40 & 4.83 & -0.45 & -6.45 & 1.49 & -5.42 \\
+四舍五入后的目标仓位，合约数 (P = round O) & 6 & 5 & 0 & -6 & 1 & -5 \\
+\bottomrule
+\end{tabularx}
+}
+
+Notable positions are a large long in US treasury notes, which had been rallying strongly for a month giving positive momentum, and also had a carry forecast of over 19. The V2X also had a substantial short carry forecast of -20, and although volatility spiked substantially over the last two weeks, the very slowest EWMAC rules were still short after the steady fall in implied volatility for most of 2014.
+
+值得注意的仓位包括：美国国债期货上有一个相当大的多头，因为它已经持续上涨了一个月，带来了明显的正动量，同时 carry 预测值也超过了 19。
+V2X 上同样有一个很显著的空头 carry 预测值
+（-20），而且尽管过去两周波动率大幅飙升，最慢的那组 EWMAC 规则在 2014 年大部分时间里由于隐含波动率持续下降，仍然维持空头判断。
+
+\subsection*{1 December 2014}
+\bisubsectiontitle{2014 年 12 月 1 日}
+
+Let's move forward to 1 December. The system has made cumulative profits of around \$10,000 so your trading capital is \$260,000 and annualised cash volatility target is \$52,000. There has now been a pronounced rally in the equity markets so we're now modestly long Euro Stoxx, with volatility easing and V2X falling in price. Interestingly the V2X forecast hasn't strengthened as much as you might expect, primarily because the carry forecast has weakened.
+
+现在我们把时间推进到 12 月 1 日。系统已经累计盈利约 \$10,000，因此你的交易资本变成了 \$260,000，年化现金波动率目标也随之变为 \$52,000。
+此时股票市场已经出现了一轮明显上涨，因此我们现在对 Euro Stoxx 持有一个适度多头；与此同时，波动率有所回落，V2X 价格也在下跌。
+有意思的是，V2X 的预测值并没有像你也许会想象的那样变得更强，主要是因为 carry 预测值变弱了。
+
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+Daily volatility target (A) & \$3,250 & \$3,250 & \$3,250 & \$3,250 & \$3,250 & \$3,250 \\
+Price (B) & 97.41 & 119.1 & 3170 & 17.9 & 0.0707 & 415 \\
+Each point is worth (C) & \$2,500 & \$1000 & €10 & €100 & \$500,000 & \$50 \\
+FX (D) & 1 & 1 & 1.1 & 1.1 & 1 & 1 \\
+Block value (E = C × B ÷ 100) & \$2435 & \$1191 & €317 & €17.9 & \$354 & \$208 \\
+Price volatility, \% (G) & 0.045 & 0.22 & 1.18 & 3.46 & 0.47 & 1.25 \\
+Instrument currency volatility (H = G × E) & \$110 & \$262 & €374 & €62 & \$166 & \$259 \\
+Instrument value volatility (I = H × D) & \$110 & \$262 & \$412 & \$68.1 & \$166 & \$259 \\
+Volatility scalar (J = A ÷ I) & 29.7 & 12.4 & 7.9 & 47.7 & 19.6 & 12.5 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+日波动率目标 (A) & \$3,250 & \$3,250 & \$3,250 & \$3,250 & \$3,250 & \$3,250 \\
+价格 (B) & 97.41 & 119.1 & 3170 & 17.9 & 0.0707 & 415 \\
+每一点价值 (C) & \$2,500 & \$1000 & €10 & €100 & \$500,000 & \$50 \\
+汇率 (D) & 1 & 1 & 1.1 & 1.1 & 1 & 1 \\
+单位价值 (E = C × B ÷ 100) & \$2435 & \$1191 & €317 & €17.9 & \$354 & \$208 \\
+价格波动率，\% (G) & 0.045 & 0.22 & 1.18 & 3.46 & 0.47 & 1.25 \\
+品种货币波动率 (H = G × E) & \$110 & \$262 & €374 & €62 & \$166 & \$259 \\
+品种价值波动率 (I = H × D) & \$110 & \$262 & \$412 & \$68.1 & \$166 & \$259 \\
+波动率缩放因子 (J = A ÷ I) & 29.7 & 12.4 & 7.9 & 47.7 & 19.6 & 12.5 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent\textit{I've kept the row identifiers the same in all three example chapters so that comparisons can easily be made. Row F has been omitted as you don't require volatility in points per day here.}
+
+\smallskip
+\noindent\textit{我在三个示例章节中都保留了相同的行标识，便于直接比较。由于这里不需要“以点数表示的日波动率”，因此仍然省略 F 行。}
+
+\medskip
+
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+Combined forecast (K) & 14.1 & 16.5 & 4.7 & -12.7 & -1.7 & -8.8 \\
+Subsystem position, contracts (L = K × J ÷ 10) & 41.8 & 20.5 & 3.7 & -60.6 & -3.3 & -11.0 \\
+Instrument weight (M) & 11.7\% & 11.7\% & 20\% & 10\% & 23.3\% & 23.3\% \\
+Instrument diversification multiplier (N) & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 \\
+Portfolio instrument position, contracts (O = L × M × N) & 9.2 & 4.5 & 1.4 & -11.46 & -1.47 & -4.9 \\
+Rounded target position, contracts (P = round O) & 9 & 5 & 1 & -11 & -1 & -5 \\
+\bottomrule
+\end{tabularx}
+}
+
+\smallskip
+\noindent{\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\toprule
+& Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
+\midrule
+合成预测值 (K) & 14.1 & 16.5 & 4.7 & -12.7 & -1.7 & -8.8 \\
+子系统仓位，合约数 (L = K × J ÷ 10) & 41.8 & 20.5 & 3.7 & -60.6 & -3.3 & -11.0 \\
+品种权重 (M) & 11.7\% & 11.7\% & 20\% & 10\% & 23.3\% & 23.3\% \\
+品种分散化乘数 (N) & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 & 1.89 \\
+投资组合品种仓位，合约数 (O = L × M × N) & 9.2 & 4.5 & 1.4 & -11.46 & -1.47 & -4.9 \\
+四舍五入后的目标仓位，合约数 (P = round O) & 9 & 5 & 1 & -11 & -1 & -5 \\
+\bottomrule
+\end{tabularx}
+}
+
+I'm not showing trades because there would have been trading almost every day between these two snapshot dates. We'll leave the staunch systematic portfolio there.
+
+我这里不再展示具体交易指令，因为在这两个快照日期之间，几乎每天都会发生交易。我们就把坚定系统化交易者的投资组合示例停在这里。

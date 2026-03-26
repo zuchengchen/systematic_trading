@@ -1,0 +1,219 @@
+\chapter{Portfolio Optimisation}
+
+\section*{More details on bootstrapping}
+\phantomsection
+\addcontentsline{toc}{section}{More details on bootstrapping}
+
+\subsection*{Bootstrapping 101}
+
+BRIEFLY, YOU SHOULD TAKE THE FOLLOWING STEPS, ASSUMING returns have already been volatility normalised and have the same expected standard deviation:164
+
+\begin{enumerate}
+  \item Choose a random subset of past returns (either from all history or a recent period depending on whether an expanding or rolling window is being used).
+  \item Calculate the correlation and average returns implied by that subset of returns.
+  \item Run your normal optimisation using the correlation and mean returns of the subset.
+  \item Record the resulting instrument weights.
+  \item Repeat step 1 a number of times.
+  \item For each asset take all the instrument weights from past optimisations and average them out.\footnote{I am assuming that all weights are constrained to add up to 100\%. If this isn't the case then some renormalisation would have to be done here.} In practice then there are a few options which you need to consider.
+\end{enumerate}
+
+\subsection*{How should you select return periods?}
+
+In the simple example in chapter four I drew individual daily returns at random; 30 August 2002 could easily have been followed by 1 February 2000 in a particular subset. This makes life easier and is usually a reasonable approximation to reality. But sometimes this arbitrary selection might not make sense. Poor returns in one asset might often
+
+be followed by good returns in another. This time series correlation will be lost unless adjacent days are kept together. In this case you need to do ‘block' bootstrapping. Each subset will consist of an appropriate number of consecutive returns. The only randomness is in the choice of the starting date for the block. The length of the block needs to be long enough to capture any time dependence.
+
+\subsection*{How long should each period be?}
+
+How many returns should be in each sample? A month of daily returns, a year or longer? Shorter periods mean that each optimisation will be more extreme. Their distribution will be wider and confidence intervals larger. With longer periods the results will be more sensible, but that doesn't mean the average will perform better. This subject has been examined in some depth by academic researchers. My own analysis suggests that there is a small benefit from using longer periods; perhaps a 0.05 Sharpe ratio improvement from using multiple years versus only a month, assuming a couple of decades' worth of data in total. A good rule of thumb is to use samples of returns equal in length to 10\% of the period of history available. So if you had 30 years of data then you should use three year-long samples for each optimisation.
+
+\subsection*{How many times to repeat?}
+
+Here the choice is clearer; more iterations always produces better results but with decreasing benefits. So there will be almost no value in doing 200 rather than 100 iterations unless your block size is very small relative to your history.
+
+\subsection*{Does bootstrapping work?}
+
+Again academic research has focused on this subject in great detail. For me personally bootstrapping definitely wins over single period optimisation and equal weights. My own research using artificial data shows that single period can perform a little better when there is a lot of structure in the data, so that the underlying Sharpe ratio (SR) and correlations are quite different. Obviously equal weights are better when the underlying SR and correlations are very similar. However you will never know in advance or with certainty which of these situations you are in! Overall bootstrapping is the most consistent method, with less variability in performance over different kinds of data sets. If anything these kinds of study probably understate the benefits of bootstrapping. This is because the random data generated isn't as noisy as real data.
+
+Personally I also find bootstrapping to be as good or better than other, relatively complex, methods.166
+
+\section*{Rule of thumb correlations}
+\phantomsection
+\addcontentsline{toc}{section}{Rule of thumb correlations}
+
+The following are approximate and should be used with caution. Remember correlations vary considerably over time, and can be much higher or lower than shown here. First I look at the correlation of instrument price returns across different ‘super' asset classes. ‘Volatility' refers to positions in equity volatility indices, such as holding a position in VIX or V2TX futures. To avoid showing negative correlations this is displayed as if you had a short position, i.e. you want volatility to fall.
+
+\rawtablecaption{CORRELATIONS OF INSTRUMENT RETURNS, ACROSS SUPER-ASSET CLASSES}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}*{5}{>{\centering\arraybackslash}X}@{}}
+\toprule
+ & \textbf{Bonds} & \textbf{Equities} & \textbf{FX} & \textbf{Commodities} & \textbf{Volatility} \\
+\midrule
+Rates & 1 &  &  &  &  \\
+Equities & 0.1 & 1 &  &  &  \\
+FX & 0.1 & 0.1 & 1 &  &  \\
+Commodities & 0.1 & 0.1 & 0.25 & 1 &  \\
+Volatility & 0.1 & 0.6 & 0.2 & 0.1 & 1 \\
+\bottomrule
+\end{tabularx}
+}
+
+The table shows correlations given long positions in all assets except volatility -- shown as if selling option risk or short VIX futures. Rates are interest rate sensitive assets, e.g. Bonds and STIR futures.
+
+Next I break down the instrument returns for the asset classes that form the commodity and interest rate super classes (the other super classes do not have any decomposition).
+
+\begin{enumerate}
+  \item Many solutions to the optimisation problem revolve around shrinkage -- making the inputs of the calculation more like a ‘prior' by shrinking towards them. I have used these techniques in the past and they do have some advantages. However two main difficulties are involved -- the first being how much to shrink, the second where your prior comes from without itself containing forward looking information. Getting these right is tricky and an entire book would be needed to explain how to do it right. In contrast bootstrapping is very easy and needs no calibration.
+\end{enumerate}
+
+\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, ACROSS ASSET CLASSES}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}*{5}{>{\centering\arraybackslash}X}@{}}
+\toprule
+ & \textbf{Bonds} & \textbf{STIR} & \textbf{Agricultural} & \textbf{Metal} & \textbf{Energy} \\
+\midrule
+Bonds (R) & 1 & 0.5 &  &  &  \\
+STIR (R) & 0.5 & 1 &  &  &  \\
+Agricultural (C) & -- & -- & 1 &  &  \\
+Metal (C) & -- & -- & 0.2 & 1 &  \\
+Energy (C) & -- & -- & 0.25 & 0.35 & 1 \\
+\bottomrule
+\end{tabularx}
+}
+
+The table shows the correlation of returns within commodity (C) and Rates (R) super classes.
+
+In the next table I dig further into the agricultural, metal and energy asset classes.
+
+\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, BY SUB ASSET CLASS, WITHIN COMMODITY ASSET CLASSES}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccccc@{}}
+\toprule
+ & Grain & Softs & Livestock & Oil & Gas & \shortstack{Precious\\metals} & \shortstack{Base\\metals} \\
+\midrule
+Grains (A) & 1 &  &  &  &  &  &  \\
+Softs (A) & 0.4 & 1 &  &  &  &  &  \\
+Livestock (A) & 0.25 & 0.15 & 1 &  &  &  &  \\
+\shortstack[l]{Crude oil \&\\products (E)} & -- & -- & -- & 1 &  &  &  \\
+Natural gas (E) & -- & -- & -- & 0.25 & 1 &  &  \\
+\shortstack[l]{Precious metals\\(M)} & -- & -- & -- & -- & -- & 1 &  \\
+\shortstack[l]{Base metals\\(M)} & -- & -- & -- & -- & -- & 0.5 & 1 \\
+\bottomrule
+\end{tabular}%
+}
+\endgroup
+
+The table shows the correlations for instruments in the sub asset classes within Agricultural (A), Energy (E) and Metal (M) asset classes.
+
+Within the financial (bond, equity, FX) asset classes, the main distinction is regional, between emerging and developed markets.
+
+\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS FOR REGIONS WITHIN FINANCIAL ASSET CLASSES}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.72\textwidth}Y@{}}
+\toprule
+\textbf{Comparison} & \textbf{Correlation} \\
+\midrule
+Emerging and developed market bonds & 0.35 \\
+Emerging and developed market STIR & 0.35 \\
+Emerging and developed market equities & 0.50 \\
+Emerging and developed market volatility & 0.50 \\
+Emerging and developed FX rates & 0.15 \\
+\bottomrule
+\end{tabularx}
+}
+
+The next table gives typical values within regions and commodity sub asset classes.
+
+\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, WITHIN REGIONS AND SUB ASSET CLASSES}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.72\textwidth}Y@{}}
+\toprule
+\textbf{Comparison} & \textbf{Correlation} \\
+\midrule
+For bonds in same region, different countries & 0.75 \\
+For equities in same region, different countries & 0.75 \\
+For FX rates in same region, different rates against USD & 0.75 \\
+For volatility in same region, different countries & 0.75 \\
+For commodities in same sub asset class, different products & 0.70 \\
+For equities in same country, different industry & 0.70 \\
+For equities in same industry, different firms & 0.80 \\
+\bottomrule
+\end{tabularx}
+}
+
+The final table of instrument return correlations covers bonds within the same country.
+
+\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, FOR BONDS OR BOND FUTURES OF DIFFERENT DURATION IN SAME COUNTRY}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+ & 2 year & 5 year & 10 year & 20 year & 30 year \\
+\midrule
+2 year & 1 &  &  &  &  \\
+5 year & 0.80 & 1 &  &  &  \\
+10 year & 0.65 & 0.85 & 1 &  &  \\
+20 year & 0.50 & 0.80 & 0.85 & 1 &  \\
+30 year & 0.50 & 0.75 & 0.80 & 0.90 & 1 \\
+\bottomrule
+\end{tabular}%
+}
+\endgroup
+
+In my framework you will be optimising the weights of trading subsystems, each taking positions in one instrument, rather than looking at portfolios of positions in instruments. Because asset allocating investors have static portfolios they can use the correlation of the underlying instrument returns from tables 50 to 55 without any adjustment. For staunch systems traders with dynamic forecasts a good rule of thumb is that the correlation between instrument subsystem returns will be around 0.70 multiplied by the correlation of instrument price returns.
+
+We now turn to the correlations of different trading rules applied to the same instrument, which are used to find forecast weights. Let’s begin with the correlation between different trading rules, rather than variations on a single rule.
+
+\rawtablecaption{CORRELATION OF TRADING RULE RETURNS WITHIN AN INSTRUMENT}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.76\textwidth}Y@{}}
+\toprule
+\textbf{Comparison} & \textbf{Correlation} \\
+\midrule
+Between different styles, e.g. momentum and carry & 0.25 \\
+Same style, different rules, e.g. EWMAC and other trend following rules & 0.5 \\
+\bottomrule
+\end{tabularx}
+}
+
+Correlations of variations of the same rule will obviously depend on the precise rule. Table 57 provides the correlations between returns of EWMAC variations.
+
+\rawtablecaption{CORRELATION OF TRADING RULE RETURNS WITHIN AN INSTRUMENT, VARIATIONS ON EWMAC RULE}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.08}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+ & EW 2 & EW 4 & EW 8 & EW 16 & EW 32 & EW 64 \\
+\midrule
+EWMAC 2,8 & 1 &  &  &  &  &  \\
+EWMAC 4,16 & 0.90 & 1 &  &  &  &  \\
+EWMAC 8,32 & 0.60 & 0.90 & 1 &  &  &  \\
+EWMAC 16,64 & 0.35 & 0.60 & 0.90 & 1 &  &  \\
+EWMAC 32,128 & 0.20 & 0.40 & 0.65 & 0.90 & 1 &  \\
+EWMAC 64,256 & 0.15 & 0.20 & 0.45 & 0.70 & 0.90 & 1 \\
+\bottomrule
+\end{tabular}%
+}
+\endgroup
+
+Numbers shown are the fast and slow look-back respectively, in days.

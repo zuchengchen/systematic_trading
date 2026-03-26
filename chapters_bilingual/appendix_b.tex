@@ -1,0 +1,424 @@
+\chapter{Trading Rules}
+\bichaptertitle{交易规则}
+
+\section*{The A and B system: Early profit taker and early loss taker}
+\phantomsection
+\addcontentsline{toc}{section}{The A and B system: Early profit taker and early loss taker}
+\bisectiontitle{A 与 B 系统：尽早止盈者与尽早止损者}
+
+I USE TWO SIMPLE TRADING RULES IN EXAMPLES THROUGHOUT THE book -- the early profit taker and the early loss taker. These are both variations of a more general rule: the ‘A and B' system. For the profit taker I use A = 5 and B = 20. The loss taker has these values reversed, A = 20 and B = 5. I don't recommend using the A and B system for actual trading, but I've included the specification here to satisfy the curious.
+
+在全书的例子中，我使用了两条简单的交易规则
+--- 尽早止盈者和尽早止损者。它们其实都是一个更一般规则
+“A 与 B 系统”的不同变体。对于尽早止盈者，我使用 A = 5、B = 20；而尽早止损者则把这两个值反过来，用 A = 20、B = 5。
+我并不建议你在真实交易中使用 A 与 B 系统，但我还是把它的完整定义放在这里，以满足那些好奇的读者。
+
+\subsection*{Specification}
+\bisubsectiontitle{规则定义}
+
+Parameters A and B For a given variation you need two parameters, A and B.
+
+参数 A 和 B 对于任意一个变体，你都需要两个参数：A 和 B。
+
+Standard position A standard position size is \$100,000, divided by the instrument size value volatility (as defined on ‘"What's that in real money?" on page 158) measured in dollars at the time you take on your position.
+
+标准仓位大小 一个标准仓位大小等于 \$100,000 除以品种价值波动率
+（见第 158 页 “What's that in real money?” 中的定义），并且在你建立头寸时以美元来计算。
+
+Initial position You go long one standard position size.
+
+初始仓位 一开始你持有一个标准仓位大小的多头。
+
+Deviation A deviation is one daily standard deviation of returns, as measured at your last entry point. Note we use volatility in price points, not percentage points as normal. The volatility in price points is equal to the percentage point volatility (price volatility as defined in chapter ten, ‘Position sizing', on page 155), multiplied by the current price.
+
+偏离单位 一个偏离单位
+（deviation）等于你上次入场点上测得的一个日收益标准差。注意，这里我们使用的是“价格点数”的波动率，而不是通常意义上的百分比波动率。
+价格点数波动率等于百分比波动率
+（也就是第十章“仓位规模设定”第 155 页所定义的价格波动率）乘以当前价格。
+
+Profit target when If the price rises by more than A deviations from your last entry price, long then you should sell out and go short one standard position size (reverse your position). You are always long or short.
+
+多头时的止盈目标 如果价格相对于你上一次入场价上涨超过 A 个偏离单位，那么你就应当平掉多头，并反手做空一个标准仓位大小
+（也就是反转头寸）。系统始终要求你要么做多，要么做空。
+
+Trailing stop loss If the price of the instrument falls by more than B deviations from its when long high since you entered, then sell and go short one standard position size.
+
+多头时的跟踪止损 如果该品种价格从你入场以来的最高点回落超过 B 个偏离单位，那么你就应卖出并反手做空一个标准仓位大小。
+
+On reversal When you reverse your position re-measure the deviation level to set your stop loss and profit target levels, and to determine the new standard position size.
+
+发生反转时 当你反转头寸时，应重新测量偏离单位水平，以设定新的止损位和止盈位，并据此确定新的标准仓位大小。
+
+Profit target when When currently short you would generate a profit taking trade when short the price falls by more than A deviations from your last entry price; and then go long.
+
+空头时的止盈目标 当你当前持有空头时，如果价格相对于你上一次入场价下跌超过 A 个偏离单位，那么就应执行一次止盈交易，并反手做多。
+
+Stop loss when You will generate a stop loss trade when a price rises by more than B short deviations from its low, and then reverse your position by going long.
+
+空头时的止损 当价格从低点上涨超过 B 个偏离单位时，你就应触发止损交易，并通过做多来反转头寸。
+
+Notice that this is a complete trading system, not just a trading rule, since it tells you exactly what size positions to take. If you've read part three of the book you can probably see that the system does position sizing correctly, but for an arbitrary volatility target on a single instrument. Here are some interesting characteristics of the A and B system.
+
+请注意，这已经是一套完整的交易系统，而不仅仅是一条交易规则，因为它明确告诉你应当持有多大仓位。如果你已经读过本书第三部分，
+你大概会发现：这套系统在仓位规模设定上其实是正确的，只不过它对应的是某个单一品种上一个任意给定的波动率目标。下面是 A 与 B 系统的一些有趣特征。
+
+If A is larger than B The system will tend to hit stop losses more frequently, but when trends occur it will exploit them. This is the case for the early loss taker.
+
+如果 A 大于 B 系统会更频繁地触发止损，但一旦出现趋势，它就能够更好地利用这些趋势。这正是“尽早止损者”的情况。
+
+If B is larger than A The system will take profits frequently but suffer losses on large adverse movements. This will be profitable if prices remain range bound. This is how the early profit taker behaves.
+
+如果 B 大于 A 系统会频繁止盈，但在大幅逆向波动时会遭受亏损。如果价格始终维持区间震荡，这种规则就会有利可图。这正是“尽早止盈者”的行为方式。
+
+Larger values of B Will mean that slower trends will be more profitable than faster ones.
+
+更大的 B 值 会意味着较慢形成的趋势，比快速趋势更有利可图。
+
+Smaller values of B The system will exploit faster trends better.
+
+更小的 B 值 系统将能更好地利用快速趋势。
+
+The stop loss rule defined for semi-automatic traders in part four of the book is based on the stop loss component of the A and B system.
+
+本书第四部分中为半自动交易者所定义的止损规则，就是以 A 与 B 系统中的止损部分为基础设计的。
+
+\section*{The exponentially weighted moving average crossover (EWMAC) rule}
+\phantomsection
+\addcontentsline{toc}{section}{The exponentially weighted moving average crossover (EWMAC) rule}
+\bisectiontitle{指数加权移动平均交叉（EWMAC）规则}
+
+The EWMAC trading rule was briefly introduced in chapter seven. The forecast is the difference, or crossover, between two exponentially weighted moving averages (EWMA) of the price, one fast and one slow. The difference is then standardised by the recent standard deviation of prices, and a forecast scalar applied to ensure we get an average absolute value of 10 for our forecasts.
+
+EWMAC 交易规则在第七章中已经被简要介绍过。它的预测值，来自价格的两条指数加权移动平均线
+（EWMA）之间的差值或交叉信号，其中一条较快，一条较慢。然后，这个差值会再用近期价格标准差进行标准化，
+并乘上一个预测缩放因子，以确保我们的预测值平均绝对值为 10。
+
+In this version of the rule I assume you are working with daily prices for the relevant instrument, with no weekends in the price series. It is possible to work with intra-day prices, but this is slightly more involved.
+
+在这一版本的规则中，我假设你使用的是相关品种的日度价格数据，并且价格序列中不包含周末。如果你想用日内价格，也不是不行，
+只是处理起来会稍微更复杂一些。
+
+Look-back To pick up trends over different time periods you're going to want EWMAC windows, variations which work over different horizons. For each variation you need to fast and specify two look-back windows, in days: a shorter window for the fast EWMA slow Lfast, and a larger one Lslow for the slow EWMA. Lfast should be larger than 1, or you will only have one price in your average. For reasons I discuss below, I use the following pairs of look-back values for Lfast and Lslow 2:8, 4:16, 8:32, 16:64, 32: 128 and 64:256.
+
+回看窗口 为了捕捉不同时长的趋势，你需要使用在不同时间跨度上工作的 EWMAC 变体。对于每一个变体，你都需要指定两个以“天”为单位的回看窗口：
+一个较短的窗口给快 EWMA 使用，记作 Lfast；一个更长的窗口给慢 EWMA 使用，记作 Lslow。Lfast 必须大于 1，否则你的均线里就只会包含一个价格。
+基于我下面会说明的原因，我使用以下这些 Lfast 与 Lslow 的组合：2:8、4:16、8:32、16:64、32:128 和 64:256。
+
+Decay The EWMA formula uses a decay parameter, A, which is between 0 and 1. This parameters, is equal to 2 ÷ (L+1) where L is the look-back window.* So you will have Afast fast and and Aslow. slow A short look-back and a high value of A means you are giving more weight to more recent prices, so the EWMA adjusts faster; and vice versa. * I use a look-back window to calculate the decay rather than specifying the latter directly, because it's more natural to think in terms of windows. If you're interested this formulation comes from the Python language's ‘Pandas' package specification for an EWMA, which uses the term span rather than look-back window.
+
+衰减参数 EWMA 公式使用一个介于 0 和 1 之间的衰减参数 A。它等于 2 ÷ (L+1)，其中 L 是回看窗口。* 因此，你会得到 Afast 和 Aslow。
+较短的回看窗口和较高的 A 值，意味着你会给更近期的价格赋予更高权重，因此 EWMA 调整得更快；反之亦然。
+* 我之所以使用回看窗口来计算衰减参数，而不是直接指定后者，是因为从“窗口”的角度思考会更自然。如果你感兴趣，
+这一写法来自 Python 语言里 Pandas 包对 EWMA 的定义，它用的是 span 这个术语，而不是 look-back window。
+
+EWMA If Pt is the most recent price of the instrument then the EWMA is: formula (A × Pt) + (A × (1-A) × Pt-1) + (A × (1-A)2 × Pt-1) + ((A × (1-A)3 × Pt-2)... You can also calculate this recursively. With yesterday's EWMA Et-1 then today's EWMA is: (A × Pt) + (Et-1 × (1-A)) Note that if A = 1 then you are using only the current price in your EWMA, hence why I require L to be 2 or more.
+
+EWMA 公式 如果 Pt 是该品种的最新价格，那么 EWMA 为：
+\( (A \times P_t) + (A \times (1-A) \times P_{t-1}) + (A \times (1-A)^2 \times P_{t-2}) + \dots \)
+你也可以用递归方式计算它。若昨天的 EWMA 为 \(E_{t-1}\)，那么今天的 EWMA 为：
+\( (A \times P_t) + (E_{t-1} \times (1-A)) \)。
+请注意，如果 A = 1，那么你的 EWMA 就只使用当前价格，因此我才要求 L 至少为 2。
+
+Slow EWMA The slow EWMA Eslow will be an EWMA using Aslow based on the price history.
+
+慢 EWMA 慢 EWMA
+\(E_{slow}\)
+是用 Aslow 对价格历史计算得到的 EWMA。
+
+Fast EWMA The fast EWMA Efast will be an EWMA using Afast based on the price history.
+
+快 EWMA 快 EWMA
+\(E_{fast}\)
+是用 Afast 对价格历史计算得到的 EWMA。
+
+Raw EWMA Efast minus Eslow is the raw EWMA crossover. crossover If this is positive then there has been a recent price uptrend, if it's negative then prices are trending down. Since both the EWMAs are measurements of price, the crossover tells you by how much prices have changed recently.
+
+原始 EWMA 交叉值 \(E_{fast} - E_{slow}\) 就是原始 EWMA 交叉值。如果这个值为正，说明近期价格处于上升趋势；如果为负，则说明价格在走下降趋势。
+由于两条 EWMA 本身都是对价格的度量，这个交叉值也就告诉了你价格最近究竟变化了多少。
+
+Standard This is the standard deviation of returns in price points, not percentage deviation points as normal. The volatility in price points is equal to the percentage point adjustment volatility (price volatility as defined in chapter ten, ‘Position sizing', on page 155), multiplied by the current price.
+
+标准差调整 这里使用的是以价格点数表示的收益标准差，而不是通常的百分比标准差。价格点数波动率等于百分比波动率
+（即第十章“仓位规模设定”第 155 页定义的价格波动率）乘以当前价格。
+
+Volatility You should divide the raw EWMA crossover by the standard deviation of daily adjusted price changes (in price terms, not percentage points). As I pointed out in crossover chapter seven, you usually need forecasts to be adjusted for return standard deviation.
+
+波动率调整后的 EWMA 交叉值 你应当用原始 EWMA 交叉值去除以日价格变动标准差
+（以价格点数表示，而不是百分比表示）。正如我在第七章中指出的那样，预测值通常需要根据收益标准差进行调整。
+
+Forecast The forecast scalar depends on the look-back window and is shown in table scalar 49.
+
+预测缩放因子 预测缩放因子取决于回看窗口，其数值见表 49。
+
+Forecast The forecast is the forecast scalar multiplied by the volatility adjusted EWMA crossover. It should have an average absolute value of around 10.
+
+预测值 最终预测值等于预测缩放因子乘以波动率调整后的 EWMA 交叉值。它的平均绝对值应当大约为 10。
+
+Capped This is the forecast with capping of values above +20 and below -20. forecast
+
+封顶后的预测值 这是把高于 +20、低于 -20 的预测值截断之后得到的最终预测值。
+
+What ratio of fast and slow look-backs to use? To reduce the set of parameters to consider for evaluation, I first fixed the ratio of fast and slow look-backs. As this requires looking at performance to avoid over-fitting I initially used artificial data which contained trends of various lengths plus an element of noise. There was not much difference in performance over look-backs between 2 and 6, so I selected a ratio of 4. A subsequent check on real data confirmed this was reasonable. This reduces the set of possible look-backs to 2:8, 3:12, 4:16, 5:20 and so on.
+
+快慢回看窗口该使用什么比例？为了减少需要评估的参数集合，我首先固定了快慢回看窗口之间的比例。由于这项工作需要查看表现结果，
+而我又想避免过拟合，因此我一开始使用的是包含多种不同长度趋势并带有噪声成分的人工数据。在 2 到 6 的比例范围内，
+表现差异并不大，所以我最终选择了比例为 4。之后我又用真实数据做了检查，确认这是一个合理选择。这样一来，可选的回看组合就被缩减为 2:8、3:12、4:16、5:20 等等。
+
+\subsection*{Which pairs of look-backs to use?}
+\bisubsectiontitle{应当使用哪些回看窗口组合？}
+
+Different look-back pairs will capture different length trends. Since we don't know what length trends will occur in reality, I advise using a reasonable number of pairs. However it turns out that using the series of look-backs 2:8, 4:16, 8:32... gives enough coverage. As table 57 in appendix C (page 295) shows, the adjacent look-backs in this set have correlations of 0.90. Any intervening values that are added would have correlations above the cutoff of 0.95 which I recommend using to prune trading rule variations in chapter six, ‘Forecasts'. Beyond the pair 64:256 turnover the holding period gets excessively long, and as the law of active management suggests performance will be poor, it isn't worth adding any more pairs beyond this.
+
+不同的回看窗口组合会捕捉不同长度的趋势。由于我们并不知道现实中究竟会出现多长的趋势，因此我建议使用一个“数量合理”的组合集合。
+不过事实表明，只要使用 2:8、4:16、8:32……这样一组组合，就已经足够覆盖需求。正如附录 C 的表 57
+（第 295 页）所展示的，这个集合里相邻组合之间的相关性是 0.90。如果你往中间再插入其他组合，那么它们的相关性就会超过我在第六章“预测值”中建议用于筛选规则变体的 0.95 截断线。
+而在 64:256 这组组合之后，持仓周期会变得过于漫长；按照主动管理定律，这种规则的表现也不会太好，因此没有必要再往后继续添加更多组合。
+
+\subsection*{Which forecast scalars to use?}
+\bisubsectiontitle{应当使用哪些预测缩放因子？}
+
+I use the technique in appendix D on page 297 with data from a large number of futures markets, which isn't likely to lead to over-fitting as I'm not looking at performance. This gives the forecast scalars shown in table 49.
+
+我使用的是附录 D
+（第 297 页）中的方法，并且应用于大量期货市场的数据。由于这里并没有查看表现结果，因此不太可能造成过拟合。由此得到的预测缩放因子如表 49 所示。
+
+\rawtablecaption{FORECAST SCALARS FOR DIFFERENT EWMAC LOOK-BACK PAIRS\\不同 EWMAC 回看组合对应的预测缩放因子}
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}Y@{}}
+\toprule
+\textbf{Look-back pair} & \textbf{Forecast scalar} \\
+\midrule
+EWMAC 2,8 & 10.6 \\
+EWMAC 4,16 & 7.5 \\
+EWMAC 8,32 & 5.3 \\
+EWMAC 16,64 & 3.75 \\
+EWMAC 32,128 & 2.65 \\
+EWMAC 64,256 & 1.87 \\
+\bottomrule
+\end{tabularx}
+}
+
+\medskip
+
+\noindent{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}Y@{}}
+\toprule
+\textbf{EWMAC 回看组合} & \textbf{预测缩放因子} \\
+\midrule
+EWMAC 2,8 & 10.6 \\
+EWMAC 4,16 & 7.5 \\
+EWMAC 8,32 & 5.3 \\
+EWMAC 16,64 & 3.75 \\
+EWMAC 32,128 & 2.65 \\
+EWMAC 64,256 & 1.87 \\
+\bottomrule
+\end{tabularx}
+}
+
+\section*{The carry trading rule}
+\phantomsection
+\addcontentsline{toc}{section}{The carry trading rule}
+\bisectiontitle{Carry 交易规则}
+
+I introduced the carry rule in chapter seven. The rule calculates an annualised volatility standardised expected return for the asset, assuming nothing happens to prices. Because the carry rule is slightly different for various asset classes, the definition here is in two parts. The first part calculates the annualised net expected return in price points for different assets. Then in the second part, which applies to all assets, this is converted to a forecast.
+
+我在第七章中介绍过 carry 规则。这条规则在假设价格完全不发生变化的情况下，计算某个资产经年化且完成波动率标准化之后的预期收益。
+由于 carry 规则在不同资产类别上的定义略有差异，这里的说明分为两部分。第一部分是计算不同资产以“价格点数”表示的年化净预期收益；
+第二部分则适用于所有资产，用来把这个结果转换成预测值。
+
+\subsection*{Equities, bought with cash or on margin}
+\bisubsectiontitle{股票：现金买入或融资买入}
+
+Dividend yield, \% The expected dividend yield per year during the holding period, or for simplicity the historic dividend divided by current price.
+
+股息率，\% 持有期间每年的预期股息率；或者为了简化，也可以直接用历史股息除以当前价格。
+
+\subsection*{Funding cost, \% Either:}
+\bisubsectiontitle{融资成本，\% 可以是以下两种之一：}
+
+On a cash purchase the interest you could have received on your money if you had not invested it. If borrowing on margin your cost of funding.
+
+如果是现金买入，那它就是你本来可以拿到、但因为把钱拿去投资而放弃的利息收益；如果是融资买入，那它就是你的实际融资成本。
+
+Net expected return, \% Dividend yield minus funding cost.
+
+净预期收益，\% 股息率减去融资成本。
+
+Net expected return in Net expected return \% points, multiplied by the current price. price units
+
+以价格点数表示的净预期收益 等于净预期收益百分比乘以当前价格。
+
+\subsection*{Equities, contracts for difference (CFD)}
+\bisubsectiontitle{股票：差价合约（CFD）}
+
+Dividend yield, \% The expected dividend yield per year during the holding period, or for simplicity just the historic dividend divided by current price.
+
+股息率，\% 持有期间每年的预期股息率，或者简单地使用历史股息除以当前价格。
+
+Funding cost, \% The average of the interest you pay to fund a long position and what you receive on short positions.
+
+融资成本，\% 这是你为多头头寸支付的融资利率，与空头头寸可获得利息之间的平均值。
+
+Net expected return, \% Dividend yield minus funding cost.
+
+净预期收益，\% 股息率减去融资成本。
+
+Net expected return in Net expected return \% points, multiplied by the current price. price units
+
+以价格点数表示的净预期收益 等于净预期收益百分比乘以当前价格。
+
+\subsection*{Foreign exchange, cash}
+\bisubsectiontitle{外汇：现货}
+
+Interest, \% The interest you get in the foreign currency.
+
+利息，\% 你在外币上获得的利息。
+
+Funding cost, \% The interest you pay to borrow the domestic currency.
+
+融资成本，\% 你为借入本币而支付的利息。
+
+Net expected return, \% Interest minus funding cost.
+
+净预期收益，\% 利息减去融资成本。
+
+Net expected return in Net expected return \% multiplied by current price. price units
+
+以价格点数表示的净预期收益 等于净预期收益百分比乘以当前价格。
+
+\subsection*{Spread bet, e.g. on FX or equities}
+\bisubsectiontitle{点差投注，例如外汇或股票点差投注}
+
+Spread bet level The level of the spread bet (mid-price). (I assume that the financing cost is wrapped up in the relationship between the spot and spread bet price.)
+
+点差投注价格 点差投注的价格水平
+（中间价）。
+（这里我假设融资成本已经体现在现货价格与点差投注价格之间的关系中了。）
+
+Spot level The level of the spot price of the relevant instrument at the same time.
+
+现货价格水平 同一时刻对应标的品种的现货价格水平。
+
+Net expected return Spot level minus spread bet level. over bet period
+
+投注期限内的净预期收益 现货价格水平减去点差投注价格水平。
+
+Time to maturity Time to expiry of the bet, in years. So a quarterly three-month bet would be 0.25.
+
+到期期限 该笔投注距离到期还有多少年。例如，季度型的三个月投注，其值就是 0.25。
+
+Net expected return in Net expected return over bet period divided by time to maturity. price units
+
+以价格点数表示的净预期收益 等于投注期限内的净预期收益除以到期期限。
+
+\subsection*{Futures: If not trading nearest contract (preferred)}
+\bisubsectiontitle{期货：如果你不是在交易最近月合约（推荐方式）}
+
+Current contract price The price of the contract you are trading.
+
+当前合约价格 你正在交易的那份合约的价格。
+
+Nearer contract price The price of the next closest contract. So if you are trading June 2017 Eurodollar it would be March 2017.
+
+更近月合约价格 最近的下一份合约价格。例如，如果你交易的是 2017 年 6 月的 Eurodollar，那么更近月合约就是 2017 年 3 月的那份。
+
+Price differential Current contract price minus nearer contract price.
+
+价格差 当前合约价格减去更近月合约价格。
+
+Distance between The time in years between the two contracts (current and nearer). contracts For adjacent quarterly expiries it is 0.25 and for monthly 0.083.
+
+合约间距 这两份合约
+（当前合约与更近月合约）之间相隔的时间长度，以“年”为单位。对于相邻季度合约，该值是 0.25；对于月度合约，则是 0.083。
+
+Net expected return in You need to annualise the price differential by dividing by the price units distance between contracts.
+
+以价格点数表示的净预期收益 你需要用合约间距去除价格差，从而把它年化。
+
+If you are already trading the nearest contract you obviously can't use this method.\footnote{Ideally you'd use the spot price relative to the future, but this isn't easily available except for equity indices.\par 理想情况下，你应该使用现货相对于期货的价格关系；
+但除了股票指数之外，这类数据通常并不容易获得。} Instead there is an approximation below, which assumes you get the same amount of expected return for the first two available contracts.
+
+如果你本来就在交易最近月合约，那么显然不能用这种方法。此时可以使用下面给出的一个近似方法，它假设你在最前面的两份可交易合约上能获得相同数量的预期收益。
+
+\subsection*{Futures: If trading nearest contract (approximation)}
+\bisubsectiontitle{期货：如果你正在交易最近月合约（近似方法）}
+
+Current contract price The price of the contract you are trading.
+
+当前合约价格 你正在交易的合约价格。
+
+Next contract price The price of the contract with the next expiry. So if you had June 2017 Treasury bonds it would be September 2017.
+
+下一到期合约价格 下一份到期合约的价格。例如，如果你持有的是 2017 年 6 月到期的美国国债合约，那么下一份就是 2017 年 9 月合约。
+
+Price differential Next contract price minus current contract price.
+
+价格差 下一到期合约价格减去当前合约价格。
+
+Distance between The time in years between the two contracts (current and next). contracts For adjacent quarterly expiries it would be 0.25, for monthly 0.083 and so on.
+
+合约间距 这两份合约
+（当前合约与下一份合约）之间相隔的时间长度，以“年”为单位。对于相邻季度合约，它是 0.25；对于月度合约则是 0.083，依此类推。
+
+Net expected return in You need to annualise the price differential by dividing by the price units distance between contracts.
+
+以价格点数表示的净预期收益 你需要用合约间距去除价格差，从而得到年化值。
+
+Now let us turn to the actual forecast calculation, which is the same for all assets.
+
+现在我们转向真正的预测值计算，这一部分对所有资产都是相同的。
+
+\subsection*{Forecast calculation}
+\bisubsectiontitle{预测值计算}
+
+Net expected return in From relevant information above. Note this is an annualised price units measure.
+
+以价格点数表示的净预期收益 来自上面相应部分的计算结果。请注意，它是一个年化度量。
+
+Standard deviation of This is the standard deviation of returns in price points, not returns percentage points as normal. The volatility in price points is equal to the percentage point volatility (price volatility as defined in chapter ten, ‘Position sizing', on page 155), multiplied by the current price.
+
+收益标准差 这里使用的是以价格点数表示的收益标准差，而不是通常意义上的百分比标准差。价格点数波动率等于百分比波动率
+（即第十章“仓位规模设定”第 155 页定义的价格波动率）乘以当前价格。
+
+Annualised standard Multiply the standard deviation of returns by the ‘square root of deviation of returns time' to annualise it. Assuming 256 business days in a year you should multiply by 16.
+
+年化收益标准差 把收益标准差乘以“时间平方根”就可以把它年化。若假设一年有 256 个交易日，那么你就应当乘以 16。
+
+Raw carry: Volatility As I pointed out in chapter seven, you want forecasts to be standardised expected adjusted for return standard deviation. So this is the net expected return return in price units divided by the annualised standard deviation of returns.
+
+原始 carry：经过波动率标准化的预期收益 正如我在第七章中指出的那样，你希望预测值经过收益标准差的调整。因此，这里的值等于以价格点数表示的净预期收益，
+除以收益的年化标准差。
+
+Forecast scalar The forecast scalar is 30. I explain below where the multiplier comes from.
+
+预测缩放因子 预测缩放因子取 30。下面我会解释这个乘数从何而来。
+
+Forecast The forecast will be the forecast scalar times the raw carry.
+
+预测值 最终预测值等于预测缩放因子乘以原始 carry 值。
+
+Capped forecast This is the forecast with values outside the range -20, +20 capped.
+
+封顶后的预测值 这是把超出 -20 到 +20 区间的值进行封顶后的最终预测值。
+
+\subsection*{Which forecast scalar to use?}
+\bisubsectiontitle{应当使用哪个预测缩放因子？}
+
+The raw carry measure is effectively an annualised Sharpe ratio (SR), an expected return divided by standard deviation. I used the technique in appendix D and data from a large number of markets across different asset classes to work out the right forecast scalar. This gives a forecast scalar of around 30.
+
+原始 carry 度量，本质上就是一个年化夏普比率
+（SR），也就是预期收益除以标准差。我使用了附录 D 中的方法，并结合来自多个资产类别的大量市场数据，来找出合适的预测缩放因子。
+这样得到的预测缩放因子大约是 30。
+
+\subsection*{What is the turnover of carry?}
+\bisubsectiontitle{Carry 的换手率是多少？}
+
+It's hard to generalise about the turnover (round trips per year) of carry since it depends on the asset class and how often you update the value of the forecast. I suggest checking the forecast weekly to avoid spurious noise which can otherwise be a problem. If you do this then it is reasonable to use a rule of thumb value of 10 for the turnover of the carry rule.
+
+很难对 carry 规则的换手率
+（每年的 round trips）给出一个放之四海而皆准的数字，因为它取决于资产类别，也取决于你多频繁地更新预测值。
+我建议你每周检查一次预测值，以避免虚假噪声成为问题。如果你这样做，那么把 carry 规则的换手率经验值设为 10，是一个合理的做法。
