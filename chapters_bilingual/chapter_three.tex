@@ -515,14 +515,6 @@ equal blend of them all. This gives an SR of 0.33, which is pretty good for one 
 trading rule run on a single instrument. These results could be a fluke but I get similar
 results on many different instruments and trading rules.
 
-Why does fitting do so badly?
-
-Firstly choosing just one variation to run at a time smacks of overconfidence. As you'll see
-shortly we rarely have enough evidence that one rule is definitely better than another.
-Secondly one year of data is wholly insufficient to decide which trading rule is best. I
-make this problem worse by fitting on the history of a single instrument, gold futures.
-Finally, like Joe, I am testing far too many variations.
-
 如果你是拟合的忠实信徒，
 那结果会令人非常失望。
 如果每年都选择“上一年表现最好的规则”，
@@ -540,49 +532,28 @@ SR 居然能达到 0.33，
 这些结果当然有可能只是巧合，
 但我在许多不同品种和不同交易规则上都得到了类似结论。
 
+Why does fitting do so badly?
+
+Firstly choosing just one variation to run at a time smacks of overconfidence. As you'll see
+shortly we rarely have enough evidence that one rule is definitely better than another.
+Secondly one year of data is wholly insufficient to decide which trading rule is best. I
+make this problem worse by fitting on the history of a single instrument, gold futures.
+Finally, like Joe, I am testing far too many variations.
+
 为什么拟合会表现得这么糟糕呢？
-
-这里我给出一个拟合走偏的具体例子：
-我从 90 个可能变体中，
-去为 CME 黄金期货挑选“尽早止损者”规则里表现最好的那一个变体。
-这听起来已经很多了，
-但你别忘了，
-它仍然比前面故事里 Joe 测试过的规则数量还少。
-如果我有一条五参数规则，
-而每个参数都能取十个离散值，
-那么我就已经在测试 10,000 个变体了。
-
-接着我采用一年滚动窗口：
-只要拥有至少一年数据，
-我就用过去 12 个月里夏普比率最高的变体，
-来测试接下来的一年。
-然后每年都重复这个过程。
-
-问题是：
-你猜哪种方法表现最好？
-1. 每年都选上一年最好的变体；
-2. 完全随机地选一个变体；
-3. 什么都不挑，把 90 个变体全部保留下来，然后等权平均。
-
-结果很残酷：
-每年都挑“上一年最好的那个”，
-反而只得到大约 0.07 的夏普；
-每年随机挑一个，
-平均下来大约是 0.2；
-最好的办法居然是压根别选，
-而是把 90 个变体全部等权组合起来，
-夏普反而有 0.33。
-
-也就是说，
-拟合在这里不但没有帮你，
-反而害了你。
-原因很简单：
 第一，
 每次只押注一个变体，
-本身就充满过度自信；
+本身就充满过度自信。
+正如你马上会看到的，
+我们几乎从来没有足够证据证明某一条规则一定优于另一条。
 第二，
-一年数据远远不足以判断哪条规则真的更好；
+一年数据远远不足以判断哪条交易规则最好。
+而我还把问题进一步恶化了，
+因为我只在单一品种
+--- 黄金期货
+--- 的历史上做拟合。
 第三，
+就像 Joe 一样，
 我测试的变体数量本来就太多了。
 
 \subsection*{The hazards of rule selection}
@@ -592,6 +563,12 @@ SR 居然能达到 0.33，
 
 Why is it so dangerous to test large numbers of trading rules and variations? Apart from
 the effort involved it's very likely that you will end up picking a poor rule just by chance.
+
+为什么大规模测试交易规则和变体会如此危险？
+除了你得付出大量劳动之外，
+更大的风险在于：
+你最后极有可能只是靠运气，
+就挑中了一条很差的规则。
 
 To see why here is an experiment. Let's suppose I am trying to achieve alchemy and find
 profitable rules where there are none to be had. I have a pool of a certain number of
@@ -613,23 +590,6 @@ the answer is not influenced by how each series of random numbers come out.\par 
 再报告平均结果，
 这样结论就不会被某一次具体随机数的偶然结果所左右。}
 
-For each test I get one year of return data for each rule in my pool, as in the gold futures
-example above, and select all the rules whose Sharpe ratio (SR) in that year is higher than
-a given minimum level. If no rule has an SR above the threshold then I won't choose any.
-All the rules that pass the test will be kept (even if there are 50!).
-
-Because the underlying data is random I need to generate new data multiple times and then
-repeat the test to get meaningful results. I then measure the average number of rules
-accepted given a specific minimum level and the size of the pool available. As table 3
-shows, even if I'm strict and set an extremely high minimum SR of 2.0 I'll still pick up a
-couple of bad rules if I test enough of them.
-
-为什么大规模测试交易规则和变体会如此危险？
-除了你得付出大量劳动之外，
-更大的风险在于：
-你最后极有可能只是靠运气，
-就挑中了一条很差的规则。
-
 要理解这一点，
 我们来看一个实验。
 假设我想在根本不存在盈利机会的地方，
@@ -639,6 +599,11 @@ couple of bad rules if I test enough of them.
 只是现实里我事先并不知道这一点。
 这些规则完全是任意构造的，
 它们的收益也全都来自随机数据。
+
+For each test I get one year of return data for each rule in my pool, as in the gold futures
+example above, and select all the rules whose Sharpe ratio (SR) in that year is higher than
+a given minimum level. If no rule has an SR above the threshold then I won't choose any.
+All the rules that pass the test will be kept (even if there are 50!).
 
 在每次测试里，
 我都会像前面黄金期货的例子那样，
@@ -650,6 +615,12 @@ couple of bad rules if I test enough of them.
 那我就一个都不选。
 所有通过检验的规则都会被保留下来
 --- 哪怕最后通过的有 50 条！
+
+Because the underlying data is random I need to generate new data multiple times and then
+repeat the test to get meaningful results. I then measure the average number of rules
+accepted given a specific minimum level and the size of the pool available. As table 3
+shows, even if I'm strict and set an extremely high minimum SR of 2.0 I'll still pick up a
+couple of bad rules if I test enough of them.
 
 由于底层数据是随机的，
 我必须不断生成新数据并重复这个测试，
@@ -685,6 +656,9 @@ The table shows the average number of rules accepted from pools of arbitrary unp
 rules, given different pool sizes (rows), which were tested to see if their Sharpe ratio
 exceeded a minimum cutoff (columns).
 
+\textit{这张表展示的是：当你从不同规模的“原本并不盈利”的规则池中筛选规则时，
+在给定不同最低夏普门槛的情况下，平均会有多少条规则被误选出来。}
+
 Practically then what SR cutoff should I use? As none of the imaginary rules are truly
 profitable ideally I wouldn't accept any. But in real fitting situations we can't set the bar
 too high or even good rules will be discarded; after all a realistic SR for a real trading rule,
@@ -693,11 +667,40 @@ with a 5\% chance of picking out at least one rule that was truly unprofitable. 
 real world I'd usually have more than one year of data, so let's see what effect additional
 history has on my findings.
 
+实际中那我到底该把 SR 门槛设在什么水平呢？
+既然这些假想规则本来全都不盈利，
+理想情况下我当然一条都不想选中。
+但在真实拟合场景里，
+如果把门槛设得太高，
+连那些真正不错的规则也会被误杀；
+毕竟，
+一条真实交易规则在单一品种上的现实 SR，
+大概率也不过只有 0.30 左右。
+那我们就假设：
+我愿意接受“至少错选出一条真正不盈利规则”的概率不超过 5\%。
+另外，
+真实世界里我通常也不只拥有一年的数据，
+所以接下来我们就来看看：
+历史长度增加之后，
+结论会发生什么变化。
+
 Table 4 has all the results. As you might have suspected the length of the return series is
 very important here. More history means less chance of a zero SR rule getting a lucky
 streak, so I can set the cutoff lower. However, even with 30 years of data I can't risk
 testing more than a handful of rules, and even then the cutoff is far too high when many
 perfectly good variations will only have true Sharpe ratios of 0.3.
+
+表 4 给出了全部结果。
+正如你可能已经猜到的那样，
+收益序列的长度在这里非常关键。
+历史越长，
+一个真实 SR 为零的规则就越不容易仅仅靠运气走出一段漂亮表现，
+于是我就可以把筛选门槛适当放低。
+但即便拥有 30 年数据，
+我仍然不敢测试太多规则；
+而且即便如此，
+当许多完全不错的变体真实 SR 也不过只有 0.3 时，
+这个门槛依然会高得离谱。
 
 \begin{table}[htbp]
   \centering
@@ -722,11 +725,24 @@ The table shows the Sharpe ratio cutoff needed when testing a given size pool (r
 trading rules, with a certain amount of years of historical data (columns) to ensure you
 only have a 5\% chance of picking out one or more truly bad rules.
 
+\textit{这张表展示的是：当你要在不同规模的规则池中筛选规则时，
+为了把“误选出至少一条真正坏规则”的概率控制在 5\% 以内，
+所需的夏普比率门槛会随着历史样本长度如何变化。}
+
 \subsubsection*{How much history do you need to decide if a rule is good?}
 
 You've now seen that a common mistake is to use insufficient historical data to select or
 calibrate a rule. How much data do you need? How long do you need to decide if a rule
 has a positive Sharpe ratio (SR) and is worth keeping?
+
+你现在已经看到，
+一个常见错误就是：
+用过短的历史数据来选择或校准规则。
+那么问题来了：
+到底需要多少数据，
+你才能判断一条规则是否真的拥有正的夏普比率
+（SR），
+并值得被保留下来？
 
 To answer this I generated more random trading rule daily returns, this time assuming an
 underlying positive Sharpe ratio, which again I wouldn't know in advance. As more
@@ -737,19 +753,55 @@ in \textit{Financial Analysts Journal} 58:4, July/August 2002.} This allows me t
 for how statistically significant my measured average SR is; was I just lucky or is this really
 a good system?
 
+为了回答这个问题，
+我又生成了一些随机的交易规则日收益，
+只是这一次假设它们背后拥有一个真实为正的夏普比率，
+当然我在实验开始前也并不知道这个值。
+随着交易历史逐年累积，
+我就可以每年估算一次 SR，
+以及到目前为止的平均 SR。
+与此同时，
+我还会观察这些年度夏普比率的分布情况。
+这样一来，
+我就能大致判断：
+我测出来的平均 SR 到底有多大的统计显著性；
+它究竟只是我运气好，
+还是这真的是一套好系统？
+
 A classic test for statistical significance is the T-Test. In this example it determines
 whether an estimated Sharpe ratio is likely to be positive given the estimate of its mean and
 standard deviation. The further away the mean is from zero, as measured in units of
 sigma, the more likely the unknown SR is actually positive.
 
+衡量统计显著性的经典方法之一，
+就是 T 检验。
+在这里，
+它用来判断：
+在已知某个估计均值和标准差的前提下，
+这条规则的估计夏普比率到底有多大概率是真的为正。
+用 sigma 这个单位来衡量时，
+均值离零越远，
+那条未知的真实 SR 就越可能真的为正。
+
 This test is commonly used with a threshold of two sigma. If an estimated average SR is
 more than two standard deviations above zero there would only be a 2.5\% chance of this
 happening if the true SR was actually negative.
+
+这个检验通常会采用“两倍 sigma”的门槛。
+如果一条规则的估计平均 SR 高于零两个标准差以上，
+那么在真实 SR 实际上为负的情况下，
+出现这种结果的概率只有 2.5\%。
 
 Figure 11 shows the evolution of the average measured SR for an arbitrary trading rule,
 and around it the upper and lower ``confidence intervals''. Each confidence interval is two
 sigma away from the average, so when the lower interval pushes above zero I know there
 is only a 2.5\% chance the trading system is really a loss making rule in disguise.
+
+\textit{图 11 展示了一条任意规则的平均测得 SR 如何随时间演化，
+以及围绕它的上下“置信区间”。
+每个置信区间都与平均值相差两个 sigma；
+因此，当下界也被推到零以上时，
+这条系统其实是亏钱货色的概率就只剩下 2.5\%。}
 
 \begin{figure}[htbp]
   \centering
@@ -763,9 +815,25 @@ But it takes over ten years before the lower confidence interval goes above zero
 T-Test is finally passed. Only then can we be reasonably certain this is not a loss making
 system.
 
+在这张图里，
+你会看到平均 SR 很快就向真实值 0.5 收敛。
+但要等到下方置信区间真正越过零轴，
+并最终通过 T 检验，
+却需要十多年时间。
+只有到那时，
+我们才能比较有把握地说：
+这不是一套伪装成盈利系统的亏损策略。
+
 If I repeat this for a rule with a true SR of 1.0 I get figure 12. The time to pass the test
 here is just a few years. On average it will always take less time for higher SR strategies to
 prove their profitability.
+
+\textit{如果我把同样实验重复在一条真实 SR 为 1.0 的规则上，
+得到的就是图 12。
+这一次通过检验只需要几年时间。
+平均而言，
+真实 SR 越高的策略，
+证明自己确实盈利所需的时间就越短。}
 
 \begin{figure}[htbp]
   \centering
@@ -780,6 +848,17 @@ on the skew of returns. For example, with a true SR of 1.0 I needed about three 
 more data for a typical negative skew volatility selling strategy to pass the T-Test,
 compared to a positive skew trend following strategy.} The average trading rule for one
 instrument has a realistic SR of around 0.3; so you'd need nearly 40 years of history!
+
+\textit{接下来我们来看看：对于给定的真实夏普比率，
+平均需要多少年才能通过这个检验。
+在做完必要实验之后，
+我得到的就是表 5。
+除非规则真的非常优秀，
+否则你通常至少需要十年，
+而且往往还远不止十年，
+才能有把握说这条策略真的能赚钱。
+而一条单一品种交易规则现实中比较合理的 SR 大约只有 0.3，
+这意味着你几乎需要 40 年历史。}
 
 \begin{table}[htbp]
   \centering
@@ -796,6 +875,10 @@ instrument has a realistic SR of around 0.3; so you'd need nearly 40 years of hi
 
 The table shows average time in years to pass the T-Test for profitability given the true
 Sharpe ratio of the trading rule.
+
+\textit{这张表展示的是：在给定真实夏普比率的前提下，
+一条交易规则平均需要多少年，
+才能通过“是否盈利”的 T 检验。}
 
 \subsubsection*{How much history do you need to decide if one rule is better than another?}
 
@@ -848,27 +931,6 @@ The table shows the number of years needed for us to be reasonably certain that 
 is better than another, given the SR advantage of the better rule (rows) and the correlation
 between the trading returns of the two rules (columns).
 
-为什么大规模测试会这么危险？
-因为哪怕所有规则本质上都没有任何盈利能力，
-只要你测试得足够多，
-总会有一些“看起来很棒”的规则幸运混出来。
-
-上面的几张表说明了几个核心事实：
-1. 规则池越大，
-你越容易误选出坏规则。
-2. 历史样本越长，
-你才越有资格把“筛选阈值”放低一些。
-3. 即便一条规则真的有正的夏普比率，
-要在统计意义上证明它大概是正的，
-通常也需要非常多年。
-4. 若你想证明规则 A 比规则 B 更好，
-所需数据比证明“一条规则不是垃圾”还要更多。
-
-直白一点说，
-大多数时候，
-你根本没有足够的数据，
-去理直气壮地说：
-“这一条规则明显优于那一条。”
 
 \subsubsection*{Should you fit one trading rule for all instruments?}
 
@@ -877,6 +939,17 @@ classes. My team managed the fixed income portfolio, another ran equities and so
 Initially the trading strategies we ran were fairly similar. However over time, as we did
 more market specific research, we all became convinced that we needed to customise our
 systems differently.
+
+2010 年，
+我所在的大型系统化对冲基金按资产类别进行了重组。
+我的团队负责固定收益投资组合，
+另一支团队负责股票，
+其他团队也各自管理不同板块。
+最开始，
+我们运行的交易策略还算比较相似。
+但随着大家做了越来越多针对具体市场的研究，
+我们都逐渐相信：
+自己的系统需要被分别定制。
 
 In many cases we went further and also began to fit different parts of our portfolios
 separately. We might for example have fitted emerging and developed market bond
@@ -889,52 +962,6 @@ this to the extreme and fit every instrument separately. Almost all back-testing
 such as the one Joe was using, default to fitting trading rules on a single instrument at a
 time. So you would have one variation of a rule for the British pound/dollar, another for
 euro/dollar and so on.
-
-This is a classic example of the narrative fallacy, a cognitive bias we have seen before. To
-our human minds it makes sense to have different stories, and so different trading rules,
-for different instruments.
-
-But is this the right thing to do? It depends on whether the behaviour of each variation
-over the various instruments is significantly different. If it isn't then you're likely to be
-over-fitting by individually tailoring each rule for every instrument. In practice there isn't
-usually a statistical difference between different instruments, particularly if they are closely
-related such as a group of equity index futures.\footnote{There are some exceptions,
-notably when there are different trading costs for the instruments concerned, which I'll
-cover in chapter twelve, ``Speed and Size''.\par 当然也有例外，
-尤其是当不同工具的交易成本差异很大时，
-这一点我会在第十二章“速度与规模”中讨论。}
-
-In fact pooling your data and fitting multiple instruments together is an excellent way of
-getting more data history, which gives you a better shot at being able to distinguish
-profitable and loss making trading rules.
-
-As an example I have two trading rules in my own portfolio which for a typical single
-instrument have Sharpe ratios (SR) averaging 0.05 and 0.30 respectively. Despite being
-perfectly uncorrelated, table 6 shows I'd need 45 years to distinguish them; almost
-impossible when even the earliest financial futures only began trading in 1972. However
-the same rules run on a portfolio of instruments have SR of 0.13 and
-1.13.\footnote{Technical note: These are the returns you'd get if you traded an equally
-weighted portfolio of instruments using the same trading rule. The improvement in Sharpe
-ratio (SR) comes from the diversification effect across instruments. The alternative method
-is to stitch consecutive series of instrument returns together. This gives a very long history
-of returns, but the SR of the stitched series will be almost the same as the average across
-individual instruments (it is not identical to the average because of the effect of varying
-lengths of price series for different instruments).} The table shows I'd need just 11 years
-of data to distinguish these two Sharpe ratios from each other.
-
-To make pooling easier you should design trading rules that are generic and can work with
-any instrument. I'll give some examples of generic rules in chapter seven, ``Forecasts''.
-
-2010 年，
-我所在的大型系统化对冲基金按资产类别进行了重组。
-我的团队负责固定收益投资组合，
-另一支团队负责股票，
-其他团队也各自管理不同板块。
-最开始，
-我们运行的交易策略还算比较相似。
-但随着大家做了越来越多针对具体市场的研究，
-我们都逐渐相信：
-自己的系统需要被分别定制。
 
 在很多情况下，
 我们甚至更进一步，
@@ -953,12 +980,26 @@ any instrument. I'll give some examples of generic rules in chapter seven, ``For
 欧元兑美元会有另一种，
 其余品种也都各自为政。
 
+This is a classic example of the narrative fallacy, a cognitive bias we have seen before. To
+our human minds it makes sense to have different stories, and so different trading rules,
+for different instruments.
+
 这正是叙事谬误的经典例子，
 而我们之前已经见识过这种认知偏差。
 对人类大脑来说，
 给不同品种讲不同故事，
 于是再给它们配上不同的交易规则，
 听上去非常合理。
+
+But is this the right thing to do? It depends on whether the behaviour of each variation
+over the various instruments is significantly different. If it isn't then you're likely to be
+over-fitting by individually tailoring each rule for every instrument. In practice there isn't
+usually a statistical difference between different instruments, particularly if they are closely
+related such as a group of equity index futures.\footnote{There are some exceptions,
+notably when there are different trading costs for the instruments concerned, which I'll
+cover in chapter twelve, ``Speed and Size''.\par 当然也有例外，
+尤其是当不同工具的交易成本差异很大时，
+这一点我会在第十二章“速度与规模”中讨论。}
 
 但这样做真的是对的吗？
 答案取决于：
@@ -971,6 +1012,10 @@ any instrument. I'll give some examples of generic rules in chapter seven, ``For
 尤其是当它们彼此非常接近时，
 例如一组股票指数期货。
 
+In fact pooling your data and fitting multiple instruments together is an excellent way of
+getting more data history, which gives you a better shot at being able to distinguish
+profitable and loss making trading rules.
+
 事实上，
 把多个品种的数据合并起来一起拟合，
 是获得更多历史样本的极佳方式。
@@ -978,27 +1023,45 @@ any instrument. I'll give some examples of generic rules in chapter seven, ``For
 你更有机会区分哪些交易规则真正能赚钱，
 哪些只是会亏钱的噪声。
 
+As an example I have two trading rules in my own portfolio which for a typical single
+instrument have Sharpe ratios (SR) averaging 0.05 and 0.30 respectively. Despite being
+perfectly uncorrelated, table 6 shows I'd need 45 years to distinguish them; almost
+impossible when even the earliest financial futures only began trading in 1972. However
+the same rules run on a portfolio of instruments have SR of 0.13 and
+1.13.\footnote{Technical note: These are the returns you'd get if you traded an equally
+weighted portfolio of instruments using the same trading rule. The improvement in Sharpe
+ratio (SR) comes from the diversification effect across instruments. The alternative method
+is to stitch consecutive series of instrument returns together. This gives a very long history
+of returns, but the SR of the stitched series will be almost the same as the average across
+individual instruments (it is not identical to the average because of the effect of varying
+lengths of price series for different instruments).} The table shows I'd need just 11 years
+of data to distinguish these two Sharpe ratios from each other.
+
+举个例子，
+我自己的投资组合里有两条交易规则，
+如果只在单一品种上运行，
+它们的平均夏普比率
+（SR）
+分别大约是 0.05 和 0.30。
+尽管这两条规则彼此完全不相关，
+表 6 仍显示：
+我要区分它们，
+需要 45 年的数据。
+这几乎是不可能的，
+因为最早的金融期货也不过从 1972 年才开始交易。
+但如果同样的规则运行在一个品种组合上，
+它们的 SR 就会变成 0.13 和 1.13。
+这时表格显示，
+我只需要 11 年数据，
+就足以把这两个夏普比率区分开来。
+
+To make pooling easier you should design trading rules that are generic and can work with
+any instrument. I'll give some examples of generic rules in chapter seven, ``Forecasts''.
+
 为了让这种“合并数据”更容易实现，
 你应当设计通用型交易规则，
 让它们能够适用于任何品种。
 我会在第七章“预测值”中给出一些这类通用规则的例子。
-
-另一个常见错误，是把每个品种都单独拟合出一套专属规则。
-这在直觉上很诱人，
-因为人类喜欢给不同市场讲不同故事。
-但问题在于：
-除非你能证明不同品种上的规则行为真的存在显著差异，
-否则这种“量身定做”通常就是过拟合。
-
-现实里，
-尤其是在那些彼此非常相近的品种
-（例如一组股指期货）之间，
-这种显著差异通常很难被统计地证明。
-与其把每个品种分开拟合，
-不如把多个品种的数据合并起来，
-这样反而能得到更多历史样本，
-也更有机会区分规则究竟是赚钱，
-还是只是噪声。
 
 \section*{Some rules for effective fitting}
 \phantomsection
@@ -1156,18 +1219,6 @@ significant falls in inflation; something that won't be repeated.
 因为过去那些高收益最主要的原因之一，
 是通胀的大幅下行；
 而这件事不太可能再发生一次。
-
-如果你无论如何都要拟合，
-那么至少要遵守几条底线：
-1. 方法保持简单；
-2. 候选规则和变体尽可能少；
-3. 永远使用扩张式或滚动式样本外拟合；
-4. 不要因为一点点表现差异就轻易淘汰规则；
-5. 尽量跨品种合并数据；
-6. 比较规则时，
-要比较真正可比的对象；
-7. 不要把过去那个异常好的宏观时代，
-误当成未来也会重复出现的常态。
 
 \section*{How I choose my rules}
 \phantomsection
