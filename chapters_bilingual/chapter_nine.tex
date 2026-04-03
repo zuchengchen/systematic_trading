@@ -196,6 +196,8 @@ The table shows various expected losses (rows), and different percentage volatil
 
 Now, table 20 assumes you have zero skew in your returns. Are you running a positive skew trend following system, or a negative skew relative value or carry rule? Systems with different skew have varying risk properties. As table 21 shows, the worst days, weeks and months for a negative skew strategy are much nastier than with zero skew. For positive skew strategies large losses are much less likely, as you can see in table 22. However the typical cumulative loss is higher. With negative skew it's vital to have sufficient capital to cope with the very bad days, weeks and months you will occasionally see. This is especially true with high leverage and the risk your broker will make a margin call at the worst possible time. With positive skew the difficulty is psychological; committing to a system when you spend most of your time suffering cumulative losses.
 
+skew strategies large losses are much less likely, as you can see in table 22. However the typical cumulative loss is higher. With negative skew it's vital to have sufficient capital to cope with the very bad days, weeks and months you will occasionally see. This is especially true with high leverage and the risk your broker will make a margin call at the worst possible time. With positive skew the difficulty is psychological; committing to a system when you spend most of your time suffering cumulative losses.
+
 不过，表 20 假设的是你的收益偏度为零。那你的系统到底是一套正偏度的趋势跟踪系统，还是一套负偏度的相对价值或 carry 系统呢？
 不同偏度的系统，风险特性会非常不一样。正如表 21 所展示的那样，对于负偏度策略来说，最糟糕的单日、单周和单月亏损，
 都会比零偏度情形下惨烈得多。对于正偏度策略来说，大额亏损出现的概率则要低得多，正如你在表 22 中所看到的那样。
@@ -368,9 +370,11 @@ Chance of losing 90\% & <1\% & 1.1\% & 22\% & 88\% \\
 \endgroup
 
 \subsection*{Sharpe ratio is 0.50 and zero skew.103}
-\bisubsectiontitle{假设 Sharpe 比率为 0.50，偏度为零。103}
+\bisubsectiontitle{假设夏普比率为 0.50，偏度为零。103}
 
 The table shows chances of ending a ten-year trading career losing a given proportion (rows), of initial trading capital given different percentage volatility targets, assuming Sharpe ratio is 0.50 and zero skew.103
+
+\subsection*{Sharpe ratio is 0.50 and zero skew.103}
 
 这张表展示的是：在假设夏普比率为 0.50、偏度为零的条件下，采用不同百分比波动率目标时，
 十年交易生涯结束后亏掉某一给定比例初始资本
@@ -508,7 +512,7 @@ This finding is potentially dangerous when used by an over confident investor. I
 I run a highly diversified futures trading system with around 45 instruments, eight trading rules drawn from four different styles, and 30 trading rule variations. In a 35 year back-test, conservatively fitted with out of sample bootstrapping, it has a Sharpe ratio (SR) of around 1.0 after costs, but the highest volatility target I'd advocate using
 
 我自己运行的是一套高度分散化的期货交易系统，它包含大约 45 个品种、8 条来自 4 种不同风格的交易规则，以及 30 个交易规则变体。
-在一项长达 35 年、采用保守的样本外 bootstrapping 拟合的回测中，它在扣除成本后的夏普比率
+在一项长达 35 年、采用保守的样本外自助法拟合的回测中，它在扣除成本后的夏普比率
 （SR）大约是 1.0，但我愿意主张使用的最高波动率目标却只有
 
 for it is 37\%, rather than the 100\% suggested by the Kelly criterion and the back-tested SR.\footnote{At the time of writing I'm using a 25\% volatility target, reflecting my relatively low appetite for risk.\par 在我写这本书的时候，
@@ -523,13 +527,13 @@ for it is 37\%, rather than the 100\% suggested by the Kelly criterion and the b
 这是因为，正如我在第二章“系统化交易规则”关于可实现夏普比率的部分
 （第 46 页起）所讨论的那样，未来资产收益很可能会低于我们通常用来回测的历史样本。要从回测结果中得到更现实、可实现的 SR，
 一个不错的经验法则是使用表 14
-（第 90 页）中的比例。它们表明：如果你像我一样采用样本外 bootstrap，那么应当乘以 0.75，才能得到更现实的夏普比率。
+（第 90 页）中的比例。它们表明：如果你像我一样采用样本外自助法，那么应当乘以 0.75，才能得到更现实的夏普比率。
 如果你在拟合时没有做到这么谨慎，那么还应使用更低的比例。我在第二章中也说过：无论回测结果有多漂亮，我认为坚定的系统化交易者应当期待达到的绝对最大 SR 也不过是 1.0。
 第二，完整 Kelly 准则实在是太激进了，因为即便你的 SR 预期完全正确，它仍然会让你暴露在坏运气拖累下的巨大回撤风险之中。
 在表 23 中，一个使用正确 Kelly 目标 50\% 的人，在十年后有 10\% 的概率亏掉一半本金；这对绝大多数人来说都会令人不安。
-因此，采用 Half-Kelly，把风险设定为最优值的一半，会好得多。表 25 的 A 列给出了：在某个现实可行的回测 SR 下，我建议采用的百分比波动率目标。
+因此，采用半 Kelly，把风险设定为最优值的一半，会好得多。表 25 的 A 列给出了：在某个现实可行的回测 SR 下，我建议采用的百分比波动率目标。
 以我自己的系统为例，我先从 1.0 的回测夏普比率出发，再根据表 14 乘以 0.75
-（因为我使用的是样本外 bootstrapping），得到更现实的 SR = 0.75。
+（因为我使用的是样本外自助法），得到更现实的 SR = 0.75。
 如果按完整 Kelly 准则下注，对应的波动率目标会是 75\%；再把它减半之后，就得到 37\%
 （向下取整）。这一切都建立在你的交易系统和我的系统一样，偏度为零或正偏度的前提之上。如果你预期系统是负偏度的，就必须格外小心。
 正如图 21 所展示的那样，风险过高时，负偏度系统所遭受的惩罚会比正偏度或零偏度系统更严重。正如我在第二章中讨论的那样，
@@ -576,7 +580,7 @@ The table shows the recommended percentage volatility target for those who can b
 这张表展示的是：对于那些可以回测自己动态交易系统的人来说，在根据第 90 页表 14 对模拟结果进行调整之后，
 不同收益偏度
 （列）与可实现的回测夏普比率
-（行）对应的建议百分比波动率目标。最优波动率目标是用 Half-Kelly 计算出来的。
+（行）对应的建议百分比波动率目标。最优波动率目标是用半 Kelly 计算出来的。
 对于负偏度策略，这个值还要再减半。我们假设可实现的最大 SR 为 1.0。
 
 The returns of asset allocating investors are limited by their use of a static trading strategy. With a small, relatively undiversified portfolio you shouldn't expect high Sharpe ratios. As I said in chapter two, if you're holding a dozen equities in different industries but from the same country then you probably will achieve an SR of around 0.20. Those with larger portfolios diversified across multiple asset classes could get a maximum realistic SR of 0.4. Column C of table 26 shows the correct targets given asset allocators' SR expectations. However, as you'll see in chapter fourteen, it's unlikely even this level of volatility can be achieved as these investors don't use leverage. Semi-automatic traders have systems which cannot be back-tested and usually have a small, relatively un-diversified, set of ad-hoc instruments. I would initially assume an achievable SR of 0.20 unless you are very experienced, are trading across multiple asset classes, and have a good track record with real money. As you saw in chapter two, in my opinion an SR of 0.5 is the maximum safe achievable level, so you should set the volatility target at no more than 25\%. Again the target should be halved if you are trading a strategy that is likely to have negative skew, such as selling option volatility, or exhibits a similar return pattern with steady profits on most bets with occasional large losses. Columns D and E of table 26 show the appropriate volatility targets for this type of trader.
@@ -641,7 +645,7 @@ semi-automatic trading.
 （列），以及夏普比率
 （SR）预期
 （行），所对应的建议百分比波动率目标。
-最优波动率目标采用 Half-Kelly 计算。
+最优波动率目标采用半 Kelly 计算。
 我们假设资产配置型投资者不应期待超过 0.40 的 SR，
 而半自动交易者不应期待超过 0.50 的 SR。
 资产配置型投资者被假定为零偏度。

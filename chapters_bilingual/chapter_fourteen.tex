@@ -144,8 +144,8 @@ Because you're going to use the ‘no-rule' trading rule I introduced in chapter
 （100 个交易日）回看窗口来估计价格波动率。在前面的章节中我算过：
 如果对 ETF 交易采用保守成本假设，那么较长回看窗口对应的年度成本大约是 0.032 个夏普比率
 （SR）单位，而默认五周窗口则是 0.13 个 SR 单位，这节省非常可观。
-采用 20 周回看窗口时，你的交易换手率大约会是每年 0.4 个 round trips。如果你采用第十二章中我建议的速度上限，
-也就是每年在成本上不超过 0.08 个 SR，那么 0.4 的年 round trips 换手率，就意味着你所交易的任何工具，其最大标准化成本必须不高于
+采用 20 周回看窗口时，你的交易换手率大约会是每年 0.4 次往返交易。如果你采用第十二章中我建议的速度上限，
+也就是每年在成本上不超过 0.08 个 SR，那么每年 0.4 次往返交易就意味着你所交易的任何工具，其最大标准化成本必须不高于
 0.08 ÷ 0.4 = 0.20 个 SR 单位每年。幸运的是，只要你避开了低波动债券，那么你所有工具的成本都会明显低于这个阈值；
 其中最贵的是通胀挂钩债券 ETF
 IGIL，它的标准化成本是 0.08 个 SR 单位。
@@ -210,14 +210,14 @@ This implies your annualised cash volatility target should be 7.5\% multiplied b
 不过在此之前，你应当先理解它们每日重新加杠杆所涉及的复杂性。} How much would you be paying in costs? I worked out above that you should expect to have a turnover of 0.4 round trips per year and standardised costs of 0.08 SR, implying an expected cost of 0.4 × 0.08 = 0.032 SR annually. With 7.5\% annualised volatility that equates to a modest annual performance drag of 0.032 × 7.5\% = 0.24\%. In practice you should pay less since I used the most expensive instrument to work out the standardised cost. On top of this would be the annual holding costs for ETFs -- currently these range from about 0.05\% for the cheapest S\&P 500 tracker up to 0.55\% for emerging market equities.
 
 这意味着，你的年化现金波动率目标应当是 7.5\% 乘以交易资本，也就是 €750,000。这个水平应该不会对任何人的风险偏好构成问题；
-如果你进一步假设这个波动率目标正好位于正确的 Half-Kelly 水平，那么所要求的夏普比率
+如果你进一步假设这个波动率目标正好位于正确的半 Kelly 水平，那么所要求的夏普比率
 （SR）仅仅是 0.15，这应该很容易实现。与此同时，这也意味着你对账户增长速度的预期应当非常克制。对于资产配置型投资者，
 我会保守地认为成本后的最大 SR 为 0.4
 （见第 46 页），这对应的收益仅仅只有 0.4 × 7.5\% = 3.0\% 每年，再加上无风险利率
 （在我写作时欧洲大约是 0.5\%），而由于你并没有使用衍生品，这部分无风险利率应当计入收益。
 如果你想把收益水平再提高，那么要么你得使用杠杆，要么你就得减少分散化，并通过降低低波动品种
 （比如债券）的权重
-（甚至彻底剔除它们）来提高夏普比率。这一结构下的成本会是多少呢？前面我算过：你的换手率大约是每年 0.4 个 round trips，
+（甚至彻底剔除它们）来提高夏普比率。这一结构下的成本会是多少呢？前面我算过：你的换手率大约是每年 0.4 次往返交易，
 标准化成本是 0.08 SR，因此预期年度成本就是 0.4 × 0.08 = 0.032 SR。以 7.5\% 的年化波动率来看，
 这对应的年度表现拖累大约是 0.032 × 7.5\% = 0.24\%，属于相当温和的水平。实际上，你支付的成本还应当更低一些，
 因为我在计算标准化成本时，使用的是最贵的那个工具。除此之外，还要再加上 ETF 本身的年度持有成本
@@ -456,9 +456,9 @@ I've suggested a weekly rebalancing process here which given the low volatility 
 \textbf{品种子系统仓位} & 由于你的预测值恒定为 +10，所以这一步的结果就等于波动率缩放因子，也就是日现金波动率目标除以品种价值波动率。 \\
 \textbf{可选：获取表现预估} & 把你对价格表现的判断转换成年化夏普比率。 \\
 \textbf{可选：调整品种权重} & 使用第四章表 12
-（第 86 页）B 列 “Without certainty” 来进行 Sharpe 比率权重调整。 \\
+（第 86 页）B 列 “Without certainty” 来进行夏普比率权重调整。 \\
 \textbf{投资组合品种仓位} & 子系统仓位乘以品种权重
-（本例使用表 41 的权重，如有需要再做 Sharpe 比率调整），并再乘以品种分散化乘数
+（本例使用表 41 的权重，如有需要再做夏普比率调整），并再乘以品种分散化乘数
 （本例中为 1.61）。 \\
 \textbf{四舍五入后的目标仓位} & 将投资组合品种仓位四舍五入到最接近的品种单位仓位，本例中一个单位是 100 股。 \\
 \textbf{发出交易指令} & 把当前仓位与最终目标仓位进行比较。如果偏差超过 10\%，就依据仓位惯性进行交易。 \\
@@ -631,10 +631,10 @@ Using these predictions you can use table 12 (page 86), column B ‘Without cert
 & US bonds / 美国债券 & Euro bonds / 欧洲债券 & UK bonds / 英国债券 & EM bonds / 新兴市场债券 & Inflation bonds / 通胀挂钩债券 \\
 \midrule
 Instrument weight / 品种权重 & 6.67\% & 6.67\% & 6.67\% & 10.00\% & 10.00\% \\
-Expected Sharpe ratio / 预期 Sharpe 比率 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
-Average Sharpe ratio / 平均 Sharpe 比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
+Expected Sharpe ratio / 预期夏普比率 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+Average Sharpe ratio / 平均夏普比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
 Outperformance / 相对超额表现 & -0.3 & -0.3 & -0.3 & -0.3 & -0.3 \\
-Sharpe ratio adjustment / Sharpe 比率调整* & 0.83 & 0.83 & 0.83 & 0.83 & 0.83 \\
+Sharpe ratio adjustment / 夏普比率调整* & 0.83 & 0.83 & 0.83 & 0.83 & 0.83 \\
 Renormalised instrument weight / 重新归一化后的品种权重** & 5.35\% & 5.35\% & 5.35\% & 8.03\% & 8.03\% \\
 \bottomrule
 \end{tabularx}
@@ -660,10 +660,10 @@ Renormalised instrument weight / 重新归一化后的品种权重** & 5.35\% & 
 & Euro equities / 欧洲股票 & US equities / 美国股票 & UK equities / 英国股票 & Japan equities / 日本股票 & EM equities / 新兴市场股票 \\
 \midrule
 Instrument weight / 品种权重 & 10.50\% & 10.50\% & 10.50\% & 10.50\% & 18.00\% \\
-Expected Sharpe ratio / 预期 Sharpe 比率 & 0.6 & 0.6 & 0.6 & 0.6 & 0.6 \\
-Average Sharpe ratio / 平均 Sharpe 比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
+Expected Sharpe ratio / 预期夏普比率 & 0.6 & 0.6 & 0.6 & 0.6 & 0.6 \\
+Average Sharpe ratio / 平均夏普比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
 Outperformance / 相对超额表现 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
-Sharpe ratio adjustment / Sharpe 比率调整 & 1.17 & 1.17 & 1.17 & 1.17 & 1.17 \\
+Sharpe ratio adjustment / 夏普比率调整 & 1.17 & 1.17 & 1.17 & 1.17 & 1.17 \\
 Renormalised instrument weight / 重新归一化后的品种权重 & 11.88\% & 11.88\% & 11.88\% & 11.88\% & 20.37\% \\
 \bottomrule
 \end{tabularx}
@@ -810,10 +810,10 @@ Even with your long look-back, price volatility has exploded, especially in equi
 & US bonds / 美国债券 & Euro bonds / 欧洲债券 & UK bonds / 英国债券 & EM bonds / 新兴市场债券 & Inflation bonds / 通胀挂钩债券 \\
 \midrule
 Instrument weight / 品种权重 & 6.67\% & 6.67\% & 6.67\% & 10.00\% & 10.00\% \\
-Expected Sharpe ratio / 预期 Sharpe 比率 & 0.6 & 0.6 & 0.6 & 0.6 & 0.6 \\
-Average Sharpe ratio / 平均 Sharpe 比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
+Expected Sharpe ratio / 预期夏普比率 & 0.6 & 0.6 & 0.6 & 0.6 & 0.6 \\
+Average Sharpe ratio / 平均夏普比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
 Outperformance / 相对超额表现 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
-Sharpe ratio adjustment / Sharpe 比率调整* & 1.17 & 1.17 & 1.17 & 1.17 & 1.17 \\
+Sharpe ratio adjustment / 夏普比率调整* & 1.17 & 1.17 & 1.17 & 1.17 & 1.17 \\
 Renormalised instrument weight / 重新归一化后的品种权重** & 8.07\% & 8.07\% & 8.07\% & 12.11\% & 12.11\% \\
 \bottomrule
 \end{tabularx}
@@ -839,10 +839,10 @@ Renormalised instrument weight / 重新归一化后的品种权重** & 8.07\% & 
 & Euro equities / 欧洲股票 & US equities / 美国股票 & UK equities / 英国股票 & Japan equities / 日本股票 & EM equities / 新兴市场股票 \\
 \midrule
 Instrument weight / 品种权重 & 10.5\% & 10.5\% & 10.5\% & 10.5\% & 18\% \\
-Expected Sharpe ratio / 预期 Sharpe 比率 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
-Average Sharpe ratio / 平均 Sharpe 比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
+Expected Sharpe ratio / 预期夏普比率 & 0.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+Average Sharpe ratio / 平均夏普比率 & 0.3 & 0.3 & 0.3 & 0.3 & 0.3 \\
 Outperformance / 相对超额表现 & -0.3 & -0.3 & -0.3 & -0.3 & -0.3 \\
-Sharpe ratio adjustment / Sharpe 比率调整 & 0.83 & 0.83 & 0.83 & 0.83 & 0.83 \\
+Sharpe ratio adjustment / 夏普比率调整 & 0.83 & 0.83 & 0.83 & 0.83 & 0.83 \\
 Renormalised instrument weight / 重新归一化后的品种权重 & 9.02\% & 9.02\% & 9.02\% & 9.02\% & 15.47\% \\
 \bottomrule
 \end{tabularx}
