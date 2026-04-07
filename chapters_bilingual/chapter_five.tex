@@ -116,10 +116,19 @@
 
 \rawtablecaption{EXAMPLE OF COMPONENTS IN A TRADING SYSTEM\\交易系统组成示例}\begingroup \small
 
-\begin{englishtableblock} \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
+\begin{englishtableblock} \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{breakabletabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{Component} & \textbf{Example in this system} & \textbf{Role in the framework} \\
 \midrule
+\endfirsthead
+\toprule
+\textbf{Component} & \textbf{Example in this system} & \textbf{Role in the framework} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
 \textbf{Instruments to trade} & Instruments X and Y & Instruments are the things you trade and hold positions in. They could be directly held assets such as equities and bonds, derivatives like options, futures, contracts for difference and spread bets, or collective funds such as ETFs, mutual funds and hedge funds. \\
 \addlinespace[0.4em]
 \textbf{Forecasts} & A1, A2 and B1 forecasts for each instrument & A forecast is an estimate of how much a particular instrument's price will change, given a specific trading rule variation. In this example there are three rule variations and two instruments, so there are \(3 \times 2 = 6\) forecasts in total. For staunch systems traders, the trading rules that generate forecasts are the engine of the system. Semi-automatic traders make discretionary forecasts instead, while asset allocating investors use a single fixed forecast for all instruments. \\
@@ -133,8 +142,7 @@
 \textbf{Portfolios} & Portfolio weighted position in X and in Y & Each subsystem is self-contained, but you then combine multiple subsystems into a portfolio to get diversification. This means allocating capital across instruments using instrument weights, and then using the resulting portfolio weighted positions to determine the trades you need to do. \\
 \addlinespace[0.4em]
 \textbf{Speed and Size} & System-wide design constraints & This is not a separate component, but a set of principles that apply across the whole system. You need to understand how expensive the system is to trade, and whether your capital is unusually large or small, before deciding how to tailor the final design. \\
-\bottomrule
-\end{tabularx}
+\end{breakabletabularx}
 }
 \end{englishtableblock}
 \endgroup
@@ -143,10 +151,19 @@
 
 \begin{chineseblock} \noindent 这套交易系统有两条交易规则 A 和 B、三个规则变体 A1、A2 和 B1，以及两个交易品种 X 和 Y。这个框架会先为每个品种形成一个独立的交易子系统，再把这些子系统组合成投资组合。\end{chineseblock}
 
-\begin{chinesetableblock} \begingroup \small \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
+\begin{chinesetableblock} \begingroup \small \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{breakabletabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{组成部分} & \textbf{在本系统中的示例} & \textbf{在框架中的作用} \\
 \midrule
+\endfirsthead
+\toprule
+\textbf{组成部分} & \textbf{在本系统中的示例} & \textbf{在框架中的作用} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
 \textbf{要交易的品种} & 品种 X 和 Y & 品种就是你进行交易并持有仓位的对象。它们既可以是股票、债券这类直接持有的资产，也可以是期权、期货、差价合约和点差投注等衍生品，还可以是 ETF、共同基金甚至对冲基金这类集合投资工具。 \\
 \addlinespace[0.4em]
 \textbf{预测} & 每个品种上的 A1、A2 和 B1 预测 & 预测是在给定某个特定交易规则变体的情况下，对某个品种价格会变动多少的估计。在这个例子里有三个规则变体、两个品种，因此总共会产生 \(3 \times 2 = 6\) 个预测。对坚定系统化交易者而言，生成预测的交易规则就是系统的引擎。半自动交易者改用主观预测，而资产配置型投资者则对所有品种使用同一个固定预测。 \\
@@ -160,7 +177,6 @@
 \textbf{投资组合} & X 与 Y 上的投资组合加权仓位 & 每个子系统本身都是自成一体的，但你接下来会把多个子系统组合成投资组合，以获得分散化。这意味着你要通过品种权重在不同子系统之间分配资本，再利用得到的投资组合加权仓位去计算最终需要执行的交易。 \\
 \addlinespace[0.4em]
 \textbf{速度与规模} & 作用于全系统的设计约束 & 这并不是一个独立组件，而是一组贯穿整个系统的原则。你需要先理解系统的交易成本有多高，以及你的资本规模是否异常大或异常小，然后再决定如何调整最终设计。 \\
-\bottomrule
-\end{tabularx}
+\end{breakabletabularx}
 }
 \endgroup \end{chinesetableblock}

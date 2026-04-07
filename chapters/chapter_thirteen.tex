@@ -4,11 +4,12 @@ I N THIS FINAL PART OF THE BOOK I'LL SHOW YOU HOW TO PUT THE framework into acti
 
 \section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
-\begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} Y@{}}\textbf{Who are you?} & Introducing the semi-automatic trader. \\
-\textbf{Using the framework} & How you will use the systematic framework as a semi-automatic trader. \\
-\textbf{Process} & The process you need to follow each morning and as you are trading throughout the day. \\
-\textbf{Trading diary} & A diary showing how you could have traded the markets as a semi-automatic trader in late 2014. \\
-\end{tabularx}
+\begin{chapteroverviewtable}
+\chapteroverviewitem{Who are you?}{Introducing the semi-automatic trader.}
+\chapteroverviewitem{Using the framework}{How you will use the systematic framework as a semi-automatic trader.}
+\chapteroverviewitem{Process}{The process you need to follow each morning and as you are trading throughout the day.}
+\chapteroverviewitem{Trading diary}{A diary showing how you could have traded the markets as a semi-automatic trader in late 2014.}
+\end{chapteroverviewtable}
 
 \section*{Who are you?} \phantomsection \addcontentsline{toc}{section}{Who are you?}
 
@@ -24,7 +25,9 @@ As \textbf{semi-automatic traders} you don't trade a fixed set of instruments. A
 
 As I discussed in chapter seven, ‘Forecasts', (page 115) you'll need to have a graduated opinion on likely price movements whenever you decide to open a new position or ‘bet'. These need to be translated into quantifiable \textbf{forecasts}, as in table 37. Note if you weren't using spread bets or other derivatives, and couldn't \textbf{short sell} assets, you'd need to limit yourself to making positive forecasts.
 
-\rawtablecaption{TRANSLATING OPINIONS INTO A QUANTIFIED FORECAST141} \begingroup \small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{}*{9}{>{\centering\arraybackslash} X}@{}}
+\rawtablecaption{TRANSLATING OPINIONS INTO A QUANTIFIED FORECAST\protect\footnotemark}
+\footnotetext{This is identical to table 16 and is repeated here for ease of reference.}
+\begingroup \small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{}*{9}{>{\centering\arraybackslash} X}@{}}
 \toprule
 \shortstack{Very\\strong\\sell} & \shortstack{Strong\\sell} & Sell & \shortstack{Weak\\sell} & Neutral & \shortstack{Weak\\buy} & Buy & \shortstack{Strong\\buy} & \shortstack{Very\\strong\\buy} \\
 \midrule
@@ -44,7 +47,7 @@ I strongly recommend that you do not change your forecast once a bet is open. Ot
 
 \smallskip \noindent\textit{* \(X\) is equivalent to the \(B\) parameter in the generic ‘A and B’ system which I describe in appendix B.}
 
-What value of \(X\) should you use? It depends on whether you have a short or long-term forecasting horizon, and on the costs of your instruments. So with a shorter forecasting horizon you’ll cut more quickly, hold positions for less time, and it will be more expensive to trade. It’s important to match the forecasting horizon and the tightness of your stop loss. There is no point making a forecast of prices for the next six months if you’re likely to be stopped out by next Tuesday. Table 38 shows the average holding period for a given value of \(X\).142
+What value of \(X\) should you use? It depends on whether you have a short or long-term forecasting horizon, and on the costs of your instruments. So with a shorter forecasting horizon you’ll cut more quickly, hold positions for less time, and it will be more expensive to trade. It’s important to match the forecasting horizon and the tightness of your stop loss. There is no point making a forecast of prices for the next six months if you’re likely to be stopped out by next Tuesday. Table 38 shows the average holding period for a given value of \(X\).\footnote{I produced this table using both artificial and real market data drawn from a number of asset classes. Because we obviously can’t simulate a discretionary rule I used a random entry rule. Interestingly this is actually profitable in real data, because even with a random entry we can still capitalise on trends by using stop losses.}
 
 \rawtablecaption{HOW DOES THE X PARAMETER IN YOUR STOP LOSS RULE DETERMINE YOUR AVERAGE HOLDING PERIOD? SMALLER VALUES OF X MEAN TIGHTER STOP LOSSES AND SHORTER HORIZONS, BUT REQUIRE CHEAPER INSTRUMENTS} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.18\textwidth} p{0.24\textwidth} p{0.28\textwidth} Y@{}}
 \toprule
@@ -68,14 +71,11 @@ As you saw in chapter twelve, ‘Speed and Size', you need to adjust X given the
 
 I've already set the initial \textbf{trading capital} of this example at £100,000. But how aggressive should you be with this money -- what should your \textbf{percentage} \textbf{volatility target} be? You need to refer back to chapter nine, ‘Volatility Targeting'. In this example I am going to assume that your \textbf{Sharpe ratio} (SR) will be at least 0.30 after costs, which I calculate below as 0.08 SR units. This is comfortably under my recommended maximum expectation of 0.50 (from page 46). Referring to column D of table 26 (page 148) an SR of 0.30 gives a risk percentage of 15\%, and I'm assuming you can cope with the pain that implies.
 
-This implies you'll have an annual \textbf{volatility target} of £100,000 × 15\% = £15,000 and a daily target of £15,000 ÷ 16 = £937.50.144 Because you're using spread bets there is no concern about hitting a relatively modest risk percentage of 15\%. As always you should avoid low volatility assets where the required leverage will be too high. You'll be measuring your account value daily, recalculating \textbf{trading capital}, and adjusting your \textbf{volatility target} accordingly. This might trigger trades on existing positions and the new volatility target will be used to size any new bets you make.
+This implies you'll have an annual \textbf{volatility target} of £100,000 × 15\% = £15,000 and a daily target of £15,000 ÷ 16 = £937.50.\footnote{As before to go from annual to daily volatility you need to divide by the ‘square root of time’, which assuming 256 business days in a year is 16.} Because you're using spread bets there is no concern about hitting a relatively modest risk percentage of 15\%. As always you should avoid low volatility assets where the required leverage will be too high. You'll be measuring your account value daily, recalculating \textbf{trading capital}, and adjusting your \textbf{volatility target} accordingly. This might trigger trades on existing positions and the new volatility target will be used to size any new bets you make.
 
 \subsection*{Position sizing}
 
 You can now think about ‘Position sizing', as discussed in chapter ten. First you need to measure the recent percentage \textbf{standard deviation} of returns (\textbf{price volatility}) in each market to determine the expected daily variation in the value of one \textbf{instrument block} (the instrument currency volatility). I'd suggest you use the eyeball technique described in chapter ten (page 155), which you're already using to calculate the volatility estimate needed for stop loss levels. This should be done daily on any instruments where you have positions, and ideally on anything you might place bets on today.\footnote{Working out the instrument currency volatility for a potential trade in advance makes the process more efficient but might not always be possible, in which case you will need to do your estimation just before you trade.} Changes in price volatility for your existing positions might trigger trades. From table 38 (page 212) with the suggested X of 4 you would expect to get a turnover of 8 after accounting for the effects of sizing your position. With \textbf{standardised costs} of 0.01 SR units for spread bets this gives us an annual cost of 8 × 0.01 = 0.08 \textbf{Sharpe ratio} (SR) units, which just squeaks in at the maximum level of 0.08 SR that I recommended in chapter twelve, ‘Speed and Size'. With 15\% annualised volatility that equates to a performance drag from costs of 0.08 × 15\% = 1.2\% a year. This is more than most \textbf{passive ETFs}, but significantly cheaper than a hedge fund. You'd also have to pay perhaps 0.6\% for rolling your quarterly bets.\footnote{Assuming the full spread is charged on rolls.} You can save on costs by following the advice in the chapter twelve, ‘Speed and Size', and not adjusting your estimate of \textbf{instrument currency volatility} if the previous level looks about right, say within 25\% of the current value. As you're spread betting, the value of a 1\% move (the \textbf{block value}) depends on the bet size in pounds per point, so you won't need to use exchange rates even when betting on non-UK markets. So for example with crude oil at \$65, a 1\% move of \$0.65 or 0.65 points, at a broker's minimum of £10 a point, will have a value of £6.50.
-
-\begin{enumerate}
-\item As before to go from annual to daily volatility you need to divide by the ‘square root of time', which assuming 256 business days in a year is 16. \end{enumerate}
 
 With this information you can use your \textbf{volatility target} to work out the \textbf{volatility scalars} every morning to use for both existing and potential trades.
 

@@ -4,16 +4,19 @@ NOW YOU HAVE SOME THEORY AND PERHAPS A FEW QUANTITATIVE tools at your disposal y
 
 \section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
-\begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} Y@{}}\textbf{A bad example} & A trading system with some fatal flaws. \\
-\textbf{Why use a modular framework} & The reasons why a modular framework makes sense for systematic trading strategies. \\
-\textbf{The elements of the framework} & A brief road map of the various components in the framework. \\
-\textbf{The following chapters in part three will describe each component in more detail. In the final part of the book I’ll show three examples of how this framework can be used, for semi-automatic traders, asset allocating investors and staunch systems traders.} & \\
-\end{tabularx}
+\begin{chapteroverviewtable}
+\chapteroverviewitem{A bad example}{A trading system with some fatal flaws.}
+\chapteroverviewitem{Why use a modular framework}{The reasons why a modular framework makes sense for systematic trading strategies.}
+\chapteroverviewitem{The elements of the framework}{A brief road map of the various components in the framework.}
+\end{chapteroverviewtable}
+
+\medskip
+
+\noindent The following chapters in part three will describe each component in more detail. In the final part of the book I'll show three examples of how this framework can be used, for semi-automatic traders, asset allocating investors and staunch systems traders.
 
 \section*{A bad example} \phantomsection \addcontentsline{toc}{section}{A bad example}
 
-\begin{enumerate}
-\item This is a hypothetical example and as far as I know isn't identical to any publicly available system. Here's an example of the kind of trading system you find in many books and websites.69 \end{enumerate}
+Here's an example of the kind of trading system you find in many books and websites.\footnote{This is a hypothetical example and as far as I know isn't identical to any publicly available system.}
 
 Entry rule Buy when the 20 day moving average rises over the 40 day, and vice versa.
 
@@ -25,11 +28,7 @@ Money management Never bet more than 3\% of your capital on each trade.
 
 Stop loss Set a trailing stop to close once you have lost 3\% of your capital. If you find yourself triggering stops too frequently, then widen them.
 
-I am not going to discuss the entry or exit rule.70 However the position sizing, money management and stop loss are a mess. Firstly why 3\%? Will this generate the right amount of risk? What if I'm particularly conservative, should I still use 3\%? If I don't like a particular trade that much, what should I bet? I typically have 40 positions in my portfolio, so should I be putting 40 lots of 3\% of my portfolio at risk at any one time (meaning 120\% of my total portfolio is at risk)? Does 3\% make sense if I am using a slower trading rule? The position sizes above might make sense for someone with an account size of perhaps £50,000 and a certain risk appetite, but what about everyone else? They might be correct when the book was written, but are they still right when we read it five years later? What about an \textbf{instrument} that isn't listed, can we trade it? How? Finally, setting a stop loss based solely on your capital and personal pain threshold is incorrect.71 Someone with a tiny account who hated losing money would be triggering their very tight stops after a few minutes, whilst a large hedge fund might close a losing position after decades. Stops that would make sense in oil futures would be completely wrong in the relatively quiet USD/CAD FX market. A stop that was correct in the peaceful calm of 2006 would be absurdly tight in the insanity we saw in 2008. The solution is to separate out the components of your system: \textbf{trading rules} (including explicit or implicit stop losses), position sizing, and the calculation of your \textbf{volatility}
-
-\begin{enumerate}
-\item The rules aren't too bad, as they are purely systematic and very simple. However they are binary (you're either fully in or out) which isn't ideal, and having only one trading rule \textbf{variation} is also less than perfect.
-\item This is recognised by most good traders. Here is Jack Schwager, in Hedge Fund Wizards, interviewing hedge fund manager Colm O'Shea: Jack: "So you don't use stops?" Colm: "No I do. I just set them wide enough. In those early days I wasn't setting stops at levels that made sense on the underlying hypothesis of the trade. I was setting stops based on my pain threshold. When I get out of a trade now it is because I was wrong. ... Prices are inconsistent with my hypothesis. I'm wrong and I need to get out and rethink the situation." (My emphasis.) \end{enumerate}
+I am not going to discuss the entry or exit rule.\footnote{The rules aren't too bad, as they are purely systematic and very simple. However they are binary (you're either fully in or out) which isn't ideal, and having only one trading rule variation is also less than perfect.} However the position sizing, money management and stop loss are a mess. Firstly why 3\%? Will this generate the right amount of risk? What if I'm particularly conservative, should I still use 3\%? If I don't like a particular trade that much, what should I bet? I typically have 40 positions in my portfolio, so should I be putting 40 lots of 3\% of my portfolio at risk at any one time (meaning 120\% of my total portfolio is at risk)? Does 3\% make sense if I am using a slower trading rule? The position sizes above might make sense for someone with an account size of perhaps £50,000 and a certain risk appetite, but what about everyone else? They might be correct when the book was written, but are they still right when we read it five years later? What about an \textbf{instrument} that isn't listed, can we trade it? How? Finally, setting a stop loss based solely on your capital and personal pain threshold is incorrect.\footnote{This is recognised by most good traders. Here is Jack Schwager, in Hedge Fund Wizards, interviewing hedge fund manager Colm O'Shea: Jack: "So you don't use stops?" Colm: "No I do. I just set them wide enough. In those early days I wasn't setting stops at levels that made sense on the underlying hypothesis of the trade. I was setting stops based on my pain threshold. When I get out of a trade now it is because I was wrong. ... Prices are inconsistent with my hypothesis. I'm wrong and I need to get out and rethink the situation." (My emphasis.)} Someone with a tiny account who hated losing money would be triggering their very tight stops after a few minutes, whilst a large hedge fund might close a losing position after decades. Stops that would make sense in oil futures would be completely wrong in the relatively quiet USD/CAD FX market. A stop that was correct in the peaceful calm of 2006 would be absurdly tight in the insanity we saw in 2008. The solution is to separate out the components of your system: \textbf{trading rules} (including explicit or implicit stop losses), position sizing, and the calculation of your \textbf{volatility}
 
 target (the average amount of cash you are willing to risk). You can then design each component independently of the other moving parts. Trading rules and stop losses should be based only on expected market price volatility, and should never take your account size into consideration. Calculating a volatility target, how much of your capital to put at risk, is a function of account size and your pain threshold.\footnote{There are other considerations, such as the amount of leverage required versus what is available, and the expected performance of the system. I'll discuss these in more detail in chapter nine, ‘Volatility targeting'.} Positions should then be sized based on how volatile markets are, how confident your price forecasts are, and the amount of capital you wish to gamble. Each of these components is part of the modular \textbf{framework} which together form a complete trading system.
 
@@ -47,7 +46,7 @@ It's possible to have frameworks that are nicely modular but which contain entir
 
 \subsection*{Individual components with well defined interface}
 
-If you replace the gearbox in your car you need to be sure that the car will still go forward or backwards as required. But if the drive shaft output is reversed on your new gearbox you will end up driving into your front door when you wanted to reverse out of your driveway. To avoid this we need to specify that the shaft on the gearbox must rotate clockwise to make the car go forward, and vice versa. Similarly if you use a new trading rule then the rest of the modular trading system framework should still work correctly and give you appropriately sized positions. To do this the individual components need to have a well defined interface -- a specification describing how they interact with other parts of the system. For example in the framework it will be important that a trading rule \textbf{forecast} of say +1.5 has a consistent meaning, no matter what style of trading or instrument you are using.73
+If you replace the gearbox in your car you need to be sure that the car will still go forward or backwards as required. But if the drive shaft output is reversed on your new gearbox you will end up driving into your front door when you wanted to reverse out of your driveway. To avoid this we need to specify that the shaft on the gearbox must rotate clockwise to make the car go forward, and vice versa. Similarly if you use a new trading rule then the rest of the modular trading system framework should still work correctly and give you appropriately sized positions. To do this the individual components need to have a well defined interface -- a specification describing how they interact with other parts of the system. For example in the framework it will be important that a trading rule \textbf{forecast} of say +1.5 has a consistent meaning, no matter what style of trading or instrument you are using.\footnote{It will become clear in later chapters what this consistent meaning is.}
 
 \subsection*{Getting the boring bit right}
 
@@ -63,10 +62,19 @@ Table 15 shows the components you'd have in a small \textbf{trading system} with
 
 \rawtablecaption{EXAMPLE OF COMPONENTS IN A TRADING SYSTEM} \noindent This trading system has two trading rules A and B, three rule variations A1, A2 and B1, and two instruments X and Y. The framework naturally creates one trading subsystem per instrument before combining those subsystems into a portfolio.
 
-\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{breakabletabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{Component} & \textbf{Example in this system} & \textbf{Role in the framework} \\
 \midrule
+\endfirsthead
+\toprule
+\textbf{Component} & \textbf{Example in this system} & \textbf{Role in the framework} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
 \textbf{Instruments to trade} & \textbf{Instruments} X and Y & Instruments are the things you trade and hold positions in. They could be directly held assets such as equities and bonds, \textbf{derivatives} like options, futures, contracts for difference and spread bets, or \textbf{collective funds} such as \textbf{exchange traded funds (ETFs)}, mutual funds and hedge funds. \\
 \addlinespace[0.4em]
 \textbf{Forecasts} & A1, A2 and B1 forecasts for each instrument & A \textbf{forecast} is an estimate of how much a particular \textbf{instrument's} price will change, given a specific \textbf{trading rule variation}. In this example there are three rule variations and two instruments, so there are \(3 \times 2 = 6\) forecasts in total. For \textbf{staunch systems traders}, the trading rules that generate forecasts are the engine of all \textbf{trading systems}. \textbf{Semi-automatic traders} make discretionary forecasts instead, while \textbf{asset allocating investors} use a single fixed forecast for all instruments. \\
@@ -80,6 +88,5 @@ Table 15 shows the components you'd have in a small \textbf{trading system} with
 \textbf{Portfolios} & Portfolio weighted position in X and in Y & Each subsystem is self-contained, but you then combine multiple \textbf{trading subsystems} into a portfolio to get diversification. This means allocating capital across instruments using \textbf{instrument weights}, and then using the resulting \textbf{portfolio weighted positions} to determine the trades you need to do. \\
 \addlinespace[0.4em]
 \textbf{Speed and Size} & System-wide design constraints & This is not a separate component, but a set of principles that apply across the whole system. You need to understand how expensive the system is to trade, and whether your capital is unusually large or small, before deciding how to tailor the final design. \\
-\bottomrule
-\end{tabularx}
+\end{breakabletabularx}
 }

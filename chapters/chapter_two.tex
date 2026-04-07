@@ -4,19 +4,13 @@
 
 \section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
-\begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
-\hline
-\textbf{What makes a good trading rule} & Some key elements that make a trading rule more likely to be successful. \\
-\hline
-\textbf{When trading rules don't work} & Reasons why a trading rule which worked in back-test may not work in practice when actually traded. \\
-\hline
-\textbf{Why are certain rules profitable?} & Explanations for why profit making rules exist, to help you work out if that profitability is likely to be repeatable. \\
-\hline
-\textbf{Classifying trading styles} & The main ways in which you can classify rules into trading styles, and the important characteristics each style has. \\
-\hline
-\textbf{Achievable Sharpe ratios} & What are realistic Sharpe ratios to expect? \\
-\hline
-\end{tabularx}
+\begin{chapteroverviewtable}
+\chapteroverviewitem{What makes a good trading rule}{Some key elements that make a trading rule more likely to be successful.}
+\chapteroverviewitem{When trading rules don't work}{Reasons why a trading rule which worked in back-test may not work in practice when actually traded.}
+\chapteroverviewitem{Why are certain rules profitable?}{Explanations for why profit making rules exist, to help you work out if that profitability is likely to be repeatable.}
+\chapteroverviewitem{Classifying trading styles}{The main ways in which you can classify rules into trading styles, and the important characteristics each style has.}
+\chapteroverviewitem{Achievable Sharpe ratios}{What are realistic Sharpe ratios to expect?}
+\end{chapteroverviewtable}
 
 \section*{What makes a good trading rule} \phantomsection \addcontentsline{toc}{section}{What makes a good trading rule}
 
@@ -43,6 +37,7 @@ Whereas for a data first system: ``Here is a system that was profitable in the p
 If an idea works no further potentially dangerous \textbf{fitting} is required. &There will be a bias with ideas first to testing things that you know will work, either because of ``market lore'' or academic studies. This is a form of implicit \textbf{over-fitting}. \\
 \hline
 Any fitting will probably be done in a small subset of alternatives. &With ideas first it is tempting to try a large number of ideas to find the ones that work. This is definitely over-fitting. \\
+\hline
 You tend to get simpler and more intuitive trading rules with ideas first. &In data first all the fitting is explicit, so the degree of over-fitting can be controlled. \\
 \hline
 You can construct rules that make intuitive sense, with a story behind them. &A compelling theory or story does not guarantee that the source of returns is repeatable, and could give a false sense of security. This is the narrative fallacy I mentioned in Chapter 1. \\
@@ -120,7 +115,9 @@ When computers have a significant advantage, as in ultra high frequency trading,
 
 \section*{Why certain rules are profitable} \phantomsection \addcontentsline{toc}{section}{Why certain rules are profitable}
 
-\audiencebox{This section is relevant to all readers}{Whether you are using systematic rules or making discretionary forecasts it's important to understand where your returns are coming from and what your ``edge'' is --- if any. This section briefly covers the theory around this subject.\footnote{An exhaustive treatment of this topic can be found in \textit{Expected Returns} by Antti Ilmanen.} It presents some possible reasons why certain assets, portfolios of assets, or \textbf{dynamic} trading rules make profits.}
+\refstepcounter{footnote}%
+\audiencebox{This section is relevant to all readers}{Whether you are using systematic rules or making discretionary forecasts it's important to understand where your returns are coming from and what your ``edge'' is --- if any. This section briefly covers the theory around this subject.\textsuperscript{\thefootnote} It presents some possible reasons why certain assets, portfolios of assets, or \textbf{dynamic} trading rules make profits.}
+\footnotetext[\thefootnote]{An exhaustive treatment of this topic can be found in \textit{Expected Returns} by Antti Ilmanen.}
 
 \subsection*{Risk premia}
 

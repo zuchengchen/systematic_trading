@@ -4,12 +4,13 @@ QUESTION: WHAT DO MANY TRADERS AND AMATEUR INVESTORS who buy individual equities
 
 \section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
-\begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} Y@{}}\textbf{Portfolios and instrument weights} & What is a portfolio of trading subsystems and what are instrument weights? \\
-\textbf{Instrument weights – Asset allocators and} & How to allocate weights when you are trading a fixed set of trading subsystems. Staunch systems traders \\
-\textbf{Instrument weights – Semi-automatic traders} & The special case of semi-automatic traders who have multiple bets on, but not necessarily in the same instruments. \\
-\textbf{Instrument diversification multiplier} & Accounting for diversification between subsystems for different instruments. \\
-\textbf{A portfolio of positions and trades} & Calculating what position you should hold, given your instrument weights, and what trades you should generate. \\
-\end{tabularx}
+\begin{chapteroverviewtable}
+\chapteroverviewitem{Portfolios and instrument weights}{What is a portfolio of trading subsystems and what are instrument weights?}
+\chapteroverviewitem{Instrument weights -- Asset allocators and Staunch systems traders}{How to allocate weights when you are trading a fixed set of trading subsystems.}
+\chapteroverviewitem{Instrument weights -- Semi-automatic traders}{The special case of semi-automatic traders who have multiple bets on, but not necessarily in the same instruments.}
+\chapteroverviewitem{Instrument diversification multiplier}{Accounting for diversification between subsystems for different instruments.}
+\chapteroverviewitem{A portfolio of positions and trades}{Calculating what position you should hold, given your instrument weights, and what trades you should generate.}
+\end{chapteroverviewtable}
 
 \section*{Portfolios and instrument weights} \phantomsection \addcontentsline{toc}{section}{Portfolios and instrument weights}
 
@@ -25,7 +26,7 @@ In practice though you're going to share your capital across a portfolio of subs
 
 \subsection*{Asset Allocating Investor / Staunch Systems Trader} \textbf{Asset allocating investors} run a fixed portfolio of \textbf{trading} \textbf{subsystems}, one per \textbf{instrument}, each consisting of a single \textbf{trading rule} -- the ‘no-rule' rule producing a constant identical forecast. \textbf{Staunch systems traders} have a group of \textbf{trading rules} whose forecasts are combined and then scaled into a position. In both cases you are allocating your \textbf{trading capital} between subsystems relating to a fixed set of instruments. This is different to traditional portfolio allocation, where you allocate capital directly to positions in each instrument.
 
-Because of your hard work in the last couple of chapters all the subsystems will be \textbf{volatility standardised} and have the same expected \textbf{standard deviation} of returns. As you saw in chapter four, this makes the job of \textbf{portfolio optimisation} simpler. You can easily use the \textbf{handcrafting} method introduced in chapter four to determine the instrument weight each subsystem gets. It's also possible to use \textbf{bootstrapping} as an alternative.115
+Because of your hard work in the last couple of chapters all the subsystems will be \textbf{volatility standardised} and have the same expected \textbf{standard deviation} of returns. As you saw in chapter four, this makes the job of \textbf{portfolio optimisation} simpler. You can easily use the \textbf{handcrafting} method introduced in chapter four to determine the instrument weight each subsystem gets. It's also possible to use \textbf{bootstrapping} as an alternative.\footnote{To use bootstrapping you need to be able to back-test the performance of each of the trading subsystems separately. Ideally this should be done on a rolling out of sample basis. As I’ll discuss in chapter twelve, ‘Speed and Size’, any returns that are calculated should be after costs.}
 
 To handcraft your weights you need to group the assets and for this you need \textbf{correlations}. There are two alternatives that can be used to find these. Firstly you can estimate them using \textbf{back-tested} data. Alternatively if you don't have back-tested correlations then tables 50 to 55 (from page 291 in appendix C) give indicative correlations between instrument returns.
 
@@ -37,9 +38,9 @@ In chapter four I showed you how to change portfolio weights if you had evidence
 
 Let's look at an example. Here's how I would handcraft the instrument weights for the simple example of three instruments (S\&P 500, NASDAQ, 20 year bond). Row numbers refer to the relevant rows of table 8 (page 79).
 
-First level grouping: Group one (bonds): One asset, so 100\% in 20 year bond. Row 1. Within asset classes: Group two (equities): Two assets, 50\% in each. Row 2.
+\medskip \noindent\textbf{First level grouping, within asset classes.} Group one (bonds): One asset, so 100\% in 20 year bond. Row 1. Group two (equities): Two assets, 50\% in each. Row 2.
 
-Second level grouping: I have two groups to allocate to, each gets 50\%. Row 2. Across asset classes.
+\medskip \noindent\textbf{Second level grouping, across asset classes.} I have two groups to allocate to, each gets 50\%. Row 2.
 
 This gives me the same weights I had in chapter four for the actual assets, as shown in table 28. Of course this wouldn't normally be the case; it's only because this is a trivial example with no more than two assets in each group, and the same groupings as before.
 
@@ -82,7 +83,7 @@ Once again be warned that tables 50 to 55 (from page 291 in appendix C) give ind
 
 Once you have the correlations, from whichever source, you have two options for the calculation: either use the formula in appendix D on page 297, or the approximations in table 18 (page 131). The number of assets in table 18 will be the number of subsystems you are running.
 
-Let's return to the simple three asset example. From table 50 the correlation between bonds and equities is 0.1, and from table 54 the correlation between the S\&P 500 and NASDAQ is around 0.75.117 I'll assume for the sake of the example that I have a \textbf{dynamic} trading system, so I'm not a \textbf{static} asset allocator. This implies I should multiply correlations by 0.7, giving the correlation matrix in table 29. The average correlation is around 0.25, and from table 18 with three assets I get a diversification multiplier of 1.41.118
+Let's return to the simple three asset example. From table 50 the correlation between bonds and equities is 0.1, and from table 54 the correlation between the S\&P 500 and NASDAQ is around 0.75.\footnote{Actually table 54 in appendix C tells us the correlation between equities of different industries. Given the technology heavy nature of the NASDAQ compared to the S\&P 500 this seems a good enough approximation, and is very close to the real number which we estimated in chapter four.} I'll assume for the sake of the example that I have a \textbf{dynamic} trading system, so I'm not a \textbf{static} asset allocator. This implies I should multiply correlations by 0.7, giving the correlation matrix in table 29. The average correlation is around 0.25, and from table 18 with three assets I get a diversification multiplier of 1.41.\footnote{You should remove the self correlation values of 1.0 before calculating the average.}
 
 It's possible to get very high values for the diversification multiplier, if you have enough assets, and they are relatively uncorrelated. However in a crisis such as the 2008 crash, correlations tend to jump higher exposing us to serious losses -- an example of \textbf{unpredictable} risk. To avoid the serious dangers this poses I strongly recommend limiting the value of the multiplier to an absolute maximum of 2.5.
 
@@ -101,13 +102,13 @@ Correlations are 0.7 of the indicative correlations of instrument returns from t
 
 \subsection*{Semi-automatic Trader}
 
-For \textbf{semi-automatic traders} I recommend using the following simple calculation. The instrument diversification multiplier should be your maximum numbers of bets divided by the average number of bets.119 So if you had an average of four bets on at any given time, with a maximum of five, then your multiplier would be 5 ÷ 4 = 1.25. I advocate that the multiplier is limited to a maximum of 2.5, since if you end up frequently trading more than your average then your expected risk will be too high. As I said earlier this means it's advisable that the maximum number of bets isn't more than 2.5 times the expected average.
+For \textbf{semi-automatic traders} I recommend using the following simple calculation. The instrument diversification multiplier should be your maximum numbers of bets divided by the average number of bets.\footnote{This essentially assumes that all of a semi-automatic trader’s bets are always perfectly correlated, which is very conservative. Here is the proof of this result. Suppose you’re aiming for a daily \textbf{volatility target} of \$1,000 and have an average of five bets, with a maximum of 10. All portfolio weights are 100\% ÷ 10 = 10\%. Each \textbf{trading subsystem} will also have a volatility target of \$1,000. Once multiplied by the portfolio weight each subsystem position will have an average volatility of \$100. On average with five bets, all of which are perfectly correlated, your daily portfolio returns will be \(5 \times \$100 = \$500\) (note had they all been uncorrelated the risk would only be \$223). So to hit the overall target of \$1,000 you need a diversification multiplier of 2.} So if you had an average of four bets on at any given time, with a maximum of five, then your multiplier would be 5 ÷ 4 = 1.25. I advocate that the multiplier is limited to a maximum of 2.5, since if you end up frequently trading more than your average then your expected risk will be too high. As I said earlier this means it's advisable that the maximum number of bets isn't more than 2.5 times the expected average.
 
 \section*{A portfolio of positions and trades} \phantomsection \addcontentsline{toc}{section}{A portfolio of positions and trades}
 
 \subsection*{This section is relevant to all readers}
 
-You're now in a position to see how a complete \textbf{trading system} for the simple three asset example could work. I'm assuming that I use futures to trade these assets and that I have an \textbf{annualised cash} \textbf{volatility target} of €100,000. The price volatility and exchange rates are correct as I write,\footnote{This essentially assumes that all of a semi-automatic trader's bets are always perfectly correlated, which is very conservative. Here is the proof of this result. Suppose you're aiming for a daily \textbf{volatility target} of \$1,000 and have an average of five bets, with a maximum of 10. All portfolio weights are 100\% ÷ 10 = 10\%. Each \textbf{trading subsystem} will also have a volatility target of \$1,000. Once multiplied by the portfolio weight each subsystem position will have an average volatility of \$100. On average with five bets, all of which are perfectly correlated, your daily portfolio returns will be 5 × \$100 = \$500 (note had they all been uncorrelated the risk would only be \$223). So to hit the overall target of \$1,000 you need a diversification multiplier of 2.} but I've used some arbitrary forecasts to make this example interesting but not too specific. You'll see some more specific examples in part four.
+You're now in a position to see how a complete \textbf{trading system} for the simple three asset example could work. I'm assuming that I use futures to trade these assets and that I have an \textbf{annualised cash} \textbf{volatility target} of €100,000. The price volatility and exchange rates are correct as I write, but I've used some arbitrary forecasts to make this example interesting but not too specific. You'll see some more specific examples in part four.
 
 First of all tables 30 and 31 are there to remind you of the calculations in earlier chapters for each of the three \textbf{trading} \textbf{subsystems}.
 
@@ -141,7 +142,7 @@ NASDAQ equities & €674 & €6,250 & 9.28 & -15 & -13.9 \\
 }
 \par \endgroup
 
-The investor has a €100,000 cash volatility target, which implies a €6,250 daily target.120 Forecasts are arbitrary.
+The investor has a €100,000 cash volatility target, which implies a €6,250 daily target.\footnote{To go from annualised to daily we divide by the ‘square root of time’, assuming a 256 day business day year that means you should divide by 16.} Forecasts are arbitrary.
 
 The \textbf{subsystem positions} in column K assume one instrument is traded with the entire trading capital. In table 32 I bring in the \textbf{instrument weights} and \textbf{instrument diversification multiplier} that I calculated earlier in this chapter. So to get the final portfolio instrument position I just need to multiply each \textbf{subsystem position} by the relevant instrument weight and the multiplier which compensates for the diversification in the portfolio.
 
@@ -185,22 +186,20 @@ For example suppose your desired unrounded position is 133.48 Italian government
 
 The solution is to avoid trading until the target position is more than 10\% away from the current position. For Italian bond futures the first movement in the desired position to 133.52 wouldn’t result in a trade, since your current position of 133 would only be 0.75\% away from the desired rounded position of 134. In fact the target position would have to go to 147 blocks before you traded.
 
-Position inertia significantly reduces trading costs, which as you’ll see in the next chapter can seriously affect your returns. My research shows position inertia usually has a negligible effect on pre-cost performance, so there is no downside to using it.121
+Position inertia significantly reduces trading costs, which as you’ll see in the next chapter can seriously affect your returns. My research shows position inertia usually has a negligible effect on pre-cost performance, so there is no downside to using it.\footnote{This seems to be true for trading rules with holding periods of greater than a few days. If you’re trading faster you probably shouldn’t use position inertia (or use a lower value than 10\%), but as we’ll see in chapter twelve it’s very hard to trade that quickly and make money.}
 
 Trades can be done manually or by an algorithm if you have a completely automated system. There is information on how I automate my own trading with simple algorithms on my website (see appendix A).
 
 \section*{Summary for creating a portfolio of trading subsystems} \phantomsection \addcontentsline{toc}{section}{Summary for creating a portfolio of trading subsystems}
 
-Subsystem This is the number of instrument blocks you hold in each trading position subsystem, given your forecasts, the instrument riskiness and your daily cash volatility target, as calculated in chapter ten. It is in instrument blocks.
-
-Instrument Each trading subsystem should have an instrument weight. Weights weights should add up 100\%. Staunch systems traders and asset allocating investors can use handcrafting or bootstrapping to find weights. Correlations can be estimated from a back-test of trading subsystems, or using rules of thumb. In the latter case you should multiply instrument return correlations from appendix C by 0.7 if you're trading a dynamic strategy, or by 1.0 if you're asset allocating investors using fixed constant forecasts. Semi-automatic traders should use equal instrument weights of 100\% divided by the maximum number of possible bets.
-
-Instrument For asset allocating investors and staunch systems traders this is calculated diversification using the correlation of trading subsystem returns. The multiplier can be multiplier calculated precisely using the formula in appendix C on page 297 or approximately using table 18 on page 131. For semi-automatic traders this will be equal to the maximum number of bets divided by the average number of bets. I recommend that in all cases the multiplier is limited to a maximum value of 2.5.
-
-Portfolio Equal to instrument subsystem position multiplied by instrument weight instrument and then by instrument diversification multiplier. position
-
-Rounded This is the portfolio instrument position rounded to the nearest integer target position number of instrument blocks.
-
-Desired trade After calculating the rounded target position you compare this to your actual current position and generate the necessary trade. If the current position is within 10\% of the target then you don't need to trade (position inertia).
+\noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}
+\textbf{Subsystem position} & This is the number of instrument blocks you hold in each trading subsystem, given your forecasts, the instrument riskiness and your daily cash volatility target, as calculated in chapter ten. It is in instrument blocks. \\
+\textbf{Instrument weights} & Each trading subsystem should have an instrument weight. Weights should add up 100\%. Staunch systems traders and asset allocating investors can use handcrafting or bootstrapping to find weights. Correlations can be estimated from a back-test of trading subsystems, or using rules of thumb. In the latter case you should multiply instrument return correlations from appendix C by 0.7 if you're trading a dynamic strategy, or by 1.0 if you're asset allocating investors using fixed constant forecasts. Semi-automatic traders should use equal instrument weights of 100\% divided by the maximum number of possible bets. \\
+\textbf{Instrument diversification multiplier} & For asset allocating investors and staunch systems traders this is calculated using the correlation of trading subsystem returns. The multiplier can be calculated precisely using the formula in appendix C on page 297 or approximately using table 18 on page 131. For semi-automatic traders this will be equal to the maximum number of bets divided by the average number of bets. I recommend that in all cases the multiplier is limited to a maximum value of 2.5. \\
+\textbf{Portfolio instrument position} & Equal to instrument subsystem position multiplied by instrument weight and then by instrument diversification multiplier. \\
+\textbf{Rounded target position} & This is the portfolio instrument position rounded to the nearest integer number of instrument blocks. \\
+\textbf{Desired trade} & After calculating the rounded target position you compare this to your actual current position and generate the necessary trade. If the current position is within 10\% of the target then you don't need to trade (position inertia). \\
+\end{tabularx}
+}
 
 This completes the main part of the framework. I've now shown you how to create a complete \textbf{trading system}, consisting of a portfolio of \textbf{trading subsystems}. In the next chapter we will consider how to design systems which cope with the varying costs you'd see trading at different speeds, and with larger or smaller amounts of capital.

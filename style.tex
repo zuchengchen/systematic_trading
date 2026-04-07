@@ -1,4 +1,4 @@
-\usepackage[paperwidth=6.933in, paperheight=10in, inner=1.06in, outer=0.86in, top=0.98in, bottom=1.0in, headheight=24pt, headsep=20pt, footskip=28pt]{geometry} \usepackage{fontspec} \ifbilinguallayout \usepackage{xeCJK} \fi \usepackage{graphicx} \usepackage{tikz} \usepackage[table]{xcolor} \usepackage{booktabs} \usepackage{longtable} \usepackage{multicol} \usepackage{tabularx} \usepackage{array} \usepackage{amsmath} \usepackage{amssymb} \usepackage{caption} \usepackage{chngcntr} \usepackage{hyperref} \usepackage{bookmark} \usepackage{fancyhdr} \usepackage{titlesec} \usepackage{titletoc} \usepackage{microtype} \usepackage[most]{tcolorbox} \usepackage{emptypage} \usepackage{etoolbox}
+\usepackage[paperwidth=6.933in, paperheight=10in, inner=1.06in, outer=0.86in, top=0.98in, bottom=1.0in, headheight=24pt, headsep=20pt, footskip=28pt]{geometry} \usepackage{fontspec} \ifbilinguallayout \usepackage{xeCJK} \fi \usepackage{graphicx} \usepackage{tikz} \usepackage[table]{xcolor} \usepackage{booktabs} \usepackage{longtable} \usepackage{multirow} \usepackage{multicol} \usepackage{tabularx} \usepackage{xltabular} \usepackage{array} \usepackage{amsmath} \usepackage{amssymb} \usepackage{caption} \usepackage{chngcntr} \usepackage{hyperref} \usepackage{bookmark} \usepackage{fancyhdr} \usepackage{titlesec} \usepackage{titletoc} \usepackage{microtype} \usepackage[most]{tcolorbox} \usepackage{emptypage} \usepackage{etoolbox} \usepackage{indentfirst}
 
 \definecolor{bookink}{HTML}{1F2831} \definecolor{booklatinink}{HTML}{3F4E5C} \definecolor{booklatinstrong}{HTML}{285D82} \definecolor{bookcjkstrong}{HTML}{7B4A34} \definecolor{bookaccent}{HTML}{2F5F7C} \definecolor{booksubtle}{HTML}{66727F} \definecolor{bookrule}{HTML}{D8DDE3} \definecolor{bookpaper}{HTML}{F8F6F1} \definecolor{bookpanel}{HTML}{EEF2F4} \definecolor{bookdeepaccent}{HTML}{22445D}
 
@@ -157,12 +157,20 @@ ItalicFeatures={AutoFakeSlant=0.2}
 }
 \makeatother
 
-\AtBeginDocument{\color{bookink}} \AtBeginDocument{\flushbottom} \setlength{\parindent}{1.45em} \setlength{\parskip}{0pt} \setlength{\headsep}{18pt} \setlength{\tabcolsep}{5pt} \setlength{\LTpre}{0.75\baselineskip} \setlength{\LTpost}{0.45\baselineskip} \setlength{\columnsep}{1.45em} \setlength{\skip\footins}{1.15\baselineskip plus 0.2\baselineskip minus 0.1\baselineskip} \setlength{\footnotesep}{0.55\baselineskip} \emergencystretch=2.8em \clubpenalty=10000 \widowpenalty=10000 \displaywidowpenalty=10000 \interfootnotelinepenalty=10000
+\keepXColumns
+\newenvironment{breakabletabularx}[2]{%
+\xltabular{#1}{#2}%
+}{%
+\endxltabular
+}
+
+\AtBeginDocument{\color{bookink}} \AtBeginDocument{\flushbottom} \setlength{\parindent}{1.45em} \setlength{\parskip}{0pt} \setlength{\headsep}{18pt} \setlength{\tabcolsep}{5pt} \setlength{\LTpre}{0.75\baselineskip} \setlength{\LTpost}{0.45\baselineskip} \setlength{\LTleft}{0pt} \setlength{\LTright}{0pt} \setlength{\columnsep}{1.45em} \setlength{\skip\footins}{1.15\baselineskip plus 0.2\baselineskip minus 0.1\baselineskip} \setlength{\footnotesep}{0.55\baselineskip} \emergencystretch=2.8em \clubpenalty=10000 \widowpenalty=10000 \displaywidowpenalty=10000 \interfootnotelinepenalty=10000
 \renewcommand{\footnoterule}{%
 \vspace*{-0.2\baselineskip}%
 {\color{bookrule}\hrule width 0.24\textwidth height 0.6pt}%
 \vspace{0.6\baselineskip}%
 }
+\counterwithout{footnote}{chapter}
 \arrayrulecolor{bookrule}
 
 \DeclareCaptionFormat{bookbilingual}{#1#2\bookcaptioncontent{#3}} \captionsetup[table]{name=Table, font={small,it}, labelfont={bf,color=bookaccent}, textfont={},format=bookbilingual, labelsep=period, justification=raggedright, singlelinecheck=false, skip=9pt
@@ -381,4 +389,26 @@ ItalicFeatures={AutoFakeSlant=0.2}
 \IfFileExists{chapters_bilingual/#1.tex}{\input{chapters_bilingual/#1}}{\input{chapters/#1}}%
 }
 
-\newcolumntype{Y}{>{\raggedright\arraybackslash\hspace{0pt}} X} \newcolumntype{L}[1]{>{\raggedright\arraybackslash\hspace{0pt}} p{#1}} \newcolumntype{R}{>{\raggedleft\arraybackslash\hspace{0pt}} X} \renewcommand{\thefigure}{\arabic{figure}} \renewcommand{\thetable}{\arabic{table}} \counterwithout{figure}{chapter} \counterwithout{table}{chapter}
+\newcolumntype{Y}{>{\raggedright\arraybackslash\hspace{0pt}} X} \newcolumntype{L}[1]{>{\raggedright\arraybackslash\hspace{0pt}} p{#1}} \newcolumntype{R}{>{\raggedleft\arraybackslash\hspace{0pt}} X}
+
+\newenvironment{chapteroverviewtable}[1][0.30\textwidth]{%
+\par
+\noindent
+\begingroup
+\setlength{\tabcolsep}{6pt}%
+\renewcommand{\arraystretch}{1.08}%
+\arrayrulecolor{bookrule}%
+\begin{tabular}{@{} p{#1} p{\dimexpr\textwidth-#1-2\tabcolsep\relax}@{}}
+\hline
+}{%
+\end{tabular}%
+\endgroup
+\par
+}
+
+\newcommand{\chapteroverviewitem}[2]{%
+\textbf{#1} & #2 \\
+\hline
+}
+
+\renewcommand{\thefigure}{\arabic{figure}} \renewcommand{\thetable}{\arabic{table}} \counterwithout{figure}{chapter} \counterwithout{table}{chapter}

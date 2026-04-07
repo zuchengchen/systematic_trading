@@ -14,32 +14,40 @@ Just like trading rules, portfolio weights can be \textbf{over-fitted}. Optimisi
 
 \section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
-\begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} Y@{}}\textbf{Optimising gone bad} & How classic portfolio optimisation can often result in over-fitted extreme portfolio weights. \\
-\textbf{Saving optimisation from itself} & Some insights from an alternative technique, bootstrapping, which can help us understand what is going wrong. \\
-\textbf{Making weights by hand} & How to use a simple method called handcrafting to get portfolio weights. \\
-\textbf{Incorporating Sharpe ratios} & Using additional information about expected performance to improve handcrafted weights. \\
-\end{tabularx}
+\begin{chapteroverviewtable}
+\chapteroverviewitem{Optimising gone bad}{How classic portfolio optimisation can often result in over-fitted extreme portfolio weights.}
+\chapteroverviewitem{Saving optimisation from itself}{Some insights from an alternative technique, bootstrapping, which can help us understand what is going wrong.}
+\chapteroverviewitem{Making weights by hand}{How to use a simple method called handcrafting to get portfolio weights.}
+\chapteroverviewitem{Incorporating Sharpe ratios}{Using additional information about expected performance to improve handcrafted weights.}
+\end{chapteroverviewtable}
 
 \section*{Optimising gone bad} \phantomsection \addcontentsline{toc}{section}{Optimising gone bad}
 
 \subsection*{Introducing optimisation}
 
-Portfolio optimisation will find the set of asset weights which give the best expected risk adjusted returns, usually measured by \textbf{Sharpe ratio}. The inputs to this are the expected average returns, \textbf{standard deviation} of returns, and their \textbf{correlation}. The standard method for doing this was first introduced by Harry Markowitz in the 1950s. It was a neat and elegant solution to a complex problem. Unfortunately it's all too easy to be distracted by elegance, and forget the important assumptions underlying the maths. As you will see below, blind use of this method frequently results in ugly portfolios with extreme weights. Just because an equation is wonderful to behold doesn't mean you should slavishly use its results without thought of the consequences. As Einstein said, "If you are out to describe the truth, leave elegance to the tailor." In the early part of my career I was fatally distracted by the lovely equations and ended up with some terrible portfolios, until I learned the error of my ways. Subsequently I often had to review the allocation decisions made by researchers who were less experienced, although undoubtedly cleverer and more academically qualified than myself.
+Portfolio optimisation will find the set of asset weights which give the best expected risk adjusted returns, usually measured by \textbf{Sharpe ratio}. The inputs to this are the expected average returns, \textbf{standard deviation} of returns, and their \textbf{correlation}. The standard method for doing this was first introduced by Harry Markowitz in the 1950s. It was a neat and elegant solution to a complex problem.
+
+Unfortunately it's all too easy to be distracted by elegance, and forget the important assumptions underlying the maths. As you will see below, blind use of this method frequently results in ugly portfolios with extreme weights. Just because an equation is wonderful to behold doesn't mean you should slavishly use its results without thought of the consequences. As Einstein said, "If you are out to describe the truth, leave elegance to the tailor."
+
+In the early part of my career I was fatally distracted by the lovely equations and ended up with some terrible portfolios, until I learned the error of my ways. Subsequently I often had to review the allocation decisions made by researchers who were less experienced, although undoubtedly cleverer and more academically qualified than myself.
 
 When I asked one of these rocket scientists what they thought about the extreme portfolio weights they'd found I often got a shrug. "These are what the optimiser came up with." The unspoken assumption was that the equation must be right. Hopefully after reading this chapter you will be less accepting of attractive mathematics.
 
 \subsection*{Some good news}
 
-Portfolio optimisation is hard. But there are a few difficulties that don't arise when you're using it to design trading strategies. This is because you aren't deciding directly how large your positions in various \textbf{instruments} should be. Instead you're deciding what weight should be given to different parts of your \textbf{trading system}. These can either be the \textbf{forecast weights} telling you in what proportion to use \textbf{trading rule variations} for a particular instrument, or the \textbf{instrument weights} determining how much of your capital to allocate for trading each instrument. This gives you two advantages. Firstly, you can't have negative weights in your portfolio; you can't short trading rules, so the lowest possible weight is zero. If a trading rule is expected to lose money you shouldn't include it at all.56 Secondly, using my \textbf{framework} will mean that profits from your trading rules have identical expected \textbf{standard deviation} of returns. This is because of the \textbf{volatility standardisation} I spoke about in chapter two, ‘Systematic Trading Rules'. By using this technique you simplify the problem and only need to use expected \textbf{Sharpe ratios} and \textbf{correlations} to work out your weights. Although you won't be optimising the underlying positions in individual assets like equities or bonds in your trading systems, I will be using portfolios of simple assets in this chapter to make the examples more straightforward. However to make it easier to interpret the results I will adjust asset returns before any calculations so that they have the same standard deviation as you'll have when you work with trading system returns.
+Portfolio optimisation is hard. But there are a few difficulties that don't arise when you're using it to design trading strategies. This is because you aren't deciding directly how large your positions in various \textbf{instruments} should be. Instead you're deciding what weight should be given to different parts of your \textbf{trading system}. These can either be the \textbf{forecast weights} telling you in what proportion to use \textbf{trading rule variations} for a particular instrument, or the \textbf{instrument weights} determining how much of your capital to allocate for trading each instrument.
+
+This gives you two advantages. Firstly, you can't have negative weights in your portfolio; you can't short trading rules, so the lowest possible weight is zero. If a trading rule is expected to lose money you shouldn't include it at all.\footnote{A rule with a significantly negative Sharpe ratio either has very high trading costs and should be omitted, or it is consistently wrong and so should be inverted with longs and shorts reversed before incorporating it into the portfolio (although you'll probably also want to consider the logic of your original idea before proceeding).} Secondly, using my \textbf{framework} will mean that profits from your trading rules have identical expected \textbf{standard deviation} of returns. This is because of the \textbf{volatility standardisation} I spoke about in chapter two, ‘Systematic Trading Rules'. By using this technique you simplify the problem and only need to use expected \textbf{Sharpe ratios} and \textbf{correlations} to work out your weights.
+
+Although you won't be optimising the underlying positions in individual assets like equities or bonds in your trading systems, I will be using portfolios of simple assets in this chapter to make the examples more straightforward. However to make it easier to interpret the results I will adjust asset returns before any calculations so that they have the same standard deviation as you'll have when you work with trading system returns.
 
 \subsection*{The unstable world of portfolio weights}
 
-Let's take a simple example of allocating capital between three assets: the NASDAQ and S\&P 500 US stock indices, and the US 20 year benchmark bond. I am using data from January 1999 to mid-2014 and all returns are \textbf{volatility standardised} to have the same expected standard deviation. Each year from January 2000 onwards I'm going to use returns from all previous years to calculate some optimal weights.\footnote{If you read the previous chapter you should recognise this as an \textbf{out of sample expanding window}.} Because each optimisation uses all available data to create a single set of weights I call this a \textbf{single} period optimisation.
+Let's take a simple example of allocating capital between three assets: the NASDAQ and S\&P 500 US stock indices, and the US 20 year benchmark bond. I am using data from January 1999 to mid-2014 and all returns are \textbf{volatility standardised} to have the same expected standard deviation. Each year from January 2000 onwards I'm going to use returns from all previous years to calculate some optimal weights.\footnote{If you read the previous chapter you should recognise this as an \textbf{out of sample expanding window}.} Because each optimisation uses all available data to create a single set of weights I call this a \textbf{single period optimisation}.
 
-\begin{enumerate}
-\item A rule with a significantly negative Sharpe ratio either has very high trading costs and should be omitted, or it is consistently wrong and so should be inverted with longs and shorts reversed before incorporating it into the portfolio (although you'll probably also want to consider the logic of your original idea before proceeding). \end{enumerate}
+The calculation is done using the classic Markowitz optimisation; I find the maximum risk adjusted return (e.g. \textbf{Sharpe ratio}) using the estimated means and \textbf{correlations}, and standard deviations (which are all identical because I've used \textbf{volatility standardisation}). I also don't allow weights to be negative and they have to sum up to exactly 100\%. 
 
-The calculation is done using the classic Markowitz optimisation; I find the maximum risk adjusted return (e.g. \textbf{Sharpe ratio}) using the estimated means and \textbf{correlations}, and standard deviations (which are all identical because I've used \textbf{volatility standardisation}). I also don't allow weights to be negative and they have to sum up to exactly 100\%. Figure 14 shows the weights calculated for each year.\footnote{Remember these are displayed as if all assets had the same standard deviation. So in practice roughly twice as much actual money would be allocated to bonds than shown here, due to their lower volatility.} In the last throes of the late 1990s tech boom I naturally put all my money into the fast rising NASDAQ. This then implodes, and is permanently removed from the portfolio. For much of the remaining period I put my entire capital in bonds. At the end I only have 25\% in equities, all of which is in the S\&P 500. This is a very extreme portfolio, with very unstable weights.
+Figure 14 shows the weights calculated for each year.\footnote{Remember these are displayed as if all assets had the same standard deviation. So in practice roughly twice as much actual money would be allocated to bonds than shown here, due to their lower volatility.} In the last throes of the late 1990s tech boom I naturally put all my money into the fast rising NASDAQ. This then implodes, and is permanently removed from the portfolio. For much of the remaining period I put my entire capital in bonds. At the end I only have 25\% in equities, all of which is in the S\&P 500. This is a very extreme portfolio, with very unstable weights.
 
 \begin{figure}[htbp] \centering \includegraphics[width=\textwidth]{figures/raw/img-014.png} \caption{SINGLE PERIOD OPTIMISATION USUALLY MEANS EXTREME WEIGHTS} \end{figure}
 
@@ -47,27 +55,35 @@ The figure shows the portfolio weights produced by single period optimisation do
 
 \subsection*{Not all statistical estimates are created equal}
 
-Faced with such nightmares a natural reaction is to discard any hope of optimising. Perhaps we should just allocate equally to all the assets we have. Many academic researchers have also come to this conclusion and there is plenty of evidence that equal weights are hard to beat.59
+Faced with such nightmares a natural reaction is to discard any hope of optimising. Perhaps we should just allocate equally to all the assets we have. Many academic researchers have also come to this conclusion and there is plenty of evidence that equal weights are hard to beat.\footnote{For example see DeMiguel, Victor, Lorenzo Garlappi and Raman Uppal, ‘Optimal versus naive diversification: How inefficient is the 1/N portfolio strategy?', Review of Financial Studies 2009.}
 
-\subsection*{When do equal weights make sense?60}
+\subsection*{When do equal weights make sense?\protect\footnotemark}
+\footnotetext{To be pedantic there are some unusual portfolios where equal weights are optimal that don't fulfill these criteria, but they aren't relevant here.}
 
 \begin{enumerate}
 \item Same volatility: If all assets had the same expected standard deviation of returns. This is always the case for the \textbf{volatility standardised} assets we're using.
 \item Same Sharpe ratio: If all assets had the same expected \textbf{Sharpe ratio (SR)}.
-\item Same \textbf{correlation}: If all assets had the same expected co-movement of returns. If these assumptions aren't correct, then what should your portfolio look like?61 \end{enumerate}
+\item Same \textbf{correlation}: If all assets had the same expected co-movement of returns. 
+\end{enumerate}
+
+If these assumptions aren't correct, then what should your portfolio look like?\footnote{The portfolios examined by academic researchers mostly consisted of equities from the same country, which tend to have similar standard deviation and correlations. In this situation equal weights will indeed be hard to beat.} 
 
 What kind of portfolio should we have with...
 
 \begin{enumerate}
 \item Same Sharpe ratio and correlation: Equal weights.
 \item Significantly different Sharpe ratio (SR): Larger weights for assets that are expected to have higher SR, smaller for low SR.
-\item Significantly different correlation: Larger weights for highly diversifying assets which have lower correlations to other assets, and smaller for less diversifying assets. Let's see if these assumptions are true in the simple example. Figure 15 shows the distribution of Sharpe ratios for each of the three assets. Notice that the lines mostly overlap; this means we can't distinguish between the historic performance of each asset. Although bonds did have a higher average SR the advantage isn't statistically significant. If you read the previous chapter, and remember table 6, it is no surprise that the 15 years of data isn't enough to say with confidence which asset had the best SR.
-\item For example see DeMiguel, Victor, Lorenzo Garlappi and Raman Uppal, ‘Optimal versus naive diversification: How inefficient is the 1/N portfolio strategy?', Review of Financial Studies 2009.
-\item To be pedantic there are some unusual portfolios where equal weights are optimal that don't fulfill these criteria, but they aren't relevant here. \end{enumerate}
+\item Significantly different correlation: Larger weights for highly diversifying assets which have lower correlations to other assets, and smaller for less diversifying assets. \end{enumerate}
+
+Let's see if these assumptions are true in the simple example. Figure 15 shows the distribution of Sharpe ratios for each of the three assets. Notice that the lines mostly overlap; this means we can't distinguish between the historic performance of each asset. Although bonds did have a higher average SR the advantage isn't statistically significant. If you read the previous chapter, and remember table 6, it is no surprise that the 15 years of data isn't enough to say with confidence which asset had the best SR.
 
 \begin{figure}[htbp] \centering \includegraphics[width=\textwidth]{figures/raw/img-015.png} \caption{HARDER TO DISTINGUISH SHARPE RATIOS THAN YOU THINK} \end{figure}
 
-The figure shows the distribution of Sharpe ratios for the three assets in my example portfolio. On the contrary, we can often distinguish different correlations. Figure 16 shows the distribution of correlations in my simple example. You should be able to easily pick apart the correlated equities and the diversifying bond asset. So in the simple example I should be able to do better than equal weights, as there is significant data about correlations. A good portfolio would have more of the diversifying bond asset than the equities, but wouldn't take much account of the insignificantly different Sharpe ratios. However the classic optimiser doesn't work like this, because it can't see all the information in figures 15 and 16. It uses only the average SR and correlation, not knowing or caring how much uncertainty there is in each estimate.
+The figure shows the distribution of Sharpe ratios for the three assets in my example portfolio.
+
+On the contrary, we can often distinguish different correlations. Figure 16 shows the distribution of correlations in my simple example. You should be able to easily pick apart the correlated equities and the diversifying bond asset.
+
+So in the simple example I should be able to do better than equal weights, as there is significant data about correlations. A good portfolio would have more of the diversifying bond asset than the equities, but wouldn't take much account of the insignificantly different Sharpe ratios. However the classic optimiser doesn't work like this, because it can't see all the information in figures 15 and 16. It uses only the average SR and correlation, not knowing or caring how much uncertainty there is in each estimate.
 
 \begin{figure}[htbp] \centering \includegraphics[width=\textwidth]{figures/raw/img-016.png} \caption{EQUITIES CLEARLY CORRELATED WITH EACH OTHER, AND NEGATIVELY WITH BONDS} \end{figure}
 
@@ -75,7 +91,13 @@ The figure shows the distribution of correlations for pairs of the three assets 
 
 \section*{Saving optimisation from itself} \phantomsection \addcontentsline{toc}{section}{Saving optimisation from itself}
 
-How can we fix this problem? I have two techniques that I use. The first, which is quite hard work, is called \textbf{bootstrapping}. This involves repeating my optimisation many times over different parts of the data, taking the resulting weights, and averaging them out. So the weights are the average of many optimisations, rather than one optimisation on the average of all data. The justification for bootstrapping is simple. I believe that the past is a good guide to the future, but I don't know which part of the past will be repeated. To hedge my bets I assume there is an equal chance of seeing any particular historical period repeated. So it's logical to use an average of all the portfolios which did best in previous periods. Bootstrapping has some nice advantages over classic optimisation. Most of the individual optimisations have extreme weights. However with enough of them it's unlikely the average will be extreme. If I have noisy data, and the past contains periods which were very different, then the optimal portfolios will be close to equal weights. But with significant differences in \textbf{Sharpe ratios} or \textbf{correlations} similar portfolios will crop up repeatedly, and the average will reflect that. The averaged weights naturally reflect the amount of uncertainty that the data has. Let's see the results of running an \textbf{expanding window} bootstrap optimisation on our simple three asset portfolio. Figure 17 shows the results over time, whilst table 7 compares the final weights with a classic \textbf{single period optimisation} and equal weights.\footnote{This is the result of using 100 bootstraps, each 1 year in length, with daily returns drawn randomly with replacement.} After the first year the weights are relatively stable, and for all periods less extreme than for the single period method. However the diversifying allocation to bonds is greater than with equal weights, so this portfolio should do better.
+How can we fix this problem? I have two techniques that I use. The first, which is quite hard work, is called \textbf{bootstrapping}. This involves repeating my optimisation many times over different parts of the data, taking the resulting weights, and averaging them out. So the weights are the average of many optimisations, rather than one optimisation on the average of all data.
+
+The justification for bootstrapping is simple. I believe that the past is a good guide to the future, but I don't know which part of the past will be repeated. To hedge my bets I assume there is an equal chance of seeing any particular historical period repeated. So it's logical to use an average of all the portfolios which did best in previous periods.
+
+Bootstrapping has some nice advantages over classic optimisation. Most of the individual optimisations have extreme weights. However with enough of them it's unlikely the average will be extreme. If I have noisy data, and the past contains periods which were very different, then the optimal portfolios will be close to equal weights. But with significant differences in \textbf{Sharpe ratios} or \textbf{correlations} similar portfolios will crop up repeatedly, and the average will reflect that. The averaged weights naturally reflect the amount of uncertainty that the data has.
+
+Let's see the results of running an \textbf{expanding window} bootstrap optimisation on our simple three asset portfolio. Figure 17 shows the results over time, whilst table 7 compares the final weights with a classic \textbf{single period optimisation} and equal weights.\footnote{This is the result of using 100 bootstraps, each 1 year in length, with daily returns drawn randomly with replacement.} After the first year the weights are relatively stable, and for all periods less extreme than for the single period method. However the diversifying allocation to bonds is greater than with equal weights, so this portfolio should do better.
 
 \begin{figure}[htbp] \centering \includegraphics[width=\textwidth]{figures/raw/img-017.png} \caption{BOOTSTRAPPED PORTFOLIO WEIGHTS: STABLE AND EVENLY SPREAD} \end{figure}
 
@@ -83,7 +105,7 @@ The figure shows the portfolio weights I get over time from using the bootstrap 
 
 \rawtablecaption{BOOTSTRAPPED WEIGHTS ARE MORE EVEN THAN THE SINGLE PERIOD METHOD, BUT ACCOUNT FOR CORRELATIONS BETTER THAN EQUAL WEIGHTS} \begingroup \small \centering \begin{tabular}{@{} lccc@{}}
 \toprule
-& Equal weight & Single period & Bootstrapped \\
+& \textbf{Equal weight} & \textbf{Single period} & \textbf{Bootstrapped} \\
 \midrule
 US 20 year bond & 33\% & 68\% & 53\% \\
 S\&P 500 equities & 33\% & 32\% & 27\% \\
@@ -98,56 +120,109 @@ Bootstrapping requires a suitable software package, the ability to write your ow
 
 \section*{Making weights by hand} \phantomsection \addcontentsline{toc}{section}{Making weights by hand}
 
-Something weird happens if you ask an experienced and skilled expert in portfolio optimisation, but not one who uses \textbf{bootstrapping}, to do some work for you. Under your gaze they will pull out their optimisation software and diligently produce some weights. As we've seen these are inevitably awful, with many assets having zero weights and one or two having huge allocations. The artisan will then suggest you go for a coffee whilst they do their magic. When you return the weights have suspiciously changed; they're now much nicer and less extreme. Upon interrogation the expert will admit they have tortured the software with all kinds of arcane tricks until it produced the right result. Experts know from glancing at the problem roughly what a good answer should look like, and their skill lies in extracting it from the computer. I remember once being told "Optimisation is more of an art than a science." This never seemed particularly satisfying. I would have preferred a process that always produced exactly the same result for the same data set, regardless of who was operating the machinery. After leaving the financial industry I set myself the task of creating my own trading system, which naturally meant doing some optimisation. As it would take time to write the necessary code for bootstrapping I thought I'd use the simpler single period method for my first attempt. I soon found myself with weights I didn't like, and true to form began fiddling to improve them. After toying with the optimiser for a few minutes, I quickly realised it would be better to cut out the artistic pseudo-optimisation stage entirely. Why not just write down the right weights to start with? The only tool required would be a sharp pencil, and something like the back of an envelope or a beer mat to write on. A little harder was defining exactly what ‘good' weights would look like for a given portfolio. I started with small portfolios. For simple situations where equal weights were justified this was easy. To deal with more difficult groups I used the results from experiments on artificial data with the \textbf{bootstrapping} method. To cope with larger portfolios I made the problem modular. So I first worked on subsets of the portfolio which I formed into groups, and then calculated the weight of each group relative to others. If necessary I used more than one level of grouping depending on how complicated the problem was. The \textbf{handcrafting} method was born. Let's see how it works in more detail.
+Something weird happens if you ask an experienced and skilled expert in portfolio optimisation, but not one who uses \textbf{bootstrapping}, to do some work for you. Under your gaze they will pull out their optimisation software and diligently produce some weights. As we've seen these are inevitably awful, with many assets having zero weights and one or two having huge allocations. The artisan will then suggest you go for a coffee whilst they do their magic.
+
+When you return the weights have suspiciously changed; they're now much nicer and less extreme. Upon interrogation the expert will admit they have tortured the software with all kinds of arcane tricks until it produced the right result. Experts know from glancing at the problem roughly what a good answer should look like, and their skill lies in extracting it from the computer.
+
+I remember once being told "Optimisation is more of an art than a science." This never seemed particularly satisfying. I would have preferred a process that always produced exactly the same result for the same data set, regardless of who was operating the machinery.
+
+After leaving the financial industry I set myself the task of creating my own trading system, which naturally meant doing some optimisation. As it would take time to write the necessary code for bootstrapping I thought I'd use the simpler single period method for my first attempt. I soon found myself with weights I didn't like, and true to form began fiddling to improve them. After toying with the optimiser for a few minutes, I quickly realised it would be better to cut out the artistic pseudo-optimisation stage entirely. Why not just write down the right weights to start with?
+
+The only tool required would be a sharp pencil, and something like the back of an envelope or a beer mat to write on. A little harder was defining exactly what ‘good' weights would look like for a given portfolio.
+
+I started with small portfolios. For simple situations where equal weights were justified this was easy. To deal with more difficult groups I used the results from experiments on artificial data with the bootstrapping method.
+
+To cope with larger portfolios I made the problem modular. So I first worked on subsets of the portfolio which I formed into groups, and then calculated the weight of each group relative to others. If necessary I used more than one level of grouping depending on how complicated the problem was.
+
+The \textbf{handcrafting} method was born. Let's see how it works in more detail.
 
 \subsection*{Handcrafting method}
 
-The procedure involves constructing the portfolio in a bottom-up fashion by first forming groups of similar assets. Within and across groups you set allocations using a table of optimal weights for similar portfolios. These weights come from my own experiments with \textbf{bootstrapping}. As you would expect the method assumes that all assets have the same expected \textbf{standard deviation} of returns. I also assume, for now, that they also have the same \textbf{Sharpe ratio} (SR). I'll relax that assumption later, but as you saw above and perhaps in the last chapter it's quite common to be unable to find statistically significant differences between the Sharpe ratios of assets. So all you need is an idea of what \textbf{correlations} are likely to be. As you'll see these don't need to be precise, and you can either estimate them with historical data or take an educated guess given the nature of the assets in your portfolio. If you don't want to do your own guessing then tables 50 to 57 in appendix C show some rough correlations between the returns of different \textbf{instruments}, and sets of different \textbf{trading rules} for the same instrument. Once you have your correlations you need to group the most highly correlated assets together. Except with unusual portfolios the groupings will normally be pretty obvious; so for example in a Nikkei stock portfolio you'd probably put all Japanese utility stocks together, all banks together and so on. Groups should ideally contain only one, two or three assets, but more is okay if their correlations are similar enough. Within these small groups there are only a limited number of distinctive correlation patterns that really matter.
+The procedure involves constructing the portfolio in a bottom-up fashion by first forming groups of similar assets. Within and across groups you set allocations using a table of optimal weights for similar portfolios. These weights come from my own experiments with \textbf{bootstrapping}.
+
+As you would expect the method assumes that all assets have the same expected \textbf{standard deviation} of returns. I also assume, for now, that they also have the same \textbf{Sharpe ratio (SR)}. I'll relax that assumption later, but as you saw above and perhaps in the last chapter it's quite common to be unable to find statistically significant differences between the Sharpe ratios of assets.
+
+So all you need is an idea of what \textbf{correlations} are likely to be. As you'll see these don't need to be precise, and you can either estimate them with historical data or take an educated guess given the nature of the assets in your portfolio. If you don't want to do your own guessing then tables 50 to 57 in appendix C show some rough correlations between the returns of different \textbf{instruments}, and sets of different \textbf{trading rules} for the same instrument.
+
+Once you have your correlations you need to group the most highly correlated assets together. Except with unusual portfolios the groupings will normally be pretty obvious; so for example in a Nikkei stock portfolio you'd probably put all Japanese utility stocks together, all banks together and so on.
+
+Groups should ideally contain only one, two or three assets, but more is okay if their correlations are similar enough. Within these small groups there are only a limited number of distinctive correlation patterns that really matter.
 
 The correct weights for these patterns are shown in table 8. If the exact correlation value isn't shown then you should round to the closest relevant number.\footnote{Alternatively some interpolation of weights could be done, but this makes this simple method rather complicated.} Negative values should be floored at zero.\footnote{An asset with a negative correlation would get an unreasonably extreme allocation.} The three asset correlations shown are those between assets A and B, A and C, and B and C respectively. These give the weights shown for assets A, B and C respectively.
 
-\rawtablecaption{GROUP WEIGHTS TO USE WHEN HANDCRAFTING PORTFOLIOS} \begingroup \small \centering \begin{tabular}{@{} p{0.46\textwidth} cp{0.34\textwidth}@{}}
+\enlargethispage{5\baselineskip}
+\rawtablecaption{GROUP WEIGHTS TO USE WHEN HANDCRAFTING PORTFOLIOS}
+\begingroup
+\footnotesize
+\centering
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.42\textwidth} c >{\raggedright\arraybackslash}p{0.28\textwidth} @{}}
 \toprule
-Portfolio Pattern & Row & Weight Rule \\
+Group of one asset & \textbf{1} & 100\% to that asset \\
 \midrule
-Group of one asset & 1 & 100\% to that asset \\
-Any group of two assets & 2 & 50\% to each asset \\
-Any size group with identical correlations & 3 & Equal weights \\
-\shortstack[l]{Four or more assets without identical\\correlations} & 4 & \shortstack[l]{Split groups further or differently\\until they match another row} \\
-Three assets with correlations AB, AC, BC & & Weights for A, B, C \\
-3 assets correlation 0.0, 0.5, 0.0 & 5 & Weights: 30\%, 40\%, 30\% \\
-3 assets correlation 0.0, 0.9, 0.0 & 6 & Weights: 27\%, 46\%, 27\% \\
-3 assets correlation 0.5, 0.0, 0.5 & 7 & Weights: 37\%, 26\%, 37\% \\
-3 assets correlation 0.0, 0.5, 0.9 & 8 & Weights: 45\%, 45\%, 10\% \\
-3 assets correlation 0.9, 0.0, 0.9 & 9 & Weights: 39\%, 22\%, 39\% \\
-3 assets correlation 0.5, 0.9, 0.5 & 10 & Weights: 29\%, 42\%, 29\% \\
-3 assets correlation 0.9, 0.5, 0.9 & 11 & Weights: 42\%, 16\%, 42\% \\
+Any group of two assets & \textbf{2} & 50\% to each asset \\
+\midrule
+Any size group with identical correlations & \textbf{3} & Equal weights \\
+\midrule
+\shortstack[c]{Four or more assets without identical\\correlations} & \textbf{4} & \shortstack[l]{Split groups further or differently\\until they match another row} \\
 \bottomrule
 \end{tabular}
-\par \endgroup
 
-Numbers in the middle of the table are used to identify rows.
+\smallskip
+
+{\setlength{\fboxsep}{6pt}\setlength{\arrayrulewidth}{0.45pt}\fcolorbox{bookrule}{white}{%
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.39\textwidth} c >{\raggedright\arraybackslash}p{0.24\textwidth} @{}}
+\textbf{Three assets with correlations AB, AC, BC} & & \textbf{Weights for A, B, C} \\
+3 assets correlation 0.0, 0.5, 0.0 & \textbf{5} & Weights: 30\%, 40\%, 30\% \\
+3 assets correlation 0.0, 0.9, 0.0 & \textbf{6} & Weights: 27\%, 46\%, 27\% \\
+3 assets correlation 0.5, 0.0, 0.5 & \textbf{7} & Weights: 37\%, 26\%, 37\% \\
+3 assets correlation 0.0, 0.5, 0.9 & \textbf{8} & Weights: 45\%, 45\%, 10\% \\
+3 assets correlation 0.9, 0.0, 0.9 & \textbf{9} & Weights: 39\%, 22\%, 39\% \\
+3 assets correlation 0.5, 0.9, 0.5 & \textbf{10} & Weights: 29\%, 42\%, 29\% \\
+3 assets correlation 0.9, 0.5, 0.9 & \textbf{11} & Weights: 42\%, 16\%, 42\% \\
+\end{tabular}%
+}}
+\par
+\endgroup
+
+Numbers in bold in middle of table are used to identify rows.
 
 Note that there are other permutations of these correlations which aren’t shown here that would just be a re-ordering of a set of values included in the table. So for example suppose your portfolio has three assets: US bonds (D), S\&P 500 (E) and NASDAQ (F); with correlations of -0.3 (DE), -0.2 (DF) and 0.8 (EF); which you would round to 0.0 (DE), 0.0 (DF), 0.9 (EF).
 
-After reordering and mapping to ABC in the table the relevant row number 6 is 0.0 (DE mapping to AB), 0.9 (EF mapping to AC), 0.0 (DF mapping to BC) giving weights of 27\% (A), 46\% (B), 27\% (C). Expressing that back in the original problem (E=A, D=B, F=C) the weights are US Bonds 46\% (D), S\&P 500 27\% (E) and NASDAQ 27\% (F).65 Let’s think about the intuition of where these weights come from. Equities aren’t very diversifying since they have a correlation of 0.90 with each other. But bonds are uncorrelated with the two equity indices, so add more diversification to the portfolio. So it makes sense that they get a higher weight, and the weight of the equities sinks lower. Once every group has been processed you then allocate weights to groups, based on your guess or estimate of the correlation between groups.66 Finally the weight of each asset in the overall portfolio is just the total weight of its group multiplied by the weight it has within the group. Depending on the size and structure of the portfolio this process could be done with two levels as explained here, at just one level if all the assets fall readily into table 8 without needing subgroups, or with three or more levels. To see how grouping works consider again the three asset portfolio of US bonds, S\&P 500 and NASDAQ. Common sense and the correlations estimated above imply I should create one group for the single bond asset, and a second group for the two equity indices. Here is how I calculated the weights. The row numbers shown refer to the relevant rows of table 8.
+After reordering and mapping to ABC in the table the relevant row number 6 is 0.0 (DE mapping to AB), 0.9 (EF mapping to AC), 0.0 (DF mapping to BC) giving weights of 27\% (A), 46\% (B), 27\% (C). Expressing that back in the original problem (E=A, D=B, F=C) the weights are US Bonds 46\% (D), S\&P 500 27\% (E) and NASDAQ 27\% (F).\footnote{If you didn't enjoy the mapping and un-mapping process you can find a larger table of weights on my website that doesn't require untangling in this way.}
+
+Let’s think about the intuition of where these weights come from. Equities aren’t very diversifying since they have a correlation of 0.90 with each other. But bonds are uncorrelated with the two equity indices, so add more diversification to the portfolio. So it makes sense that they get a higher weight, and the weight of the equities sinks lower.
+
+Once every group has been processed you then allocate weights to groups, based on your guess or estimate of the correlation between groups.\footnote{If you are going to use estimation then you would need to construct mini-portfolios for each group and \textbf{back-test} them to get their returns. Alternatively you can use the average (simple or weighted by intra group weights) of the correlation between the group members.} Finally the weight of each asset in the overall portfolio is just the total weight of its group multiplied by the weight it has within the group.
+
+Depending on the size and structure of the portfolio this process could be done with two levels as explained here, at just one level if all the assets fall readily into table 8 without needing subgroups, or with three or more levels.
+
+To see how grouping works consider again the three asset portfolio of US bonds, S\&P 500 and NASDAQ. Common sense and the correlations estimated above imply I should create one group for the single bond asset, and a second group for the two equity indices. Here is how I calculated the weights. The row numbers shown refer to the relevant rows of table 8.
 
 \medskip \noindent\textbf{First level grouping, within asset classes.} Group one (bonds): one asset, gets 100\%. Row 1. Group two (equities): two assets, I place 50\% in each. Row 2.
 
 \medskip \noindent\textbf{Second level grouping, across asset classes.} I have two groups to allocate to, each gets 50\%. Row 2.
 
-\medskip Each equity index gets 50\% (within group weight) multiplied by 50\% (weight of group) which is 25\%. The one bond asset gets the other 50\%. The weights are shown in figure 9. They are fairly close to the ungrouped handcrafted weights, and to what the full \textbf{bootstrap} method gave us in its final iteration, despite both handcrafting methods taking only a few seconds and needing no computing power. Because I didn’t use Sharpe ratios there isn’t the slight overweight on bonds and S\&P 500 that we have in the bootstrapped results. I’ll address that shortcoming below. 65. If you didn’t enjoy the mapping and un-mapping process you can find a larger table of weights on my website that doesn’t require untangling in this way.
+\medskip Each equity index gets 50\% (within group weight) multiplied by 50\% (weight of group) which is 25\%. The one bond asset gets the other 50\%. The weights are shown in figure 9. They are fairly close to the ungrouped handcrafted weights, and to what the full \textbf{bootstrap} method gave us in its final iteration, despite both handcrafting methods taking only a few seconds and needing no computing power. Because I didn’t use Sharpe ratios there isn’t the slight overweight on bonds and S\&P 500 that we have in the bootstrapped results. I’ll address that shortcoming below.
 
-\rawtablecaption{HANDCRAFTED WEIGHTS ARE SIMILAR TO BOOTSTRAPPED WEIGHTS, BUT WITH LESS WORK} \begingroup \small \centering \begin{tabular}{@{} lccccc@{}}
+\rawtablecaption{HANDCRAFTED WEIGHTS ARE SIMILAR TO BOOTSTRAPPED WEIGHTS, BUT WITH LESS WORK} 
+
+\begingroup 
+\small 
+\setlength{\tabcolsep}{3pt}
+\centering 
+\begin{tabular}{@{} lccccc@{}}
 \toprule
-& Equal weight & Single period & Bootstrapped & Handcrafted ungrouped & Handcrafted grouped \\
+& \shortstack{Equal\\weight} & \shortstack{Single\\period} & Bootstrapped & \shortstack{Handcrafted\\ungrouped} & \shortstack{Handcrafted\\grouped} \\
 \midrule
 US 20 year bond & 33\% & 68\% & 53\% & 46\% & 50\% \\
 S\&P 500 equities & 33\% & 32\% & 27\% & 27\% & 25\% \\
 NASDAQ equities & 33\% & 0\% & 20\% & 27\% & 25\% \\
 \bottomrule
 \end{tabular}
-\par \endgroup
+\par 
+\endgroup
 
 The table shows the final portfolio weights using equal weights, after optimising using both single period and bootstrapped methods with expanding windows, and using handcrafting without and with grouping.
 
@@ -192,7 +267,11 @@ Here is how I calculated the weights. Relevant rows of table 8 are shown.
 
 \medskip \noindent\textbf{Fourth level grouping, across asset classes.} Two grouped assets (bonds and equities) allocate 50\% to each. Row 2.
 
-\medskip \noindent\textbf{Final weights.} The final weights for each asset, from multiplying the weights they are given at each grouping stage, are shown in table 11. Notice I mostly did not use correlations except in the US bonds group. If you can keep your groups down to one or two members, or your group members are similarly correlated, then you do not need to use correlations once you have determined your groups. With 16 assets equal weights would have come out at 6.25\% each. This was an unbalanced portfolio with more equities than bonds, and where it was unrealistic to assume identical correlations. In this situation we should be able to beat equal weights by giving more allocation to more diversifying assets. \endgroup
+\medskip \noindent\textbf{Final weights.} The final weights for each asset, from multiplying the weights they are given at each grouping stage, are shown in table 11.
+
+Notice I mostly did not use correlations except in the US bonds group. If you can keep your groups down to one or two members, or your group members are similarly correlated, then you do not need to use correlations once you have determined your groups.
+
+With 16 assets equal weights would have come out at 6.25\% each. This was an unbalanced portfolio with more equities than bonds, and where it was unrealistic to assume identical correlations. In this situation we should be able to beat equal weights by giving more allocation to more diversifying assets. \endgroup
 
 \rawtablecaption{CONSTRUCTION OF WEIGHTS IN LARGER EXAMPLE PORTFOLIO} \begingroup \small \centering
 \bookfitbox{%
@@ -225,15 +304,30 @@ Calculation of weights is shown for each grouping stage, and in the last column 
 
 \subsection*{Are we cheating?}
 
-The handcrafting method cannot easily be repeated automatically in multiple years, so is unsuitable for an \textbf{expanding} or \textbf{rolling out of sample} \textbf{back-test}.\footnote{Actually it is possible to back-test the handcrafting method, and I have done so to validate it, but it requires historical estimates of correlation using only past data and an algorithm to cluster groups into a hierarchy. If you must use a back-tested method then the \textbf{bootstrap} method is much easier to implement. After all, the main benefit of handcrafting is its simplicity.} You fit one single \textbf{in sample} set of portfolio weights, with knowledge of all past data. Arguably there is a danger that the resulting portfolio will be \textbf{over-fitted}. This is more likely if you're using estimated \textbf{correlations}, although it's also an issue with correlations that are educated guesses, since both imply you knew the future at the start of the back-test. Relax; you will be using information from the future but in mitigation the weights you'll produce will be much less extreme than an in sample \textbf{single period optimisation} will produce. Also correlations usually don't move enough that handcrafted weights would be dramatically different over time. So the weights you will produce using all data are likely to be very similar if you do them earlier in the back-test using only past data. Also for now the method ignores differences in \textbf{Sharpe ratio (SR)}, which also ensures weights are not extreme and relatively stable. To illustrate this I fitted the trading system I outline in chapter fifteen for \textbf{staunch systems} traders. Using in sample handcrafting rather than rolling out of sample \textbf{bootstrapping} gave an insignificant advantage (Sharpe ratio of 0.54 rather than 0.52). In comparison in sample single period optimisation produced an unrealistically high SR of 0.84; although when I used the single period method to perform a rolling out of sample fit it did much worse, with an SR of 0.3. Nevertheless the results of back-testing handcrafted portfolios should be treated with slightly more scepticism than a true out of sample method like bootstrapping.
+The handcrafting method cannot easily be repeated automatically in multiple years, so is unsuitable for an \textbf{expanding} or \textbf{rolling out of sample} \textbf{back-test}.\footnote{Actually it is possible to back-test the handcrafting method, and I have done so to validate it, but it requires historical estimates of correlation using only past data and an algorithm to cluster groups into a hierarchy. If you must use a back-tested method then the \textbf{bootstrap} method is much easier to implement. After all, the main benefit of handcrafting is its simplicity.} You fit one single \textbf{in sample} set of portfolio weights, with knowledge of all past data. Arguably there is a danger that the resulting portfolio will be \textbf{over-fitted}. This is more likely if you're using estimated \textbf{correlations}, although it's also an issue with correlations that are educated guesses, since both imply you knew the future at the start of the back-test.
+
+Relax; you will be using information from the future but in mitigation the weights you'll produce will be much less extreme than an in sample \textbf{single period optimisation} will produce. Also correlations usually don't move enough that handcrafted weights would be dramatically different over time. So the weights you will produce using all data are likely to be very similar if you do them earlier in the back-test using only past data. Also for now the method ignores differences in \textbf{Sharpe ratio (SR)}, which also ensures weights are not extreme and relatively stable.
+
+To illustrate this I fitted the trading system I outline in chapter fifteen for \textbf{staunch systems} traders. Using in sample handcrafting rather than rolling out of sample \textbf{bootstrapping} gave an insignificant advantage (Sharpe ratio of 0.54 rather than 0.52). In comparison in sample single period optimisation produced an unrealistically high SR of 0.84; although when I used the single period method to perform a rolling out of sample fit it did much worse, with an SR of 0.3.
+
+Nevertheless the results of back-testing handcrafted portfolios should be treated with slightly more scepticism than a true out of sample method like bootstrapping.
 
 \section*{Incorporating Sharpe ratios} \phantomsection \addcontentsline{toc}{section}{Incorporating Sharpe ratios}
 
-The basic \textbf{handcrafting} method assumes all assets have the same expected \textbf{Sharpe ratio} (SR). Usually you don't have enough data to determine whether historic SR were significantly different. However there might be times when you have a valid opinion about relative asset Sharpes. One example which I'll return to later is when some assets have higher costs than others. Costs are known with much more certainty than raw performance, so you can usually have a statistically well informed opinion about their effect on returns. Another scenario is where you are following my recommended procedure for trading rule selection outlined in the previous chapter. With my preferred method you don't remove unprofitable trading rules before deciding what their \textbf{forecast weights} should be. However if a rule is terrible in \textbf{back-test} you'll want to reduce its weight, although it will probably have some allocation, since it's hard to find sufficient evidence that one rule is definitely better or worse than another (as covered in the last chapter). By experimenting with random data I calculated how \textbf{bootstrapped} portfolio weights change in a group of assets whose true SR are not equal. These adjustments can then be applied to handcrafted weights. These results are below in table 12. To avoid showing infinite permutations the results are in relative terms, so it's the SR relative to the average for the group that matters.
+The basic \textbf{handcrafting} method assumes all assets have the same expected \textbf{Sharpe ratio} (SR). Usually you don't have enough data to determine whether historic SR were significantly different. However there might be times when you have a valid opinion about relative asset Sharpes.
 
-\rawtablecaption{HOW MUCH SHOULD YOU ADJUST HANDCRAFTED WEIGHTS BY IF YOU HAVE SOME INFORMATION ABOUT ASSET SHARPE RATIOS?} \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabular}{@{} >{\raggedleft\arraybackslash}p{0.14\textwidth} >{\centering\arraybackslash}p{0.18\textwidth} >{\centering\arraybackslash}p{0.28\textwidth} >{\centering\arraybackslash}p{0.22\textwidth}@{}}
+One example which I'll return to later is when some assets have higher costs than others. Costs are known with much more certainty than raw performance, so you can usually have a statistically well informed opinion about their effect on returns.
+
+Another scenario is where you are following my recommended procedure for trading rule selection outlined in the previous chapter. With my preferred method you don't remove unprofitable trading rules before deciding what their \textbf{forecast weights} should be. However if a rule is terrible in \textbf{back-test} you'll want to reduce its weight, although it will probably have some allocation, since it's hard to find sufficient evidence that one rule is definitely better or worse than another (as covered in the last chapter).
+
+By experimenting with random data I calculated how \textbf{bootstrapped} portfolio weights change in a group of assets whose true SR are not equal. These adjustments can then be applied to handcrafted weights. These results are below in table 12. To avoid showing infinite permutations the results are in relative terms, so it's the SR relative to the average for the group that matters.
+
+\rawtablecaption{HOW MUCH SHOULD YOU ADJUST HANDCRAFTED WEIGHTS BY IF YOU HAVE SOME INFORMATION ABOUT ASSET SHARPE RATIOS?}
+\noindent{\footnotesize \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.1} \begin{tabular}{@{} >{\raggedleft\arraybackslash}p{0.16\textwidth} >{\centering\arraybackslash}p{0.16\textwidth} >{\centering\arraybackslash}p{0.24\textwidth} >{\centering\arraybackslash}p{0.20\textwidth}@{}}
 \toprule
-{\footnotesize\bfseries\shortstack[c]{SR difference\\to\\average}} & {\footnotesize\bfseries\shortstack[c]{(A) With\\certainty,\\e.g. costs}} & {\footnotesize\bfseries\shortstack[c]{(B) Without certainty,\\more than\\ten years' data}} & {\footnotesize\bfseries\shortstack[c]{(C) Without certainty,\\less than\\ten years' data}} \\
+\multicolumn{1}{c}{} & \multicolumn{3}{c}{\textbf{Adjustment factor}} \\
+\cmidrule(l){2-4}
+{\bfseries\shortstack[c]{SR\\difference to\\average}} & {\bfseries\shortstack[c]{(A) With\\certainty\\e.g. costs}} & {\bfseries\shortstack[c]{(B) Without\\certainty, more than\\ten years' data}} & {\bfseries\shortstack[c]{(C) Without\\certainty, less than\\ten years' data}} \\
 \midrule
 -0.50 & 0.32 & 0.65 & 1.0 \\
 -0.40 & 0.42 & 0.75 & 1.0 \\
@@ -264,17 +358,15 @@ However if you are using historical estimates of SR, or forecasting them in some
 
 Follow these steps to adjust handcrafted weights for Sharpe ratio
 
-Starting weights Work out the handcrafted weights for the group. These will add up to 100\%.
-
-Get Sharpe ratios In each group using historical data, cost estimates, or some other method, find the expected SR for each asset.
-
-Sharpe versus average Calculate the average SR for the entire group and then work out the relative difference higher or lower than this for each asset.
-
-Get multiplier Find the weight multiplier for each asset from column A, B or C in table 12, depending on how certain you are about the SR estimate, and if relevant how much data was used.
-
-Multiply Multiply each of the weights in the group by the relevant multiplier.
-
-Normalise The resulting weights in the group may not add up to 100\%. If necessary normalise the weights so they sum to exactly 100\%.
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\textbf{Starting weights} & Work out the handcrafted weights for the group. These will add up to 100\%. \\
+\textbf{Get Sharpe ratios} & In each group using historical data, cost estimates, or some other method, find the expected SR for each asset. \\
+\textbf{Sharpe versus average} & Calculate the average SR for the entire group and then work out the relative difference higher or lower than this for each asset. \\
+\textbf{Get multiplier} & Find the weight multiplier for each asset from column A, B or C in table 12, depending on how certain you are about the SR estimate, and if relevant how much data was used. \\
+\textbf{Multiply} & Multiply each of the weights in the group by the relevant multiplier. \\
+\textbf{Normalise} & The resulting weights in the group may not add up to 100\%. If necessary normalise the weights so they sum to exactly 100\%. \\
+\end{tabularx}
+}
 
 If you have two or more levels of grouping you'll need to repeat this process. When you move up to the next level you should estimate the SR of each group as a whole. You can do this by \textbf{back-testing} each group's returns, taking a weighted average of the SR for each individual asset in the group, or just using a simple average SR across the group's assets. The process for adjusting group weights is then the same as for within groups.
 
@@ -282,60 +374,63 @@ If you have two or more levels of grouping you'll need to repeat this process. W
 
 Let's return to the simple three asset portfolio of two US equity and one bond market, using handcrafting with groups. My historic estimates of Sharpe ratios are around 0 for NASDAQ, 0.5 for S\&P 500 and 0.75 for bonds. Here is what I did with the equity group (the bond group is still just 100\% in a single asset):
 
-\subsection*{Starting weights NASDAQ: 50\%, S\&P 500: 50\%}
-
-Estimate Sharpes NASDAQ: 0, S\&P 500: 0.5 (from historical data)
-
-\subsection*{Sharpe versus average Average: 0.25. Difference to average:}
-
-• NASDAQ 0 - 0.25 = -0.25 • S\&P 500 0.5 - 0.25 = 0.25
-
-Get multiplier I have uncertain estimates with over ten years of data so I use column B of table 12: • NASDAQ: 0.85 • S\&P 500: 1.15
-
-\subsection*{Multiply NASDAQ: 50\% × 0.85 = 42\%}
-
-S\&P 500: 50\% × 1.15 = 58\%
-
-Normalise Total is 100\% so no normalisation required.
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\textbf{Starting weights} & NASDAQ: 50\%, S\&P 500: 50\% \\
+\textbf{Estimate Sharpes} & NASDAQ: 0, S\&P 500: 0.5 (from historical data) \\
+\textbf{Sharpe versus average} & Average: 0.25. Difference to average: \par • NASDAQ 0 - 0.25 = -0.25 \par • S\&P 500 0.5 - 0.25 = 0.25 \\
+\textbf{Get multiplier} & I have uncertain estimates with over ten years of data so I use column B of table 12: \par • NASDAQ: 0.85 \par • S\&P 500: 1.15 \\
+\textbf{Multiply} & NASDAQ: 50\% × 0.85 = 42\% \par S\&P 500: 50\% × 1.15 = 58\% \\
+\textbf{Normalise} & Total is 100\% so no normalisation required. \\
+\end{tabularx}
+}
 
 Now for the second level where I mix bonds and equities
 
-\subsection*{Starting weights Equities: 50\%, Bonds: 50\%}
-
-Guess Sharpes Equities: using a simple average of NASDAQ with SR of 0 and S\&P 500 with SR 0.5, I get an average of 0.25 Bonds: 0.75 from historical data.
-
-Sharpe versus average Average across bonds and equities: 0.50. Difference to average: • Equities 0.25 - 0.50 = -0.25 • Bonds 0.75 - 0.50 = 0.25
-
-\subsection*{Get multiplier From column B of table 12:}
-
-• Equities: 0.85 • Bonds: 1.15
-
-\subsection*{Multiply Equities: 50\% × 0.85 = 42\%}
-
-\subsection*{Bonds: 50\% × 1.15 = 58\%}
-
-Normalise Total is 100\% so no normalisation required.
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\textbf{Starting weights} & Equities: 50\%, Bonds: 50\% \\
+\textbf{Guess Sharpes} & Equities: using a simple average of NASDAQ with SR of 0 and S\&P 500 with SR 0.5, I get an average of 0.25. \par Bonds: 0.75 from historical data. \\
+\textbf{Sharpe versus average} & Average across bonds and equities: 0.50. Difference to average: \par • Equities 0.25 - 0.50 = -0.25 \par • Bonds 0.75 - 0.50 = 0.25 \\
+\textbf{Get multiplier} & From column B of table 12: \par • Equities: 0.85 \par • Bonds: 1.15 \\
+\textbf{Multiply} & Equities: 50\% × 0.85 = 42\% \par Bonds: 50\% × 1.15 = 58\% \\
+\textbf{Normalise} & Total is 100\% so no normalisation required. \\
+\end{tabularx}
+}
 
 The final weights then are 18\% NASDAQ (42\% × 42\%), 24\% to S\&P 500 (58\% × 42\%) and 58\% to bonds. Though more uneven than before they are much less extreme than what I'd get with a \textbf{single period optimiser} using the same SR figures, as table 9 shows. They're also not dissimilar to my final bootstrapped weights, which also use Sharpe ratios in their calculation.
 
-\rawtablecaption{HOW MUCH OF AN EFFECT DOES INCLUDING SHARPE RATIOS (SR) HAVE ON OPTIMISED PORTFOLIO WEIGHTS?} \begingroup \small \centering \begin{tabular}{@{} lcccc@{}}
+\rawtablecaption{HOW MUCH OF AN EFFECT DOES INCLUDING SHARPE RATIOS (SR) HAVE ON OPTIMISED PORTFOLIO WEIGHTS?}
+\begingroup
+\footnotesize
+\centering
+\setlength{\tabcolsep}{5pt}
+\begin{tabularx}{0.92\textwidth}{@{} l*{4}{>{\centering\arraybackslash}X}@{}}
 \toprule
-& Single period (uses SR) & Bootstrapped (uses SR) & Handcrafted: no SR & Handcrafted: using SR \\
+& \shortstack{Single period\\(uses SR)} & \shortstack{Bootstrapped\\(uses SR)} & \shortstack{Handcrafted:\\no SR} & \shortstack{Handcrafted:\\using SR} \\
 \midrule
 US 20 year bond & 68\% & 53\% & 50\% & 58\% \\
 S\&P 500 equities & 32\% & 27\% & 25\% & 24\% \\
 NASDAQ equities & 0\% & 20\% & 25\% & 18\% \\
 \bottomrule
-\end{tabular}
-\par \endgroup
+\end{tabularx}
+\par
+\endgroup
 
 When I bring in Sharpe ratio estimates, handcrafting up-weights better performing assets and produces similar results to bootstrapping, but does not result in extreme portfolios like single period optimisation.
 
-Once again, are we cheating? Now you’re using \textbf{Sharpe ratios (SR)} to produce your handcrafted weights it’s worth reiterating that this is a mild form of \textbf{in-sample back-test} cheating, since you only use the final SR averaged over all data history, which you wouldn’t have at the beginning of the back-test.68 Again this is a fair criticism, but the problem is not that serious. The weights are still not extreme, so the effect on back-tested SR you get is modest compared to in-sample \textbf{single} period optimisation. However you should still be cautious of assuming that you’d be able to achieve the back-test SR in live trading. Table 14 shows you roughly how much you should degrade back-tested returns to get realistic achievable Sharpe ratios given a particular fitting technique for a system like the one I describe in chapter fifteen.
+Once again, are we cheating?
 
-\rawtablecaption{WITH HOW MANY PINCHES OF SALT SHOULD WE TREAT BACK-TESTED SHARPE RATIOS?} \begingroup \small \centering \begin{tabular}{@{} lr@{}}
+Now you’re using \textbf{Sharpe ratios (SR)} to produce your handcrafted weights it’s worth reiterating that this is a mild form of \textbf{in-sample back-test} cheating, since you only use the final SR averaged over all data history, which you wouldn’t have at the beginning of the back-test.\footnote{As with the standard handcrafted weights it's possible to back-test this by doing the SR adjustment on an expanding window. For the first ten years of data you shouldn't adjust the weights at all. After that you should use only past data to estimate the SR at each point in the back-test. But again this is much more work than using the bootstrapping method.}
+
+Again this is a fair criticism, but the problem is not that serious. The weights are still not extreme, so the effect on back-tested SR you get is modest compared to in-sample \textbf{single} period optimisation. However you should still be cautious of assuming that you’d be able to achieve the back-test SR in live trading. Table 14 shows you roughly how much you should degrade back-tested returns to get realistic achievable Sharpe ratios given a particular fitting technique for a system like the one I describe in chapter fifteen.
+
+\rawtablecaption{WITH HOW MANY PINCHES OF SALT SHOULD WE TREAT BACK-TESTED SHARPE RATIOS?}
+\begingroup
+\small
+\centering
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.54\textwidth} >{\centering\arraybackslash}p{0.16\textwidth}@{}}
 \toprule
-& Pessimism factor \\
+& \textbf{\shortstack{Pessimism\\factor}} \\
 \midrule
 Single period optimisation, uses SR, in sample & 25\% \\
 Single period optimisation, uses SR, out of sample & 75\% \\

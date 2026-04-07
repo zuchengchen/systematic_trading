@@ -4,7 +4,7 @@
 
 \subsection*{Bootstrapping 101}
 
-BRIEFLY, YOU SHOULD TAKE THE FOLLOWING STEPS, ASSUMING returns have already been \textbf{volatility normalised} and have the same expected standard deviation:164
+BRIEFLY, YOU SHOULD TAKE THE FOLLOWING STEPS, ASSUMING returns have already been \textbf{volatility normalised} and have the same expected standard deviation:\footnote{Technically what we are using here is a non-parametric bootstrap which I believe was first proposed by David Jobson and Bob Korkie in the early 1980s.}
 
 \begin{enumerate}
 \item Choose a random subset of past returns (either from all history or a recent period depending on whether an expanding or rolling window is being used).
@@ -30,7 +30,7 @@ Here the choice is clearer; more iterations always produces better results but w
 
 Again academic research has focused on this subject in great detail. For me personally bootstrapping definitely wins over \textbf{single period optimisation} and equal weights. My own research using artificial data shows that single period can perform a little better when there is a lot of structure in the data, so that the underlying \textbf{Sharpe ratio (SR)} and correlations are quite different. Obviously equal weights are better when the underlying SR and correlations are very similar. However you will never know in advance or with certainty which of these situations you are in! Overall bootstrapping is the most consistent method, with less variability in performance over different kinds of data sets. If anything these kinds of study probably understate the benefits of bootstrapping. This is because the random data generated isn't as noisy as real data.
 
-Personally I also find bootstrapping to be as good or better than other, relatively complex, methods.166
+Personally I also find bootstrapping to be as good or better than other, relatively complex, methods.\footnote{Many solutions to the optimisation problem revolve around shrinkage -- making the inputs of the calculation more like a ‘prior' by shrinking towards them. I have used these techniques in the past and they do have some advantages. However two main difficulties are involved -- the first being how much to shrink, the second where your prior comes from without itself containing forward looking information. Getting these right is tricky and an entire book would be needed to explain how to do it right. In contrast bootstrapping is very easy and needs no calibration.}
 
 \section*{Rule of thumb correlations} \phantomsection \addcontentsline{toc}{section}{Rule of thumb correlations}
 
@@ -52,9 +52,6 @@ Volatility & 0.1 & 0.6 & 0.2 & 0.1 & 1 \\
 The table shows correlations given long positions in all assets except volatility -- shown as if selling option risk or short VIX futures. Rates are interest rate sensitive assets, e.g. Bonds and STIR futures.
 
 Next I break down the instrument returns for the asset classes that form the commodity and interest rate super classes (the other super classes do not have any decomposition).
-
-\begin{enumerate}
-\item Many solutions to the optimisation problem revolve around shrinkage -- making the inputs of the calculation more like a ‘prior' by shrinking towards them. I have used these techniques in the past and they do have some advantages. However two main difficulties are involved -- the first being how much to shrink, the second where your prior comes from without itself containing forward looking information. Getting these right is tricky and an entire book would be needed to explain how to do it right. In contrast bootstrapping is very easy and needs no calibration. \end{enumerate}
 
 \rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, ACROSS ASSET CLASSES} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.20\textwidth}*{5}{>{\centering\arraybackslash} X}@{}}
 \toprule
