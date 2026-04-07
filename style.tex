@@ -1,338 +1,384 @@
-\usepackage[
-  paperwidth=6.933in,
-  paperheight=10in,
-  inner=1.0in,
-  outer=0.78in,
-  top=0.9in,
-  bottom=0.95in,
-  headheight=24pt,
-  headsep=18pt,
-  footskip=24pt
-]{geometry}
-\usepackage{fontspec}
-\ifbilinguallayout
-  \usepackage{xeCJK}
-\fi
-\usepackage{graphicx}
-\usepackage{tikz}
-\usepackage[table]{xcolor}
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{multicol}
-\usepackage{tabularx}
-\usepackage{array}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{caption}
-\usepackage{chngcntr}
-\usepackage{hyperref}
-\usepackage{fancyhdr}
-\usepackage{titlesec}
-\usepackage{titletoc}
-\usepackage{microtype}
-\usepackage[most]{tcolorbox}
-\usepackage{emptypage}
-\usepackage{etoolbox}
+\usepackage[paperwidth=6.933in, paperheight=10in, inner=1.06in, outer=0.86in, top=0.98in, bottom=1.0in, headheight=24pt, headsep=20pt, footskip=28pt]{geometry} \usepackage{fontspec} \ifbilinguallayout \usepackage{xeCJK} \fi \usepackage{graphicx} \usepackage{tikz} \usepackage[table]{xcolor} \usepackage{booktabs} \usepackage{longtable} \usepackage{multicol} \usepackage{tabularx} \usepackage{array} \usepackage{amsmath} \usepackage{amssymb} \usepackage{caption} \usepackage{chngcntr} \usepackage{hyperref} \usepackage{bookmark} \usepackage{fancyhdr} \usepackage{titlesec} \usepackage{titletoc} \usepackage{microtype} \usepackage[most]{tcolorbox} \usepackage{emptypage} \usepackage{etoolbox}
 
-\definecolor{bookink}{HTML}{1E252D}
-\definecolor{bookaccent}{HTML}{35596F}
-\definecolor{booksubtle}{HTML}{5F6B78}
-\definecolor{bookrule}{HTML}{D4D9DF}
-\definecolor{bookpaper}{HTML}{F8F6F1}
-\definecolor{bookpanel}{HTML}{EEF2F5}
+\definecolor{bookink}{HTML}{1F2831} \definecolor{booklatinink}{HTML}{3F4E5C} \definecolor{booklatinstrong}{HTML}{285D82} \definecolor{bookcjkstrong}{HTML}{7B4A34} \definecolor{bookaccent}{HTML}{2F5F7C} \definecolor{booksubtle}{HTML}{66727F} \definecolor{bookrule}{HTML}{D8DDE3} \definecolor{bookpaper}{HTML}{F8F6F1} \definecolor{bookpanel}{HTML}{EEF2F4} \definecolor{bookdeepaccent}{HTML}{22445D}
 
-\defaultfontfeatures{Ligatures=TeX}
-\IfFontExistsTF{Libertinus Serif}{
-  \setmainfont{Libertinus Serif}
-}{
-  \IfFontExistsTF{TeX Gyre Pagella}{
-    \setmainfont{TeX Gyre Pagella}
-  }{
-    \setmainfont{Latin Modern Roman}
-  }
+\newcommand{\englishbodycolorname}{bookink} \newcommand{\chinesebodycolorname}{bookink} \ifbilinguallayout \providecommand{\bilingualbodycolormode}{off}
+\ifdefstring{\bilingualbodycolormode}{subtle}{%
+\renewcommand{\englishbodycolorname}{booklatinink}%
+\renewcommand{\chinesebodycolorname}{bookink}%
+}{}
+\ifdefstring{\bilingualbodycolormode}{strong}{%
+\renewcommand{\englishbodycolorname}{booklatinstrong}%
+\renewcommand{\chinesebodycolorname}{bookcjkstrong}%
+\colorlet{bookaccent}{booklatinstrong}%
+\colorlet{booksubtle}{bookcjkstrong}%
+\colorlet{bookrule}{booklatinstrong!12!bookcjkstrong!12!white}%
+\colorlet{bookpanel}{booklatinstrong!4!white}%
+}{}\fi
+
+\defaultfontfeatures{Ligatures=TeX} \IfFontExistsTF{Libertinus Serif}{\setmainfont{Libertinus Serif}}{\IfFontExistsTF{TeX Gyre Pagella}{\setmainfont{TeX Gyre Pagella}}{\IfFontExistsTF{Noto Serif}{\setmainfont{Noto Serif}}{\IfFontExistsTF{Liberation Serif}{\setmainfont{Liberation Serif}}{\setmainfont{DejaVu Serif}
 }
-\IfFontExistsTF{TeX Gyre Heros}{
-  \newfontfamily\booksans{TeX Gyre Heros}[Scale=MatchLowercase]
-}{
-  \newfontfamily\booksans{Latin Modern Sans}[Scale=MatchLowercase]
 }
-\IfFontExistsTF{TeX Gyre Cursor}{
-  \setmonofont{TeX Gyre Cursor}
-}{
-  \setmonofont{Latin Modern Mono}
+}
+}
+\IfFontExistsTF{Source Sans 3}{\newfontfamily\booksans{Source Sans 3}[Scale=MatchLowercase]}{\IfFontExistsTF{TeX Gyre Heros}{\newfontfamily\booksans{TeX Gyre Heros}[Scale=MatchLowercase]}{\IfFontExistsTF{Noto Sans}{\newfontfamily\booksans{Noto Sans}[Scale=MatchLowercase]}{\IfFontExistsTF{Liberation Sans}{\newfontfamily\booksans{Liberation Sans}[Scale=MatchLowercase]}{\newfontfamily\booksans{DejaVu Sans}[Scale=MatchLowercase]
+}
+}
+}
+}
+\IfFontExistsTF{Noto Serif Display}{\newfontfamily\bookdisplayfont{Noto Serif Display}[Ligatures=TeX]}{\IfFontExistsTF{Libertinus Serif}{\newfontfamily\bookdisplayfont{Libertinus Serif}[Ligatures=TeX]}{\IfFontExistsTF{TeX Gyre Pagella}{\newfontfamily\bookdisplayfont{TeX Gyre Pagella}[Ligatures=TeX]}{\IfFontExistsTF{Noto Serif}{\newfontfamily\bookdisplayfont{Noto Serif}[Ligatures=TeX]}{\newfontfamily\bookdisplayfont{DejaVu Serif}[Ligatures=TeX]
+}
+}
+}
+}
+\IfFontExistsTF{TeX Gyre Cursor}{\setmonofont{TeX Gyre Cursor}}{\IfFontExistsTF{Liberation Mono}{\setmonofont{Liberation Mono}}{\setmonofont{DejaVu Sans Mono}
+}
 }
 
 \ifbilinguallayout
-  \newcommand{\setfallbackcjkmainfont}[1]{%
-    \setCJKmainfont[AutoFakeSlant=0.2]{#1}%
-  }
-  \newcommand{\setfallbackcjksansfont}[1]{%
-    \setCJKsansfont[AutoFakeBold=2]{#1}%
-  }
-  \newcommand{\setfallbackcjkmonofont}[1]{%
-    \setCJKmonofont{#1}%
-  }
-  \IfFontExistsTF{Noto Serif CJK SC}{
-    \setfallbackcjkmainfont{Noto Serif CJK SC}
-  }{
-    \IfFontExistsTF{Source Han Serif SC}{
-      \setfallbackcjkmainfont{Source Han Serif SC}
-    }{
-      \setfallbackcjkmainfont{FandolSong-Regular}
-    }
-  }
-  \IfFontExistsTF{Noto Sans CJK SC}{
-    \setfallbackcjksansfont{Noto Sans CJK SC}
-  }{
-    \IfFontExistsTF{Source Han Sans SC}{
-      \setfallbackcjksansfont{Source Han Sans SC}
-    }{
-      \setfallbackcjksansfont{FandolHei-Regular}
-    }
-  }
-  \IfFontExistsTF{Noto Sans Mono CJK SC}{
-    \setfallbackcjkmonofont{Noto Sans Mono CJK SC}
-  }{
-    \setfallbackcjkmonofont{FandolFang-Regular}
-  }
-  \xeCJKsetup{
-    CJKecglue=\hskip 0.06em plus 0.04em minus 0.02em
-  }
+\newcommand{\setfallbackcjkmainfont}[1]{%
+\setCJKmainfont[AutoFakeSlant=0.2]{#1}%
+}
+\newcommand{\setfallbackcjksansfont}[1]{%
+\setCJKsansfont[AutoFakeBold=2]{#1}%
+}
+\newcommand{\setfallbackcjkmonofont}[1]{%
+\setCJKmonofont[
+AutoFakeSlant=0.2,
+ItalicFont={#1},
+ItalicFeatures={AutoFakeSlant=0.2}
+]{#1}%
+}
+\IfFontExistsTF{Noto Serif CJK SC}{\setfallbackcjkmainfont{Noto Serif CJK SC}}{\IfFontExistsTF{Source Han Serif SC}{\setfallbackcjkmainfont{Source Han Serif SC}}{\setfallbackcjkmainfont{FandolSong-Regular}
+}
+}
+\IfFontExistsTF{Noto Sans CJK SC}{\setfallbackcjksansfont{Noto Sans CJK SC}}{\IfFontExistsTF{Source Han Sans SC}{\setfallbackcjksansfont{Source Han Sans SC}}{\setfallbackcjksansfont{FandolHei-Regular}
+}
+}
+\IfFontExistsTF{Noto Sans Mono CJK SC}{\setfallbackcjkmonofont{Noto Sans Mono CJK SC}}{\setfallbackcjkmonofont{FandolFang-Regular}
+}
+\xeCJKsetup{CJKecglue=\hskip 0.06em plus 0.04em minus 0.02em
+}
 \fi
 
-\hypersetup{
-  hidelinks
+\hypersetup{hidelinks, pdfdisplaydoctitle=true, bookmarksopen=true, bookmarksnumbered=true
 }
-\urlstyle{same}
-\ifbilinguallayout
-  \renewcommand{\contentsname}{Contents / 目录}
+\urlstyle{same} \microtypesetup{protrusion=true, expansion=false, tracking=true
+}
+\ifbilinguallayout \renewcommand{\contentsname}{Contents / 目录}\setcounter{secnumdepth}{0} \setcounter{tocdepth}{1} \else \renewcommand{\contentsname}{Contents} \fi
+
+\frenchspacing \ifbilinguallayout \linespread{1.08} \else \linespread{1.05} \fi
+
+\newenvironment{englishblock}{%
+\par \begingroup\color{\englishbodycolorname}\ignorespaces
+}{%
+\par \endgroup\ignorespacesafterend
+}
+
+\newenvironment{chineseblock}{%
+\par \begingroup\color{\chinesebodycolorname}\ignorespaces
+}{%
+\par \endgroup\ignorespacesafterend
+}
+
+\newenvironment{englishtableblock}{%
+\par \noindent\begingroup\color{\englishbodycolorname}\arrayrulecolor{\englishbodycolorname!22!bookrule}\ignorespaces
+}{%
+\par \endgroup\ignorespacesafterend
+}
+
+\newenvironment{chinesetableblock}{%
+\par \noindent\begingroup\color{\chinesebodycolorname}\arrayrulecolor{\chinesebodycolorname!22!bookrule}\ignorespaces
+}{%
+\par \endgroup\ignorespacesafterend
+}
+
+\newenvironment{bilingualtableblock}{%
+\par \noindent\begingroup\color{bookink}\arrayrulecolor{bookrule}\ignorespaces
+}{%
+\par \endgroup\ignorespacesafterend
+}
+
+\newcommand{\englishdisplay}[1]{{\color{\englishbodycolorname}#1}} \newcommand{\chinesedisplay}[1]{{\color{\chinesebodycolorname}#1}}
+
+\ExplSyntaxOn \seq_new:N \l__book_color_seq \tl_new:N \l__book_color_head_tl
+
+\prg_new_conditional:Npnn \book_if_contains_cjk:n #1 { TF }
+{
+\regex_match:nnTF { [\x{4E00}-\x{9FFF}] } { \tl_to_str:n {#1} } { \prg_return_true: } { \prg_return_false: }
+}
+
+\cs_new_protected:Npn \book_render_segment:nn #1 #2
+{
+\group_begin: \color{#1}#2 \group_end:
+}
+
+\cs_new_protected:Npn \book_render_par_bilingual:n #1
+{
+\seq_set_split:Nnn \l__book_color_seq { \par } { #1 } \seq_pop_left:NN \l__book_color_seq \l__book_color_head_tl \seq_if_empty:NTF \l__book_color_seq
+{
+\book_if_contains_cjk:nTF { \l__book_color_head_tl } { \book_render_segment:nn {\chinesebodycolorname} { \tl_use:N \l__book_color_head_tl } } { \book_render_segment:nn {\englishbodycolorname} { \tl_use:N \l__book_color_head_tl } }
+}
+{
+\book_render_segment:nn {\englishbodycolorname} { \tl_use:N \l__book_color_head_tl }
+\par \book_render_segment:nn {\chinesebodycolorname} { \seq_use:Nn \l__book_color_seq { \par } }
+}
+}
+
+\cs_new_protected:Npn \book_render_medskip_bilingual:n #1
+{
+\seq_set_split:Nnn \l__book_color_seq {
+\par
+\medskip
+} { #1 } \seq_pop_left:NN \l__book_color_seq \l__book_color_head_tl \seq_if_empty:NTF \l__book_color_seq
+{
+\book_if_contains_cjk:nTF { \l__book_color_head_tl } { \book_render_segment:nn {\chinesebodycolorname} { \tl_use:N \l__book_color_head_tl } } { \book_render_segment:nn {\englishbodycolorname} { \tl_use:N \l__book_color_head_tl } }
+}
+{
+\book_render_segment:nn {\englishbodycolorname} { \tl_use:N \l__book_color_head_tl }
+\par
+\medskip
+\book_render_segment:nn {\chinesebodycolorname} { \seq_use:Nn \l__book_color_seq {
+\par
+\medskip
+} }
+}
+}
+\cs_new_protected:Npn \bookrenderparbilingual #1 { \book_render_par_bilingual:n {#1} } \cs_new_protected:Npn \bookrendermedskipbilingual #1 { \book_render_medskip_bilingual:n {#1} } \ExplSyntaxOff
+
+\makeatletter \newcommand{\bookcaptioncontent}[1]{\bookcaptioncontentaux#1\\\@nil}
+\def\bookcaptioncontentaux#1\\#2\@nil{%
+\def\bookcaptiontail{#2}%
+\ifx\bookcaptiontail\empty
+{\color{bookink}#1}%
 \else
-  \renewcommand{\contentsname}{Contents}
+{\englishdisplay{#1}\\[-0.12ex]\chinesedisplay{\ignorespaces#2}}%
 \fi
+}
+\makeatother
 
-\frenchspacing
-\ifbilinguallayout
-  \linespread{1.075}
-\else
-  \linespread{1.05}
-\fi
-\setlength{\parindent}{1.45em}
-\setlength{\parskip}{0pt}
-\setlength{\headsep}{18pt}
-\setlength{\tabcolsep}{5pt}
-\setlength{\LTpre}{0.75\baselineskip}
-\setlength{\LTpost}{0.45\baselineskip}
-\setlength{\skip\footins}{1.15\baselineskip plus 0.2\baselineskip minus 0.1\baselineskip}
-\setlength{\footnotesep}{0.55\baselineskip}
-\emergencystretch=2.35em
-\clubpenalty=10000
-\widowpenalty=10000
-\displaywidowpenalty=10000
-\interfootnotelinepenalty=10000
+\AtBeginDocument{\color{bookink}} \AtBeginDocument{\flushbottom} \setlength{\parindent}{1.45em} \setlength{\parskip}{0pt} \setlength{\headsep}{18pt} \setlength{\tabcolsep}{5pt} \setlength{\LTpre}{0.75\baselineskip} \setlength{\LTpost}{0.45\baselineskip} \setlength{\columnsep}{1.45em} \setlength{\skip\footins}{1.15\baselineskip plus 0.2\baselineskip minus 0.1\baselineskip} \setlength{\footnotesep}{0.55\baselineskip} \emergencystretch=2.8em \clubpenalty=10000 \widowpenalty=10000 \displaywidowpenalty=10000 \interfootnotelinepenalty=10000
 \renewcommand{\footnoterule}{%
-  \vspace*{-0.3\baselineskip}%
-  {\color{bookrule}\hrule width 0.18\textwidth height 0.6pt}%
-  \vspace{0.55\baselineskip}%
+\vspace*{-0.2\baselineskip}%
+{\color{bookrule}\hrule width 0.24\textwidth height 0.6pt}%
+\vspace{0.6\baselineskip}%
+}
+\arrayrulecolor{bookrule}
+
+\DeclareCaptionFormat{bookbilingual}{#1#2\bookcaptioncontent{#3}} \captionsetup[table]{name=Table, font={small,it}, labelfont={bf,color=bookaccent}, textfont={},format=bookbilingual, labelsep=period, justification=raggedright, singlelinecheck=false, skip=9pt
+}
+\captionsetup[figure]{name=Figure, font={small,it}, labelfont={bf,color=bookaccent}, textfont={},format=bookbilingual, justification=raggedright, singlelinecheck=false, skip=9pt
 }
 
-\captionsetup[table]{
-  name=Table,
-  font=small,
-  labelfont={bf,color=bookaccent},
-  textfont={color=bookink},
-  labelsep=period,
-  justification=raggedright,
-  singlelinecheck=false,
-  skip=8pt
+\pagestyle{fancy} \fancyhf{}\newcommand{\bookrunningheadfont}{\booksans\scriptsize\color{booksubtle}} \newcommand{\booklabelcaps}[1]{{\booksans\footnotesize\bfseries\addfontfeatures{LetterSpace=8}\MakeUppercase{#1}}}
+\newcommand{\bookornament}{%
+{\color{bookaccent}\rule{0.17\textwidth}{0.85pt}\par}%
+\vspace{0.42em}%
+{\color{bookrule}\rule{0.34\textwidth}{0.55pt}\par}%
 }
-\captionsetup[figure]{
-  name=Figure,
-  font=small,
-  labelfont={bf,color=bookaccent},
-  textfont={color=bookink},
-  justification=raggedright,
-  singlelinecheck=false,
-  skip=8pt
+\newcommand{\bookminorornament}{%
+{\color{bookrule}\rule{0.16\textwidth}{0.7pt}}%
 }
-
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[LE,RO]{{\booksans\footnotesize\color{booksubtle}\thepage}}
-\fancyhead[LO,RE]{{\booksans\footnotesize\color{booksubtle}\nouppercase{\leftmark}}}
-\renewcommand{\headrulewidth}{0.45pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{bookrule}\leaders\hrule height \headrulewidth\hfill}}
-\renewcommand{\footrulewidth}{0pt}
-\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\fancyhead[LE]{{\bookrunningheadfont\thepage}} \fancyhead[RO]{{\bookrunningheadfont\thepage}} \fancyhead[RE]{{\bookrunningheadfont\nouppercase{\leftmark}}} \fancyhead[LO]{{\bookrunningheadfont\nouppercase{\rightmark}}} \renewcommand{\headrulewidth}{0.45pt} \renewcommand{\headrule}{\hbox to\headwidth{\color{bookrule}\leaders\hrule height \headrulewidth\hfill}} \renewcommand{\footrulewidth}{0pt} \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}} \renewcommand{\sectionmark}[1]{\markright{#1}}
 \fancypagestyle{plain}{%
-  \fancyhf{}%
-  \fancyfoot[C]{{\booksans\footnotesize\color{booksubtle}\thepage}}%
-  \renewcommand{\headrulewidth}{0pt}%
+\fancyhf{}%
+\fancyfoot[C]{{\bookrunningheadfont\thepage}}%
+\renewcommand{\headrulewidth}{0pt}%
 }
 
-\titleformat{\chapter}[display]
-  {\normalfont\filcenter}
-  {{\booksans\large\scshape\color{booksubtle}\lsstyle \chaptername\ \thechapter}}
-  {1.05em}
-  {\Huge\bfseries\color{bookink}}
-  [\vspace{1.25ex}\color{bookrule}\rule{0.24\textwidth}{0.8pt}]
-\titleformat{name=\chapter,numberless}[display]
-  {\normalfont\filcenter}
-  {}
-  {0pt}
-  {\Huge\bfseries\color{bookink}}
-  [\vspace{1.25ex}\color{bookrule}\rule{0.24\textwidth}{0.8pt}]
-\titlespacing*{\chapter}{0pt}{0.115\textheight}{2.8ex}
+\newcommand{\bookchapterlabel}[1]{%
+\begin{minipage}{0.56\textwidth}
+{\booklabelcaps{#1}\par}%
+\vspace{0.9ex}%
+\bookminorornament
+\end{minipage}%
+}
+
+\newcommand{\bookchapterbackgroundnumber}{%
+\makebox[0pt][l]{%
+\hspace*{0.73\textwidth}%
+{\booksans\fontsize{58}{58}\selectfont\bfseries\color{bookaccent!10}\thechapter}%
+}%
+}
+
+\titleformat{\chapter}[display] {\normalfont\raggedright} {\bookchapterbackgroundnumber\bookchapterlabel{\chaptername\ \thechapter}} {1.7ex} {\begin{minipage}{0.84\textwidth}\bookdisplayfont\fontsize{30}{34}\selectfont\bfseries\color{bookink}} [{\end{minipage}\vspace{1.1ex}\bookornament}] \titleformat{name=\chapter,numberless}[display] {\normalfont\raggedright}{}{0pt} {\begin{minipage}{0.84\textwidth}\bookdisplayfont\fontsize{30}{34}\selectfont\bfseries\color{bookink}} [{\end{minipage}\vspace{1.1ex}\bookornament}] \titlespacing*{\chapter}{0pt}{0.115\textheight}{2.55ex}
 
 \newcommand{\booksectionrule}{%
-  \vspace{0.45ex}%
-  {\color{bookrule}\rule{0.11\textwidth}{0.7pt}}%
+\vspace{0.62ex}%
+{\color{bookrule}\rule{0.18\textwidth}{0.72pt}}%
 }
 
-\titleformat{\section}
-  {\normalfont\booksans\Large\bfseries\color{bookink}}
-  {}
-  {0pt}
-  {}
-  [\booksectionrule]
-\titleformat{\subsection}
-  {\normalfont\booksans\large\bfseries\color{bookink}}
-  {}
-  {0pt}
-  {}
-\titlespacing*{\section}{0pt}{3.1ex plus 0.6ex minus 0.2ex}{1.35ex}
-\titlespacing*{\subsection}{0pt}{2.45ex plus 0.45ex minus 0.2ex}{0.8ex}
+\titleformat{\section} {\normalfont\booksans\fontsize{18}{22}\selectfont\bfseries\raggedright\color{bookdeepaccent}}{}{0pt}{}[\booksectionrule] \titleformat{\subsection} {\normalfont\booksans\fontsize{14.5}{18}\selectfont\bfseries\raggedright\color{bookink}}{}{0pt}{}\titlespacing*{\section}{0pt}{3.35ex plus 0.7ex minus 0.2ex}{1.5ex} \titlespacing*{\subsection}{0pt}{2.7ex plus 0.45ex minus 0.2ex}{0.95ex}
 
-\contentsmargin{3.45em}
-\titlecontents{part}
-  [0pt]
-  {\addvspace{1.45em}\booksans\bfseries\color{bookaccent}}
-  {}
-  {}
-  {\hfill{\booksans\color{bookaccent}\contentspage}}
-\titlecontents{chapter}
-  [0pt]
-  {\addvspace{0.75em}\bfseries\color{bookink}}
-  {\contentslabel{3em}}
-  {}
-  {\hfill{\color{bookink}\contentspage}}
-\titlecontents{section}
-  [2em]
-  {\small\color{booksubtle}}
-  {\contentslabel{2.8em}}
-  {}
-  {\color{bookrule}\titlerule*[0.75pc]{.}{\color{booksubtle}\contentspage}}
+\contentsmargin{4.15em} \titlecontents{part} [0pt] {\addvspace{1.8em}\booksans\footnotesize\bfseries\color{bookaccent}}{}{}{\hfill{\booksans\footnotesize\color{bookaccent}\contentspage}} \titlecontents{chapter} [0pt] {\addvspace{0.9em}\booksans\bfseries\color{bookink}} {\contentslabel{3.0em}}{}{\hfill{\booksans\color{bookink}\contentspage}} \titlecontents{section} [2.15em] {\addvspace{0.2em}\small\color{booksubtle}} {\contentslabel{2.75em}}{}{\color{bookrule}\titlerule*[0.75pc]{.}{\color{booksubtle}\contentspage}}
 
-\renewenvironment{quote}
-  {\list{}{\leftmargin=1.75em\rightmargin=1.75em}\item\relax\small\itshape\color{booksubtle}}
-  {\endlist}
+\renewenvironment{quote} {\list{}{\leftmargin=2.1em\rightmargin=2.1em}\item\relax\small\itshape\color{booksubtle}} {\endlist}
 
-\tcbset{
-  bookbox/.style={
-    enhanced,
-    breakable,
-    sharp corners,
-    boxrule=0.6pt,
-    colback=bookpaper,
-    colframe=bookrule,
-    borderline west={2.1pt}{0pt}{bookaccent!70!bookrule},
-    left=11pt,
-    right=11pt,
-    top=10pt,
-    bottom=10pt,
-    before skip=1.1\baselineskip,
-    after skip=1.1\baselineskip
-  }
+\tcbset{bookbox/.style={enhanced, breakable, sharp corners, boxrule=0.5pt, colback=bookpaper, colframe=bookrule, borderline west={2.3pt}{0pt}{bookaccent!70!bookrule}, left=12pt, right=12pt, top=10pt, bottom=10pt, before skip=1.15\baselineskip, after skip=1.15\baselineskip
+}
 }
 
 \newcommand{\conceptbox}[1]{%
-  \begin{tcolorbox}[bookbox]
-    #1
-  \end{tcolorbox}%
+\begin{tcolorbox}[bookbox]#1
+\end{tcolorbox}%
+}
+
+\let\bookorigfootnote\footnote
+\RenewDocumentCommand{\footnote}{ o +m }{%
+\IfNoValueTF{#1} {\bookorigfootnote{\bookrenderparbilingual{#2}}}
+{\bookorigfootnote[#1]{\bookrenderparbilingual{#2}}}%
 }
 
 \newcommand{\audiencebox}[2]{%
-  \begin{tcolorbox}[
-    bookbox,
-    colback=bookpanel,
-    colframe=bookaccent,
-    colbacktitle=bookaccent,
-    coltitle=white,
-    fonttitle=\booksans\bfseries\small,
-    title={#1}
-  ]
-    #2
-  \end{tcolorbox}%
+\begin{tcolorbox}[bookbox, colback=bookpanel!72!bookpaper, colframe=bookrule, colbacktitle=bookpanel!72!bookpaper, coltitle=bookaccent, fonttitle=\booksans\bfseries\footnotesize\scshape, title={#1}] \bookrendermedskipbilingual{#2}
+\end{tcolorbox}%
 }
 
 \newcommand{\rawtablecaption}[1]{%
-  \refstepcounter{table}%
-  \par\medskip\noindent
-  {\small\booksans\bfseries\color{bookaccent}\textsc{Table \thetable}\par}%
-  \smallskip
-  {\small\raggedright #1\par}%
-  \smallskip%
+\refstepcounter{table}%
+\par
+\medskip
+\noindent
+{\small\raggedright\booksans\bfseries\color{bookaccent}\textsc{Table \thetable}. }%
+{\small\raggedright\bookcaptioncontent{#1}\par}%
+\vspace{0.35em}%
 }
 
 \newcommand{\rawfigurecaption}[1]{%
-  \refstepcounter{figure}%
-  \par\medskip\noindent
-  {\small\booksans\bfseries\color{bookaccent}\textsc{Figure \thefigure}\par}%
-  \smallskip
-  {\small\raggedright #1\par}%
-  \smallskip%
+\refstepcounter{figure}%
+\par
+\medskip
+\noindent
+{\small\raggedright\booksans\bfseries\color{bookaccent}\textsc{Figure \thefigure}. }%
+{\small\raggedright\bookcaptioncontent{#1}\par}%
+\vspace{0.35em}%
+}
+
+\newcommand{\bookfitbox}[2][\textwidth]{%
+\resizebox{\ifdim\width>#1 #1\else\width\fi}{!}{#2}%
+}
+
+\DeclareRobustCommand{\bilingualtocentry}[2]{%
+\texorpdfstring{%
+\shortstack[l]{%
+\englishdisplay{\strut #1}\\[-0.2ex]%
+{\normalfont\small\chinesedisplay{\strut #2}}%
+}%
+}{#1 / #2}%
+}
+
+\DeclareRobustCommand{\bilingualheaderentry}[2]{%
+\englishdisplay{#1}\ {\color{bookrule}/}\ \chinesedisplay{#2}%
+}
+
+\newcommand{\bilingualchapterdisplay}[2]{%
+\texorpdfstring{%
+\englishdisplay{#1}\\[0.72ex]%
+{\LARGE\booksans\bfseries\chinesedisplay{#2}}%
+}{#1 / #2}%
+}
+
+\newcommand{\bilingualsectiondisplay}[2]{%
+\texorpdfstring{%
+\englishdisplay{#1}\\[0.5ex]%
+{\large\booksans\bfseries\chinesedisplay{#2}}%
+}{#1 / #2}%
+}
+
+\newcommand{\bilingualsubsectiondisplay}[2]{%
+\texorpdfstring{%
+\englishdisplay{#1}\\[0.25ex]%
+{\normalsize\booksans\bfseries\chinesedisplay{#2}}%
+}{#1 / #2}%
+}
+
+\newcommand{\bilingualchapter}[2]{%
+\chapter[\bilingualtocentry{#1}{#2}]{\bilingualchapterdisplay{#1}{#2}}%
+\markboth{\bilingualheaderentry{#1}{#2}}{\bilingualheaderentry{#1}{#2}}%
+}
+
+\newcommand{\bilingualchapterstar}[2]{%
+\chapter*{\bilingualchapterdisplay{#1}{#2}}%
+\phantomsection
+\addcontentsline{toc}{chapter}{\bilingualtocentry{#1}{#2}}%
+\markboth{\bilingualheaderentry{#1}{#2}}{\bilingualheaderentry{#1}{#2}}%
+}
+
+\newcommand{\bilingualsection}[2]{%
+\section*{\bilingualsectiondisplay{#1}{#2}}%
+\phantomsection
+\addcontentsline{toc}{section}{\bilingualtocentry{#1}{#2}}%
+}
+
+\newcommand{\bilingualsubsection}[2]{%
+\subsection*{\bilingualsubsectiondisplay{#1}{#2}}%
+}
+
+\newcommand{\bilingualpart}[4]{%
+\phantomsection
+\addcontentsline{toc}{part}{%
+\bilingualtocentry {\ifstrempty{#1}{#2}{#1. #2}}
+{\ifstrempty{#3}{#4}{#3. #4}}%
+}%
+\parttitleblock{#1}{#2}{#3}{#4}%
 }
 
 \newcommand{\bichaptertitle}[1]{%
-  \addcontentsline{toc}{chapter}{#1}%
-  \vspace{0.5em}%
-  \begin{center}
-    {\Large\sffamily\bfseries\color{bookaccent} #1\par}
-  \end{center}
-  \vspace{1em}%
+\vspace{0.65em}%
+\begin{center}
+{\Large\sffamily\bfseries\color{bookaccent} #1\par}
+\vspace{0.55em}%
+{\color{bookrule}\rule{0.16\textwidth}{0.7pt} \par } \end{center}
+\vspace{0.8em}%
 }
 
 \newcommand{\bisectiontitle}[1]{%
-  \addcontentsline{toc}{section}{#1}%
-  \vspace{-0.35em}%
-  \noindent{\sffamily\bfseries\color{bookaccent} #1\par}%
-  \vspace{0.35em}%
+\vspace{-0.28em}%
+\noindent{\large\sffamily\bfseries\color{bookaccent} #1\par}%
+\vspace{0.42em}%
 }
 
 \newcommand{\bisubsectiontitle}[1]{%
-  \vspace{-0.18em}%
-  \noindent{\sffamily\bfseries\color{booksubtle} #1\par}%
-  \smallskip
+\vspace{-0.08em}%
+\noindent{\sffamily\bfseries\color{booksubtle} #1\par}%
+\vspace{0.35em}%
+}
+
+\newcommand{\bipairgap}{%
+\par\addvspace{1.02\baselineskip plus 0.1\baselineskip minus 0.04\baselineskip}%
 }
 
 \newcommand{\parttitleblock}[4]{%
-  \begin{center}
-    \vspace*{\fill}
-    \ifstrempty{#1}{}{%
-      {{\booksans\large\scshape\color{booksubtle}\lsstyle #1\par}}%
-    }%
-    \ifstrempty{#3}{}{%
-      \vspace{0.35em}%
-      {{\sffamily\large\bfseries\color{bookaccent} #3\par}}%
-    }%
-    \ifstrempty{#1#3}{}{\vspace{1.15em}}%
-    {\fontsize{29}{32}\selectfont\bfseries\color{bookink} #2\par}%
-    \ifstrempty{#4}{}{%
-      \vspace{0.5em}%
-      {{\Large\sffamily\color{booksubtle} #4\par}}%
-    }%
-    \vspace{1.45em}
-    {\color{bookrule}\rule{0.24\textwidth}{0.8pt}\par}
-    \vspace*{\fill}
-  \end{center}
+\thispagestyle{empty}%
+\vspace*{0.2\textheight} \noindent \begin{minipage}{0.82\textwidth}
+\ifstrempty{#1}{}{%
+{{\booklabelcaps{#1}\par}}%
+}%
+\ifstrempty{#3}{}{%
+\vspace{0.5em}%
+{{\booksans\normalsize\bfseries\chinesedisplay{#3}\par}}%
+}%
+\ifstrempty{#1#3}{}{\vspace{1.55em}}%
+{\bookdisplayfont\fontsize{32}{36}\selectfont\bfseries\color{bookink} #2\par}%
+\ifstrempty{#4}{}{%
+\vspace{0.72em}%
+{{\LARGE\booksans\bfseries\chinesedisplay{#4}\par}}%
+}%
+\vspace{1.8em} \bookornament \end{minipage}
+\vfill
+}
+
+\newcommand{\bookfrontlabel}[2]{%
+{\booklabelcaps{#1}\par}%
+\vspace{0.4em}%
+{{\booksans\normalsize\bfseries\chinesedisplay{#2}\par}}%
+\vspace{0.9em}%
+\bookornament
+\vspace{1.15em}%
 }
 
 \newcommand{\inputbilingual}[1]{%
-  \IfFileExists{chapters_bilingual/#1.tex}{\input{chapters_bilingual/#1}}{\input{chapters/#1}}%
+\IfFileExists{chapters_bilingual/#1.tex}{\input{chapters_bilingual/#1}}{\input{chapters/#1}}%
 }
 
-\newcolumntype{Y}{>{\raggedright\arraybackslash\hspace{0pt}}X}
-\newcolumntype{R}{>{\raggedleft\arraybackslash\hspace{0pt}}X}
-\renewcommand{\thefigure}{\arabic{figure}}
-\renewcommand{\thetable}{\arabic{table}}
-\counterwithout{figure}{chapter}
-\counterwithout{table}{chapter}
+\newcolumntype{Y}{>{\raggedright\arraybackslash\hspace{0pt}} X} \newcolumntype{L}[1]{>{\raggedright\arraybackslash\hspace{0pt}} p{#1}} \newcolumntype{R}{>{\raggedleft\arraybackslash\hspace{0pt}} X} \renewcommand{\thefigure}{\arabic{figure}} \renewcommand{\thetable}{\arabic{table}} \counterwithout{figure}{chapter} \counterwithout{table}{chapter}

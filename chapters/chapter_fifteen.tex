@@ -1,37 +1,26 @@
 \chapter{Staunch Systems Trader}
 
-THE LAST TWO CHAPTERS HAVE BEEN FOR THOSE WHO DON'T really believe that simple trading rules work, but are happy to use the systematic framework. However this chapter is for the staunch systems trader who wants to use both the framework and multiple systematic trading rules for predicting asset prices.
+THE LAST TWO CHAPTERS HAVE BEEN FOR THOSE WHO DON'T really believe that simple \textbf{trading rules} work, but are happy to use the systematic framework. However this chapter is for the \textbf{staunch systems trader} who wants to use both the framework and multiple systematic \textbf{trading rules} for predicting asset prices.
 
-\section*{Chapter overview}
-\phantomsection
-\addcontentsline{toc}{section}{Chapter overview}
+\section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
-\textbf{Who are you?} & Introducing the staunch systems trader. \\
+\begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} Y@{}}\textbf{Who are you?} & Introducing the staunch systems trader. \\
 \textbf{Using the framework} & How you will use the systematic trading rules and framework. \\
 \textbf{Daily process} & The daily process you need to follow to run your system. \\
 \textbf{Trading diary} & A diary showing how the example system traded the market in late 2014. \\
 \end{tabularx}
 
-\section*{Who are you?}
-\phantomsection
-\addcontentsline{toc}{section}{Who are you?}
+\section*{Who are you?} \phantomsection \addcontentsline{toc}{section}{Who are you?}
 
-The specific example in this chapter will cover futures trading, but in principle any leveraged instruments could be operated in a similar way. Trading futures is a complex task and I'm not covering a lot of the mechanics around practicalities like getting data, execution and optimal rolling.\footnote{Appendix A provides pointers to where you can find further help and advice, including the website for this book: www.systematictrading.org} I will assume that you have \$250,000 of initial trading capital. The example will focus on building a system suitable for part-time traders which trades daily and for which data can be obtained for free.
+The specific example in this chapter will cover futures trading, but in principle any leveraged \textbf{instruments} could be operated in a similar way. Trading futures is a complex task and I'm not covering a lot of the mechanics around practicalities like getting data, execution and optimal rolling.\footnote{Appendix A provides pointers to where you can find further help and advice, including the website for this book: www.systematictrading.org} I will assume that you have \$250,000 of initial \textbf{trading capital}. The example will focus on building a system suitable for part-time traders which trades daily and for which data can be obtained for free.
 
-\section*{Using the framework}
-\phantomsection
-\addcontentsline{toc}{section}{Using the framework}
+\section*{Using the framework} \phantomsection \addcontentsline{toc}{section}{Using the framework}
 
 \subsection*{Instrument choice: Size, diversification and costs}
 
-Unless you have many millions of dollars, choosing which futures to trade is mostly a balance between getting reasonable diversification and running into the issues with large minimum instrument block sizes discussed in chapter twelve, ‘Speed and Size'. These issues are common with an account of this size given that you can't trade less than one futures contract, and many contracts are quite large.\footnote{This issue was discussed in chapter twelve from ‘Trading with relatively little capital' on page 200 onwards.} You should also avoid instruments that are very expensive to trade and as always those with low volatility. In my opinion the set shown in table 42 is a good selection for this account size.\footnote{These instruments also have the advantage that long histories of daily prices can be obtained for free from the sources listed in appendix A, and live data is relatively cheap through most brokers.} It is highly diversified since it contains one future from each major asset class.\footnote{In an ideal world I'd add a metal like gold, and an energy future like WTI Crude. However all the contracts in these asset classes have relatively large minimum sizes.} You wouldn't have any maximum positions of less than the four contracts threshold suggested in chapter twelve, although Euro Stoxx is close. It might seem strange that a US investor would prefer the European stock market (Euro Stoxx) and equity volatility index (V2TX), but these are the only liquid futures in these categories where you can avoid maximum positions that are too small.
+Unless you have many millions of dollars, choosing which futures to trade is mostly a balance between getting reasonable diversification and running into the issues with large minimum \textbf{instrument block} sizes discussed in chapter twelve, ‘Speed and Size'. These issues are common with an account of this size given that you can't trade less than one futures contract, and many contracts are quite large.\footnote{This issue was discussed in chapter twelve from ‘Trading with relatively little capital' on page 200 onwards.} You should also avoid \textbf{instruments} that are very expensive to trade and as always those with low \textbf{volatility}. In my opinion the set shown in table 42 is a good selection for this account size.\footnote{These instruments also have the advantage that long histories of daily prices can be obtained for free from the sources listed in appendix A, and live data is relatively cheap through most brokers.} It is highly diversified since it contains one future from each major \textbf{asset class}.\footnote{In an ideal world I'd add a metal like gold, and an energy future like WTI Crude. However all the contracts in these \textbf{asset classes} have relatively large minimum sizes.} You wouldn't have any maximum positions of less than the four contracts threshold suggested in chapter twelve, although Euro Stoxx is close. It might seem strange that a US investor would prefer the European stock market (Euro Stoxx) and \textbf{equity volatility index} (V2TX), but these are the only liquid futures in these categories where you can avoid maximum positions that are too small.
 
-\rawtablecaption{WHAT INSTRUMENTS SHOULD YOU USE FOR THE STAUNCH SYSTEMS TRADER EXAMPLE?}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.18\textwidth}p{0.16\textwidth}Y@{}}
+\rawtablecaption{WHAT INSTRUMENTS SHOULD YOU USE FOR THE STAUNCH SYSTEMS TRADER EXAMPLE?} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} p{0.18\textwidth} p{0.16\textwidth} Y@{}}
 \toprule
 \textbf{Instrument} & \textbf{Standard cost SR} & \textbf{Currency} & \textbf{Maximum position} \\
 \midrule
@@ -47,17 +36,13 @@ Corn & 0.005 & USD & 9 \\
 
 The table shows my selected instruments (rows), standardised costs (using the method in chapter twelve), traded currency and maximum possible positions (calculated with a forecast of +20 using the formula on page 201).
 
-As well as the maximum expected position, the volatility standardised costs and currency for each future are also shown in table 42.\footnote{Costs are based on average price volatility and bid-offer spreads during 2014. Maximum position depends on the current level of price volatility and is correct as of December 2014.} All of these instruments have costs that are less than the maximum of 0.01 Sharpe ratio units which I recommended for staunch systems traders in chapter twelve, ‘Speed and Size'. In chapter six, ‘Instruments', I said you should also consider skew and volatility when choosing instruments. With a short position the European equity volatility index future (V2TX) is a markedly negative skew instrument (as discussed in the skew concept box, page 32), but as you'll see later you'll only allocate 10\% of your portfolio to it. None of the instruments have especially low volatility as I write this chapter, as long as you avoid trading the closest Eurodollar delivery months (where volatility is very low due to zero interest rate policies). For this reason I recommend trading Eurodollar around three years out; much beyond that and the liquidity starts to drop off.
+As well as the maximum expected position, the \textbf{volatility standardised} costs and currency for each future are also shown in table 42.\footnote{Costs are based on \textbf{average price volatility} and bid-offer spreads during 2014. Maximum position depends on the current level of price volatility and is correct as of December 2014.} All of these instruments have costs that are less than the maximum of 0.01 Sharpe ratio units which I recommended for staunch systems traders in chapter twelve, ‘Speed and Size'. In chapter six, ‘Instruments', I said you should also consider skew and volatility when choosing instruments. With a short position the European equity volatility index future (V2TX) is a markedly negative skew instrument (as discussed in the skew concept box, page 32), but as you'll see later you'll only allocate 10\% of your portfolio to it. None of the instruments have especially low volatility as I write this chapter, as long as you avoid trading the closest Eurodollar delivery months (where volatility is very low due to zero interest rate policies). For this reason I recommend trading Eurodollar around three years out; much beyond that and the liquidity starts to drop off.
 
 \subsection*{Selecting trading rules}
 
-You will use both of the trading rules introduced in chapter six: the trend following EWMAC rule and the carry rule. Your trend following rules and measures of price volatility will be based on a series of stitched futures prices using the ‘Panama method'.\footnote{Very briefly, the Panama method involves first taking the price series of the currently traded future. You then take the price series of the future you traded before the last roll. The prices of the previous future are shifted up or down in parallel, until the adjusted price of the previous future aligns with the actual price of the current future on the day when you would have rolled from one contract to the next. You then repeat this for all the futures contracts you could have traded in the past. Other methods of stitching are also available, and as long as they do not leave a discontinuous jump in the price when a roll occurs, they will give roughly similar results. There's much more detail about stitching methods available on my blog, which can be accessed from the book's website (www.systematictrading.org).} For carry, as appendix B explains, the optimal calculation requires that you're not trading the nearest contract, but one further in the future. This is achievable for volatility (V2TX), Eurodollar and corn.\footnote{I trade three years out in Eurodollar. For V2X I trade the second contract. For corn I always trade the December contract to avoid different seasonal effects influencing the price, and I usually roll to the following year by summer. There's a much longer discussion about optimal rolling available on my blog.} However for the bond, equity and FX future you'll need to trade the nearest futures contract, as the subsequent deliveries aren't liquid enough. In table 43 I've shown the back-tested turnover in round trips per year for the trading rule variations you'll be using. You can also see the maximum standardised cost at which you could use each rule, if you stick to my recommended speed limit from chapter twelve of spending no more than 0.13 Sharpe ratio (SR) units on costs each year. Only the very cheapest futures instruments can use the fastest EWMAC variations. I strongly recommend that you use at least three of the EWMAC variations for trend following, as there is insufficient evidence to say that one or two of these variations would be better than the others. So the slowest portfolio you can construct will contain the carry rule and the three slower variations of EWMAC (fast look-backs of 16, 32 and 64).
+You will use both of the trading rules introduced in chapter six: the \textbf{trend following} EWMAC rule and the \textbf{carry} rule. Your trend following rules and measures of \textbf{price volatility} will be based on a series of stitched futures prices using the ‘Panama method'.\footnote{Very briefly, the Panama method involves first taking the price series of the currently traded future. You then take the price series of the future you traded before the last roll. The prices of the previous future are shifted up or down in parallel, until the adjusted price of the previous future aligns with the actual price of the current future on the day when you would have rolled from one contract to the next. You then repeat this for all the futures contracts you could have traded in the past. Other methods of stitching are also available, and as long as they do not leave a discontinuous jump in the price when a roll occurs, they will give roughly similar results. There's much more detail about stitching methods available on my blog, which can be accessed from the book's website (www.systematictrading.org).} For carry, as appendix B explains, the optimal calculation requires that you're not trading the nearest contract, but one further in the future. This is achievable for volatility (V2TX), Eurodollar and corn.\footnote{I trade three years out in Eurodollar. For V2X I trade the second contract. For corn I always trade the December contract to avoid different seasonal effects influencing the price, and I usually roll to the following year by summer. There's a much longer discussion about optimal rolling available on my blog.} However for the bond, equity and FX future you'll need to trade the nearest futures contract, as the subsequent deliveries aren't liquid enough. In table 43 I've shown the \textbf{back-tested} \textbf{turnover} in round trips per year for the trading rule variations you'll be using. You can also see the maximum standardised cost at which you could use each rule, if you stick to my recommended \textbf{speed limit} from chapter twelve of spending no more than 0.13 \textbf{Sharpe ratio (SR)} units on costs each year. Only the very cheapest futures instruments can use the fastest EWMAC variations. I strongly recommend that you use at least three of the EWMAC variations for trend following, as there is insufficient evidence to say that one or two of these variations would be better than the others. So the slowest portfolio you can construct will contain the carry rule and the three slower variations of EWMAC (fast look-backs of 16, 32 and 64).
 
-\rawtablecaption{CAN YOU USE ALL OF THE TRADING RULE VARIATIONS FOR EVERY INSTRUMENT? ONLY CHEAP INSTRUMENTS CAN TRADE VERY QUICK RULES}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}p{0.20\textwidth}Y@{}}
+\rawtablecaption{CAN YOU USE ALL OF THE TRADING RULE VARIATIONS FOR EVERY INSTRUMENT? ONLY CHEAP INSTRUMENTS CAN TRADE VERY QUICK RULES} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.30\textwidth} p{0.20\textwidth} Y@{}}
 \toprule
 \textbf{Trading rule variation} & \textbf{Raw turnover} & \textbf{Maximum standardised cost} \\
 \midrule
@@ -78,35 +63,25 @@ Looking back at table 42 you could use the three slowest EWMAC variations for al
 
 \subsection*{Forecast weights and trading speed}
 
-Now you need to blend your trading rule forecasts into a combined forecast, as in chapter eight. I'll show you how to determine the necessary forecast weights using the handcrafting method that I explained in chapter four, although you could also use the bootstrapping procedure. To use the handcrafting method I'll need correlations and some way of grouping the trading rule variations. Table 44 shows I first group variations
+Now you need to blend your trading rule \textbf{forecasts} into a \textbf{combined forecast}, as in chapter eight. I'll show you how to determine the necessary \textbf{forecast weights} using the handcrafting method that I explained in chapter four, although you could also use the bootstrapping procedure. To use the handcrafting method I'll need \textbf{correlations} and some way of grouping the trading rule variations. Table 44 shows I first group variations within the same rule and then across rules. I'll use rule of thumb correlations as shown in table 45, which have come from appendix B.
 
-within the same rule and then across rules. I'll use rule of thumb correlations as shown in table 45, which have come from appendix B.
-
-\rawtablecaption{GROUPING FOR TRADING RULE VARIATIONS}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.34\textwidth}p{0.24\textwidth}Y@{}}
+\rawtablecaption{GROUPING FOR TRADING RULE VARIATIONS} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.34\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{Rule and variation} & \textbf{1st level} & \textbf{2nd level} \\
 \midrule
-EWMAC 16,64 &  &  \\
+EWMAC 16,64 & & \\
 EWMAC 32,128 & EWMAC & Across rules \\
-EWMAC 64,256 &  &  \\
+EWMAC 64,256 & & \\
 Carry & Carry rule & Across rules \\
 \bottomrule
 \end{tabularx}
 }
 
-In line with the advice in chapter twelve, ‘Speed and Size’, I will assume all variations have the same pre-cost Sharpe ratio (SR), since consistent evidence of statistical outperformance by one rule or another is difficult to find. This implies that instruments with different costs, and so varying after-cost SR, would have different forecast weights once I'd adjusted the original handcrafted weights.
+In line with the advice in chapter twelve, ‘Speed and Size’, I will assume all variations have the same pre-cost \textbf{Sharpe ratio (SR)}, since consistent evidence of statistical outperformance by one rule or another is difficult to find. This implies that instruments with different costs, and so varying after-cost SR, would have different forecast weights once I'd adjusted the original handcrafted weights.
 
-But for brevity I've calculated a single set of weights using the cost of the most expensive instrument -- V2TX futures. The turnover in round trips per year of each trading rule and the resulting annual cost in SR units using the V2X standardised cost of 0.009 SR units is shown in table 45. Since the largest difference in costs is only 0.031 SR units, the resulting SR adjustments will be extremely small and I haven't made any Sharpe ratio adjustments in this example.
+But for brevity I've calculated a single set of weights using the cost of the most expensive instrument -- V2TX futures. The turnover in round trips per year of each trading rule and the resulting annual cost in SR units using the V2X \textbf{standardised cost} of 0.009 SR units is shown in table 45. Since the largest difference in costs is only 0.031 SR units, the resulting SR adjustments will be extremely small and I haven't made any Sharpe ratio adjustments in this example.
 
-\rawtablecaption{WHAT IS THE EXPECTED ANNUAL COST FOR EACH TRADING RULE?}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.18\textwidth}p{0.22\textwidth}Y@{}}
+\rawtablecaption{WHAT IS THE EXPECTED ANNUAL COST FOR EACH TRADING RULE?} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} p{0.18\textwidth} p{0.22\textwidth} Y@{}}
 \toprule
 \textbf{Trading rule variation} & \textbf{Turnover} & \textbf{Annual cost, SR units} & \textbf{Forecast weight} \\
 \midrule
@@ -120,39 +95,35 @@ Carry & 10 & 0.09 & 50\% \\
 
 The table shows for each trading rule variation (rows) the turnover in round trips per year, and resulting annual costs in Sharpe ratio (SR) units for most expensive instrument V2TX (European volatility futures) with standardised cost of 0.009 SR per round trip. It also shows the handcrafted forecast weights.
 
-This set of rules is identical to those I looked at in chapter eight, in the section from page 126 onwards. This means you can use the forecast weights and forecast diversification multiplier that I'd already worked out in that earlier chapter. To save you referring back I've repeated the weights in table 45 and the multiplier is 1.31. Notice again that the EWMAC 32 variation has a lower weight because it is more highly correlated with the 16 and 64 variations, than they are with each other.
+This set of rules is identical to those I looked at in chapter eight, in the section from page 126 onwards. This means you can use the forecast weights and \textbf{forecast diversification} multiplier that I'd already worked out in that earlier chapter. To save you referring back I've repeated the weights in table 45 and the multiplier is 1.31. Notice again that the EWMAC 32 variation has a lower weight because it is more highly correlated with the 16 and 64 variations, than they are with each other.
 
 \subsection*{Volatility target calculation}
 
-With predetermined trading capital of \$250,000 you need to determine how much of that you are willing to put at risk; your percentage volatility target. As I said in chapter nine, ‘Volatility targeting', this is a matter of determining your achievable performance, inferring from that a safe level of risk to take, and checking you are comfortable with the likely levels of losses. You'll be running a reasonably diversified system, with two trading rules drawn from different styles, and six instruments from different asset classes. When I back-tested this system using out of sample bootstrapping to ensure a conservative result, I got a Sharpe ratio (SR) after costs of 0.53. Using table 14 (page 90) suggests that about 75\% of this is achievable, for an SR of 0.40. There is a mixture of positive and negative skew trading rules and 90\% of the portfolio is in relatively benign assets, with only 10\% in the potentially negative skew V2TX volatility future. I'm happy to assume this is a slightly positive zero skew system, which the backtest confirms. From the achievable Sharpe ratio 0.4 row, column A, of table 25 (page 147), you would get a 20\% volatility target and hence an annualised cash volatility target of \$250,000 × 0.20 = \$50,000. This is slightly lower than the level I run my own system at; I assume you're also comfortable with the potential pain of a 20\% target, and with leveraged futures achieving the risk won't be an issue. With this relatively high volatility target you'll be checking your account value, and adjusting your risk, every day.
+With predetermined \textbf{trading capital} of \$250,000 you need to determine how much of that you are willing to put at risk; your \textbf{percentage volatility target}. As I said in chapter nine, ‘Volatility targeting', this is a matter of determining your achievable performance, inferring from that a safe level of risk to take, and checking you are comfortable with the likely levels of losses. You'll be running a reasonably diversified system, with two trading rules drawn from different styles, and six instruments from different \textbf{asset classes}. When I \textbf{back-tested} this system using \textbf{out of sample bootstrapping} to ensure a conservative result, I got a \textbf{Sharpe ratio} (SR) after costs of 0.53. Using table 14 (page 90) suggests that about 75\% of this is achievable, for an SR of 0.40. There is a mixture of positive and negative skew trading rules and 90\% of the portfolio is in relatively benign assets, with only 10\% in the potentially negative skew V2TX volatility future. I'm happy to assume this is a slightly positive zero skew system, which the backtest confirms. From the achievable Sharpe ratio 0.4 row, column A, of table 25 (page 147), you would get a 20\% volatility target and hence an \textbf{annualised cash volatility} target of \$250,000 × 0.20 = \$50,000. This is slightly lower than the level I run my own system at; I assume you're also comfortable with the potential pain of a 20\% target, and with leveraged futures achieving the risk won't be an issue. With this relatively high volatility target you'll be checking your account value, and adjusting your risk, every day.
 
 \subsection*{Position sizing and measuring price volatility}
 
-Now you need to come up with a method for position sizing, which means calculating the instrument value volatility. This in turn depends on the value of each instrument block in USD (to match your hypothetical account), for which you need exchange rates, an estimate of price volatility and the block value, all of which were discussed in chapter ten, ‘Position sizing'. Currencies for each instrument are shown in table 42 and you'll update FX rates daily. You will be using a moving average of recent daily returns to find the price volatility of each instrument. However we need to determine what look-back to use for your moving averages.
+Now you need to come up with a method for position sizing, which means calculating the \textbf{instrument value volatility}. This in turn depends on the value of each \textbf{instrument block} in USD (to match your hypothetical account), for which you need exchange rates, an estimate of \textbf{price volatility} and the \textbf{block value}, all of which were discussed in chapter ten, ‘Position sizing'. Currencies for each instrument are shown in table 42 and you'll update FX rates daily. You will be using a moving average of recent daily returns to find the \textbf{price volatility} of each \textbf{instrument}. However we need to determine what look-back to use for your moving averages.
 
-As I discussed in chapter twelve, ‘Speed and Size', we need to compare the cost of the default look-back of five weeks versus a slower look-back. I'll do this conservatively using the costs of your most expensive instrument, the European volatility index future V2TX. Let's refer back to table 36 (page 197) in chapter twelve. First of all I need to find the turnover of your trading rules. With your portfolio of the carry rule and three EWMAC variations, and the relevant forecast weights from table 45, the weighted average turnover comes in at around 9.57 round trips per year.\footnote{Weights are 50\% to carry, 21\% to EWMAC16, 8\% to EWMAC 32, and 21\% to EWMAC 64. With trading rule turnovers from table 43 we get a weighted average of ([0.5 × 10] + [0.21 × 11] + [0.08 × 8.5] + [0.21 × 7.5]) = 9.57.} Once I've multiplied this by the forecast diversification multiplier (1.31) the turnover of your combined forecast will be 9.57 × 1.31 = 12.5. From the relevant row in table 36, the final turnover will be 12.6 using the recommended default look-back of five weeks (or equivalent for exponentially weighted moving average), or 11.7 with a look-back of 20 weeks. Using the most expensive instrument (VT2X) with standardised costs of 0.009 Sharpe ratio (SR) units, the costs will be 12.6 × 0.009 = 0.113 SR units per year with the default look-back and 11.7 × 0.009 = 0.105 SR with the slower one. It isn't worth slowing down the estimation of price volatility for a saving of 0.008 SR in costs, so I recommend you stick to the default look-back of 25 days. Also I suggest using an exponentially weighted moving average (EWMA) of daily squared returns, for which a look-back of 36 business days is the equivalent of 25 days. With your 20\% volatility target a cost level of 0.113 SR equates to an annual performance drag of 20\% × 0.113 = 2.3\% on V2TX, and less on the cheaper instruments. There will also be a small additional cost for rolling open futures positions into new delivery months. It's also worth noting that 0.113 SR comes in safely under the maximum speed limit that I recommended in chapter twelve of 0.13 SR spent on costs each year.
+As I discussed in chapter twelve, ‘Speed and Size', we need to compare the cost of the default look-back of five weeks versus a slower look-back. I'll do this conservatively using the costs of your most expensive instrument, the European volatility index future V2TX. Let's refer back to table 36 (page 197) in chapter twelve. First of all I need to find the turnover of your trading rules. With your portfolio of the \textbf{carry} rule and three EWMAC variations, and the relevant \textbf{forecast weights} from table 45, the weighted average turnover comes in at around 9.57 round trips per year.\footnote{Weights are 50\% to carry, 21\% to EWMAC16, 8\% to EWMAC 32, and 21\% to EWMAC 64. With trading rule turnovers from table 43 we get a weighted average of ([0.5 × 10] + [0.21 × 11] + [0.08 × 8.5] + [0.21 × 7.5]) = 9.57.} Once I've multiplied this by the \textbf{forecast diversification multiplier} (1.31) the turnover of your \textbf{combined forecast} will be 9.57 × 1.31 = 12.5. From the relevant row in table 36, the final turnover will be 12.6 using the recommended default look-back of five weeks (or equivalent for \textbf{exponentially weighted moving average}), or 11.7 with a look-back of 20 weeks. Using the most expensive instrument (VT2X) with standardised costs of 0.009 \textbf{Sharpe ratio} (SR) units, the costs will be 12.6 × 0.009 = 0.113 SR units per year with the default look-back and 11.7 × 0.009 = 0.105 SR with the slower one. It isn't worth slowing down the estimation of price volatility for a saving of 0.008 SR in costs, so I recommend you stick to the default look-back of 25 days. Also I suggest using an \textbf{exponentially weighted moving average (EWMA)} of daily squared returns, for which a look-back of 36 business days is the equivalent of 25 days. With your 20\% \textbf{volatility target} a cost level of 0.113 SR equates to an annual performance drag of 20\% × 0.113 = 2.3\% on V2TX, and less on the cheaper instruments. There will also be a small additional cost for rolling open futures positions into new delivery months. It's also worth noting that 0.113 SR comes in safely under the maximum \textbf{speed limit} that I recommended in chapter twelve of 0.13 SR spent on costs each year.
 
 \subsection*{Portfolio of trading subsystems}
 
-You've now got a set of six trading subsystems, one for each instrument, which you need to put together into a portfolio by setting instrument weights as I discussed in chapter eleven. Again this is a job for handcrafting, so we need to think about how to group instruments. The correlation matrix of subsystem returns in table 46 implies some obvious groupings, which I've put into table 47. Additionally you are constrained by the minimum contract size problems which I discussed in chapter twelve, ‘Speed and Size'. In particular the Euro Stoxx future needs to have an instrument weight of at least 20\%. Less than this and even with the maximum possible position, at a combined forecast of 20, you wouldn't get the minimum of four instrument blocks that I recommended in chapter twelve.
+You've now got a set of six \textbf{trading} \textbf{subsystems}, one for each instrument, which you need to put together into a portfolio by setting \textbf{instrument weights} as I discussed in chapter eleven. Again this is a job for \textbf{handcrafting}, so we need to think about how to group instruments. The \textbf{correlation} matrix of subsystem returns in table 46 implies some obvious groupings, which I've put into table 47. Additionally you are constrained by the minimum contract size problems which I discussed in chapter twelve, ‘Speed and Size'. In particular the Euro Stoxx future needs to have an instrument weight of at least 20\%. Less than this and even with the maximum possible position, at a \textbf{combined forecast} of 20, you wouldn't get the minimum of four instrument blocks that I recommended in chapter twelve.
 
-To avoid distorting the instrument weights too much, I propose putting 30\% of the portfolio into the equities top level group, rather than the 25\% that handcrafting would otherwise suggest. I then suggest that you put two-thirds of that 30\% into Euro Stoxx, which gets it to the minimum 20\%. The remaining 10\% can go into VT2X equity volatility index futures. I'm comfortable with this adjustment, since the alternative is not to trade equities at all, but a larger shift in weights would concern me.
+To avoid distorting the instrument weights too much, I propose putting 30\% of the portfolio into the equities top level group, rather than the 25\% that handcrafting would otherwise suggest. I then suggest that you put two-thirds of that 30\% into Euro Stoxx, which gets it to the minimum 20\%. The remaining 10\% can go into VT2X \textbf{equity} volatility index futures. I'm comfortable with this adjustment, since the alternative is not to trade equities at all, but a larger shift in weights would concern me.
 
-\rawtablecaption{WHAT ARE THE CORRELATIONS OF THE TRADING SUBSYSTEMS IN THIS EXAMPLE?}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccccc@{}}
+\rawtablecaption{WHAT ARE THE CORRELATIONS OF THE TRADING SUBSYSTEMS IN THIS EXAMPLE?} \begingroup \scriptsize \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.08}
+\bookfitbox{%
+\begin{tabular}{@{} lcccccc@{}}
 \toprule
- & Euro\$ & T-note & Estxx & V2X & MXP & Corn \\
+& Euro\$ & T-note & Estxx & V2X & MXP & Corn \\
 \midrule
-Eurodollar & 1 &  &  &  &  &  \\
-US T-note & 0.35 & 1 &  &  &  &  \\
-Euro Stoxx & 0.07 & 0.07 & 1 &  &  &  \\
-V2X & 0.07 & 0.07 & 0.42 & 1 &  &  \\
-MXP/USD & 0.07 & 0.07 & 0.07 & 0.14 & 1 &  \\
+Eurodollar & 1 & & & & & \\
+US T-note & 0.35 & 1 & & & & \\
+Euro Stoxx & 0.07 & 0.07 & 1 & & & \\
+V2X & 0.07 & 0.07 & 0.42 & 1 & & \\
+MXP/USD & 0.07 & 0.07 & 0.07 & 0.14 & 1 & \\
 Corn & 0.07 & 0.07 & 0.07 & 0.07 & 0.18 & 1 \\
 \bottomrule
 \end{tabular}%
@@ -161,11 +132,7 @@ Corn & 0.07 & 0.07 & 0.07 & 0.07 & 0.18 & 1 \\
 
 The table shows the correlation of trading subsystem returns in the example system. These are derived from instrument returns correlations in table 49 in appendix C, which were then multiplied by 0.7 because we have a dynamic trading system (as recommended in chapter 11).
 
-\rawtablecaption{HOW DO WE GROUP FUTURES CONTRACTS FOR HANDCRAFTING INSTRUMENT WEIGHTS?}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.28\textwidth}p{0.24\textwidth}Y@{}}
+\rawtablecaption{HOW DO WE GROUP FUTURES CONTRACTS FOR HANDCRAFTING INSTRUMENT WEIGHTS?} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{Asset group} & \textbf{Asset class} & \textbf{Name of future} \\
 \midrule
@@ -173,7 +140,7 @@ Interest rates & STIR & Eurodollar \\
 Interest rates & Bonds & 5 year T-note \\
 Equities & Equity indices & Euro Stoxx \\
 Equities & Volatility & V2X \\
-Foreign exchange &  & MXP/USD \\
+Foreign exchange & & MXP/USD \\
 Commodities & Agricultural & Corn \\
 \bottomrule
 \end{tabularx}
@@ -181,31 +148,17 @@ Commodities & Agricultural & Corn \\
 
 The table shows the grouping of instruments in the staunch systems trader example. STIR = short term interest rate futures.
 
-The handcrafting allocation process is shown below. Row numbers refer to table 8 (page 79). As I recommended in chapter twelve, I haven't adjusted these weights for different instrument costs, since there is no evidence that post-cost returns vary between instruments.
+The \textbf{handcrafting} allocation process is shown below. Row numbers refer to table 8 (page 79). As I recommended in chapter twelve, I haven't adjusted these weights for different instrument costs, since there is no evidence that post-cost returns vary between instruments.
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.22\textwidth}Y@{}}
-\textbf{First level grouping}\par Within asset groups &
-Interest rates: 50\% to US 5 year T-note, 50\% to Eurodollar. Row 2.\par
-Equities: 66.6\% to Euro Stoxx (constrained), 33.3\% to V2X European volatility future.\par
-FX: 100\% to MXPUSD. Row 1.\par
-Commodities: 100\% to Corn. Row 1. \\
+\noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.22\textwidth} Y@{}}\textbf{First level grouping} \par Within asset groups &Interest rates: 50\% to US 5 year T-note, 50\% to Eurodollar. Row 2. \par Equities: 66.6\% to Euro Stoxx (constrained), 33.3\% to V2X European volatility future. \par FX: 100\% to MXPUSD. Row 1. \par Commodities: 100\% to Corn. Row 1. \\
 \addlinespace[0.6em]
-\textbf{Top level grouping}\par Across asset groups &
-Inter-asset correlations are between 0.07 and 0.18, all of which round to zero. In the absence of constraints, row 4 would apply and we'd have equal weighting.\par
-However we need at least 30\% in the equities group as discussed above. This leaves 70\% shared between three remaining groups, or with equal weighting 23.3\% each. \\
+\textbf{Top level grouping} \par Across asset groups &Inter-asset correlations are between 0.07 and 0.18, all of which round to zero. In the absence of constraints, row 4 would apply and we'd have equal weighting. \par However we need at least 30\% in the equities group as discussed above. This leaves 70\% shared between three remaining groups, or with equal weighting 23.3\% each. \\
 \end{tabularx}
 }
 
-You can see the final weights in table 48. Using the weights, the correlations in table 46 and the formula on page 297 I get an instrument diversification multiplier of 1.89.
+You can see the final weights in table 48. Using the weights, the correlations in table 46 and the formula on page 297 I get an \textbf{instrument diversification multiplier} of 1.89.
 
-\rawtablecaption{WHAT ARE THE FINAL INSTRUMENT WEIGHTS?}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}p{0.22\textwidth}p{0.20\textwidth}Y@{}}
+\rawtablecaption{WHAT ARE THE FINAL INSTRUMENT WEIGHTS?} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.26\textwidth} p{0.22\textwidth} p{0.20\textwidth} Y@{}}
 \toprule
 \textbf{Instrument} & \textbf{Within asset group} & \textbf{Across asset groups} & \textbf{Final weight} \\
 \midrule
@@ -221,18 +174,12 @@ Corn & 100\% & 23.3\% & 23.3\% \\
 
 This table shows handcrafted instrument weights for the staunch systems trader example. Numbers in bold have been adjusted because of Euro Stoxx minimum size issues.
 
-\section*{Daily process}
-\phantomsection
-\addcontentsline{toc}{section}{Daily process}
+\section*{Daily process} \phantomsection \addcontentsline{toc}{section}{Daily process}
 
 This process can be done using spreadsheets, or entirely automated if desired. Detailed calculations are shown in the trading diary below.
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Get account value} & Get today's account value to calculate trading capital. \\
-\textbf{Volatility target} & Annualised cash volatility target equals percentage volatility target multiplied by trading capital. In this example we're using a 20\% volatility target. Divide by 16 for daily cash volatility target.\footnotemark \\
+\noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Get account value} & Get today's account value to calculate trading capital. \\
+\textbf{Volatility target} & Annualised cash volatility target equals percentage volatility target multiplied by trading capital. In this example we're using a 20\% volatility target. Divide by 16 for daily cash volatility target.\textsuperscript{*} \\
 \textbf{Get latest prices} & Get prices for all instruments. \\
 \textbf{Get latest FX rates} & Update FX rates. Only USD/EUR is needed in this example. \\
 \textbf{Calculate price volatility} & Using a 35 day look-back exponentially weighted moving average volatility as in appendix D (page 298), work out the price volatility of each instrument. With the FX rates and block values convert this to instrument value volatility using the formulas in chapter ten. \\
@@ -246,22 +193,17 @@ This process can be done using spreadsheets, or entirely automated if desired. D
 \end{tabularx}
 }
 
-\footnotetext{As usual to go from annual to daily volatility you divide by ‘the square root of time', assuming around 256 business days in a year this is 16.}
+\noindent{\footnotesize \textsuperscript{*} As usual to go from annual to daily volatility you divide by ‘the square root of time', assuming around 256 business days in a year this is 16.}
 
-\section*{Trading diary}
-\phantomsection
-\addcontentsline{toc}{section}{Trading diary}
+\section*{Trading diary} \phantomsection \addcontentsline{toc}{section}{Trading diary}
 
 This diary is very close to reality, since I run a very similar system to this, albeit with many more instruments and a few extra trading rules. Spreadsheets detailing all the calculations are available on the website for this book, www.systematictrading.org.
 
 \subsection*{15 October 2014}
 
-I've chosen today as the nominal starting date, to match the semi-automatic trader example earlier.
+I've chosen today as the nominal starting date, to match the \textbf{semi-automatic trader} example earlier.
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.31\textwidth}*{6}{R}@{}}
 \toprule
 & Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
 \midrule
@@ -278,15 +220,11 @@ Volatility scalar (J = A ÷ I) & 18.3 & 11.0 & 5.7 & 29.3 & 16.9 & 10.6 \\
 \end{tabularx}
 }
 
-\smallskip
-\noindent\textit{I've kept the row identifiers the same in all three example chapters so that comparisons can easily be made. Row F has been omitted as you don't require volatility in points per day here.}
+\smallskip \noindent\textit{I've kept the row identifiers the same in all three example chapters so that comparisons can easily be made. Row F has been omitted as you don't require volatility in points per day here.}
 
 \medskip
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.31\textwidth}*{6}{R}@{}}
 \toprule
 & Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
 \midrule
@@ -300,16 +238,13 @@ Rounded target position, contracts (P = round O) & 6 & 5 & 0 & -6 & 1 & -5 \\
 \end{tabularx}
 }
 
-Notable positions are a large long in US treasury notes, which had been rallying strongly for a month giving positive momentum, and also had a carry forecast of over 19. The V2X also had a substantial short carry forecast of -20, and although volatility spiked substantially over the last two weeks, the very slowest EWMAC rules were still short after the steady fall in implied volatility for most of 2014.
+Notable positions are a large long in US treasury notes, which had been rallying strongly for a month giving positive \textbf{momentum}, and also had a \textbf{carry} forecast of over 19. The V2X also had a substantial short carry forecast of -20, and although volatility spiked substantially over the last two weeks, the very slowest \textbf{EWMAC} rules were still short after the steady fall in implied volatility for most of 2014.
 
 \subsection*{1 December 2014}
 
-Let's move forward to 1 December. The system has made cumulative profits of around \$10,000 so your trading capital is \$260,000 and annualised cash volatility target is \$52,000. There has now been a pronounced rally in the equity markets so we're now modestly long Euro Stoxx, with volatility easing and V2X falling in price. Interestingly the V2X forecast hasn't strengthened as much as you might expect, primarily because the carry forecast has weakened.
+Let's move forward to 1 December. The system has made cumulative profits of around \$10,000 so your \textbf{trading capital} is \$260,000 and \textbf{annualised cash volatility target} is \$52,000. There has now been a pronounced rally in the equity markets so we're now modestly long Euro Stoxx, with volatility easing and V2X falling in price. Interestingly the V2X forecast hasn't strengthened as much as you might expect, primarily because the carry forecast has weakened.
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.31\textwidth}*{6}{R}@{}}
 \toprule
 & Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
 \midrule
@@ -326,15 +261,11 @@ Volatility scalar (J = A ÷ I) & 29.7 & 12.4 & 7.9 & 47.7 & 19.6 & 12.5 \\
 \end{tabularx}
 }
 
-\smallskip
-\noindent\textit{I've kept the row identifiers the same in all three example chapters so that comparisons can easily be made. Row F has been omitted as you don't require volatility in points per day here.}
+\smallskip \noindent\textit{I've kept the row identifiers the same in all three example chapters so that comparisons can easily be made. Row F has been omitted as you don't require volatility in points per day here.}
 
 \medskip
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.31\textwidth}*{6}{R}@{}}
+\noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.31\textwidth}*{6}{R}@{}}
 \toprule
 & Euro\$ & T-note & Estxx & V2TX & MXP & Corn \\
 \midrule

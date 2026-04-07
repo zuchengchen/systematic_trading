@@ -1,468 +1,313 @@
-\chapter{Portfolio Optimisation}
-\bichaptertitle{投资组合优化}
+\bilingualchapter{Portfolio Optimisation}{投资组合优化}
 
-\section*{More details on bootstrapping}
-\phantomsection
-\addcontentsline{toc}{section}{More details on bootstrapping}
-\bisectiontitle{关于 bootstrapping 的更多细节}
+\bilingualsection{More details on bootstrapping}{关于 bootstrapping 的更多细节}
 
-\subsection*{Bootstrapping 101}
-\bisubsectiontitle{Bootstrapping 入门}
+\bilingualsubsection{Bootstrapping 101}{Bootstrapping 入门}
 
-BRIEFLY, YOU SHOULD TAKE THE FOLLOWING STEPS, ASSUMING returns have already been volatility normalised and have the same expected standard deviation:164
+\begin{englishblock} BRIEFLY, YOU SHOULD TAKE THE FOLLOWING STEPS, ASSUMING returns have already been volatility normalised and have the same expected standard deviation:164 \end{englishblock}
 
-简单来说，在假设收益已经完成波动率标准化，并且拥有相同预期标准差的前提下，你应当按以下步骤进行：164
+\begin{chineseblock}简单来说，在假设收益已经完成波动率标准化，并且拥有相同预期标准差的前提下，你应当按以下步骤进行：164 \end{chineseblock}
 
 \begin{enumerate}
-  \item Choose a random subset of past returns (either from all history or a recent period depending on whether an expanding or rolling window is being used).
-  \item Calculate the correlation and average returns implied by that subset of returns.
-  \item Run your normal optimisation using the correlation and mean returns of the subset.
-  \item Record the resulting instrument weights.
-  \item Repeat step 1 a number of times.
-  \item For each asset take all the instrument weights from past optimisations and average them out.\footnote{I am assuming that all weights are constrained to add up to 100\%. If this isn't the case then some renormalisation would have to be done here.\par 这里我假设所有权重都被约束为加总等于 100\%。如果不是这样，
-  那么这里还需要做一次重新归一化。} In practice then there are a few options which you need to consider.
-\end{enumerate}
+\item Choose a random subset of past returns (either from all history or a recent period depending on whether an expanding or rolling window is being used).
+\item Calculate the correlation and average returns implied by that subset of returns.
+\item Run your normal optimisation using the correlation and mean returns of the subset.
+\item Record the resulting instrument weights.
+\item Repeat step 1 a number of times.
+\item For each asset take all the instrument weights from past optimisations and average them out.\footnote{I am assuming that all weights are constrained to add up to 100\%. If this isn't the case then some renormalisation would have to be done here. \par 这里我假设所有权重都被约束为加总等于 100\%。如果不是这样，那么这里还需要做一次重新归一化。} In practice then there are a few options which you need to consider. \end{enumerate}
 
 \begin{enumerate}
-  \item 从过去收益中随机抽取一个子样本
-  （具体是从全部历史中抽，还是只从较近的一段时期中抽，取决于你用的是 expanding window 还是 rolling window）。
-  \item 计算这个收益子样本所隐含的相关性和平均收益。
-  \item 使用这个子样本的相关性和均值收益，运行你平常的优化程序。
-  \item 记录由此得到的品种权重。
-  \item 重复第 1 步若干次。
-  \item 对于每个资产，把过去所有优化结果中对应的品种权重收集起来，再求平均。
-\end{enumerate}
+\item 从过去收益中随机抽取一个子样本（具体是从全部历史中抽，还是只从较近的一段时期中抽，取决于你用的是 expanding window 还是 rolling window）。
+\item 计算这个收益子样本所隐含的相关性和平均收益。
+\item 使用这个子样本的相关性和均值收益，运行你平常的优化程序。
+\item 记录由此得到的品种权重。
+\item 重复第 1 步若干次。
+\item 对于每个资产，把过去所有优化结果中对应的品种权重收集起来，再求平均。\end{enumerate}
 
-In practice then there are a few options which you need to consider.
+\begin{englishblock} In practice then there are a few options which you need to consider. \end{englishblock}
 
-而在实际操作中，你还需要进一步考虑几个选项问题。
+\begin{chineseblock}而在实际操作中，你还需要进一步考虑几个选项问题。\end{chineseblock}
 
-\subsection*{How should you select return periods?}
-\bisubsectiontitle{你应该如何选取收益样本区间？}
+\bilingualsubsection{How should you select return periods?}{你应该如何选取收益样本区间？}
 
-In the simple example in chapter four I drew individual daily returns at random; 30 August 2002 could easily have been followed by 1 February 2000 in a particular subset. This makes life easier and is usually a reasonable approximation to reality. But sometimes this arbitrary selection might not make sense. Poor returns in one asset might often
+\begin{englishblock} In the simple example in chapter four I drew individual daily returns at random; 30 August 2002 could easily have been followed by 1 February 2000 in a particular subset. This makes life easier and is usually a reasonable approximation to reality. But sometimes this arbitrary selection might not make sense. Poor returns in one asset might often \end{englishblock}
 
-在第四章的简单示例中，我是随机抽取单个日收益的；在某个子样本里，2002 年 8 月 30 日之后，完全可能紧接着就是 2000 年 2 月 1 日。
-这样做会让问题简单得多，而且通常也是对现实一个合理的近似。不过，有时这种任意抽取并不合理。某个资产上的糟糕收益，往往可能会
+\begin{chineseblock}在第四章的简单示例中，我是随机抽取单个日收益的；在某个子样本里，2002 年 8 月 30 日之后，完全可能紧接着就是 2000 年 2 月 1 日。这样做会让问题简单得多，而且通常也是对现实一个合理的近似。不过，有时这种任意抽取并不合理。某个资产上的糟糕收益，往往可能会\end{chineseblock}
 
-be followed by good returns in another. This time series correlation will be lost unless adjacent days are kept together. In this case you need to do ‘block' bootstrapping. Each subset will consist of an appropriate number of consecutive returns. The only randomness is in the choice of the starting date for the block. The length of the block needs to be long enough to capture any time dependence.
+\bipairgap
 
-伴随着另一个资产上的良好收益。如果不把相邻日期保留在一起，那么这种时间序列相关性就会丢失。在这种情况下，你就需要做“区块”
-（block）bootstrapping。每个子样本都应当由一段合适长度的连续收益组成。唯一的随机性，来自于区块起始日期的选择。
-区块长度必须足够长，才能捕捉任何时间依赖关系。
+\begin{englishblock} be followed by good returns in another. This time series correlation will be lost unless adjacent days are kept together. In this case you need to do ‘block' bootstrapping. Each subset will consist of an appropriate number of consecutive returns. The only randomness is in the choice of the starting date for the block. The length of the block needs to be long enough to capture any time dependence. \end{englishblock}
 
-\subsection*{How long should each period be?}
-\bisubsectiontitle{每个样本区间应当多长？}
+\begin{chineseblock}伴随着另一个资产上的良好收益。如果不把相邻日期保留在一起，那么这种时间序列相关性就会丢失。在这种情况下，你就需要做“区块”（block）bootstrapping。每个子样本都应当由一段合适长度的连续收益组成。唯一的随机性，来自于区块起始日期的选择。区块长度必须足够长，才能捕捉任何时间依赖关系。\end{chineseblock}
 
-How many returns should be in each sample? A month of daily returns, a year or longer? Shorter periods mean that each optimisation will be more extreme. Their distribution will be wider and confidence intervals larger. With longer periods the results will be more sensible, but that doesn't mean the average will perform better. This subject has been examined in some depth by academic researchers. My own analysis suggests that there is a small benefit from using longer periods; perhaps a 0.05 Sharpe ratio improvement from using multiple years versus only a month, assuming a couple of decades' worth of data in total. A good rule of thumb is to use samples of returns equal in length to 10\% of the period of history available. So if you had 30 years of data then you should use three year-long samples for each optimisation.
+\bilingualsubsection{How long should each period be?}{每个样本区间应当多长？}
 
-每个样本里应该包含多少收益数据？一个月的日收益？一年？还是更长？区间越短，每一次优化结果就越极端，它们的分布会更宽，
-置信区间也会更大。区间越长，结果会更稳定、更“像样”，但这并不意味着其平均表现一定更好。学术研究者对这个问题做过相当深入的研究。
-我自己的分析表明，使用更长区间会带来一点点好处；比如在总样本长度有几十年的前提下，用多年区间而不是一个月区间，
-大概会让夏普比率提高 0.05 左右。一个不错的经验法则是：每次优化所使用的收益样本长度，应当大约等于可用历史长度的 10\%。
-因此，如果你有 30 年数据，那么每次优化就应当使用大约 3 年长度的样本。
+\begin{englishblock} How many returns should be in each sample? A month of daily returns, a year or longer? Shorter periods mean that each optimisation will be more extreme. Their distribution will be wider and confidence intervals larger. With longer periods the results will be more sensible, but that doesn't mean the average will perform better. This subject has been examined in some depth by academic researchers. My own analysis suggests that there is a small benefit from using longer periods; perhaps a 0.05 Sharpe ratio improvement from using multiple years versus only a month, assuming a couple of decades' worth of data in total. A good rule of thumb is to use samples of returns equal in length to 10\% of the period of history available. So if you had 30 years of data then you should use three year-long samples for each optimisation. \end{englishblock}
 
-\subsection*{How many times to repeat?}
-\bisubsectiontitle{应该重复多少次？}
+\begin{chineseblock}每个样本里应该包含多少收益数据？一个月的日收益？一年？还是更长？区间越短，每一次优化结果就越极端，它们的分布会更宽，置信区间也会更大。区间越长，结果会更稳定、更“像样”，但这并不意味着其平均表现一定更好。学术研究者对这个问题做过相当深入的研究。我自己的分析表明，使用更长区间会带来一点点好处；比如在总样本长度有几十年的前提下，用多年区间而不是一个月区间，大概会让夏普比率提高 0.05 左右。一个不错的经验法则是：每次优化所使用的收益样本长度，应当大约等于可用历史长度的 10\%。因此，如果你有 30 年数据，那么每次优化就应当使用大约 3 年长度的样本。\end{chineseblock}
 
-Here the choice is clearer; more iterations always produces better results but with decreasing benefits. So there will be almost no value in doing 200 rather than 100 iterations unless your block size is very small relative to your history.
+\bilingualsubsection{How many times to repeat?}{应该重复多少次？}
 
-这一点上选择会更清楚一些：迭代次数越多，结果通常越好，但边际收益会递减。因此，除非你的区块长度相对于历史样本来说非常小，
-否则做 200 次而不是 100 次迭代，几乎不会带来太多额外价值。
+\begin{englishblock} Here the choice is clearer; more iterations always produces better results but with decreasing benefits. So there will be almost no value in doing 200 rather than 100 iterations unless your block size is very small relative to your history. \end{englishblock}
 
-\subsection*{Does bootstrapping work?}
-\bisubsectiontitle{Bootstrapping 真的有效吗？}
+\begin{chineseblock}这一点上选择会更清楚一些：迭代次数越多，结果通常越好，但边际收益会递减。因此，除非你的区块长度相对于历史样本来说非常小，否则做 200 次而不是 100 次迭代，几乎不会带来太多额外价值。\end{chineseblock}
 
-Again academic research has focused on this subject in great detail. For me personally bootstrapping definitely wins over single period optimisation and equal weights. My own research using artificial data shows that single period can perform a little better when there is a lot of structure in the data, so that the underlying Sharpe ratio (SR) and correlations are quite different. Obviously equal weights are better when the underlying SR and correlations are very similar. However you will never know in advance or with certainty which of these situations you are in! Overall bootstrapping is the most consistent method, with less variability in performance over different kinds of data sets. If anything these kinds of study probably understate the benefits of bootstrapping. This is because the random data generated isn't as noisy as real data.
+\bilingualsubsection{Does bootstrapping work?}{Bootstrapping 真的有效吗？}
 
-同样地，学术界对这个问题也做了很多细致研究。对我个人而言，bootstrapping 明显优于单期优化和简单等权。我自己用人工数据做的研究表明：
-当数据中存在很强结构性时，也就是说底层夏普比率
-（SR）和相关性差异很大时，单期优化有时会表现得略好一点。显然，当底层 SR 和相关性都很接近时，等权会更好。
-然而，你永远无法提前、也无法确定地知道自己到底身处哪一种情况！总体来看，bootstrapping 是最稳定的方法，
-它在不同数据集上的表现波动要更小。甚至可以说，这类研究很可能还低估了 bootstrapping 的好处，因为研究中生成的随机数据，
-通常没有真实数据那么嘈杂。
+\begin{englishblock} Again academic research has focused on this subject in great detail. For me personally bootstrapping definitely wins over single period optimisation and equal weights. My own research using artificial data shows that single period can perform a little better when there is a lot of structure in the data, so that the underlying Sharpe ratio (SR) and correlations are quite different. Obviously equal weights are better when the underlying SR and correlations are very similar. However you will never know in advance or with certainty which of these situations you are in! Overall bootstrapping is the most consistent method, with less variability in performance over different kinds of data sets. If anything these kinds of study probably understate the benefits of bootstrapping. This is because the random data generated isn't as noisy as real data. \end{englishblock}
 
-Personally I also find bootstrapping to be as good or better than other, relatively complex, methods.166
+\begin{chineseblock}同样地，学术界对这个问题也做了很多细致研究。对我个人而言，bootstrapping 明显优于单期优化和简单等权。我自己用人工数据做的研究表明：当数据中存在很强结构性时，也就是说底层夏普比率（SR）和相关性差异很大时，单期优化有时会表现得略好一点。显然，当底层 SR 和相关性都很接近时，等权会更好。然而，你永远无法提前、也无法确定地知道自己到底身处哪一种情况！总体来看，bootstrapping 是最稳定的方法，它在不同数据集上的表现波动要更小。甚至可以说，这类研究很可能还低估了 bootstrapping 的好处，因为研究中生成的随机数据，通常没有真实数据那么嘈杂。\end{chineseblock}
 
-就我个人而言，我也发现 bootstrapping 至少和其他那些相对复杂的方法一样好，往往甚至更好。166
+\bipairgap
 
-\section*{Rule of thumb correlations}
-\phantomsection
-\addcontentsline{toc}{section}{Rule of thumb correlations}
-\bisectiontitle{经验法则相关性}
+\begin{englishblock} Personally I also find bootstrapping to be as good or better than other, relatively complex, methods.166 \end{englishblock}
 
-The following are approximate and should be used with caution. Remember correlations vary considerably over time, and can be much higher or lower than shown here. First I look at the correlation of instrument price returns across different ‘super' asset classes. ‘Volatility' refers to positions in equity volatility indices, such as holding a position in VIX or V2TX futures. To avoid showing negative correlations this is displayed as if you had a short position, i.e. you want volatility to fall.
+\begin{chineseblock}就我个人而言，我也发现自助法至少和其他那些相对复杂的方法一样好，往往甚至更好。166 \end{chineseblock}
 
-下面给出的数值都只是近似值，应当谨慎使用。请记住，相关性会随着时间发生显著变化，可能远高于或远低于这里展示的水平。首先，
-我会看不同“超级”资产类别之间品种价格收益的相关性。这里的“Volatility”指的是股票波动率指数上的头寸，例如持有 VIX 或 V2TX 期货。
-为了避免出现负相关，这里把它显示成你持有空头头寸的情形，也就是说你希望波动率下跌。
+\bilingualsection{Rule of thumb correlations}{经验法则相关性}
 
-\rawtablecaption{CORRELATIONS OF INSTRUMENT RETURNS, ACROSS SUPER-ASSET CLASSES\\超级资产类别之间的品种收益相关性}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}*{5}{>{\centering\arraybackslash}X}@{}}
+\begin{englishblock} The following are approximate and should be used with caution. Remember correlations vary considerably over time, and can be much higher or lower than shown here. First I look at the correlation of instrument price returns across different ‘super' asset classes. ‘Volatility' refers to positions in equity volatility indices, such as holding a position in VIX or V2TX futures. To avoid showing negative correlations this is displayed as if you had a short position, i.e. you want volatility to fall. \end{englishblock}
+
+\begin{chineseblock}下面给出的数值都只是近似值，应当谨慎使用。请记住，相关性会随着时间发生显著变化，可能远高于或远低于这里展示的水平。首先，我会看不同“超级”资产类别之间品种价格收益的相关性。这里的“Volatility”指的是股票波动率指数上的头寸，例如持有 VIX 或 V2TX 期货。为了避免出现负相关，这里把它显示成你持有空头头寸的情形，也就是说你希望波动率下跌。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CORRELATIONS OF INSTRUMENT RETURNS, ACROSS SUPER-ASSET CLASSES\\超级资产类别之间的品种收益相关性}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.18\textwidth}*{5}{>{\centering\arraybackslash} X}@{}}
 \toprule
- & \textbf{Bonds} & \textbf{Equities} & \textbf{FX} & \textbf{Commodities} & \textbf{Volatility} \\
+& \textbf{Bonds} & \textbf{Equities} & \textbf{FX} & \textbf{\shortstack{Commod-\\ities}} & \textbf{Volatility} \\
+& \textbf{债券} & \textbf{股票} & \textbf{外汇} & \textbf{商品} & \textbf{波动率} \\
 \midrule
-Rates & 1 &  &  &  &  \\
-Equities & 0.1 & 1 &  &  &  \\
-FX & 0.1 & 0.1 & 1 &  &  \\
-Commodities & 0.1 & 0.1 & 0.25 & 1 &  \\
+Rates & 1 & & & & \\
+利率相关资产 & 1 & & & & \\
+Equities & 0.1 & 1 & & & \\
+股票 & 0.1 & 1 & & & \\
+FX & 0.1 & 0.1 & 1 & & \\
+外汇 & 0.1 & 0.1 & 1 & & \\
+Commodities & 0.1 & 0.1 & 0.25 & 1 & \\
+商品 & 0.1 & 0.1 & 0.25 & 1 & \\
 Volatility & 0.1 & 0.6 & 0.2 & 0.1 & 1 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}*{5}{>{\centering\arraybackslash}X}@{}}
-\toprule
- & \textbf{债券} & \textbf{股票} & \textbf{外汇} & \textbf{商品} & \textbf{波动率} \\
-\midrule
-利率相关资产 & 1 &  &  &  &  \\
-股票 & 0.1 & 1 &  &  &  \\
-外汇 & 0.1 & 0.1 & 1 &  &  \\
-商品 & 0.1 & 0.1 & 0.25 & 1 &  \\
 波动率 & 0.1 & 0.6 & 0.2 & 0.1 & 1 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-The table shows correlations given long positions in all assets except volatility -- shown as if selling option risk or short VIX futures. Rates are interest rate sensitive assets, e.g. Bonds and STIR futures.
+\begin{englishblock} The table shows correlations given long positions in all assets except volatility -- shown as if selling option risk or short VIX futures. Rates are interest rate sensitive assets, e.g. Bonds and STIR futures. \end{englishblock}
 
-这张表展示的是：在除波动率之外的所有资产上都持有多头时的相关性；而波动率则按卖出期权风险或做空 VIX 期货那样来展示。
-Rates 指的是对利率敏感的资产，例如债券和 STIR 期货。
+\begin{chineseblock}这张表展示的是：在除波动率之外的所有资产上都持有多头时的相关性；而波动率则按卖出期权风险或做空 VIX 期货那样来展示。Rates 指的是对利率敏感的资产，例如债券和 STIR 期货。\end{chineseblock}
 
-Next I break down the instrument returns for the asset classes that form the commodity and interest rate super classes (the other super classes do not have any decomposition).
+\bipairgap
 
-接下来，我会把构成“商品”和“利率”这两个超级资产类别的下层资产类别继续拆开来看
-（其他超级资产类别则没有进一步拆分）。
+\begin{englishblock} Next I break down the instrument returns for the asset classes that form the commodity and interest rate super classes (the other super classes do not have any decomposition). \end{englishblock}
 
-\begin{enumerate}
-  \item Many solutions to the optimisation problem revolve around shrinkage -- making the inputs of the calculation more like a ‘prior' by shrinking towards them. I have used these techniques in the past and they do have some advantages. However two main difficulties are involved -- the first being how much to shrink, the second where your prior comes from without itself containing forward looking information. Getting these right is tricky and an entire book would be needed to explain how to do it right. In contrast bootstrapping is very easy and needs no calibration.
-\end{enumerate}
+\begin{chineseblock}接下来，我会把构成“商品”和“利率”这两个超级资产类别的下层资产类别继续拆开来看（其他超级资产类别则没有进一步拆分）。\end{chineseblock}
 
 \begin{enumerate}
-  \item 许多优化问题的解决方案都围绕 shrinkage
-  （收缩）展开
-  --- 也就是把计算输入向某个“先验”方向收缩，使它们更接近先验值。我过去也用过这些技术，而且它们确实有一些优点。
-  不过，这里面有两个主要难点：第一，应该收缩多少；第二，这个先验本身应该从哪里来，而且它还不能包含任何前瞻信息。
-  要把这些事处理对并不容易，真正要讲清楚甚至得再写一本书。相比之下，bootstrapping 非常简单，而且不需要额外校准。
-\end{enumerate}
+\item Many solutions to the optimisation problem revolve around shrinkage -- making the inputs of the calculation more like a ‘prior' by shrinking towards them. I have used these techniques in the past and they do have some advantages. However two main difficulties are involved -- the first being how much to shrink, the second where your prior comes from without itself containing forward looking information. Getting these right is tricky and an entire book would be needed to explain how to do it right. In contrast bootstrapping is very easy and needs no calibration. \end{enumerate}
 
-\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, ACROSS ASSET CLASSES\\不同资产类别之间的品种收益相关性}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}*{5}{>{\centering\arraybackslash}X}@{}}
+\begin{enumerate}
+\item 许多优化问题的解决方案都围绕 shrinkage（收缩）展开--- 也就是把计算输入向某个“先验”方向收缩，使它们更接近先验值。我过去也用过这些技术，而且它们确实有一些优点。不过，这里面有两个主要难点：第一，应该收缩多少；第二，这个先验本身应该从哪里来，而且它还不能包含任何前瞻信息。要把这些事处理对并不容易，真正要讲清楚甚至得再写一本书。相比之下，bootstrapping 非常简单，而且不需要额外校准。\end{enumerate}
+
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, ACROSS ASSET CLASSES\\不同资产类别之间的品种收益相关性}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.20\textwidth}*{5}{>{\centering\arraybackslash} X}@{}}
 \toprule
- & \textbf{Bonds} & \textbf{STIR} & \textbf{Agricultural} & \textbf{Metal} & \textbf{Energy} \\
+& \textbf{Bonds} & \textbf{STIR} & \textbf{\shortstack{Agricul-\\tural}} & \textbf{Metal} & \textbf{Energy} \\
 \midrule
-Bonds (R) & 1 & 0.5 &  &  &  \\
-STIR (R) & 0.5 & 1 &  &  &  \\
-Agricultural (C) & -- & -- & 1 &  &  \\
-Metal (C) & -- & -- & 0.2 & 1 &  \\
+Bonds (R) & 1 & 0.5 & & & \\
+STIR (R) & 0.5 & 1 & & & \\
+STIR (R) & 0.5 & 1 & & & \\
+Agricultural (C) & -- & -- & 1 & & \\
+农产品 (C) & -- & -- & 1 & & \\
+Metal (C) & -- & -- & 0.2 & 1 & \\
+金属 (C) & -- & -- & 0.2 & 1 & \\
 Energy (C) & -- & -- & 0.25 & 0.35 & 1 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}*{5}{>{\centering\arraybackslash}X}@{}}
-\toprule
- & \textbf{债券} & \textbf{STIR} & \textbf{农产品} & \textbf{金属} & \textbf{能源} \\
-\midrule
-债券 (R) & 1 & 0.5 &  &  &  \\
-STIR (R) & 0.5 & 1 &  &  &  \\
-农产品 (C) & -- & -- & 1 &  &  \\
-金属 (C) & -- & -- & 0.2 & 1 &  \\
 能源 (C) & -- & -- & 0.25 & 0.35 & 1 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-The table shows the correlation of returns within commodity (C) and Rates (R) super classes.
+\begin{englishblock} The table shows the correlation of returns within commodity (C) and Rates (R) super classes. \end{englishblock}
 
-这张表展示的是商品
-（C）和利率相关资产
-（R）这两个超级资产类别内部的收益相关性。
+\begin{chineseblock}这张表展示的是商品（C）和利率相关资产（R）这两个超级资产类别内部的收益相关性。\end{chineseblock}
 
-In the next table I dig further into the agricultural, metal and energy asset classes.
+\bipairgap
 
-下一张表会进一步细分农产品、金属和能源这几个资产类别。
+\begin{englishblock} In the next table I dig further into the agricultural, metal and energy asset classes. \end{englishblock}
 
-\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, BY SUB ASSET CLASS, WITHIN COMMODITY ASSET CLASSES\\商品资产类别内部、按子资产类别划分的品种收益相关性}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
+\begin{chineseblock}下一张表会进一步细分农产品、金属和能源这几个资产类别。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, BY SUB ASSET CLASS, WITHIN COMMODITY ASSET CLASSES\\商品资产类别内部、按子资产类别划分的品种收益相关性}\begingroup \scriptsize \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.08} \noindent
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccccc@{}}
+\begin{tabular}{@{} lccccccc@{}}
 \toprule
- & Grain & Softs & Livestock & Oil & Gas & \shortstack{Precious\\metals} & \shortstack{Base\\metals} \\
+& Grain & Softs & Livestock & Oil & Gas & \shortstack{Precious\\metals} & \shortstack{Base\\metals} \\
+& 谷物 & 软商品 & 畜产品 & 原油 & 天然气 & 贵金属 & 基本金属 \\
 \midrule
-Grains (A) & 1 &  &  &  &  &  &  \\
-Softs (A) & 0.4 & 1 &  &  &  &  &  \\
-Livestock (A) & 0.25 & 0.15 & 1 &  &  &  &  \\
-\shortstack[l]{Crude oil \&\\products (E)} & -- & -- & -- & 1 &  &  &  \\
-Natural gas (E) & -- & -- & -- & 0.25 & 1 &  &  \\
-\shortstack[l]{Precious metals\\(M)} & -- & -- & -- & -- & -- & 1 &  \\
+Grains (A) & 1 & & & & & & \\
+谷物 (A) & 1 & & & & & & \\
+Softs (A) & 0.4 & 1 & & & & & \\
+软商品 (A) & 0.4 & 1 & & & & & \\
+Livestock (A) & 0.25 & 0.15 & 1 & & & & \\
+畜产品 (A) & 0.25 & 0.15 & 1 & & & & \\
+\shortstack[l]{Crude oil \&\\products (E)} & -- & -- & -- & 1 & & & \\
+原油及其制品 (E) & -- & -- & -- & 1 & & & \\
+Natural gas (E) & -- & -- & -- & 0.25 & 1 & & \\
+天然气 (E) & -- & -- & -- & 0.25 & 1 & & \\
+\shortstack[l]{Precious metals\\(M)} & -- & -- & -- & -- & -- & 1 & \\
+贵金属 (M) & -- & -- & -- & -- & -- & 1 & \\
 \shortstack[l]{Base metals\\(M)} & -- & -- & -- & -- & -- & 0.5 & 1 \\
-\bottomrule
-\end{tabular}%
-}
-\endgroup
-
-\medskip
-
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccccc@{}}
-\toprule
- & 谷物 & 软商品 & 畜产品 & 原油 & 天然气 & 贵金属 & 基本金属 \\
-\midrule
-谷物 (A) & 1 &  &  &  &  &  &  \\
-软商品 (A) & 0.4 & 1 &  &  &  &  &  \\
-畜产品 (A) & 0.25 & 0.15 & 1 &  &  &  &  \\
-原油及其制品 (E) & -- & -- & -- & 1 &  &  &  \\
-天然气 (E) & -- & -- & -- & 0.25 & 1 &  &  \\
-贵金属 (M) & -- & -- & -- & -- & -- & 1 &  \\
 基本金属 (M) & -- & -- & -- & -- & -- & 0.5 & 1 \\
 \bottomrule
 \end{tabular}%
 }
-\endgroup
+\endgroup \end{bilingualtableblock}
 
-The table shows the correlations for instruments in the sub asset classes within Agricultural (A), Energy (E) and Metal (M) asset classes.
+\begin{englishblock} The table shows the correlations for instruments in the sub asset classes within Agricultural (A), Energy (E) and Metal (M) asset classes. \end{englishblock}
 
-这张表展示的是农产品
-（A）、能源
-（E）和金属
-（M）这些资产类别内部，不同子资产类别中工具的收益相关性。
+\begin{chineseblock}这张表展示的是农产品（A）、能源（E）和金属（M）这些资产类别内部，不同子资产类别中工具的收益相关性。\end{chineseblock}
 
-Within the financial (bond, equity, FX) asset classes, the main distinction is regional, between emerging and developed markets.
+\bipairgap
 
-在金融类
-（债券、股票、外汇）资产类别内部，主要的区分维度则是地区，也就是新兴市场与发达市场之间的差异。
+\begin{englishblock} Within the financial (bond, equity, FX) asset classes, the main distinction is regional, between emerging and developed markets. \end{englishblock}
 
-\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS FOR REGIONS WITHIN FINANCIAL ASSET CLASSES\\金融资产类别内部、不同地区之间的品种收益相关性}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.72\textwidth}Y@{}}
+\begin{chineseblock}在金融类（债券、股票、外汇）资产类别内部，主要的区分维度则是地区，也就是新兴市场与发达市场之间的差异。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION OF INSTRUMENT RETURNS FOR REGIONS WITHIN FINANCIAL ASSET CLASSES\\金融资产类别内部、不同地区之间的品种收益相关性}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.72\textwidth} Y@{}}
 \toprule
 \textbf{Comparison} & \textbf{Correlation} \\
-\midrule
-Emerging and developed market bonds & 0.35 \\
-Emerging and developed market STIR & 0.35 \\
-Emerging and developed market equities & 0.50 \\
-Emerging and developed market volatility & 0.50 \\
-Emerging and developed FX rates & 0.15 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.72\textwidth}Y@{}}
-\toprule
 \textbf{比较项} & \textbf{相关性} \\
 \midrule
+Emerging and developed market bonds & 0.35 \\
 新兴与发达市场债券 & 0.35 \\
+Emerging and developed market STIR & 0.35 \\
 新兴与发达市场 STIR & 0.35 \\
+Emerging and developed market equities & 0.50 \\
 新兴与发达市场股票 & 0.50 \\
+Emerging and developed market volatility & 0.50 \\
 新兴与发达市场波动率 & 0.50 \\
+Emerging and developed FX rates & 0.15 \\
 新兴与发达市场外汇汇率 & 0.15 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-The next table gives typical values within regions and commodity sub asset classes.
+\begin{englishblock} The next table gives typical values within regions and commodity sub asset classes. \end{englishblock}
 
-下一张表则给出了各地区内部，以及商品子资产类别内部的典型相关性数值。
+\begin{chineseblock}下一张表则给出了各地区内部，以及商品子资产类别内部的典型相关性数值。\end{chineseblock}
 
-\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, WITHIN REGIONS AND SUB ASSET CLASSES\\地区内部与子资产类别内部的品种收益相关性}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.72\textwidth}Y@{}}
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, WITHIN REGIONS AND SUB ASSET CLASSES\\地区内部与子资产类别内部的品种收益相关性}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.72\textwidth} Y@{}}
 \toprule
 \textbf{Comparison} & \textbf{Correlation} \\
-\midrule
-For bonds in same region, different countries & 0.75 \\
-For equities in same region, different countries & 0.75 \\
-For FX rates in same region, different rates against USD & 0.75 \\
-For volatility in same region, different countries & 0.75 \\
-For commodities in same sub asset class, different products & 0.70 \\
-For equities in same country, different industry & 0.70 \\
-For equities in same industry, different firms & 0.80 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.72\textwidth}Y@{}}
-\toprule
 \textbf{比较项} & \textbf{相关性} \\
 \midrule
+For bonds in same region, different countries & 0.75 \\
 同一区域内、不同国家的债券 & 0.75 \\
+For equities in same region, different countries & 0.75 \\
 同一区域内、不同国家的股票 & 0.75 \\
+For FX rates in same region, different rates against USD & 0.75 \\
 同一区域内、不同货币相对于美元的外汇汇率 & 0.75 \\
+For volatility in same region, different countries & 0.75 \\
 同一区域内、不同国家的波动率工具 & 0.75 \\
+For commodities in same sub asset class, different products & 0.70 \\
 同一商品子资产类别内、不同产品 & 0.70 \\
+For equities in same country, different industry & 0.70 \\
 同一国家内、不同产业的股票 & 0.70 \\
+For equities in same industry, different firms & 0.80 \\
 同一行业内、不同公司的股票 & 0.80 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-The final table of instrument return correlations covers bonds within the same country.
+\begin{englishblock} The final table of instrument return correlations covers bonds within the same country. \end{englishblock}
 
-最后一张关于品种收益相关性的表，覆盖的是同一国家内部不同期限的债券。
+\begin{chineseblock}最后一张关于品种收益相关性的表，覆盖的是同一国家内部不同期限的债券。\end{chineseblock}
 
-\rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, FOR BONDS OR BOND FUTURES OF DIFFERENT DURATION IN SAME COUNTRY\\同一国家内、不同期限债券或债券期货的品种收益相关性}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION OF INSTRUMENT RETURNS, FOR BONDS OR BOND FUTURES OF DIFFERENT DURATION IN SAME COUNTRY\\同一国家内、不同期限债券或债券期货的品种收益相关性}\begingroup \scriptsize \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.08} \noindent
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{} lccccc@{}}
 \toprule
- & 2 year & 5 year & 10 year & 20 year & 30 year \\
+& 2 year & 5 year & 10 year & 20 year & 30 year \\
+& 2 年 & 5 年 & 10 年 & 20 年 & 30 年 \\
 \midrule
-2 year & 1 &  &  &  &  \\
-5 year & 0.80 & 1 &  &  &  \\
-10 year & 0.65 & 0.85 & 1 &  &  \\
-20 year & 0.50 & 0.80 & 0.85 & 1 &  \\
+2 year & 1 & & & & \\
+2 年 & 1 & & & & \\
+5 year & 0.80 & 1 & & & \\
+5 年 & 0.80 & 1 & & & \\
+10 year & 0.65 & 0.85 & 1 & & \\
+10 年 & 0.65 & 0.85 & 1 & & \\
+20 year & 0.50 & 0.80 & 0.85 & 1 & \\
+20 年 & 0.50 & 0.80 & 0.85 & 1 & \\
 30 year & 0.50 & 0.75 & 0.80 & 0.90 & 1 \\
-\bottomrule
-\end{tabular}%
-}
-\endgroup
-
-\medskip
-
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
-\toprule
- & 2 年 & 5 年 & 10 年 & 20 年 & 30 年 \\
-\midrule
-2 年 & 1 &  &  &  &  \\
-5 年 & 0.80 & 1 &  &  &  \\
-10 年 & 0.65 & 0.85 & 1 &  &  \\
-20 年 & 0.50 & 0.80 & 0.85 & 1 &  \\
 30 年 & 0.50 & 0.75 & 0.80 & 0.90 & 1 \\
 \bottomrule
 \end{tabular}%
 }
-\endgroup
+\endgroup \end{bilingualtableblock}
 
-In my framework you will be optimising the weights of trading subsystems, each taking positions in one instrument, rather than looking at portfolios of positions in instruments. Because asset allocating investors have static portfolios they can use the correlation of the underlying instrument returns from tables 50 to 55 without any adjustment. For staunch systems traders with dynamic forecasts a good rule of thumb is that the correlation between instrument subsystem returns will be around 0.70 multiplied by the correlation of instrument price returns.
+\begin{englishblock} In my framework you will be optimising the weights of trading subsystems, each taking positions in one instrument, rather than looking at portfolios of positions in instruments. Because asset allocating investors have static portfolios they can use the correlation of the underlying instrument returns from tables 50 to 55 without any adjustment. For staunch systems traders with dynamic forecasts a good rule of thumb is that the correlation between instrument subsystem returns will be around 0.70 multiplied by the correlation of instrument price returns. \end{englishblock}
 
-在我的框架里，你优化的是交易子系统的权重，每个子系统都只在一个品种上持仓，而不是直接优化多个品种头寸构成的组合。由于资产配置型投资者使用的是静态组合，他们可以直接使用表 50 到表 55 中底层品种收益的相关性，而无需做任何调整。对于使用动态预测值的坚定系统化交易者而言，一个不错的经验法则是：品种子系统收益之间的相关性，大约等于品种价格收益相关性的 0.70 倍。
+\begin{chineseblock}在我的框架里，你优化的是交易子系统的权重，每个子系统都只在一个品种上持仓，而不是直接优化多个品种头寸构成的组合。由于资产配置型投资者使用的是静态组合，他们可以直接使用表 50 到表 55 中底层品种收益的相关性，而无需做任何调整。对于使用动态预测值的坚定系统化交易者而言，一个不错的经验法则是：品种子系统收益之间的相关性，大约等于品种价格收益相关性的 0.70 倍。\end{chineseblock}
 
-We now turn to the correlations of different trading rules applied to the same instrument, which are used to find forecast weights. Let’s begin with the correlation between different trading rules, rather than variations on a single rule.
+\bipairgap
 
-接下来，我们转向“同一品种上不同交易规则之间的相关性”，因为这会被用来确定预测权重。我们先从不同交易规则之间的相关性开始，而不是从同一条规则的不同变体开始。
+\begin{englishblock} We now turn to the correlations of different trading rules applied to the same instrument, which are used to find forecast weights. Let’s begin with the correlation between different trading rules, rather than variations on a single rule. \end{englishblock}
 
-\rawtablecaption{CORRELATION OF TRADING RULE RETURNS WITHIN AN INSTRUMENT\\同一品种内部，不同交易规则收益之间的相关性}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.76\textwidth}Y@{}}
+\begin{chineseblock}接下来，我们转向“同一品种上不同交易规则之间的相关性”，因为这会被用来确定预测权重。我们先从不同交易规则之间的相关性开始，而不是从同一条规则的不同变体开始。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION OF TRADING RULE RETURNS WITHIN AN INSTRUMENT\\同一品种内部，不同交易规则收益之间的相关性}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.76\textwidth} Y@{}}
 \toprule
 \textbf{Comparison} & \textbf{Correlation} \\
-\midrule
-Between different styles, e.g. momentum and carry & 0.25 \\
-Same style, different rules, e.g. EWMAC and other trend following rules & 0.5 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.76\textwidth}Y@{}}
-\toprule
 \textbf{比较项} & \textbf{相关性} \\
 \midrule
+Between different styles, e.g. momentum and carry & 0.25 \\
 不同风格之间，例如动量与 carry & 0.25 \\
+Same style, different rules, e.g. EWMAC and other trend following rules & 0.5 \\
 相同风格、不同规则之间，例如 EWMAC 与其他趋势跟踪规则 & 0.5 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-Correlations of variations of the same rule will obviously depend on the precise rule. Table 57 provides the correlations between returns of EWMAC variations.
+\begin{englishblock} Correlations of variations of the same rule will obviously depend on the precise rule. Table 57 provides the correlations between returns of EWMAC variations. \end{englishblock}
 
-同一条规则不同变体之间的相关性，显然取决于该规则本身的具体形式。表 57 给出了 EWMAC 各变体收益之间的相关性。
+\begin{chineseblock}同一条规则不同变体之间的相关性，显然取决于该规则本身的具体形式。表 57 给出了 EWMAC 各变体收益之间的相关性。\end{chineseblock}
 
-\rawtablecaption{CORRELATION OF TRADING RULE RETURNS WITHIN AN INSTRUMENT, VARIATIONS ON EWMAC RULE\\同一品种内部，EWMAC 规则不同变体收益之间的相关性}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
+\begin{chinesetableblock} \rawtablecaption{CORRELATION OF TRADING RULE RETURNS WITHIN AN INSTRUMENT, VARIATIONS ON EWMAC RULE\\同一品种内部，EWMAC 规则不同变体收益之间的相关性}\begingroup \scriptsize \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.08} \noindent
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccccc@{}}
+\begin{tabular}{@{} lcccccc@{}}
 \toprule
- & EW 2 & EW 4 & EW 8 & EW 16 & EW 32 & EW 64 \\
+& EW 2 & EW 4 & EW 8 & EW 16 & EW 32 & EW 64 \\
 \midrule
-EWMAC 2,8 & 1 &  &  &  &  &  \\
-EWMAC 4,16 & 0.90 & 1 &  &  &  &  \\
-EWMAC 8,32 & 0.60 & 0.90 & 1 &  &  &  \\
-EWMAC 16,64 & 0.35 & 0.60 & 0.90 & 1 &  &  \\
-EWMAC 32,128 & 0.20 & 0.40 & 0.65 & 0.90 & 1 &  \\
+EWMAC 2,8 & 1 & & & & & \\
+EWMAC 4,16 & 0.90 & 1 & & & & \\
+EWMAC 8,32 & 0.60 & 0.90 & 1 & & & \\
+EWMAC 16,64 & 0.35 & 0.60 & 0.90 & 1 & & \\
+EWMAC 32,128 & 0.20 & 0.40 & 0.65 & 0.90 & 1 & \\
 EWMAC 64,256 & 0.15 & 0.20 & 0.45 & 0.70 & 0.90 & 1 \\
 \bottomrule
 \end{tabular}%
 }
-\endgroup
+\endgroup \end{chinesetableblock}
 
 \medskip
 
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.08}
+\begin{englishtableblock} \begingroup \scriptsize \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.08} \noindent
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccccc@{}}
+\begin{tabular}{@{} lcccccc@{}}
 \toprule
- & EW 2 & EW 4 & EW 8 & EW 16 & EW 32 & EW 64 \\
+& EW 2 & EW 4 & EW 8 & EW 16 & EW 32 & EW 64 \\
 \midrule
-EWMAC 2,8 & 1 &  &  &  &  &  \\
-EWMAC 4,16 & 0.90 & 1 &  &  &  &  \\
-EWMAC 8,32 & 0.60 & 0.90 & 1 &  &  &  \\
-EWMAC 16,64 & 0.35 & 0.60 & 0.90 & 1 &  &  \\
-EWMAC 32,128 & 0.20 & 0.40 & 0.65 & 0.90 & 1 &  \\
+EWMAC 2,8 & 1 & & & & & \\
+EWMAC 4,16 & 0.90 & 1 & & & & \\
+EWMAC 8,32 & 0.60 & 0.90 & 1 & & & \\
+EWMAC 16,64 & 0.35 & 0.60 & 0.90 & 1 & & \\
+EWMAC 32,128 & 0.20 & 0.40 & 0.65 & 0.90 & 1 & \\
 EWMAC 64,256 & 0.15 & 0.20 & 0.45 & 0.70 & 0.90 & 1 \\
 \bottomrule
 \end{tabular}%
 }
-\endgroup
+\endgroup \end{englishtableblock}
 
-Numbers shown are the fast and slow look-back respectively, in days.
+\begin{englishblock} Numbers shown are the fast and slow look-back respectively, in days. \end{englishblock}
 
-这里所显示的数字，分别表示快均线与慢均线的回看期，单位为天。
+\begin{chineseblock}这里所显示的数字，分别表示快均线与慢均线的回看期，单位为天。\end{chineseblock}

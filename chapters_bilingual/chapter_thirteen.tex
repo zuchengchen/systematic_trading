@@ -1,872 +1,604 @@
-\chapter{Semi-automatic Trader}
-\bichaptertitle{半自动交易者}
+\bilingualchapter{Semi-automatic Trader}{半自动交易者}
 
-I N THIS FINAL PART OF THE BOOK I'LL SHOW YOU HOW TO PUT THE framework into action for three specific examples. This first chapter is for semiautomatic traders, who make their own discretionary forecasts about price movements, but then use my systematic framework to manage their capital and position risk.
+\begin{englishblock} I N THIS FINAL PART OF THE BOOK I'LL SHOW YOU HOW TO PUT THE framework into action for three specific examples. This first chapter is for semiautomatic traders, who make their own discretionary forecasts about price movements, but then use my systematic framework to manage their capital and position risk. \end{englishblock}
 
-在本书最后这一部分里，我会通过三个具体例子，展示如何把这个框架真正用起来。第一章写给半自动交易者：他们会对价格走势作出自己的主观预测，
-但随后会使用我的系统化框架来管理资金和仓位风险。
+\begin{chineseblock}在本书最后这一部分里，我会通过三个具体例子，展示如何把这个框架真正用起来。第一章写给半自动交易者：他们会对价格走势作出自己的主观预测，但随后会使用我的系统化框架来管理资金和仓位风险。\end{chineseblock}
 
-\section*{Chapter overview}
-\phantomsection
-\addcontentsline{toc}{section}{Chapter overview}
-\bisectiontitle{本章概览}
+\bilingualsection{Chapter overview}{本章概览}
 
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
-\textbf{Who are you?} & Introducing the semi-automatic trader. \\
-\textbf{Using the framework} & How you will use the systematic framework as a semi-automatic trader. \\
-\textbf{Process} & The process you need to follow each morning and as you are trading throughout the day. \\
-\textbf{Trading diary} & A diary showing how you could have traded the markets as a semi-automatic trader in late 2014. \\
-\end{tabularx}
+\begin{bilingualtableblock} \begin{tabularx}{\textwidth}{@{} p{0.26\textwidth} Y@{}}\textbf{Who are you?} & Introducing the semi-automatic trader. \\
 
-\medskip
-
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
 \textbf{你是谁？} & 介绍“半自动交易者”这一类人。 \\
+\textbf{Using the framework} & How you will use the systematic framework as a semi-automatic trader. \\
 \textbf{如何使用框架} & 作为一名半自动交易者，你将如何使用系统化框架。 \\
+\textbf{Process} & The process you need to follow each morning and as you are trading throughout the day. \\
 \textbf{流程} & 你每天早晨以及白天交易过程中需要遵循的流程。 \\
+\textbf{Trading diary} & A diary showing how you could have traded the markets as a semi-automatic trader in late 2014. \\
 \textbf{交易日记} & 一份交易日记，展示如果你在 2014 年末作为半自动交易者， 可能会如何交易市场。 \\
 \end{tabularx}
+\end{bilingualtableblock}
 
-\section*{Who are you?}
-\phantomsection
-\addcontentsline{toc}{section}{Who are you?}
-\bisectiontitle{你是谁？}
+\bilingualsection{Who are you?}{你是谁？}
 
-As a semi-automatic trader you want to make your own calls on the market, but within a systematic framework. With stop losses, risk targeting and position sizing taken care of you can focus on getting the buy or sell decision correct. This will give you the best of both worlds -- your human ability to interpret and process information, combined with a system giving the correct amount of risk. It will not be easy sticking to the framework. The system may force you to trade, or prevent you from trading, when you would rather do otherwise. However there are
+\begin{englishblock} As a semi-automatic trader you want to make your own calls on the market, but within a systematic framework. With stop losses, risk targeting and position sizing taken care of you can focus on getting the buy or sell decision correct. This will give you the best of both worlds -- your human ability to interpret and process information, combined with a system giving the correct amount of risk. It will not be easy sticking to the framework. The system may force you to trade, or prevent you from trading, when you would rather do otherwise. However there are \end{englishblock}
 
-作为一名半自动交易者，你希望自己来判断市场方向，但同时又要把这些判断置于一个系统化框架之中。当止损、风险目标设定以及仓位规模问题都已经被框架处理好之后，
-你就可以把精力集中在做对“买还是卖”这个决策上。这样，你就能兼得两种世界的好处
---- 一方面保留人类对信息进行解释和处理的能力，另一方面又拥有一个能够给出正确风险水平的系统。要始终坚持这个框架并不容易。
-系统有时会迫使你去交易，或者阻止你交易，而这恰恰是你主观上不想做的事情。不过，
+\begin{chineseblock}作为一名半自动交易者，你希望自己来判断市场方向，但同时又要把这些判断置于一个系统化框架之中。当止损、风险目标设定以及仓位规模问题都已经被框架处理好之后，你就可以把精力集中在做对“买还是卖”这个决策上。这样，你就能兼得两种世界的好处--- 一方面保留人类对信息进行解释和处理的能力，另一方面又拥有一个能够给出正确风险水平的系统。要始终坚持这个框架并不容易。系统有时会迫使你去交易，或者阻止你交易，而这恰恰是你主观上不想做的事情。不过，\end{chineseblock}
 
-significant benefits in sticking to a consistent strategy. I strongly recommend that you design a system you're comfortable with and then do not deviate from it. In the specific example discussed in this chapter we'll assume you're going to be trading spread bets on equity indices and FX, as reasonable sized amateur investors with a notional trading capital of £100,000. You could be trading full-time, or on a part-time basis for perhaps an hour each morning. However you can apply this framework to any market where leverage is possible and to any account size. As a semi-automatic trader you'll be trading sporadically as opportunities arise. This presents some challenges in using my systematic framework, which normally requires a series of calculations to be performed each time you trade. To reduce the workload you'll first do some daily housekeeping on your current portfolio: closing out any positions that have hit stop losses, adjusting estimates of trading capital and price volatility, and doing any trades on existing positions that are now required. You'll then put on any new trades which look promising based on overnight moves. If you're trading part-time you will leave stop loss orders with your broker and go to your day job. However if you're trading full-time you'll continue to watch the markets, potentially putting further trades on, and closing positions that hit stop losses. You won't however repeat the more time-consuming housekeeping tasks until the next morning.
+\bipairgap
 
-坚持一套一致策略的好处非常显著。我强烈建议你先设计出一套自己真正觉得舒服的系统，然后不要偏离它。在本章的具体示例中，
-我们会假设你是一位账户规模适中的个人投资者，名义交易资本为 £100,000，交易对象是股票指数和外汇的点差投注。你既可能是全职交易，
-也可能只是兼职，每天早上花一个小时左右来处理交易。不过，这套框架其实适用于任何允许使用杠杆的市场，也适用于任何账户规模。
-作为半自动交易者，你会在机会出现时不定期地下单。这给使用我的系统化框架带来了一些挑战，因为这个框架通常要求你在每次交易时做一系列计算。
-为了减轻工作量，你首先会对当前投资组合做一些每日例行维护：平掉已经触发止损的头寸、更新交易资本和价格波动率估计，并对当前已有头寸执行必要的调整交易。
-之后，你再根据隔夜市场走势去建立那些看起来有希望的新交易。如果你是兼职交易者，那么你会把止损单留给经纪商执行，然后去上你的日常工作。
-但如果你是全职交易者，那么你会继续盯盘，可能会进一步建立新的头寸，也会及时平掉那些触发止损的头寸。不过，那些更耗时的日常维护计算，
-你通常不会在同一天里反复做，直到第二天早晨再重新开始。
+\begin{englishblock} significant benefits in sticking to a consistent strategy. I strongly recommend that you design a system you're comfortable with and then do not deviate from it. In the specific example discussed in this chapter we'll assume you're going to be trading spread bets on equity indices and FX, as reasonable sized amateur investors with a notional trading capital of £100,000. You could be trading full-time, or on a part-time basis for perhaps an hour each morning. However you can apply this framework to any market where leverage is possible and to any account size. As a semi-automatic trader you'll be trading sporadically as opportunities arise. This presents some challenges in using my systematic framework, which normally requires a series of calculations to be performed each time you trade. To reduce the workload you'll first do some daily housekeeping on your current portfolio: closing out any positions that have hit stop losses, adjusting estimates of trading capital and price volatility, and doing any trades on existing positions that are now required. You'll then put on any new trades which look promising based on overnight moves. If you're trading part-time you will leave stop loss orders with your broker and go to your day job. However if you're trading full-time you'll continue to watch the markets, potentially putting further trades on, and closing positions that hit stop losses. You won't however repeat the more time-consuming housekeeping tasks until the next morning. \end{englishblock}
 
-\section*{Using the framework}
-\phantomsection
-\addcontentsline{toc}{section}{Using the framework}
-\bisectiontitle{使用框架}
+\begin{chineseblock}坚持一套一致策略的好处非常显著。我强烈建议你先设计出一套自己真正觉得舒服的系统，然后不要偏离它。在本章的具体示例中，我们会假设你是一位账户规模适中的个人投资者，名义交易资本为 £100,000，交易对象是股票指数和外汇的点差投注。你既可能是全职交易，也可能只是兼职，每天早上花一个小时左右来处理交易。不过，这套框架其实适用于任何允许使用杠杆的市场，也适用于任何账户规模。作为半自动交易者，你会在机会出现时不定期地下单。这给使用我的系统化框架带来了一些挑战，因为这个框架通常要求你在每次交易时做一系列计算。为了减轻工作量，你首先会对当前投资组合做一些每日例行维护：平掉已经触发止损的头寸、更新交易资本和价格波动率估计，并对当前已有头寸执行必要的调整交易。之后，你再根据隔夜市场走势去建立那些看起来有希望的新交易。如果你是兼职交易者，那么你会把止损单留给经纪商执行，然后去上你的日常工作。但如果你是全职交易者，那么你会继续盯盘，可能会进一步建立新的头寸，也会及时平掉那些触发止损的头寸。不过，那些更耗时的日常维护计算，你通常不会在同一天里反复做，直到第二天早晨再重新开始。\end{chineseblock}
 
-\subsection*{Instrument choice: size and costs}
-\bisubsectiontitle{品种选择：规模与成本}
+\bilingualsection{Using the framework}{使用框架}
 
-As semi-automatic traders you don't trade a fixed set of instruments. At any given time you will have a small number of positions, or ‘bets', open. Those positions are drawn from a larger pool of instruments that you've formed opinions on. You'll be using quarterly spread bets, with all bets in multiples of £1 per point. For example if you go long the FTSE at £2 per point, and it goes from 6500 to 6501, then you'd earn £2.\footnote{There are several other important aspects of spread betting that I don't have space to discuss here. I assume that if you intend to actually trade the system shown here you are already familiar with spread betting. If not you should consult the books I've recommended in appendix A, or similar resources.\par 关于点差投注，还有一些重要方面我在这里没有空间展开。
-我默认你如果真的打算交易这里展示的这套系统，那么你已经熟悉点差投注的基本机制。如果不是，
-你应当先去看附录 A 中我推荐的那些书，或其他类似资源。} The bet size will be determined by the broker's minimum bet size, usually between £1 and £10 depending on the instrument. In line with the advice in chapter twelve, ‘Speed and Size', (page 200) you should check that any position you're putting on would be at least four instrument blocks with a maximum forecast of 20. You should also check that the standardised costs of trading any potential instrument will be 0.01 Sharpe ratio units or less, for reasons explained in detail below. Finally you should avoid very low volatility instruments, for the numerous reasons enumerated throughout part three.
+\bilingualsubsection{Instrument choice: size and costs}{品种选择：规模与成本}
 
-作为半自动交易者，你不会交易一组固定的品种。在任何一个时点，你通常只会持有少量头寸，也就是少量“下注”。这些头寸来自一个更大的备选池，
-也就是那些你已经对其形成了判断的品种。你将使用季度型点差投注，且所有下注都以每点 £1 的整数倍来进行。例如，如果你以每点 £2 做多 FTSE，
-而指数从 6500 涨到 6501，那么你就会赚到 £2。下注规模将由经纪商的最小下注额决定，通常根据品种不同，最小值在 £1 到 £10 之间。
-按照第十二章“速度与规模”
-（第 200 页）的建议，你应当检查：在最大预测值为 20 的情况下，任何你准备建立的头寸都至少应有四个品种单位。
-你还应检查，任何潜在交易品种的标准化成本都应当不高于 0.01 个夏普比率单位，原因我会在下面详细解释。最后，出于第三部分中已经反复列举过的众多原因，
-你还应当避开那些波动率极低的工具。
+\begin{englishblock} As semi-automatic traders you don't trade a fixed set of instruments. At any given time you will have a small number of positions, or ‘bets', open. Those positions are drawn from a larger pool of instruments that you've formed opinions on. You'll be using quarterly spread bets, with all bets in multiples of £1 per point. For example if you go long the FTSE at £2 per point, and it goes from 6500 to 6501, then you'd earn £2.\footnote{There are several other important aspects of spread betting that I don't have space to discuss here. I assume that if you intend to actually trade the system shown here you are already familiar with spread betting. If not you should consult the books I've recommended in appendix A, or similar resources. \par 关于点差投注，还有一些重要方面我在这里没有空间展开。我默认你如果真的打算交易这里展示的这套系统，那么你已经熟悉点差投注的基本机制。如果不是，你应当先去看附录 A 中我推荐的那些书，或其他类似资源。} The bet size will be determined by the broker's minimum bet size, usually between £1 and £10 depending on the instrument. In line with the advice in chapter twelve, ‘Speed and Size', (page 200) you should check that any position you're putting on would be at least four instrument blocks with a maximum forecast of 20. You should also check that the standardised costs of trading any potential instrument will be 0.01 Sharpe ratio units or less, for reasons explained in detail below. Finally you should avoid very low volatility instruments, for the numerous reasons enumerated throughout part three. \end{englishblock}
 
-\subsection*{Forecasts and stop losses}
-\bisubsectiontitle{预测值与止损}
+\begin{chineseblock}作为半自动交易者，你不会交易一组固定的品种。在任何一个时点，你通常只会持有少量头寸，也就是少量“下注”。这些头寸来自一个更大的备选池，也就是那些你已经对其形成了判断的品种。你将使用季度型点差投注，且所有下注都以每点 £1 的整数倍来进行。例如，如果你以每点 £2 做多 FTSE，而指数从 6500 涨到 6501，那么你就会赚到 £2。下注规模将由经纪商的最小下注额决定，通常根据品种不同，最小值在 £1 到 £10 之间。按照第十二章“速度与规模”（第 200 页）的建议，你应当检查：在最大预测值为 20 的情况下，任何你准备建立的头寸都至少应有四个品种单位。你还应检查，任何潜在交易品种的标准化成本都应当不高于 0.01 个夏普比率单位，原因我会在下面详细解释。最后，出于第三部分中已经反复列举过的众多原因，你还应当避开那些波动率极低的工具。\end{chineseblock}
 
-As I discussed in chapter seven, ‘Forecasts', (page 115) you'll need to have a graduated opinion on likely price movements whenever you decide to open a new position or ‘bet'. These need to be translated into quantifiable forecasts, as in table 37. Note if you weren't using spread bets or other derivatives, and couldn't short sell assets, you'd need to limit yourself to making positive forecasts.
+\bilingualsubsection{Forecasts and stop losses}{预测值与止损}
 
-正如我在第七章“预测值”
-（第 115 页）中讨论过的那样，每当你决定建立一个新的头寸或一笔新的“下注”时，你都需要对价格可能如何变动形成一个有层次的判断。
-这些判断需要被转换成可以量化的预测值，就像表 37 所展示的那样。注意，如果你没有使用点差投注或其他衍生品、因而也无法做空资产，
-那么你就只能把自己限制在使用正的预测值。
+\begin{englishblock} As I discussed in chapter seven, ‘Forecasts', (page 115) you'll need to have a graduated opinion on likely price movements whenever you decide to open a new position or ‘bet'. These need to be translated into quantifiable forecasts, as in table 37. Note if you weren't using spread bets or other derivatives, and couldn't short sell assets, you'd need to limit yourself to making positive forecasts. \end{englishblock}
 
-\rawtablecaption{TRANSLATING OPINIONS INTO A QUANTIFIED FORECAST141\\把主观看法转换成量化预测值141}
-\begingroup
-\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}*{9}{>{\centering\arraybackslash}X}@{}}
+\begin{chineseblock}正如我在第七章“预测值”（第 115 页）中讨论过的那样，每当你决定建立一个新的头寸或一笔新的“下注”时，你都需要对价格可能如何变动形成一个有层次的判断。这些判断需要被转换成可以量化的预测值，就像表 37 所展示的那样。注意，如果你没有使用点差投注或其他衍生品、因而也无法做空资产，那么你就只能把自己限制在使用正的预测值。\end{chineseblock}
+
+\begin{chinesetableblock} \rawtablecaption{TRANSLATING OPINIONS INTO A QUANTIFIED FORECAST141\\把主观看法转换成量化预测值141} \begingroup \small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15}
+\noindent\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}*{9}{c}@{}}
 \toprule
 \shortstack{Very\\strong\\sell} & \shortstack{Strong\\sell} & Sell & \shortstack{Weak\\sell} & Neutral & \shortstack{Weak\\buy} & Buy & \shortstack{Strong\\buy} & \shortstack{Very\\strong\\buy} \\
 \midrule
 -20 & -15 & -10 & -5 & 0 & 5 & 10 & 15 & 20 \\
 \bottomrule
-\end{tabularx}
-\endgroup
+\end{tabular}%
+}
+\endgroup \end{chinesetableblock}
 
-I strongly recommend that you do not change your forecast once a bet is open. Otherwise you might be tempted to take profits too early, or double up on losses. You can sometimes add new bets on top of an existing position, of which more later. But you will be using a systematic trailing stop loss rule to close all your positions; no other exit rules are permitted. The stop loss rule is loosely related to the ‘early loss taker’ system I’ve used for examples in previous chapters. It uses stops set at a multiple of the current value of the daily standard deviation of prices.
+\begin{englishblock} I strongly recommend that you do not change your forecast once a bet is open. Otherwise you might be tempted to take profits too early, or double up on losses. You can sometimes add new bets on top of an existing position, of which more later. But you will be using a systematic trailing stop loss rule to close all your positions; no other exit rules are permitted. The stop loss rule is loosely related to the ‘early loss taker’ system I’ve used for examples in previous chapters. It uses stops set at a multiple of the current value of the daily standard deviation of prices. \end{englishblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Parameter \(X\)} & You should set a parameter \(X\) which will be related to how long you want to hold positions for and your trading costs. I recommend \(X = 4\), for reasons I explain below. \\
+\begin{englishtableblock} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Parameter \(X\)} & You should set a parameter \(X\) which will be related to how long you want to hold positions for and your trading costs. I recommend \(X = 4\), for reasons I explain below. \\
 \textbf{Volatility units} & The expected standard deviation of daily price changes, in price points. Note we use volatility in price points, not percentage points as normal. The volatility in price points is equal to the percentage point volatility (price volatility as defined in chapter ten, ‘Position sizing’, on “Price volatility” on page 155), multiplied by the current price. In this chapter you’ll find this by eyeballing a one month chart of recent price changes (as discussed in chapter ten, page 155), since you’re probably going to be using charts to decide on your entries. You need to update this estimate throughout the life of the trade and adjust the stop accordingly. As suggested in chapter twelve, you don’t need to update your volatility estimate unless it has changed by more than 25\% from the previous value. For example as I write this the standard deviation of oil prices is \(\$1.5\) per day. \\
 \textbf{Trailing stop loss when long} & If the price of the instrument falls by more than \(X\) volatility units from the high achieved since entry then you should close your position. As an example suppose the high of crude was \(\$70\), so with \(X = 4\) and volatility units of \(\$1.5\), that implies a stop loss of \(\$70 - (4 \times \$1.5) = \$64\). \\
 \textbf{Trailing stop loss when short} & You will generate a closing trade when a price rises by more than \(X\) volatility units from the low reached after entry. So again for crude if the recent low was \(\$30\), then that implies a stop loss of \(\$30 + (4 \times \$1.5) = \$46\). \\
 \end{tabularx}
 }
+\end{englishtableblock}
 
-\smallskip
-\noindent\textit{* \(X\) is equivalent to the \(B\) parameter in the generic ‘A and B’ system which I describe in appendix B.}
+\smallskip \noindent\textit{* \(X\) is equivalent to the \(B\) parameter in the generic ‘A and B’ system which I describe in appendix B.}
 
-\begingroup
-\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}*{9}{>{\centering\arraybackslash}X}@{}}
+\begin{chinesetableblock} \begingroup \small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15}
+\noindent\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}*{9}{c}@{}}
 \toprule
 \shortstack{非常\\强烈\\看空} & \shortstack{强烈\\看空} & 卖出 & \shortstack{偏弱\\看空} & 中性 & \shortstack{偏弱\\看多} & 买入 & \shortstack{强烈\\看多} & \shortstack{非常强烈\\看多} \\
 \midrule
 -20 & -15 & -10 & -5 & 0 & 5 & 10 & 15 & 20 \\
 \bottomrule
-\end{tabularx}
-\endgroup
+\end{tabular}%
+}
+\endgroup \end{chinesetableblock}
 
-我强烈建议，一旦某笔下注已经建立，你就不要再去更改原先的预测值。否则，你可能会忍不住过早止盈，或者在亏损时不断加码。当然，有时你可以在现有头寸之上继续叠加新的下注，稍后我会讲到这一点。但无论如何，你将使用一套系统化的跟踪止损规则来关闭所有头寸，不允许使用其他任何离场规则。这条止损规则与我在前几章例子中使用过的“尽早止损者”系统有一定关联。它通过把止损位设定为“当前日价格标准差若干倍”的方式来工作。
+\begin{chineseblock}我强烈建议，一旦某笔下注已经建立，你就不要再去更改原先的预测值。否则，你可能会忍不住过早止盈，或者在亏损时不断加码。当然，有时你可以在现有头寸之上继续叠加新的下注，稍后我会讲到这一点。但无论如何，你将使用一套系统化的跟踪止损规则来关闭所有头寸，不允许使用其他任何离场规则。这条止损规则与我在前几章例子中使用过的“尽早止损者”系统有一定关联。它通过把止损位设定为“当前日价格标准差若干倍”的方式来工作。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{参数 \(X\)} & 你应当设定一个参数 \(X\)，它与你希望持仓多久以及你的交易成本有关。我建议使用 \(X = 4\)，原因见下文。 \\
+\begin{chinesetableblock} \noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{参数 \(X\)} & 你应当设定一个参数 \(X\)，它与你希望持仓多久以及你的交易成本有关。我建议使用 \(X = 4\)，原因见下文。 \\
 \textbf{波动率单位} & 这是日价格变动的预期标准差，以价格点数计。注意，这里我们使用的是价格点数波动率，而不是通常意义上的百分比波动率。价格点数波动率等于百分比波动率，也就是第十章“仓位规模设定”第 155 页“Price volatility”中定义的内容，乘以当前价格。在本章中，由于你很可能本来就会通过图表来判断入场，因此你可以像第十章（第 155 页）所讨论的那样，通过目测最近一个月图表中的价格波动来估计它。在交易存续期间，你需要不断更新这个估计值，并据此调整止损位。按照第十二章的建议，只有当波动率估计值相对于上次变化超过 25\% 时，你才需要真正更新它。比如，在我写这段话时，原油价格的日标准差大约是每天 \(\$1.5\)。 \\
 \textbf{多头时的跟踪止损规则} & 如果品种价格自入场以来的最高点回落超过 \(X\) 个波动率单位，你就应当平掉头寸。例如，假设原油的高点曾经达到 \(\$70\)，那么在 \(X = 4\)、波动率单位为 \(\$1.5\) 的情况下，止损位就是 \(\$70 - (4 \times \$1.5) = \$64\)。 \\
 \textbf{空头时的跟踪止损规则} & 当价格从入场以来的最低点反弹超过 \(X\) 个波动率单位时，你就应当触发平仓交易。因此同样以原油为例，如果近期低点是 \(\$30\)，那么止损位就会是 \(\$30 + (4 \times \$1.5) = \$46\)。 \\
 \end{tabularx}
 }
+\end{chinesetableblock}
 
-\smallskip
-\noindent\textit{* 这里的 “\(X\)” 就等价于我在附录 B 中所描述的通用 “A 与 B” 系统中的 “B” 参数。}
+\smallskip \noindent\textit{* 这里的 “\(X\)” 就等价于我在附录 B 中所描述的通用 “A 与 B” 系统中的 “B” 参数。}
 
-What value of X should you use? It depends on whether you have a short or long-term forecasting horizon, and on the costs of your instruments. So with a shorter forecasting horizon you’ll cut more quickly, hold positions for less time, and it will be more expensive to trade. It’s important to match the forecasting horizon and the tightness of your stop loss. There is no point making a forecast of prices for the next six months if you’re likely to be stopped out by next Tuesday. Table 38 shows the average holding period for a given value of X.142
+\begin{englishblock} What value of X should you use? It depends on whether you have a short or long-term forecasting horizon, and on the costs of your instruments. So with a shorter forecasting horizon you’ll cut more quickly, hold positions for less time, and it will be more expensive to trade. It’s important to match the forecasting horizon and the tightness of your stop loss. There is no point making a forecast of prices for the next six months if you’re likely to be stopped out by next Tuesday. Table 38 shows the average holding period for a given value of X.142 \end{englishblock}
 
-那么，X 应该取什么值？这取决于你的预测期限到底是偏短还是偏长，也取决于所交易品种的成本。预测期限越短，你就会越快止损，持仓时间也越短，
-同时交易成本也会更高。预测期限与止损宽度之间必须相互匹配。如果你做的是“未来六个月价格怎么走”的判断，
-但系统却很可能在下周二就把你止损出场，那这个预测就毫无意义了。表 38 展示了不同 X 值对应的平均持仓周期。142
+\begin{chineseblock}那么，X 应该取什么值？这取决于你的预测期限到底是偏短还是偏长，也取决于所交易品种的成本。预测期限越短，你就会越快止损，持仓时间也越短，同时交易成本也会更高。预测期限与止损宽度之间必须相互匹配。如果你做的是“未来六个月价格怎么走”的判断，但系统却很可能在下周二就把你止损出场，那这个预测就毫无意义了。表 38 展示了不同 X 值对应的平均持仓周期。142 \end{chineseblock}
 
-\rawtablecaption{HOW DOES THE X PARAMETER IN YOUR STOP LOSS RULE DETERMINE YOUR AVERAGE HOLDING PERIOD? SMALLER VALUES OF X MEAN TIGHTER STOP LOSSES AND SHORTER HORIZONS, BUT REQUIRE CHEAPER INSTRUMENTS\\止损规则中的 X 参数如何决定平均持仓周期？更小的 X 意味着更紧的止损和更短的期限，但也要求更便宜的品种}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.24\textwidth}p{0.28\textwidth}Y@{}}
+\begin{bilingualtableblock} \rawtablecaption{HOW DOES THE X PARAMETER IN YOUR STOP LOSS RULE DETERMINE YOUR AVERAGE HOLDING PERIOD? SMALLER VALUES OF X MEAN TIGHTER STOP LOSSES AND SHORTER HORIZONS, BUT REQUIRE CHEAPER INSTRUMENTS\\止损规则中的 X 参数如何决定平均持仓周期？更小的 X 意味着更紧的止损和更短的期限，但也要求更便宜的品种}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.18\textwidth} p{0.24\textwidth} p{0.28\textwidth} Y@{}}
 \toprule
 \textbf{Value of \(X\)} & \textbf{Average holding period} & \textbf{Turnover, round trips per year} & \textbf{Maximum cost SR} \\
-\midrule
-1 & 4 days & 64 & 0.0013 \\
-2 & 9 days & 29 & 0.0027 \\
-3 & 17 days & 15 & 0.0053 \\
-4 & 6.5 weeks & 8 & 0.01 \\
-8 & 13 weeks & 4.0 & 0.02 \\
-10 & 26 weeks & 2.0 & 0.04 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}p{0.24\textwidth}p{0.28\textwidth}Y@{}}
-\toprule
 \textbf{\(X\) 值} & \textbf{平均持仓周期} & \textbf{换手率，round trips/年} & \textbf{最大可接受成本 SR} \\
 \midrule
+1 & 4 days & 64 & 0.0013 \\
 1 & 4 天 & 64 & 0.0013 \\
+2 & 9 days & 29 & 0.0027 \\
 2 & 9 天 & 29 & 0.0027 \\
+3 & 17 days & 15 & 0.0053 \\
 3 & 17 天 & 15 & 0.0053 \\
+4 & 6.5 weeks & 8 & 0.01 \\
 4 & 6.5 周 & 8 & 0.01 \\
+8 & 13 weeks & 4.0 & 0.02 \\
 8 & 13 周 & 4.0 & 0.02 \\
+10 & 26 weeks & 2.0 & 0.04 \\
 10 & 26 周 & 2.0 & 0.04 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-The table shows for each value of X (rows): the average holding period, in business days or weeks; the implied turnover in round trips per year; and the maximum instrument cost if we pay no more than 0.08 Sharpe ratio units per year. The turnover includes the additional trading we get from changes in price volatility and also assumes we don't trade position changes of less than 10\% (position inertia).
+\begin{englishblock} The table shows for each value of X (rows): the average holding period, in business days or weeks; the implied turnover in round trips per year; and the maximum instrument cost if we pay no more than 0.08 Sharpe ratio units per year. The turnover includes the additional trading we get from changes in price volatility and also assumes we don't trade position changes of less than 10\% (position inertia). \end{englishblock}
 
-we pay no more than 0.08 Sharpe ratio units per year. The turnover includes the additional trading we get from changes in price volatility and also assumes we don't trade position changes of less than 10\% (position inertia).
+\begin{chineseblock}这张表展示的是：对每一个 X 值（行）而言，对应的平均持仓周期（以交易日或周计）、隐含的年 round trips 换手率，以及在每年成本支出不超过 0.08 个夏普比率单位时，可接受的最大品种成本。这里的换手率已经包含了由于价格波动率变化所引发的额外交易，并且还假设我们不会去交易那些小于 10\% 的仓位变化（也就是应用了仓位惯性）。\end{chineseblock}
 
-这张表展示的是：对每一个 X 值
-（行）而言，对应的平均持仓周期
-（以交易日或周计）、隐含的年 round trips 换手率，以及在每年成本支出不超过 0.08 个夏普比率单位时，可接受的最大品种成本。
-这里的换手率已经包含了由于价格波动率变化所引发的额外交易，并且还假设我们不会去交易那些小于 10\% 的仓位变化
-（也就是应用了仓位惯性）。
+\bipairgap
 
-As you saw in chapter twelve, ‘Speed and Size', you need to adjust X given the cost of the instruments you're trading. The final column of table 38 shows a suggested maximum feasible standardised cost, in Sharpe ratio (SR) units per year, for a given value of X. This is calculated using my recommended speed limit of spending 0.08 SR units per year on costs, from chapter twelve. Also in chapter twelve (page 183) I suggested you use a costs figure of 0.01 SR units as the standardised cost for all of your spread bets. The table shows you could safely use an X of 4 or higher with spread bets, although if you're trading cheap futures contracts you could go quicker. I don't advise using different stop loss systems for different instruments as this complicates life and can lead to mistakes. So the value of X should be set conservatively using the cost of the most expensive instrument you're likely to trade. In this chapter we are going to use an X of 4, which means I assume you're predicting trends that last for just over six weeks. Note that unlike in the original ‘early loss taker' system you won't be using a profit target. Why not? My own research shows no evidence that systematic profit targets work consistently.\footnote{There are some situations where closing trades before a stop loss is hit makes sense, such as relative value or mean reverting strategies, but in my opinion it is better to build the closing rule into a fully systematic trading rule.\par 在某些情况下，
-在止损触发之前主动平仓是有道理的，例如相对价值或均值回归策略。但在我看来，更好的做法是把这种平仓逻辑直接设计进一条完整系统化交易规则里。} This is because most markets exhibit trending behaviour, and a profit target will get you out of trends too early. To summarise you mustn't close your trade until you hit a stop loss; then you must close it. Sticking to this rule will be difficult, but will mean that your risk is controlled and that your returns will have the favourable positive skew of trend following traders.
+\begin{englishblock} As you saw in chapter twelve, ‘Speed and Size', you need to adjust X given the cost of the instruments you're trading. The final column of table 38 shows a suggested maximum feasible standardised cost, in Sharpe ratio (SR) units per year, for a given value of X. This is calculated using my recommended speed limit of spending 0.08 SR units per year on costs, from chapter twelve. Also in chapter twelve (page 183) I suggested you use a costs figure of 0.01 SR units as the standardised cost for all of your spread bets. The table shows you could safely use an X of 4 or higher with spread bets, although if you're trading cheap futures contracts you could go quicker. I don't advise using different stop loss systems for different instruments as this complicates life and can lead to mistakes. So the value of X should be set conservatively using the cost of the most expensive instrument you're likely to trade. In this chapter we are going to use an X of 4, which means I assume you're predicting trends that last for just over six weeks. Note that unlike in the original ‘early loss taker' system you won't be using a profit target. Why not? My own research shows no evidence that systematic profit targets work consistently.\footnote{There are some situations where closing trades before a stop loss is hit makes sense, such as relative value or mean reverting strategies, but in my opinion it is better to build the closing rule into a fully systematic trading rule. \par 在某些情况下，在止损触发之前主动平仓是有道理的，例如相对价值或均值回归策略。但在我看来，更好的做法是把这种平仓逻辑直接设计进一条完整系统化交易规则里。} This is because most markets exhibit trending behaviour, and a profit target will get you out of trends too early. To summarise you mustn't close your trade until you hit a stop loss; then you must close it. Sticking to this rule will be difficult, but will mean that your risk is controlled and that your returns will have the favourable positive skew of trend following traders. \end{englishblock}
 
-正如你在第十二章“速度与规模”中看到的那样，你需要根据所交易品种的成本来调整 X 的取值。表 38 的最后一列，
-展示了在不同 X 值下所对应的建议最大可行标准化成本
-（以每年的夏普比率单位表示）。这个值是基于我在第十二章中建议的速度上限算出来的：每年在成本上支出不超过 0.08 个 SR 单位。
-同时，我在第十二章
-（第 183 页）中还建议，对于你所做的点差投注，可以统一使用 0.01 个 SR 单位作为标准化成本。
-表格说明：对点差投注来说，采用 X = 4 或更高的值都是安全可行的；不过如果你交易的是便宜得多的期货合约，那么你其实还可以把节奏做得更快。
-我不建议针对不同品种使用不同的止损系统，因为这会让整个流程变得更复杂，也更容易出错。因此，X 的取值应当保守地依据你可能交易到的最昂贵品种来决定。
-在本章中，我们将使用 X = 4，这意味着我假设你预测的是一种持续时间略长于六周的趋势。请注意，与原始的“尽早止损者”系统不同，
-你在这里不会使用任何止盈目标。为什么？因为我自己的研究没有发现任何证据，能够证明系统化止盈目标会稳定有效。这是因为大多数市场都表现出趋势特征，
-而止盈目标往往会让你过早地退出趋势。总结一下就是：在止损没有触发之前，你不能主动平仓；而一旦止损触发，你就必须平仓。
-坚持这一规则会很难，但它会确保你的风险处于受控状态，同时你的收益也更有可能拥有趋势跟踪者那种有利的正偏度。
+\begin{chineseblock}正如你在第十二章“速度与规模”中看到的那样，你需要根据所交易品种的成本来调整 X 的取值。表 38 的最后一列，展示了在不同 X 值下所对应的建议最大可行标准化成本（以每年的夏普比率单位表示）。这个值是基于我在第十二章中建议的速度上限算出来的：每年在成本上支出不超过 0.08 个 SR 单位。同时，我在第十二章（第 183 页）中还建议，对于你所做的点差投注，可以统一使用 0.01 个 SR 单位作为标准化成本。表格说明：对点差投注来说，采用 X = 4 或更高的值都是安全可行的；不过如果你交易的是便宜得多的期货合约，那么你其实还可以把节奏做得更快。我不建议针对不同品种使用不同的止损系统，因为这会让整个流程变得更复杂，也更容易出错。因此，X 的取值应当保守地依据你可能交易到的最昂贵品种来决定。在本章中，我们将使用 X = 4，这意味着我假设你预测的是一种持续时间略长于六周的趋势。请注意，与原始的“尽早止损者”系统不同，你在这里不会使用任何止盈目标。为什么？因为我自己的研究没有发现任何证据，能够证明系统化止盈目标会稳定有效。这是因为大多数市场都表现出趋势特征，而止盈目标往往会让你过早地退出趋势。总结一下就是：在止损没有触发之前，你不能主动平仓；而一旦止损触发，你就必须平仓。坚持这一规则会很难，但它会确保你的风险处于受控状态，同时你的收益也更有可能拥有趋势跟踪者那种有利的正偏度。\end{chineseblock}
 
-\subsection*{Volatility targeting}
-\bisubsectiontitle{波动率目标设定}
+\bilingualsubsection{Volatility targeting}{波动率目标设定}
 
-I've already set the initial trading capital of this example at £100,000. But how aggressive should you be with this money -- what should your percentage volatility target be? You need to refer back to chapter nine, ‘Volatility Targeting'. In this example I am going to assume that your Sharpe ratio (SR) will be at least 0.30 after costs, which I calculate below as 0.08 SR units. This is comfortably under my recommended maximum expectation of 0.50 (from page 46). Referring to column D of table 26 (page 148) an SR of 0.30 gives a risk percentage of 15\%, and I'm assuming you can cope with the pain that implies.
+\begin{englishblock} I've already set the initial trading capital of this example at £100,000. But how aggressive should you be with this money -- what should your percentage volatility target be? You need to refer back to chapter nine, ‘Volatility Targeting'. In this example I am going to assume that your Sharpe ratio (SR) will be at least 0.30 after costs, which I calculate below as 0.08 SR units. This is comfortably under my recommended maximum expectation of 0.50 (from page 46). Referring to column D of table 26 (page 148) an SR of 0.30 gives a risk percentage of 15\%, and I'm assuming you can cope with the pain that implies. \end{englishblock}
 
-我已经把这个示例的初始交易资本设定为 £100,000。但你到底应该拿这笔钱承担多大风险
---- 也就是你的百分比波动率目标应该设为多少？这里你需要回到第九章“波动率目标设定”。在本例中，我将假设你的成本后夏普比率
-（SR）至少能达到 0.30，而我稍后计算出的交易成本为 0.08 个 SR 单位。这个预期明显低于我建议的最大安全预期 0.50
-（见第 46 页）。根据表 26
-（第 148 页）D 列，SR = 0.30 对应的风险百分比是 15\%，而我这里假设你能够承受这种风险所意味着的痛苦。
+\begin{chineseblock}我已经把这个示例的初始交易资本设定为 £100,000。但你到底应该拿这笔钱承担多大风险--- 也就是你的百分比波动率目标应该设为多少？这里你需要回到第九章“波动率目标设定”。在本例中，我将假设你的成本后夏普比率（SR）至少能达到 0.30，而我稍后计算出的交易成本为 0.08 个 SR 单位。这个预期明显低于我建议的最大安全预期 0.50（见第 46 页）。根据表 26（第 148 页）D 列，SR = 0.30 对应的风险百分比是 15\%，而我这里假设你能够承受这种风险所意味着的痛苦。\end{chineseblock}
 
-This implies you'll have an annual volatility target of £100,000 × 15\% = £15,000 and a daily target of £15,000 ÷ 16 = £937.50.144 Because you're using spread bets there is no concern about hitting a relatively modest risk percentage of 15\%. As always you should avoid low volatility assets where the required leverage will be too high. You'll be measuring your account value daily, recalculating trading capital, and adjusting your volatility target accordingly. This might trigger trades on existing positions and the new volatility target will be used to size any new bets you make.
+\bipairgap
 
-这意味着，你的年化波动率目标是 £100,000 × 15\% = £15,000，而日度目标则是 £15,000 ÷ 16 = £937.50。144
-由于你使用的是点差投注，因此要实现相对温和的 15\% 风险百分比并不存在技术上的困难。像往常一样，你仍然应当避开那些波动率过低、
-从而需要过高杠杆的资产。你需要每天测量账户净值，重新计算交易资本，并据此调整波动率目标。这既可能触发对现有头寸的调整交易，
-也会成为你为任何新下注设定仓位规模时所使用的新目标。
+\begin{englishblock} This implies you'll have an annual volatility target of £100,000 × 15\% = £15,000 and a daily target of £15,000 ÷ 16 = £937.50.144 Because you're using spread bets there is no concern about hitting a relatively modest risk percentage of 15\%. As always you should avoid low volatility assets where the required leverage will be too high. You'll be measuring your account value daily, recalculating trading capital, and adjusting your volatility target accordingly. This might trigger trades on existing positions and the new volatility target will be used to size any new bets you make. \end{englishblock}
 
-\subsection*{Position sizing}
-\bisubsectiontitle{仓位规模设定}
+\begin{chineseblock}这意味着，你的年化波动率目标是 £100,000 × 15\% = £15,000，而日度目标则是 £15,000 ÷ 16 = £937.50。144由于你使用的是点差投注，因此要实现相对温和的 15\% 风险百分比并不存在技术上的困难。像往常一样，你仍然应当避开那些波动率过低、从而需要过高杠杆的资产。你需要每天测量账户净值，重新计算交易资本，并据此调整波动率目标。这既可能触发对现有头寸的调整交易，也会成为你为任何新下注设定仓位规模时所使用的新目标。\end{chineseblock}
 
-You can now think about ‘Position sizing', as discussed in chapter ten. First you need to measure the recent percentage standard deviation of returns (price volatility) in each market to determine the expected daily variation in the value of one instrument block (the instrument currency volatility). I'd suggest you use the eyeball technique described in chapter ten (page 155), which you're already using to calculate the volatility estimate needed for stop loss levels. This should be done daily on any instruments where you have positions, and ideally on anything you might place bets on today.\footnote{Working out the instrument currency volatility for a potential trade in advance makes the process more efficient but might not always be possible, in which case you will need to do your estimation just before you trade.\par 提前为潜在交易计算品种货币波动率，会让流程更高效，
-但这并不总是做得到；如果做不到，那你就需要在真正交易前立刻完成估计。} Changes in price volatility for your existing positions might trigger trades. From table 38 (page 212) with the suggested X of 4 you would expect to get a turnover of 8 after accounting for the effects of sizing your position. With standardised costs of 0.01 SR units for spread bets this gives us an annual cost of 8 × 0.01 = 0.08 Sharpe ratio (SR) units, which just squeaks in at the maximum level of 0.08 SR that I recommended in chapter twelve, ‘Speed and Size'. With 15\% annualised volatility that equates to a performance drag from costs of 0.08 × 15\% = 1.2\% a year. This is more than most passive ETFs, but significantly cheaper than a hedge fund. You'd also have to pay perhaps 0.6\% for rolling your quarterly bets.\footnote{Assuming the full spread is charged on rolls.\par 这里假设换月时会收取完整价差。} You can save on costs by following the advice in the chapter twelve, ‘Speed and Size', and not adjusting your estimate of instrument currency volatility if the previous level looks about right, say within 25\% of the current value. As you're spread betting, the value of a 1\% move (the block value) depends on the bet size in pounds per point, so you won't need to use exchange rates even when betting on non-UK markets. So for example with crude oil at \$65, a 1\% move of \$0.65 or 0.65 points, at a broker's minimum of £10 a point, will have a value of £6.50.
+\bilingualsubsection{Position sizing}{仓位规模设定}
 
-现在你可以开始考虑第十章中讨论过的“仓位规模设定”了。首先，你需要测量每个市场近期收益的百分比标准差
-（也就是价格波动率），以便确定一个品种单位在价值上预期的日波动幅度
-（也就是品种货币波动率）。我建议你使用第十章
-（第 155 页）中提到的“目测法”，而你本来也已经在用它来估计止损水平所需的波动率。对于任何你当前持有头寸的品种，
-以及理想情况下任何你今天可能下注的品种，这项工作都应当每天进行。现有头寸的价格波动率变化，也可能会触发交易。
-根据表 38
-（第 212 页），在建议取值 X = 4 的情况下，在考虑了仓位规模调整的影响之后，你会得到大约 8 的换手率。
-若点差投注的标准化成本为 0.01 个 SR 单位，那么对应的年化成本就是 8 × 0.01 = 0.08 个夏普比率
-（SR）单位，这恰好踩在我在第十二章“速度与规模”中建议的最高上限 0.08 SR 上。
-在 15\% 的年化波动率下，这就意味着由成本带来的表现拖累约为 0.08 × 15\% = 1.2\% 每年。这比大多数被动 ETF 都要贵，
-但又明显比对冲基金便宜得多。此外，你还需要为季度型点差投注的换月支付大约 0.6\% 的额外成本。按照第十二章“速度与规模”中的建议，
-如果上一轮的品种货币波动率估计值看起来仍然差不多合理
-（例如仍在当前值的 25\% 区间以内），那你就可以不去调整它，从而节省一部分交易成本。
-由于你做的是点差投注，因此 1\% 波动所对应的价值
-（也就是单位价值）取决于你每点下注多少英镑，所以即便你下注的是非英国市场，你也不需要额外使用汇率。
-例如，若原油价格是 \$65，那么 1\% 的波动就是 \$0.65，也就是 0.65 个点。如果经纪商的最小下注额是每点 £10，
-那么这 1\% 波动的单位价值就是 £6.50。
+\begin{englishblock} You can now think about ‘Position sizing', as discussed in chapter ten. First you need to measure the recent percentage standard deviation of returns (price volatility) in each market to determine the expected daily variation in the value of one instrument block (the instrument currency volatility). I'd suggest you use the eyeball technique described in chapter ten (page 155), which you're already using to calculate the volatility estimate needed for stop loss levels. This should be done daily on any instruments where you have positions, and ideally on anything you might place bets on today.\footnote{Working out the instrument currency volatility for a potential trade in advance makes the process more efficient but might not always be possible, in which case you will need to do your estimation just before you trade. \par 提前为潜在交易计算品种货币波动率，会让流程更高效，但这并不总是做得到；如果做不到，那你就需要在真正交易前立刻完成估计。} Changes in price volatility for your existing positions might trigger trades. From table 38 (page 212) with the suggested X of 4 you would expect to get a turnover of 8 after accounting for the effects of sizing your position. With standardised costs of 0.01 SR units for spread bets this gives us an annual cost of 8 × 0.01 = 0.08 Sharpe ratio (SR) units, which just squeaks in at the maximum level of 0.08 SR that I recommended in chapter twelve, ‘Speed and Size'. With 15\% annualised volatility that equates to a performance drag from costs of 0.08 × 15\% = 1.2\% a year. This is more than most passive ETFs, but significantly cheaper than a hedge fund. You'd also have to pay perhaps 0.6\% for rolling your quarterly bets.\footnote{Assuming the full spread is charged on rolls. \par 这里假设换月时会收取完整价差。} You can save on costs by following the advice in the chapter twelve, ‘Speed and Size', and not adjusting your estimate of instrument currency volatility if the previous level looks about right, say within 25\% of the current value. \end{englishblock}
+
+\begin{chineseblock}现在你可以开始考虑第十章中讨论过的“仓位规模设定”了。首先，你需要测量每个市场近期收益的百分比标准差（也就是价格波动率），以便确定一个品种单位在价值上预期的日波动幅度（也就是品种货币波动率）。我建议你使用第十章（第 155 页）中提到的“目测法”，而你本来也已经在用它来估计止损水平所需的波动率。对于任何你当前持有头寸的品种，以及理想情况下任何你今天可能下注的品种，这项工作都应当每天进行。现有头寸的价格波动率变化，也可能会触发交易。根据表 38（第 212 页），在建议取值 X = 4 的情况下，在考虑了仓位规模调整的影响之后，你会得到大约 8 的换手率。若点差投注的标准化成本为 0.01 个 SR 单位，那么对应的年化成本就是 8 × 0.01 = 0.08 个夏普比率（SR）单位，这恰好踩在我在第十二章“速度与规模”中建议的最高上限 0.08 SR 上。在 15\% 的年化波动率下，这就意味着由成本带来的表现拖累约为 0.08 × 15\% = 1.2\% 每年。这比大多数被动 ETF 都要贵，但又明显比对冲基金便宜得多。此外，你还需要为季度型点差投注的换月支付大约 0.6\% 的额外成本。按照第十二章“速度与规模”中的建议，如果上一轮的品种货币波动率估计值看起来仍然差不多合理（例如仍在当前值的 25\% 区间以内），那你就可以不去调整它，从而节省一部分交易成本。\end{chineseblock}
+
+\bipairgap
+
+\begin{englishblock} As you're spread betting, the value of a 1\% move (the block value) depends on the bet size in pounds per point, so you won't need to use exchange rates even when betting on non-UK markets. So for example with crude oil at \$65, a 1\% move of \$0.65 or 0.65 points, at a broker's minimum of £10 a point, will have a value of £6.50. \end{englishblock}
+
+\begin{chineseblock}由于你做的是点差投注，因此 1\% 波动所对应的价值（也就是单位价值）取决于你每点下注多少英镑，所以即便你下注的是非英国市场，你也不需要额外使用汇率。例如，若原油价格是 \$65，那么 1\% 的波动就是 \$0.65，也就是 0.65 个点。如果经纪商的最小下注额是每点 £10，那么这 1\% 波动的单位价值就是 £6.50。 \end{chineseblock}
 
 \begin{enumerate}
-  \item As before to go from annual to daily volatility you need to divide by the ‘square root of time', which assuming 256 business days in a year is 16.
-\end{enumerate}
+\item As before to go from annual to daily volatility you need to divide by the ‘square root of time', which assuming 256 business days in a year is 16. \end{enumerate}
 
 \begin{enumerate}
-  \item 与之前一样，从年化波动率换算到日波动率时，你需要除以“时间平方根”；若假设一年有 256 个交易日，这个值就是 16。
-\end{enumerate}
+\item 与之前一样，从年化波动率换算到日波动率时，你需要除以“时间平方根”；若假设一年有 256 个交易日，这个值就是 16。 \end{enumerate}
 
-With this information you can use your volatility target to work out the volatility scalars every morning to use for both existing and potential trades.
+\begin{englishblock} With this information you can use your volatility target to work out the volatility scalars every morning to use for both existing and potential trades. \end{englishblock}
 
-有了这些信息，你就可以每天早晨根据自己的波动率目标，算出适用于现有和潜在交易的波动率缩放因子。
+\begin{chineseblock}有了这些信息，你就可以每天早晨根据自己的波动率目标，算出适用于现有和潜在交易的波动率缩放因子。\end{chineseblock}
 
-\subsection*{Portfolios}
-\bisubsectiontitle{投资组合}
+\bilingualsubsection{Portfolios}{投资组合}
 
-To size your bets you need to determine your preferred maximum and average number of concurrent bets, as I explained in chapter eleven, ‘Portfolios'. These terms are self explanatory: the maximum number of bets is the most positions you will have on at any given time, and the average is what you expect to have on a typical day. As I said in chapter eleven, the instrument weight you use to size each of your positions will be 100\% divided by the maximum number of bets. The instrument diversification multiplier will be the maximum number of bets divided by the average. This multiplier ensures the total average absolute forecast will be 10 with the average number of bets on, which ensures your forecasting is consistent with the rest of the systematic framework. I recommended that the multiplier shouldn't be greater than 2.5, which limits the value of the maximum relative to the average. If you already have your maximum number of bets on, and you desperately need to make a new bet, then sorry: you can't. Wait until one of your existing bets has stopped out. If they all continue to be profitable then perhaps your new bet wasn't necessary after all. Although this may seem rigid, sticking to this ensures that you have the correct risk on for each bet and it will stop you from putting on dangerous numbers of simultaneous bets. Make sure you set your maximum high enough when designing your system to cover your likely appetite for extra bets. Earlier I said you shouldn't change the forecast on an existing bet. However you can add to positions by placing a new, separate, bet on an instrument which you're already holding. This allows pyramiding positions, such as buying into a strengthening trend. The new bet is completely distinct, will have its own stop loss, and could be closed at a different time. A new bet on an existing position counts towards your maximum number of bets. This can't be used as a loophole to close positions; you can't put on a new bet which will make your existing position smaller or reverse it. Finally, to avoid concentrating your risk too heavily I strongly recommend that you don't have a total of more than 40 forecast units bet on any asset at once, added up over all the bets on that instrument. So a forecast of +10 on your first bet, followed by +25 on your second for the same instrument would be acceptable. But you couldn't place a third bet of more than +5. In this chapter I am going to assume you have a maximum of four positions, with an average of three. So each position will have an instrument weight of 100\% ÷ 4 = 25\%, and the diversification multiplier is 4 ÷ 3 = 1.33. As you saw in chapter nine, ‘Volatility targeting', (page 150) the use of systematic stop losses allows you to compare my framework with traditional money management systems,
+\begin{englishblock} To size your bets you need to determine your preferred maximum and average number of concurrent bets, as I explained in chapter eleven, ‘Portfolios'. These terms are self explanatory: the maximum number of bets is the most positions you will have on at any given time, and the average is what you expect to have on a typical day. As I said in chapter eleven, the instrument weight you use to size each of your positions will be 100\% divided by the maximum number of bets. The instrument diversification multiplier will be the maximum number of bets divided by the average. This multiplier ensures the total average absolute forecast will be 10 with the average number of bets on, which ensures your forecasting is consistent with the rest of the systematic framework. I recommended that the multiplier shouldn't be greater than 2.5, which limits the value of the maximum relative to the average. \end{englishblock}
 
-为了给每笔下注确定正确规模，你需要先决定自己所偏好的“最大并发下注数量”和“平均并发下注数量”，正如我在第十一章“投资组合”里解释过的那样。
-这两个概念本身并不难理解：最大下注数量，就是你在任一时刻愿意同时持有的最多头寸数量；而平均下注数量，则是你在一个普通交易日里预期会持有的典型头寸数量。
-正如我在第十一章中所说，你为每个头寸所使用的品种权重，应当等于 100\% 除以最大下注数量。而品种分散化乘数，
-则应当等于最大下注数量除以平均下注数量。这个乘数能够确保：在你平均持有下注数量时，所有下注的总平均绝对预测值仍然是 10，
-从而保证你的预测体系与整个系统化框架保持一致。我建议这个乘数不应大于 2.5，这就限制了最大值相对于平均值不能过于夸张。
-如果你已经持有了最大允许下注数量，而此时你又非常想再开一笔新仓，那很抱歉：你不能这么做。你必须等到某一笔现有下注先触发止损退出。
-如果它们全部持续盈利，那么也许这笔新下注其实本来就没有那么必要。虽然这看起来有点死板，但坚持这种规则，
-才能确保每笔下注承担的是正确的风险，也能防止你同时压上一个危险得多的下注数量。在设计系统时，
-请确保你设定的最大值足够高，能够覆盖你对于额外下注的真实胃口。前面我说过，你不应去修改已经持有下注的预测值。不过，
-你仍然可以在已经持有的品种上再叠加一个新的、独立的下注。这使得你能够逐步加码，例如在趋势增强时继续追买。新的下注是完全独立的，
-它有自己的止损位，也可能在与原头寸不同的时间被平掉。对同一品种加开的这笔新下注，也会计入你的最大下注数量。
-但你不能把它当成一个钻规则空子的办法来缩减或反转现有头寸
---- 也就是说，你不能建立一笔会让原有仓位变小或直接反向的新下注。最后，为了避免风险过度集中，
-我强烈建议：对任意一个资产，你在所有下注累加后，总预测值不要超过 40 个预测单位。例如，如果你在第一笔下注上给了 +10 的预测，
-接着又在同一品种上建立第二笔 +25 的下注，这是允许的；但此时你就不能再建立一笔大于 +5 的第三笔下注了。
-在本章里，我假设你的最大头寸数量为 4，平均持仓数量为 3。因此，每个头寸对应的品种权重就是 100\% ÷ 4 = 25\%，
-而分散化乘数则是 4 ÷ 3 = 1.33。正如你在第九章“波动率目标设定”
-（第 150 页）中所看到的那样，系统化止损机制的使用，允许你把我的框架和传统资金管理系统联系起来，
+\begin{chineseblock}为了给每笔下注确定正确规模，你需要先决定自己所偏好的“最大并发下注数量”和“平均并发下注数量”，正如我在第十一章“投资组合”里解释过的那样。这两个概念本身并不难理解：最大下注数量，就是你在任一时刻愿意同时持有的最多头寸数量；而平均下注数量，则是你在一个普通交易日里预期会持有的典型头寸数量。正如我在第十一章中所说，你为每个头寸所使用的品种权重，应当等于 100\% 除以最大下注数量。而品种分散化乘数，则应当等于最大下注数量除以平均下注数量。这个乘数能够确保：在你平均持有下注数量时，所有下注的总平均绝对预测值仍然是 10，从而保证你的预测体系与整个系统化框架保持一致。我建议这个乘数不应大于 2.5，这就限制了最大值相对于平均值不能过于夸张。\end{chineseblock}
 
-where you put a fixed percentage of your capital at risk. Each bet you make puts at risk a percentage of capital equal to: (X × forecast × percentage volatility target) ÷ (10 × 16 × average number of bets) In this example with an X of 4, the average forecast of 10, a 15\% volatility target and an average of three positions you are putting (4 × 10 × 15\%) ÷ (10 × 16 × 3) = 1.25\% of your capital at risk on average per bet. With the maximum forecast of 20 you'd be risking twice that, 2.5\%. This is relatively large, but remember that you expect to be holding these positions for around six weeks.
+\bipairgap
 
-也就是你会在每笔交易中，把资本的一个固定百分比暴露在风险之中。你每下一笔注，所承担的资本风险百分比为：
-\((X \times forecast \times percentage\ volatility\ target) \div (10 \times 16 \times average\ number\ of\ bets)\)。
-在这个例子中，若 X = 4、平均预测值 = 10、波动率目标 = 15\%，平均持仓数量 = 3，那么你每笔下注平均承担的资本风险就是
-\((4 \times 10 \times 15\%) \div (10 \times 16 \times 3) = 1.25\%\)。
-如果预测值达到最大值 20，那么你承担的风险就是它的两倍，也就是 2.5\%。这个水平相对来说已经不算小了，但别忘了，
-你预期这些仓位大约会持有六周左右。
+\begin{englishblock} If you already have your maximum number of bets on, and you desperately need to make a new bet, then sorry: you can't. Wait until one of your existing bets has stopped out. If they all continue to be profitable then perhaps your new bet wasn't necessary after all. Although this may seem rigid, sticking to this ensures that you have the correct risk on for each bet and it will stop you from putting on dangerous numbers of simultaneous bets. Make sure you set your maximum high enough when designing your system to cover your likely appetite for extra bets. \end{englishblock}
 
-\subsection*{Trading in practice}
-\bisubsectiontitle{实际交易中的做法}
+\begin{chineseblock}如果你已经持有了最大允许下注数量，而此时你又非常想再开一笔新仓，那很抱歉：你不能这么做。你必须等到某一笔现有下注先触发止损退出。如果它们全部持续盈利，那么也许这笔新下注其实本来就没有那么必要。虽然这看起来有点死板，但坚持这种规则，才能确保每笔下注承担的是正确的风险，也能防止你同时压上一个危险得多的下注数量。在设计系统时，请确保你设定的最大值足够高，能够覆盖你对于额外下注的真实胃口。\end{chineseblock}
 
-You should first check to see if any stop losses on existing positions have been hit, and trade on those immediately if you didn't leave stop losses with your broker.\footnote{I'm mostly agnostic about whether stop loss orders should be left with brokers, or entered only when prices hit the relevant level. However, unless you are watching the markets all day it is safer to leave stop loss orders in place. Pre-entered orders also prevent you from ignoring an exit and staying in the trade.\par 对于止损单究竟应当预先挂在经纪商那里，
-还是只在价格触及相应水平时再手动输入，我个人并没有特别强的偏好。不过，除非你整天都盯着市场，
-否则把止损单预先挂好会更安全一些。预先录入的订单，也能防止你无视原本该执行的退出信号而继续死扛。} Then you can look at potential new entries and come up with a numeric forecast for them. On every new trade you'll need to calculate a stop loss based on the value of X, the price volatility and the entry price. Stop losses on existing positions will also need to be adjusted if price volatility changes. They also need to be moved up if prices reach new highs (for longs), and down for new lows (on shorts). Part-time daily traders should then update the stop loss limits they have left with their brokers and go to work at their real jobs. If you're still trading intra-day you will continue to monitor the market for new entries and to see if stops have been hit. You could also update stop loss levels intra-day if significant new levels are reached, but with the relatively large value of X I've suggested for this chapter this probably isn't necessary.
+\bipairgap
 
-你首先应该检查：现有头寸中是否有任何一笔已经触发了止损。如果你没有提前把止损单留在经纪商那里，那么你就应当立刻执行这些平仓交易。
-然后，你再去查看潜在的新入场机会，并为它们生成数值化预测。对每一笔新交易，你都需要根据 X 的取值、价格波动率以及入场价来计算止损位。
-如果现有头寸的价格波动率发生变化，那么对应的止损位也必须跟着调整。对于多头来说，当价格创出新高时，止损位也需要随之上移；
-对于空头来说，当价格创出新低时，止损位则需要下移。如果你是日常兼职交易者，那么更新完这些挂在经纪商那里的止损价位后，
-就可以去做你真正的日常工作了。如果你还在进行日内交易，那么你就需要继续监控市场，既要寻找新的入场机会，也要观察是否有头寸触发了止损。
-当然，如果盘中价格达到了重要新水平，你也可以在日内更新止损位；不过，以本章所建议的相对较大的 X 值来看，这样做大概并非必要。
+\begin{englishblock} Earlier I said you shouldn't change the forecast on an existing bet. However you can add to positions by placing a new, separate, bet on an instrument which you're already holding. This allows pyramiding positions, such as buying into a strengthening trend. The new bet is completely distinct, will have its own stop loss, and could be closed at a different time. A new bet on an existing position counts towards your maximum number of bets. This can't be used as a loophole to close positions; you can't put on a new bet which will make your existing position smaller or reverse it. \end{englishblock}
 
-\section*{Process}
-\phantomsection
-\addcontentsline{toc}{section}{Process}
-\bisectiontitle{流程}
+\begin{chineseblock}前面我说过，你不应去修改已经持有下注的预测值。不过，你仍然可以在已经持有的品种上再叠加一个新的、独立的下注。这使得你能够逐步加码，例如在趋势增强时继续追买。新的下注是完全独立的，它有自己的止损位，也可能在与原头寸不同的时间被平掉。对同一品种加开的这笔新下注，也会计入你的最大下注数量。但你不能把它当成一个钻规则空子的办法来缩减或反转现有头寸 --- 也就是说，你不能建立一笔会让原有仓位变小或直接反向的新下注。\end{chineseblock}
 
-Here is the process to follow when running this system. The trading diary in the next section illustrates in more detail how the calculations are done.
+\bipairgap
 
-下面就是运行这套系统时应遵循的流程。下一节中的交易日记，会更详细地展示这些计算是如何完成的。
+\begin{englishblock} Finally, to avoid concentrating your risk too heavily I strongly recommend that you don't have a total of more than 40 forecast units bet on any asset at once, added up over all the bets on that instrument. So a forecast of +10 on your first bet, followed by +25 on your second for the same instrument would be acceptable. But you couldn't place a third bet of more than +5. \end{englishblock}
 
-\subsection*{Daily housekeeping}
-\bisubsectiontitle{每日例行维护}
+\begin{chineseblock}最后，为了避免风险过度集中，我强烈建议：对任意一个资产，你在所有下注累加后，总预测值不要超过 40 个预测单位。例如，如果你在第一笔下注上给了 +10 的预测，接着又在同一品种上建立第二笔 +25 的下注，这是允许的；但此时你就不能再建立一笔大于 +5 的第三笔下注了。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.29\textwidth}Y@{}}
-\textbf{Check stops} & If not using stop orders left with brokers, check to see if any stop levels have been hit on existing positions, and if necessary do closing trades. \\
-\textbf{Get account value} & Get today's account value and calculate your current trading capital. Your annualised cash volatility target is current capital multiplied by percentage volatility target. In this chapter we use 15\%. \\
-\textbf{Daily cash volatility target} & Daily cash volatility target equals one-sixteenth of annualised cash volatility target. As usual this is the ‘square root of time' rule; with around 256 business days in a year you should divide by 16 to go from annual to daily risk. \\
-\textbf{Get latest prices} & Get charts for all instruments you have positions on and ideally anything you might wish to trade today. \\
-\textbf{Calculate daily price volatility} & Using a one month chart eyeball the price volatility of each instrument you own, or might trade today. With FX rate of 1 and relevant block values convert this to instrument value volatility. For existing positions if the volatility level you used yesterday is not within 25\% of today's level then update your estimate; otherwise stick with yesterday's estimate. For potential positions you should always use the most up-to-date estimate. \\
-\textbf{Recalculate stops} & Update stops on existing instruments so they trail new highs for longs or new lows for shorts, and account for the latest value of price volatility. \\
-\textbf{Volatility scalar} & This is equal to the daily cash volatility target divided by instrument value volatility for each instrument. \\
-\textbf{Desired subsystem position on an existing bet} & Original forecast multiplied by volatility scalar, divided by 10. \\
-\textbf{Desired portfolio instrument position on an existing bet} & Desired subsystem position multiplied by instrument weight and by instrument diversification multiplier. With the maximum of four bets used in the example, and an average of 3 bets, you should use an instrument weight of 25\% and a multiplier of 1.33. \\
-\textbf{Desired target position on an existing bet} & Portfolio instrument position rounded to the nearest whole block. \\
-\textbf{Issue trades on existing positions} & Compare current position to target position. If out by more than 10\% then issue adjusting orders, using position inertia. \\
-\textbf{Check setups} & Check charts and news for potential new bets. If any exist go to instructions for new position opening. \\
-\end{tabularx}
-}
+\bipairgap
 
-\medskip
+\begin{englishblock} In this chapter I am going to assume you have a maximum of four positions, with an average of three. So each position will have an instrument weight of 100\% ÷ 4 = 25\%, and the diversification multiplier is 4 ÷ 3 = 1.33. As you saw in chapter nine, ‘Volatility targeting', (page 150) the use of systematic stop losses allows you to compare my framework with traditional money management systems, \end{englishblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.29\textwidth}Y@{}}
+\begin{chineseblock}在本章里，我假设你的最大头寸数量为 4，平均持仓数量为 3。因此，每个头寸对应的品种权重就是 100\% ÷ 4 = 25\%，而分散化乘数则是 4 ÷ 3 = 1.33。正如你在第九章“波动率目标设定”（第 150 页）中所看到的那样，系统化止损机制的使用，允许你把我的框架和传统资金管理系统联系起来，\end{chineseblock}
+
+\bipairgap
+
+\begin{englishblock} where you put a fixed percentage of your capital at risk. Each bet you make puts at risk a percentage of capital equal to: (X × forecast × percentage volatility target) ÷ (10 × 16 × average number of bets) In this example with an X of 4, the average forecast of 10, a 15\% volatility target and an average of three positions you are putting (4 × 10 × 15\%) ÷ (10 × 16 × 3) = 1.25\% of your capital at risk on average per bet. With the maximum forecast of 20 you'd be risking twice that, 2.5\%. This is relatively large, but remember that you expect to be holding these positions for around six weeks. \end{englishblock}
+
+\begin{chineseblock}也就是你会在每笔交易中，把资本的一个固定百分比暴露在风险之中。你每下一笔注，所承担的资本风险百分比为：\((X \times forecast \times percentage\ volatility\ target) \div (10 \times 16 \times average\ number\ of\ bets)\)。在这个例子中，若 X = 4、平均预测值 = 10、波动率目标 = 15\%，平均持仓数量 = 3，那么你每笔下注平均承担的资本风险就是\((4 \times 10 \times 15\%) \div (10 \times 16 \times 3) = 1.25\%\)。如果预测值达到最大值 20，那么你承担的风险就是它的两倍，也就是 2.5\%。这个水平相对来说已经不算小了，但别忘了，你预期这些仓位大约会持有六周左右。\end{chineseblock}
+
+\bilingualsubsection{Trading in practice}{实际交易中的做法}
+
+\begin{englishblock} You should first check to see if any stop losses on existing positions have been hit, and trade on those immediately if you didn't leave stop losses with your broker.\footnote{I'm mostly agnostic about whether stop loss orders should be left with brokers, or entered only when prices hit the relevant level. However, unless you are watching the markets all day it is safer to leave stop loss orders in place. Pre-entered orders also prevent you from ignoring an exit and staying in the trade. \par 对于止损单究竟应当预先挂在经纪商那里，还是只在价格触及相应水平时再手动输入，我个人并没有特别强的偏好。不过，除非你整天都盯着市场，否则把止损单预先挂好会更安全一些。预先录入的订单，也能防止你无视原本该执行的退出信号而继续死扛。} Then you can look at potential new entries and come up with a numeric forecast for them. On every new trade you'll need to calculate a stop loss based on the value of X, the price volatility and the entry price. Stop losses on existing positions will also need to be adjusted if price volatility changes. They also need to be moved up if prices reach new highs (for longs), and down for new lows (on shorts). Part-time daily traders should then update the stop loss limits they have left with their brokers and go to work at their real jobs. If you're still trading intra-day you will continue to monitor the market for new entries and to see if stops have been hit. You could also update stop loss levels intra-day if significant new levels are reached, but with the relatively large value of X I've suggested for this chapter this probably isn't necessary. \end{englishblock}
+
+\begin{chineseblock}你首先应该检查：现有头寸中是否有任何一笔已经触发了止损。如果你没有提前把止损单留在经纪商那里，那么你就应当立刻执行这些平仓交易。然后，你再去查看潜在的新入场机会，并为它们生成数值化预测。对每一笔新交易，你都需要根据 X 的取值、价格波动率以及入场价来计算止损位。如果现有头寸的价格波动率发生变化，那么对应的止损位也必须跟着调整。对于多头来说，当价格创出新高时，止损位也需要随之上移；对于空头来说，当价格创出新低时，止损位则需要下移。如果你是日常兼职交易者，那么更新完这些挂在经纪商那里的止损价位后，就可以去做你真正的日常工作了。如果你还在进行日内交易，那么你就需要继续监控市场，既要寻找新的入场机会，也要观察是否有头寸触发了止损。当然，如果盘中价格达到了重要新水平，你也可以在日内更新止损位；不过，以本章所建议的相对较大的 X 值来看，这样做大概并非必要。\end{chineseblock}
+
+\bilingualsection{Process}{流程}
+
+\begin{englishblock} Here is the process to follow when running this system. The trading diary in the next section illustrates in more detail how the calculations are done. \end{englishblock}
+
+\begin{chineseblock}下面就是运行这套系统时应遵循的流程。下一节中的交易日记，会更详细地展示这些计算是如何完成的。\end{chineseblock}
+
+\bilingualsubsection{Daily housekeeping}{每日例行维护}
+
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.29\textwidth} Y@{}}\textbf{Check stops} & If not using stop orders left with brokers, check to see if any stop levels have been hit on existing positions, and if necessary do closing trades. \\
+
 \textbf{检查止损} & 如果没有把止损单预先留给经纪商，就检查现有头寸是否已经触及止损位；如有必要，立即执行平仓交易。 \\
+\textbf{Get account value} & Get today's account value and calculate your current trading capital. Your annualised cash volatility target is current capital multiplied by percentage volatility target. In this chapter we use 15\%. \\
 \textbf{获取账户净值} & 获取当天的账户净值，并计算当前交易资本。年化现金波动率目标等于当前资本乘以百分比波动率目标。本章中我们使用 15\%。 \\
-\textbf{日现金波动率目标} & 日现金波动率目标等于年化现金波动率目标的十六分之一。和往常一样，这遵循“时间平方根”法则；若一年大约有 256 个交易日，
-则从年化风险换算到日风险时应除以 16。 \\
+\textbf{Daily cash volatility target} & Daily cash volatility target equals one-sixteenth of annualised cash volatility target. As usual this is the ‘square root of time' rule; with around 256 business days in a year you should divide by 16 to go from annual to daily risk. \\
+\textbf{日现金波动率目标} & 日现金波动率目标等于年化现金波动率目标的十六分之一。和往常一样，这遵循“时间平方根”法则；若一年大约有 256 个交易日，则从年化风险换算到日风险时应除以 16。 \\
+\textbf{Get latest prices} & Get charts for all instruments you have positions on and ideally anything you might wish to trade today. \\
 \textbf{获取最新价格} & 获取你当前持有头寸的所有品种图表，并最好也获取今天可能想交易的所有品种图表。 \\
-\textbf{计算日价格波动率} & 用一个月图表目测你持有、或今天可能交易的每个品种的价格波动率。由于本例中汇率为 1，再结合相应单位价值，
-把它换算为品种价值波动率。对于现有头寸，如果你昨天使用的波动率水平与今天的水平偏差不超过 25\%，就无需更新估计；否则就更新。
-对潜在新头寸，则应始终使用最新估计。 \\
+\textbf{Calculate daily price volatility} & Using a one month chart eyeball the price volatility of each instrument you own, or might trade today. With FX rate of 1 and relevant block values convert this to instrument value volatility. For existing positions if the volatility level you used yesterday is not within 25\% of today's level then update your estimate; otherwise stick with yesterday's estimate. For potential positions you should always use the most up-to-date estimate. \\
+\textbf{计算日价格波动率} & 用一个月图表目测你持有、或今天可能交易的每个品种的价格波动率。由于本例中汇率为 1，再结合相应单位价值，把它换算为品种价值波动率。对于现有头寸，如果你昨天使用的波动率水平与今天的水平偏差不超过 25\%，就无需更新估计；否则就更新。对潜在新头寸，则应始终使用最新估计。 \\
+\textbf{Recalculate stops} & Update stops on existing instruments so they trail new highs for longs or new lows for shorts, and account for the latest value of price volatility. \\
 \textbf{重新计算止损} & 更新现有品种的止损位：对多头要跟随新的高点上移，对空头则要跟随新的低点下移，同时纳入最新价格波动率。 \\
+\textbf{Volatility scalar} & This is equal to the daily cash volatility target divided by instrument value volatility for each instrument. \\
 \textbf{波动率缩放因子} & 对每个品种，用日现金波动率目标除以品种价值波动率。 \\
+\textbf{Desired subsystem position on an existing bet} & Original forecast multiplied by volatility scalar, divided by 10. \\
 \textbf{现有下注的目标子系统仓位} & 原始预测值乘以波动率缩放因子，再除以 10。 \\
-\textbf{现有下注的目标投资组合品种仓位} & 目标子系统仓位乘以品种权重，再乘以品种分散化乘数。本例中最大下注数为 4，平均下注数为 3，
-因此你应使用 25\% 的品种权重和 1.33 的乘数。 \\
+\textbf{Desired portfolio instrument position on an existing bet} & Desired subsystem position multiplied by instrument weight and by instrument diversification multiplier. With the maximum of four bets used in the example, and an average of 3 bets, you should use an instrument weight of 25\% and a multiplier of 1.33. \\
+\textbf{现有下注的目标投资组合品种仓位} & 目标子系统仓位乘以品种权重，再乘以品种分散化乘数。本例中最大下注数为 4，平均下注数为 3，因此你应使用 25\% 的品种权重和 1.33 的乘数。 \\
+\textbf{Desired target position on an existing bet} & Portfolio instrument position rounded to the nearest whole block. \\
 \textbf{现有下注的目标仓位} & 将投资组合品种仓位四舍五入到最接近的整单位。 \\
+\textbf{Issue trades on existing positions} & Compare current position to target position. If out by more than 10\% then issue adjusting orders, using position inertia. \\
 \textbf{对现有头寸下调整单} & 把当前仓位与目标仓位进行比较。如果偏差超过 10\%，就利用仓位惯性逻辑发出调整交易。 \\
+\textbf{Check setups} & Check charts and news for potential new bets. If any exist go to instructions for new position opening. \\
 \textbf{检查形态/机会} & 检查图表和新闻，寻找潜在的新下注机会。如果发现机会，就转入“开新仓”流程。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-\subsection*{Further intra-day process (for full-time traders only)}
-\bisubsectiontitle{进一步的盘中流程（仅适用于全职交易者）}
+\bilingualsubsection{Further intra-day process (for full-time traders only)}{进一步的盘中流程（仅适用于全职交易者）}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.29\textwidth}Y@{}}
-\textbf{Check stop losses} & Check to see if any stop losses have been triggered. If not using broker stops then issue closing trades. \\
-\textbf{Check setups} & Check charts and news for potential trade setups. If any exist go to instructions for new position opening. \\
-\end{tabularx}
-}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.26\textwidth} Y@{}}\textbf{Check stop losses} & Check to see if any stop losses have been triggered. If not using broker stops then issue closing trades. \\
 
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.29\textwidth}Y@{}}
 \textbf{检查止损} & 检查是否有任何止损已经被触发。如果没有预先交给经纪商执行，就立即发出平仓指令。 \\
+\textbf{Check setups} & Check charts and news for potential trade setups. If any exist go to instructions for new position opening. \\
 \textbf{检查机会} & 检查图表和新闻，寻找潜在交易机会。如果有机会，就转入“开新仓”流程。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-\subsection*{New position opening}
-\bisubsectiontitle{开新仓}
+\bilingualsubsection{New position opening}{开新仓}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.29\textwidth}Y@{}}
-\textbf{Calculate forecast} & Use table 37 (page 211) to calculate your forecast for the instrument. \\
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.26\textwidth} Y@{}}\textbf{Calculate forecast} & Use table 37 (page 211) to calculate your forecast for the instrument. \\
+
+\textbf{计算预测值} & 使用表 37（第 211 页）来计算你对该品种的预测值。 \\
 \textbf{Is it allowed?} & Do you already have the maximum number of bets on? For the example system this is four. Is the bet on an instrument with an existing position? If so it must not reduce or reverse the position, or put the total absolute forecast across all bets for this instrument over 40. \\
+\textbf{是否允许？} & 你是否已经持有了最大下注数量？在本示例系统中，这个上限是 4。这笔下注是否落在一个已经有持仓的品种上？如果是，那么它不能让已有仓位缩小或反向，也不能让该品种所有下注的绝对预测值总和超过 40。 \\
 \textbf{Calculate instrument value volatility} & If not pre-calculated in the morning, using a one month chart eyeball the price volatility of each instrument. With FX rate of 1 and relevant block values convert this to instrument value volatility. \\
+\textbf{计算品种价值波动率} & 如果早晨没有提前算好，就用一个月图表目测该品种的价格波动率。由于汇率取 1，再结合相应单位价值，把它转换成品种价值波动率。 \\
 \textbf{Calculate stop loss} & Use \(X\) multiplied by the daily price volatility in price points to find where to set the stop loss relative to the entry price. In this chapter I've used an \(X\) of 4. \\
+\textbf{计算止损位} & 用 \(X\) 乘以日价格波动率（以价格点数表示），来求出相对于入场价的止损偏移。本章中我使用的是 \(X = 4\)。 \\
 \textbf{Volatility scalar} & This morning's daily cash volatility target divided by instrument value volatility for the instrument. \\
-\textbf{Subsystem position} & Forecast multiplied by volatility scalar, divided by 10. \\
-\textbf{Portfolio position} & Subsystem position multiplied by instrument weight, 25\% in the example, and then multiplied by instrument diversification multiplier, 1.33 in the example. \\
-\textbf{Rounded target position} & Portfolio instrument position rounded to nearest block. \\
-\textbf{Trade} & You should now put on the trade and once completed calculate the initial stop loss relative to the entry price. With judicious use of spreadsheets the above steps can be completed in a few moments. \\
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.29\textwidth}Y@{}}
-\textbf{计算预测值} & 使用表 37
-（第 211 页）来计算你对该品种的预测值。 \\
-\textbf{是否允许？} & 你是否已经持有了最大下注数量？在本示例系统中，这个上限是 4。
-这笔下注是否落在一个已经有持仓的品种上？如果是，那么它不能让已有仓位缩小或反向，也不能让该品种所有下注的绝对预测值总和超过 40。 \\
-\textbf{计算品种价值波动率} & 如果早晨没有提前算好，就用一个月图表目测该品种的价格波动率。由于汇率取 1，再结合相应单位价值，
-把它转换成品种价值波动率。 \\
-\textbf{计算止损位} & 用 \(X\) 乘以日价格波动率
-（以价格点数表示），来求出相对于入场价的止损偏移。本章中我使用的是 \(X = 4\)。 \\
 \textbf{波动率缩放因子} & 今天早晨算出的日现金波动率目标除以该品种的品种价值波动率。 \\
+\textbf{Subsystem position} & Forecast multiplied by volatility scalar, divided by 10. \\
 \textbf{子系统仓位} & 预测值乘以波动率缩放因子，再除以 10。 \\
-\textbf{投资组合仓位} & 子系统仓位先乘以品种权重
-（本例中为 25\%），再乘以品种分散化乘数
-（本例中为 1.33）。 \\
+\textbf{Portfolio position} & Subsystem position multiplied by instrument weight, 25\% in the example, and then multiplied by instrument diversification multiplier, 1.33 in the example. \\
+\textbf{投资组合仓位} & 子系统仓位先乘以品种权重（本例中为 25\%），再乘以品种分散化乘数（本例中为 1.33）。 \\
+\textbf{Rounded target position} & Portfolio instrument position rounded to nearest block. \\
 \textbf{四舍五入后的目标仓位} & 将投资组合品种仓位四舍五入到最接近的整单位。 \\
+\textbf{Trade} & You should now put on the trade and once completed calculate the initial stop loss relative to the entry price. With judicious use of spreadsheets the above steps can be completed in a few moments. \\
 \textbf{执行交易} & 现在你就可以下单了，成交之后立刻按照入场价计算初始止损位。合理利用电子表格的话，上述步骤可以在很短时间内完成。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-\section*{Trading diary}
-\phantomsection
-\addcontentsline{toc}{section}{Trading diary}
-\bisectiontitle{交易日记}
+\bilingualsection{Trading diary}{交易日记}
 
-Here is some paper trading I did using the semi-automatic trading system. All the calculations here have been done with a spreadsheet, which is available from my website. Prices and other values are rounded to make the example clearer.
+\begin{englishblock} Here is some paper trading I did using the semi-automatic trading system. All the calculations here have been done with a spreadsheet, which is available from my website. Prices and other values are rounded to make the example clearer. \end{englishblock}
 
-下面是一组我用半自动交易系统做的纸上交易示例。这里所有计算都通过电子表格完成，而这份表格可以在我的网站上获得。
-为了让例子更清楚，价格和其他数值都做了适当四舍五入。
+\begin{chineseblock}下面是一组我用半自动交易系统做的纸上交易示例。这里所有计算都通过电子表格完成，而这份表格可以在我的网站上获得。为了让例子更清楚，价格和其他数值都做了适当四舍五入。\end{chineseblock}
 
-\subsection*{15 October 2014}
-\bisubsectiontitle{2014 年 10 月 15 日}
+\bilingualsubsection{15 October 2014}{2014 年 10 月 15 日}
 
-Typical minimum spread bets are £10 a point on crude, £5 on US S\&P 500 equities and £1 on the European Euro Stoxx equity index. These and the price determine the block value. Note that the block values are all in British pounds, the same currency as my account, even though the prices are quoted in other currencies, as we're betting in £1 per point. So the FX rates are all 1. Starting trading capital is £100,000; annual volatility target at 15\% is £15,000 and starting daily volatility target is one sixteenth of that, £937.50.
+\begin{englishblock} Typical minimum spread bets are £10 a point on crude, £5 on US S\&P 500 equities and £1 on the European Euro Stoxx equity index. These and the price determine the block value. Note that the block values are all in British pounds, the same currency as my account, even though the prices are quoted in other currencies, as we're betting in £1 per point. So the FX rates are all 1. Starting trading capital is £100,000; annual volatility target at 15\% is £15,000 and starting daily volatility target is one sixteenth of that, £937.50. \end{englishblock}
 
-典型的最小点差投注规模分别是：原油每点 £10、美国 S\&P 500 股票指数每点 £5、欧洲 Euro Stoxx 股票指数每点 £1。
-这些下注规模再结合价格，就决定了单位价值。请注意，尽管价格本身是以其他货币报价的，但由于我们下注时是按“每点多少英镑”来操作，
-所以单位价值全部都是以英镑表示，也就是与我的账户使用相同货币。因此，这里的汇率一律记为 1。初始交易资本是 £100,000；
-按 15\% 的年化波动率目标，对应的年化波动率金额为 £15,000，而起始日波动率目标则是它的十六分之一，也就是 £937.50。
+\begin{chineseblock}典型的最小点差投注规模分别是：原油每点 £10、美国 S\&P 500 股票指数每点 £5、欧洲 Euro Stoxx 股票指数每点 £1。这些下注规模再结合价格，就决定了单位价值。请注意，尽管价格本身是以其他货币报价的，但由于我们下注时是按“每点多少英镑”来操作，所以单位价值全部都是以英镑表示，也就是与我的账户使用相同货币。因此，这里的汇率一律记为 1。初始交易资本是 £100,000；按 15\% 的年化波动率目标，对应的年化波动率金额为 £15,000，而起始日波动率目标则是它的十六分之一，也就是 £937.50。 \end{chineseblock}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.36\textwidth}*{3}{R}@{}}
 \toprule
 & Crude & S\&P 500 & Euro Stoxx \\
+& 原油 & S\&P 500 & Euro Stoxx \\
 \midrule
 Daily volatility target (A) & £937.50 & £937.50 & £937.50 \\
-Price (B) & 83 & 1880 & 2900 \\
-Bet size, per point (C) & £10 & £5 & £1 \\
-FX (D) & 1 & 1 & 1 \\
-Block value (E) & £8.30 & £94 & £29 \\
-\emph{C × B ÷ 100} & & & \\
-Price volatility, points (F) & 1 & 20 & 50 \\
-Price volatility, \% (G) & 1.20 & 1.06 & 1.72 \\
-\emph{F ÷ B} & & & \\
-Instrument currency volatility (H) & £10 & £100 & £50 \\
-\emph{G × E} & & & \\
-Instrument value volatility (I) & £10 & £100 & £50 \\
-\emph{H × D} & & & \\
-Volatility scalar (J) & 93.75 & 9.375 & 18.75 \\
-\emph{A ÷ I} & & & \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
-\toprule
-& 原油 & S\&P 500 & Euro Stoxx \\
-\midrule
 日波动率目标 (A) & £937.50 & £937.50 & £937.50 \\
+Price (B) & 83 & 1880 & 2900 \\
 价格 (B) & 83 & 1880 & 2900 \\
+Bet size, per point (C) & £10 & £5 & £1 \\
 每点下注额 (C) & £10 & £5 & £1 \\
+FX (D) & 1 & 1 & 1 \\
 汇率 (D) & 1 & 1 & 1 \\
+Block value (E) & £8.30 & £94 & £29 \\
 单位价值 (E) & £8.30 & £94 & £29 \\
 \emph{C × B ÷ 100} & & & \\
+\emph{C × B ÷ 100} & & & \\
+Price volatility, points (F) & 1 & 20 & 50 \\
 价格波动率，点数 (F) & 1 & 20 & 50 \\
+Price volatility, \% (G) & 1.20 & 1.06 & 1.72 \\
 价格波动率，\% (G) & 1.20 & 1.06 & 1.72 \\
 \emph{F ÷ B} & & & \\
+\emph{F ÷ B} & & & \\
+Instrument currency volatility (H) & £10 & £100 & £50 \\
 品种货币波动率 (H) & £10 & £100 & £50 \\
 \emph{G × E} & & & \\
+\emph{G × E} & & & \\
+Instrument value volatility (I) & £10 & £100 & £50 \\
 品种价值波动率 (I) & £10 & £100 & £50 \\
 \emph{H × D} & & & \\
+\emph{H × D} & & & \\
+Volatility scalar (J) & 93.75 & 9.375 & 18.75 \\
 波动率缩放因子 (J) & 93.75 & 9.375 & 18.75 \\
+\emph{A ÷ I} & & & \\
 \emph{A ÷ I} & & & \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-For my forecasts I'm feeling very bullish on US equities, bullish on crude and bearish on European equities.
+\begin{englishblock} For my forecasts I'm feeling very bullish on US equities, bullish on crude and bearish on European equities. \end{englishblock}
 
-在我的主观判断中，我对美国股票非常看多，对原油看多，而对欧洲股票则看空。
+\begin{chineseblock}在我的主观判断中，我对美国股票非常看多，对原油看多，而对欧洲股票则看空。\end{chineseblock}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.36\textwidth}*{3}{R}@{}}
 \toprule
 & Crude & S\&P 500 & Euro Stoxx \\
+& 原油 & S\&P 500 & Euro Stoxx \\
 \midrule
 Forecast (K) & 10 & 15 & -10 \\
-Subsystem position, blocks (L) & 93.75 & 14.06 & -18.75 \\
-\emph{K × J ÷ 10} & & & \\
-Instrument weight (M) & 25\% & 25\% & 25\% \\
-Instrument diversification multiplier (N) & 1.33 & 1.33 & 1.33 \\
-Portfolio instrument position, blocks (O) & 31.25 & 4.687 & -6.2 \\
-\emph{L × M × N} & & & \\
-Rounded target position, blocks (P = round O) & 31 & 5 & -6 \\
-Entry price (Q) & 83 & 1880 & 2900 \\
-Stop loss offset (R) & 4 & 80 & 200 \\
-\emph{F × X with X = 4} & & & \\
-Stop loss (S) & 79 & 1800 & 3100 \\
-\emph{Q plus or minus R} & & & \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
-\toprule
-& 原油 & S\&P 500 & Euro Stoxx \\
-\midrule
 预测值 (K) & 10 & 15 & -10 \\
+Subsystem position, blocks (L) & 93.75 & 14.06 & -18.75 \\
 子系统仓位，单位 (L) & 93.75 & 14.06 & -18.75 \\
 \emph{K × J ÷ 10} & & & \\
+\emph{K × J ÷ 10} & & & \\
+Instrument weight (M) & 25\% & 25\% & 25\% \\
 品种权重 (M) & 25\% & 25\% & 25\% \\
+Instrument diversification multiplier (N) & 1.33 & 1.33 & 1.33 \\
 品种分散化乘数 (N) & 1.33 & 1.33 & 1.33 \\
+Portfolio instrument position, blocks (O) & 31.25 & 4.687 & -6.2 \\
 投资组合品种仓位，单位 (O) & 31.25 & 4.687 & -6.2 \\
 \emph{L × M × N} & & & \\
+\emph{L × M × N} & & & \\
+Rounded target position, blocks (P = round O) & 31 & 5 & -6 \\
 四舍五入后的目标仓位，单位 (P = round O) & 31 & 5 & -6 \\
+Entry price (Q) & 83 & 1880 & 2900 \\
 入场价格 (Q) & 83 & 1880 & 2900 \\
+Stop loss offset (R) & 4 & 80 & 200 \\
 止损偏移量 (R) & 4 & 80 & 200 \\
 \emph{F × X with X = 4} & & & \\
+\emph{F × X with X = 4} & & & \\
+Stop loss (S) & 79 & 1800 & 3100 \\
 止损位 (S) & 79 & 1800 & 3100 \\
+\emph{Q plus or minus R} & & & \\
 \emph{Q plus or minus R} & & & \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-So I go long crude at 31 × £10 = £310 a point with a \$79 stop loss, long S\&P 500 at 5 × £5 = £25 per point with an 1800 stop loss, and short Euro Stoxx at 6 × £1 = £6 per point with a 3100 stop loss.
+\begin{englishblock} So I go long crude at 31 × £10 = £310 a point with a \$79 stop loss, long S\&P 500 at 5 × £5 = £25 per point with an 1800 stop loss, and short Euro Stoxx at 6 × £1 = £6 per point with a 3100 stop loss. \end{englishblock}
 
-因此，我会以 31 × £10 = 每点 £310 的规模做多原油，并设置 \$79 的止损；以 5 × £5 = 每点 £25 的规模做多 S\&P 500，
-并设置 1800 的止损；同时以 6 × £1 = 每点 £6 的规模做空 Euro Stoxx，并设置 3100 的止损。
+\begin{chineseblock}因此，我会以 31 × £10 = 每点 £310 的规模做多原油，并设置 \$79 的止损；以 5 × £5 = 每点 £25 的规模做多 S\&P 500，并设置 1800 的止损；同时以 6 × £1 = 每点 £6 的规模做空 Euro Stoxx，并设置 3100 的止损。\end{chineseblock}
 
-\subsection*{29 October 2014}
-\bisubsectiontitle{2014 年 10 月 29 日}
+\bilingualsubsection{29 October 2014}{2014 年 10 月 29 日}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.36\textwidth}*{3}{R}@{}}
 \toprule
 & Crude & S\&P 500 & Euro Stoxx \\
-\midrule
-Forecast & 10 & 15 & -10 \\
-Entry price & 83 & 1880 & 2900 \\
-Current price & 81 & 1980 & 3020 \\
-High (Low) since entry (T) & 83 & 1980 & (2900) \\
-Stop loss (S = T plus or minus R) & 79 & 1900 & 3100 \\
-Current position, blocks & 31 & 5 & -6 \\
-Gain (Loss) & (£620) & £2,500 & (£720) \\
-Portfolio instrument position, blocks (O) & 31.5 & 4.73 & -6.3 \\
-Rounded target position, blocks (P) & 32 & 5 & -6 \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
-\toprule
 & 原油 & S\&P 500 & Euro Stoxx \\
 \midrule
+Forecast & 10 & 15 & -10 \\
 预测值 & 10 & 15 & -10 \\
+Entry price & 83 & 1880 & 2900 \\
 入场价格 & 83 & 1880 & 2900 \\
+Current price & 81 & 1980 & 3020 \\
 当前价格 & 81 & 1980 & 3020 \\
+High (Low) since entry (T) & 83 & 1980 & (2900) \\
 自入场以来最高（最低）价 (T) & 83 & 1980 & (2900) \\
+Stop loss (S = T plus or minus R) & 79 & 1900 & 3100 \\
 止损位 (S = T plus or minus R) & 79 & 1900 & 3100 \\
+Current position, blocks & 31 & 5 & -6 \\
 当前仓位，单位 & 31 & 5 & -6 \\
+Gain (Loss) & (£620) & £2,500 & (£720) \\
 盈亏 & (£620) & £2,500 & (£720) \\
+Portfolio instrument position, blocks (O) & 31.5 & 4.73 & -6.3 \\
 投资组合品种仓位，单位 (O) & 31.5 & 4.73 & -6.3 \\
+Rounded target position, blocks (P) & 32 & 5 & -6 \\
 四舍五入后的目标仓位，单位 (P) & 32 & 5 & -6 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-No stops triggered and the trailing stop loss for S\&P 500 has been moved up. The net profit in my account is £1,160, so current capital is £101,160 and the daily volatility target is £948. The price volatility and instrument value volatility hasn't changed on any instrument by more than 25\%, so I haven't adjusted these. Current positions are still within 10\% of the target; there is no need to buy one more instrument block of crude to get to a rounded position of 32. I feel very strongly about the S\&P bet now and I'm going to add to my position. So I will bet a separate +25 forecast, taking me up to the maximum of +40 for all S\&P 500 bets. It will also help hedge my Euro Stoxx short, which is doing very badly though hasn't yet hit it's stop. I now have four bets on, two of which are in S\&P 500, so I can't place any more.
+\begin{englishblock} No stops triggered and the trailing stop loss for S\&P 500 has been moved up. The net profit in my account is £1,160, so current capital is £101,160 and the daily volatility target is £948. The price volatility and instrument value volatility hasn't changed on any instrument by more than 25\%, so I haven't adjusted these. Current positions are still within 10\% of the target; there is no need to buy one more instrument block of crude to get to a rounded position of 32. I feel very strongly about the S\&P bet now and I'm going to add to my position. So I will bet a separate +25 forecast, taking me up to the maximum of +40 for all S\&P 500 bets. It will also help hedge my Euro Stoxx short, which is doing very badly though hasn't yet hit it's stop. I now have four bets on, two of which are in S\&P 500, so I can't place any more. \end{englishblock}
 
-没有任何止损被触发，而 S\&P 500 的跟踪止损也已经随着新高上移。我的账户净利润现在是 £1,160，因此当前资本是 £101,160，
-对应的日波动率目标是 £948。所有品种的价格波动率和品种价值波动率相对于之前的变化都没有超过 25\%，所以我没有更新这些估计。
-现有仓位距离目标仓位仍然在 10\% 范围内，因此也没有必要为了把原油的四舍五入目标仓位从 31 调到 32 而去额外买一手。
-不过，现在我对 S\&P 500 这笔下注变得非常有信心，因此我决定加仓。我会再单独建立一笔 +25 的预测值下注，
-这样我在 S\&P 500 上的总预测值就会达到允许的最大 +40。这也会在一定程度上对冲我那笔表现很糟、但尚未触发止损的 Euro Stoxx 空头。
-现在我总共有四笔下注，其中两笔都在 S\&P 500 上，因此我已经不能再建立新的下注了。
+\begin{chineseblock}没有任何止损被触发，而 S\&P 500 的跟踪止损也已经随着新高上移。我的账户净利润现在是 £1,160，因此当前资本是 £101,160，对应的日波动率目标是 £948。所有品种的价格波动率和品种价值波动率相对于之前的变化都没有超过 25\%，所以我没有更新这些估计。现有仓位距离目标仓位仍然在 10\% 范围内，因此也没有必要为了把原油的四舍五入目标仓位从 31 调到 32 而去额外买一手。不过，现在我对 S\&P 500 这笔下注变得非常有信心，因此我决定加仓。我会再单独建立一笔 +25 的预测值下注，这样我在 S\&P 500 上的总预测值就会达到允许的最大 +40。这也会在一定程度上对冲我那笔表现很糟、但尚未触发止损的 Euro Stoxx 空头。现在我总共有四笔下注，其中两笔都在 S\&P 500 上，因此我已经不能再建立新的下注了。\end{chineseblock}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.40\textwidth}*{2}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.40\textwidth}*{2}{R}@{}}
 \toprule
 & S\&P 500 (2) & S\&P 500 (2) \\
-\midrule
-Daily volatility target (A) & £948 & Forecast (K): 25 \\
-Price (B) & 1980 & Subsystem position (L): 23.7 \\
-\emph{K × J ÷ 10} & & \\
-Bet size, per point (C) & £5 & Instrument weight (M): 25\% \\
-FX (D) & 1 & Instrument diversification multiplier (N): 1.33 \\
-Block value (E) & £99 & Portfolio instrument position (O): 7.88 \\
-\emph{C × B ÷ 100} & & \emph{L × M × N} \\
-Price volatility, points (F) & 20 & Rounded target position, and trade (P = round O): 8 \\
-Price volatility, \% (G) & 1.01 & Entry price (Q): 1980 \\
-\emph{F ÷ B} & & \\
-Instrument currency volatility (H) & £100 & Stop loss offset (R): 80 \\
-\emph{F × X with X = 4} & & \\
-Instrument value volatility (I) & £100 & Stop loss (S): 1900 \\
-\emph{G × E} & & \emph{Q plus or minus R} \\
-Volatility scalar (J) & 9.46 & \\
-\emph{A ÷ I} & & \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.40\textwidth}*{2}{R}@{}}
-\toprule
 & S\&P 500（已有） & S\&P 500（新增） \\
 \midrule
+Daily volatility target (A) & £948 & Forecast (K): 25 \\
 日波动率目标 (A) & £948 & 预测值 (K): 25 \\
+Price (B) & 1980 & Subsystem position (L): 23.7 \\
 价格 (B) & 1980 & 子系统仓位 (L): 23.7 \\
 \emph{K × J ÷ 10} & & \\
+\emph{K × J ÷ 10} & & \\
+Bet size, per point (C) & £5 & Instrument weight (M): 25\% \\
 每点下注额 (C) & £5 & 品种权重 (M): 25\% \\
+FX (D) & 1 & Instrument diversification multiplier (N): 1.33 \\
 汇率 (D) & 1 & 品种分散化乘数 (N): 1.33 \\
+Block value (E) & £99 & Portfolio instrument position (O): 7.88 \\
 单位价值 (E) & £99 & 投资组合品种仓位 (O): 7.88 \\
 \emph{C × B ÷ 100} & & \emph{L × M × N} \\
+\emph{C × B ÷ 100} & & \emph{L × M × N} \\
+Price volatility, points (F) & 20 & Rounded target position, and trade (P = round O): 8 \\
 价格波动率，点数 (F) & 20 & 四舍五入后的目标仓位与交易 (P = round O): 8 \\
+Price volatility, \% (G) & 1.01 & Entry price (Q): 1980 \\
 价格波动率，\% (G) & 1.01 & 入场价格 (Q): 1980 \\
 \emph{F ÷ B} & & \\
+\emph{F ÷ B} & & \\
+Instrument currency volatility (H) & £100 & Stop loss offset (R): 80 \\
 品种货币波动率 (H) & £100 & 止损偏移量 (R): 80 \\
 \emph{F × X with X = 4} & & \\
+\emph{F × X with X = 4} & & \\
+Instrument value volatility (I) & £100 & Stop loss (S): 1900 \\
 品种价值波动率 (I) & £100 & 止损位 (S): 1900 \\
 \emph{G × E} & & \emph{Q plus or minus R} \\
+\emph{G × E} & & \emph{Q plus or minus R} \\
+Volatility scalar (J) & 9.46 & \\
 波动率缩放因子 (J) & 9.46 & \\
+\emph{A ÷ I} & & \\
 \emph{A ÷ I} & & \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-I go long another eight £5 a point blocks of S\&P 500. Because we're trading at a recent high this has the same stop level as my existing bet.
+\begin{englishblock} I go long another eight £5 a point blocks of S\&P 500. Because we're trading at a recent high this has the same stop level as my existing bet. \end{englishblock}
 
-于是，我又加了一笔 S\&P 500 多头，规模是 8 个每点 £5 的单位。由于此时市场正处于近期高位，所以这笔新下注的止损位与我原先那笔下注相同。
+\begin{chineseblock}于是，我又加了一笔 S\&P 500 多头，规模是 8 个每点 £5 的单位。由于此时市场正处于近期高位，所以这笔新下注的止损位与我原先那笔下注相同。\end{chineseblock}
 
-\subsection*{4 November 2014}
-\bisubsectiontitle{2014 年 11 月 4 日}
+\bilingualsubsection{4 November 2014}{2014 年 11 月 4 日}
 
-Sadly my long in crude is now closed.
+\begin{englishblock} Sadly my long in crude is now closed. \end{englishblock}
 
-遗憾的是，我的原油多头现在已经被平掉了。
+\begin{chineseblock}遗憾的是，我的原油多头现在已经被平掉了。\end{chineseblock}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{4}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.36\textwidth}*{4}{R}@{}}
 \toprule
 & Crude & S\&P 500 (1) & S\&P 500 (2) & Euro Stoxx \\
-\midrule
-Forecast & 10 & 15 & 25 & -10 \\
-Entry price & 83 & 1880 & 1980 & 2900 \\
-Current price & 78.7 & 2018 & 2018 & 3034 \\
-High (Low) since entry (T) & 83 & 2018 & 2018 & (2900) \\
-Stop loss (S = T plus or minus R) & 79 & 1938 & 1938 & 3100 \\
-Current position, blocks & 31 & 5 & 8 & -6 \\
-Gain (Loss) & (£1,333) & £3,450 & £1,520 & (£804) \\
-Portfolio instrument position, blocks (O) & 0.0 (Hit stop loss) & 4.81 & 8.01 & -6.43 \\
-Rounded target position, blocks (P) & 0 & 5 & 8 & -6 \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{4}{R}@{}}
-\toprule
 & 原油 & S\&P 500（1） & S\&P 500（2） & Euro Stoxx \\
 \midrule
+Forecast & 10 & 15 & 25 & -10 \\
 预测值 & 10 & 15 & 25 & -10 \\
+Entry price & 83 & 1880 & 1980 & 2900 \\
 入场价格 & 83 & 1880 & 1980 & 2900 \\
+Current price & 78.7 & 2018 & 2018 & 3034 \\
 当前价格 & 78.7 & 2018 & 2018 & 3034 \\
+High (Low) since entry (T) & 83 & 2018 & 2018 & (2900) \\
 自入场以来最高（最低）价 (T) & 83 & 2018 & 2018 & (2900) \\
+Stop loss (S = T plus or minus R) & 79 & 1938 & 1938 & 3100 \\
 止损位 (S = T plus or minus R) & 79 & 1938 & 1938 & 3100 \\
+Current position, blocks & 31 & 5 & 8 & -6 \\
 当前仓位，单位 & 31 & 5 & 8 & -6 \\
+Gain (Loss) & (£1,333) & £3,450 & £1,520 & (£804) \\
 盈亏 & (£1,333) & £3,450 & £1,520 & (£804) \\
+Portfolio instrument position, blocks (O) & 0.0 (Hit stop loss) & 4.81 & 8.01 & -6.43 \\
 投资组合品种仓位，单位 (O) & 0.0（触发止损） & 4.81 & 8.01 & -6.43 \\
+Rounded target position, blocks (P) & 0 & 5 & 8 & -6 \\
 四舍五入后的目标仓位，单位 (P) & 0 & 5 & 8 & -6 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-The net gain is £2,833, so trading capital is up to £102,833 and daily volatility target is £964. Again price volatility hasn't changed significantly on any instrument. Apart from closing crude there are no adjustment trades needed. I'm tempted to take profits on my only profitable trade, the S\&P 500 longs, but I can't because it isn't part of the system!
+\begin{englishblock} The net gain is £2,833, so trading capital is up to £102,833 and daily volatility target is £964. Again price volatility hasn't changed significantly on any instrument. Apart from closing crude there are no adjustment trades needed. I'm tempted to take profits on my only profitable trade, the S\&P 500 longs, but I can't because it isn't part of the system! \end{englishblock}
 
-我的累计净利润现在是 £2,833，因此交易资本上升到了 £102,833，而日波动率目标则变成 £964。与前面一样，各个品种的价格波动率并没有显著变化。
-除了把原油头寸止损平掉之外，不需要做任何额外调整交易。我非常想把目前唯一真正赚钱的那笔交易
---- S\&P 500 多头
---- 先落袋为安，但我不能这么做，因为这不属于系统允许的行为！
+\begin{chineseblock}我的累计净利润现在是 £2,833，因此交易资本上升到了 £102,833，而日波动率目标则变成 £964。与前面一样，各个品种的价格波动率并没有显著变化。除了把原油头寸止损平掉之外，不需要做任何额外调整交易。我非常想把目前唯一真正赚钱的那笔交易--- S\&P 500 多头--- 先落袋为安，但我不能这么做，因为这不属于系统允许的行为！\end{chineseblock}
 
-\subsection*{13 November 2014}
-\bisubsectiontitle{2014 年 11 月 13 日}
+\bilingualsubsection{13 November 2014}{2014 年 11 月 13 日}
 
-I decide, belatedly, to short crude at \$75 with a forecast of -10 which corresponds to a position of short 32 blocks with a stop of \$79.
+\begin{englishblock} I decide, belatedly, to short crude at \$75 with a forecast of -10 which corresponds to a position of short 32 blocks with a stop of \$79. \end{englishblock}
 
-我有些迟疑地决定在 \$75 的位置做空原油，给出的预测值是 -10，对应的仓位是做空 32 个单位，止损位设在 \$79。
+\begin{chineseblock}我有些迟疑地决定在 \$75 的位置做空原油，给出的预测值是 -10，对应的仓位是做空 32 个单位，止损位设在 \$79。 \end{chineseblock}
 
-\subsection*{21 November 2014}
-\bisubsectiontitle{2014 年 11 月 21 日}
+\bilingualsubsection{21 November 2014}{2014 年 11 月 21 日}
 
-Ouch! Euro Stoxx has also bitten the dust.
+\begin{englishblock} Ouch! Euro Stoxx has also bitten the dust. \end{englishblock}
 
-糟了！Euro Stoxx 这笔交易也倒下了。
+\begin{chineseblock}糟了！Euro Stoxx 这笔交易也倒下了。\end{chineseblock}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{4}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.36\textwidth}*{4}{R}@{}}
 \toprule
 & Crude (2) & S\&P 500 (1) & S\&P 500 (2) & Euro Stoxx \\
-\midrule
-Forecast & -10 & 15 & 25 & -10 \\
-Entry price & 75 & 1880 & 1980 & 2900 \\
-Current price & 76 & 2063 & 2063 & 3130 \\
-High (Low) since entry (T) & (75) & 2063 & 2063 & (2900) \\
-Stop loss (S = T plus or minus R) & 79 & 1983 & 1983 & 3100 \\
-Position & -32 & 5 & 8 & -6 \\
-Gain (Loss) & (£320) & £4,575 & £3,320 & (£1,380) \\
-Portfolio instrument position, blocks (O) & -32.8 & 4.9 & 8.2 & 0.0 Hit stop \\
-Rounded target position, blocks (P) & -33 & 5 & 8 & 0 \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{4}{R}@{}}
-\toprule
 & 原油（2） & S\&P 500（1） & S\&P 500（2） & Euro Stoxx \\
 \midrule
+Forecast & -10 & 15 & 25 & -10 \\
 预测值 & -10 & 15 & 25 & -10 \\
+Entry price & 75 & 1880 & 1980 & 2900 \\
 入场价格 & 75 & 1880 & 1980 & 2900 \\
+Current price & 76 & 2063 & 2063 & 3130 \\
 当前价格 & 76 & 2063 & 2063 & 3130 \\
+High (Low) since entry (T) & (75) & 2063 & 2063 & (2900) \\
 自入场以来最高（最低）价 (T) & (75) & 2063 & 2063 & (2900) \\
+Stop loss (S = T plus or minus R) & 79 & 1983 & 1983 & 3100 \\
 止损位 (S = T plus or minus R) & 79 & 1983 & 1983 & 3100 \\
+Position & -32 & 5 & 8 & -6 \\
 仓位 & -32 & 5 & 8 & -6 \\
+Gain (Loss) & (£320) & £4,575 & £3,320 & (£1,380) \\
 盈亏 & (£320) & £4,575 & £3,320 & (£1,380) \\
+Portfolio instrument position, blocks (O) & -32.8 & 4.9 & 8.2 & 0.0 Hit stop \\
 投资组合品种仓位，单位 (O) & -32.8 & 4.9 & 8.2 & 0.0 触发止损 \\
+Rounded target position, blocks (P) & -33 & 5 & 8 & 0 \\
 四舍五入后的目标仓位，单位 (P) & -33 & 5 & 8 & 0 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-My accumulated profit is £4,862. If I wasn't trading systematically I'd also be tempted to cut my oil short, as I don't seem to be calling crude very well.
+\begin{englishblock} My accumulated profit is £4,862. If I wasn't trading systematically I'd also be tempted to cut my oil short, as I don't seem to be calling crude very well. \end{englishblock}
 
-我的累计利润现在是 £4,862。如果我不是按系统化方式在交易，那么此刻我也会很想把原油空头砍掉，因为我似乎一直都没把原油看准。
+\begin{chineseblock}我的累计利润现在是 £4,862。如果我不是按系统化方式在交易，那么此刻我也会很想把原油空头砍掉，因为我似乎一直都没把原油看准。\end{chineseblock}
 
-\subsection*{28 November 2014}
-\bisubsectiontitle{2014 年 11 月 28 日}
+\bilingualsubsection{28 November 2014}{2014 年 11 月 28 日}
 
-My crude oil is finally paying off -- crude drops \$5 in one day! The current price volatility of \$1 per day for crude now looks too low, so I'm going to double it to \$2. I'm up £7,682 in accumulated profits, so the daily volatility target is £1,010.
+\begin{englishblock} My crude oil is finally paying off -- crude drops \$5 in one day! The current price volatility of \$1 per day for crude now looks too low, so I'm going to double it to \$2. I'm up £7,682 in accumulated profits, so the daily volatility target is £1,010. \end{englishblock}
 
-我的原油空头终于开始赚钱了
---- 原油一天之内下跌了 \$5！现在看来，原本把原油的日价格波动率估成 \$1 已经太低了，因此我决定把它加倍上调到 \$2。
-我的累计利润现在达到 £7,682，所以日波动率目标也升到了 £1,010。
+\begin{chineseblock}我的原油空头终于开始赚钱了--- 原油一天之内下跌了 \$5！现在看来，原本把原油的日价格波动率估成 \$1 已经太低了，因此我决定把它加倍上调到 \$2。我的累计利润现在达到 £7,682，所以日波动率目标也升到了 £1,010。 \end{chineseblock}
 
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
+\begin{bilingualtableblock} \noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.36\textwidth}*{3}{R}@{}}
 \toprule
 & Crude (2) & S\&P 500 (1) & S\&P 500 (2) \\
-\midrule
-Daily volatility target (A) & £1,010 & £1,010 & £1,010 \\
-Forecast & -10 & 15 & 25 \\
-Entry price & 75 & 1880 & 1980 \\
-Current price & 68 & 2067 & 2067 \\
-Price volatility, points (F) & 2 & 20 & 20 \\
-Stop loss offset (R) & 8 & 80 & 80 \\
-\emph{F × X with X = 4} & & & \\
-High (Low) since entry (T) & (68) & 2067 & 2067 \\
-Stop loss (S) & 76 & 1987 & 1987 \\
-\emph{T plus or minus R} & & & \\
-Position, blocks & -32 & 5 & 8 \\
-Gain / Loss £ & £2,240 & £4,675 & £3,480 \\
-Instrument value volatility (I) & £20 & £100 & £100 \\
-Volatility scalar (J) & 50.5 & 10.1 & 10.1 \\
-\emph{A ÷ I} & & & \\
-Portfolio instrument position, blocks (O) & -16.8 & 5.05 & 8.41 \\
-Rounded target position, blocks (P) & -17 & 5 & 8 \\
-Trade & Buy 15 & No & No \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.36\textwidth}*{3}{R}@{}}
-\toprule
 & 原油（2） & S\&P 500（1） & S\&P 500（2） \\
 \midrule
+Daily volatility target (A) & £1,010 & £1,010 & £1,010 \\
 日波动率目标 (A) & £1,010 & £1,010 & £1,010 \\
+Forecast & -10 & 15 & 25 \\
 预测值 & -10 & 15 & 25 \\
+Entry price & 75 & 1880 & 1980 \\
 入场价格 & 75 & 1880 & 1980 \\
+Current price & 68 & 2067 & 2067 \\
 当前价格 & 68 & 2067 & 2067 \\
+Price volatility, points (F) & 2 & 20 & 20 \\
 价格波动率，点数 (F) & 2 & 20 & 20 \\
+Stop loss offset (R) & 8 & 80 & 80 \\
 止损偏移量 (R) & 8 & 80 & 80 \\
 \emph{F × X with X = 4} & & & \\
+\emph{F × X with X = 4} & & & \\
+High (Low) since entry (T) & (68) & 2067 & 2067 \\
 自入场以来最高（最低）价 (T) & (68) & 2067 & 2067 \\
+Stop loss (S) & 76 & 1987 & 1987 \\
 止损位 (S) & 76 & 1987 & 1987 \\
 \emph{T plus or minus R} & & & \\
+\emph{T plus or minus R} & & & \\
+Position, blocks & -32 & 5 & 8 \\
 仓位，单位 & -32 & 5 & 8 \\
+Gain / Loss £ & £2,240 & £4,675 & £3,480 \\
 盈亏 £ & £2,240 & £4,675 & £3,480 \\
+Instrument value volatility (I) & £20 & £100 & £100 \\
 品种价值波动率 (I) & £20 & £100 & £100 \\
+Volatility scalar (J) & 50.5 & 10.1 & 10.1 \\
 波动率缩放因子 (J) & 50.5 & 10.1 & 10.1 \\
 \emph{A ÷ I} & & & \\
+\emph{A ÷ I} & & & \\
+Portfolio instrument position, blocks (O) & -16.8 & 5.05 & 8.41 \\
 投资组合品种仓位，单位 (O) & -16.8 & 5.05 & 8.41 \\
+Rounded target position, blocks (P) & -17 & 5 & 8 \\
 四舍五入后的目标仓位，单位 (P) & -17 & 5 & 8 \\
+Trade & Buy 15 & No & No \\
 交易 & 买入 15 & 无 & 无 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-I have to reduce my crude bet and buy 15 blocks of crude to get to my target position. Primarily because of the change in price volatility the current position was more than 10\% away from the desired rounded portfolio instrument position. Note the stop loss gap in crude is also doubled to 4 × \$2 = \$8, which is added to the new low of \$68 to give a stop level of \$76, but my position is virtually halved so I have the same amount of capital at risk on this bet.
+\begin{englishblock} I have to reduce my crude bet and buy 15 blocks of crude to get to my target position. Primarily because of the change in price volatility the current position was more than 10\% away from the desired rounded portfolio instrument position. Note the stop loss gap in crude is also doubled to 4 × \$2 = \$8, which is added to the new low of \$68 to give a stop level of \$76, but my position is virtually halved so I have the same amount of capital at risk on this bet. \end{englishblock}
 
-我必须缩减原油空头，并买回 15 个单位的原油，才能回到系统所要求的目标仓位。主要原因是，随着价格波动率发生变化，
-当前仓位已经偏离了目标四舍五入后的投资组合仓位 10\% 以上。请注意，原油的止损间距也被加倍放大到 4 × \$2 = \$8，
-它会加到新的低点 \$68 上，从而得到新的止损位 \$76；但与此同时，我的仓位几乎减半，因此这笔下注所承担的资本风险总额其实保持不变。
+\begin{chineseblock}我必须缩减原油空头，并买回 15 个单位的原油，才能回到系统所要求的目标仓位。主要原因是，随着价格波动率发生变化，当前仓位已经偏离了目标四舍五入后的投资组合仓位 10\% 以上。请注意，原油的止损间距也被加倍放大到 4 × \$2 = \$8，它会加到新的低点 \$68 上，从而得到新的止损位 \$76；但与此同时，我的仓位几乎减半，因此这笔下注所承担的资本风险总额其实保持不变。\end{chineseblock}
 
-Although this looks like taking profits it is not; the system is trading automatically to keep the amount of capital at risk constant. If I hadn't adjusted the stop then the expected holding period of my bet would have shortened. Because I've adjusted the stop I also need to cut the position, or I'll have increased the risk on the trade.
+\bipairgap
 
-虽然这看起来有点像是在止盈，但其实并不是；系统只是自动地在交易，以确保暴露在风险中的资本金额保持恒定。如果我不调整止损位，
-那么这笔下注的预期持有周期就会缩短。而既然我已经调整了止损位，我也就必须相应缩减仓位，否则这笔交易承担的风险就会被人为放大。
+\begin{englishblock} Although this looks like taking profits it is not; the system is trading automatically to keep the amount of capital at risk constant. If I hadn't adjusted the stop then the expected holding period of my bet would have shortened. Because I've adjusted the stop I also need to cut the position, or I'll have increased the risk on the trade. \end{englishblock}
 
-This feels like a good place to stop this diary as I've shown most of the system's most interesting features. Notice how the system went against my natural instincts when I wanted to close trades too early, or let losses run. Hopefully this should show you the benefits of rigorously sticking to a position management framework once you've designed it.
+\begin{chineseblock}虽然这看起来有点像是在止盈，但其实并不是；系统只是自动地在交易，以确保暴露在风险中的资本金额保持恒定。如果我不调整止损位，那么这笔下注的预期持有周期就会缩短。而既然我已经调整了止损位，我也就必须相应缩减仓位，否则这笔交易承担的风险就会被人为放大。\end{chineseblock}
 
-到这里结束这份交易日记，感觉已经相当合适了，因为我已经展示了这套系统最有意思的大部分特征。请注意，当我本能地想要过早平仓、
-或者死扛亏损时，系统是如何与我的自然冲动对着干的。希望这能让你看到：一旦你设计好一套仓位管理框架，严格坚持它究竟能带来多大好处。
+\bipairgap
+
+\begin{englishblock} This feels like a good place to stop this diary as I've shown most of the system's most interesting features. Notice how the system went against my natural instincts when I wanted to close trades too early, or let losses run. Hopefully this should show you the benefits of rigorously sticking to a position management framework once you've designed it. \end{englishblock}
+
+\begin{chineseblock}到这里结束这份交易日记，感觉已经相当合适了，因为我已经展示了这套系统最有意思的大部分特征。请注意，当我本能地想要过早平仓、或者死扛亏损时，系统是如何与我的自然冲动对着干的。希望这能让你看到：一旦你设计好一套仓位管理框架，严格坚持它究竟能带来多大好处。\end{chineseblock}

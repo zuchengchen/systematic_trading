@@ -1,22 +1,18 @@
 \chapter{Framework Details}
 
-\section*{Rescaling forecasts}
-\phantomsection
-\addcontentsline{toc}{section}{Rescaling forecasts}
+\section*{Rescaling forecasts} \phantomsection \addcontentsline{toc}{section}{Rescaling forecasts}
 
-I F YOU'RE GOING TO CREATE YOUR OWN TRADING RULES YOU NEED to rescale them, so that the average absolute value of the forecast is around 10. To do this you need to run a back-test of the trading strategy, although you only require forecast values and you don't need to check performance. You should also average across as many instruments as possible. From the back-test you should measure the average absolute value of forecast values from a back-test, or at least eyeball them to estimate the average absolute forecast. These values should be roughly similar across instruments and long periods of time, otherwise your trading rule could be badly specified and not properly volatility normalised. Once you have the average absolute value then you should divide it into 10. The result is the trading rule's forecast scalar. So for example if the average absolute value was 0.3 then the scalar would be 10 ÷ 0.3 = 33.33.
+I F YOU'RE GOING TO CREATE YOUR OWN TRADING RULES YOU NEED to rescale them, so that the average absolute value of the forecast is around 10. To do this you need to run a \textbf{back-test} of the trading strategy, although you only require forecast values and you don't need to check performance. You should also average across as many instruments as possible. From the back-test you should measure the average absolute value of forecast values from a back-test, or at least eyeball them to estimate the average absolute forecast. These values should be roughly similar across instruments and long periods of time, otherwise your trading rule could be badly specified and not properly \textbf{volatility normalised}. Once you have the average absolute value then you should divide it into 10. The result is the trading rule's \textbf{forecast scalar}. So for example if the average absolute value was 0.3 then the scalar would be 10 ÷ 0.3 = 33.33.
 
-\section*{Calculation of diversification multiplier}
-\phantomsection
-\addcontentsline{toc}{section}{Calculation of diversification multiplier}
+\section*{Calculation of diversification multiplier} \phantomsection \addcontentsline{toc}{section}{Calculation of diversification multiplier}
 
 \subsection*{Forecast diversification multiplier}
 
-Given N trading rule variations with a correlation matrix of forecast values H and forecast weights W summing to 1, the diversification multiplier will be 1 ÷ [√(W × H × WT)].\footnote{‘T' is the transposition operator.} Any negative correlations should be floored at zero before the calculation is done, to avoid dangerously inflating the multiplier.
+Given N \textbf{trading rule variations} with a \textbf{correlation} matrix of forecast values H and \textbf{forecast weights} W summing to 1, the diversification multiplier will be \(\frac{1}{\sqrt{W \times H \times W^T}}\).\footnote{‘T' is the transposition operator.} Any negative correlations should be floored at zero before the calculation is done, to avoid dangerously inflating the multiplier.
 
 \subsection*{Instrument diversification multiplier}
 
-Given N trading subsystems with a correlation matrix of returns H and instrument weights W summing to 1, the diversification multiplier will be 1 ÷ [√(W × H × WT)].\footnote{‘T' is the transposition operator.} Any negative correlations should be floored at zero before the calculation is done, to avoid dangerously inflating the multiplier.
+Given N \textbf{trading subsystems} with a correlation matrix of returns H and \textbf{instrument weights} W summing to 1, the diversification multiplier will be \(\frac{1}{\sqrt{W \times H \times W^T}}\).\footnote{‘T' is the transposition operator.} Any negative correlations should be floored at zero before the calculation is done, to avoid dangerously inflating the multiplier.
 
 \subsection*{Spreadsheet example (for either application)}
 
@@ -26,9 +22,7 @@ For a three asset portfolio, if the correlation matrix is in cells A1:C3 and the
 \ttfamily\detokenize{1/SQRT(MMULT(TRANSPOSE(F1:F3), MMULT(A1:C3,F1:F3)))}
 \end{quote}
 
-\section*{Calculating price volatility from historic data}
-\phantomsection
-\addcontentsline{toc}{section}{Calculating price volatility from historic data}
+\section*{Calculating price volatility from historic data} \phantomsection \addcontentsline{toc}{section}{Calculating price volatility from historic data}
 
 In a spreadsheet package, assuming that the column A contains daily prices, then you first populate column B with percentage returns:
 
@@ -36,28 +30,19 @@ In a spreadsheet package, assuming that the column A contains daily prices, then
 \ttfamily\detokenize{B2 = (A2 - A1) / A1, B3 = (A3 - A2) / A2, ...}
 \end{quote}
 
-You can then calculate the price volatility from row 26 onwards, using the default of a
-25 day moving average:
+You can then calculate the price volatility from row 26 onwards, using the default of a 25 day moving average:
 
 \begin{quote}
 \ttfamily\detokenize{C26 = STDEV(B2:B26), C27 = STDEV(B3:B27), ...}
 \end{quote}
 
-The alternative is to use an exponentially weighted moving average (EWMA) of
-volatility. In general for some variable X if you have yesterday's EWMA Et-1 then today's
+The alternative is to use an \textbf{exponentially weighted moving average (EWMA)} of volatility. In general for some variable X if you have yesterday's EWMA Et-1 then today's
 
 EWMA given a smoothing parameter A is:
 
-\[
-E_t = (A \times X_t) + \left[E_{t-1}(1-A)\right]
-\]
+\[E_t = (A \times X_t) + \left[E_{t-1}(1-A)\right] \]
 
-First of all you need to calculate the A parameter, based on your volatility look-back,
-using the formula A = 2 ÷ (1 + L). For my suggested default look-back of 36 days,
-equivalent to a simple moving average of 25 days, we get A = 0.054.\footnote{This is set
-to give the same half-life as the default look-back of 25 days for a standard moving
-average.} Assuming you've put 0.054 into cell AA1, and the returns are in column B, in
-column C we get the squared returns:
+First of all you need to calculate the A parameter, based on your \textbf{volatility look-back}, using the formula A = 2 ÷ (1 + L). For my suggested default look-back of 36 days, equivalent to a simple moving average of 25 days, we get A = 0.054.\footnote{This is set to give the same half-life as the default look-back of 25 days for a standard moving average.} Assuming you've put 0.054 into cell AA1, and the returns are in column B, in column C we get the squared returns:
 
 \begin{quote}
 \ttfamily\detokenize{C2 = B2 ^ 2, C3 = B3 ^ 2, ...}
@@ -72,9 +57,7 @@ You set your first estimate of the variance equal to the first square return:
 After that you set the estimate recursively based on your smoothing parameter:
 
 \begin{quote}
-\ttfamily\detokenize{D3 = C3 * AA1 + ((1 - AA1) * D2)}
-
-\ttfamily\detokenize{D4 = C4 * AA1 + ((1 - AA1) * D3) ...}
+\ttfamily\detokenize{D3 = C3 * AA1 + ((1 - AA1) * D2)} \ttfamily\detokenize{D4 = C4 * AA1 + ((1 - AA1) * D3) ...}
 \end{quote}
 
 \subsection*{Finally the actual volatility is the square root:}

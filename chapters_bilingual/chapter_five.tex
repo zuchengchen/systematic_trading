@@ -1,181 +1,122 @@
-\chapter{Framework Overview}
-\bichaptertitle{框架概览}
+\bilingualchapter{Framework Overview}{框架概览}
 
-NOW YOU HAVE SOME THEORY AND PERHAPS A FEW QUANTITATIVE tools at your disposal you are ready to begin creating trading systems. In part three of this book I am going to describe a framework which will provide you with a template for the creation of almost any kind of strategy.
+\begin{englishblock} NOW YOU HAVE SOME THEORY AND PERHAPS A FEW QUANTITATIVE tools at your disposal you are ready to begin creating trading systems. In part three of this book I am going to describe a framework which will provide you with a template for the creation of almost any kind of strategy. \end{englishblock}
 
-现在你已经掌握了一些理论，也许手头还有几样定量工具，因此你已经准备好开始创建交易系统了。在本书第三部分中，我将介绍一个框架，它会为你提供一个模板，
-帮助你构建几乎任何类型的策略。
+\begin{chineseblock}现在你已经掌握了一些理论，也许手头还有几样定量工具，因此你已经准备好开始创建交易系统了。在本书第三部分中，我将介绍一个框架，它会为你提供一个模板，帮助你构建几乎任何类型的策略。\end{chineseblock}
 
-\section*{Chapter overview}
-\phantomsection
-\addcontentsline{toc}{section}{Chapter overview}
-\bisectiontitle{本章概览}
+\bilingualsection{Chapter overview}{本章概览}
 
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
-\textbf{A bad example} & A trading system with some fatal flaws. \\
-\textbf{Why use a modular framework} & The reasons why a modular framework makes sense for systematic trading strategies. \\
-\textbf{The elements of the framework} & A brief road map of the various components in the framework. \\
-\textbf{The following chapters in part three will describe each component in more detail. In the final part of the book I’ll show three examples of how this framework can be used, for semi-automatic traders, asset allocating investors and staunch systems traders.} &  \\
-\end{tabularx}
+\begin{bilingualtableblock} \begin{tabularx}{\textwidth}{@{} L{0.30\textwidth} Y@{}}\textbf{A bad example} & A trading system with some fatal flaws. \\
 
-\medskip
-
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
 \textbf{一个糟糕的例子} & 一套带有若干致命缺陷的交易系统。 \\
+\textbf{Why use a modular framework} & The reasons why a modular framework makes sense for systematic trading strategies. \\
 \textbf{为什么要使用模块化框架} & 模块化框架为何适用于系统化交易策略。 \\
+\textbf{The elements of the framework} & A brief road map of the various components in the framework. \\
 \textbf{框架的各个要素} & 对框架中不同组成部分的一张简明路线图。 \\
-\textbf{第三部分后续各章会更详细地介绍每一个组成部分。在本书最后一部分中，我会展示三个例子， 说明这一框架如何分别用于半自动交易者、资产配置型投资者以及坚定的系统化交易者。} &  \\
+\multicolumn{2}{@{} L{\textwidth}@{}}{\textbf{The following chapters in part three will describe each component in more detail. In the final part of the book I’ll show three examples of how this framework can be used, for semi-automatic traders, asset allocating investors and staunch systems traders.}} \\
+\multicolumn{2}{@{} L{\textwidth}@{}}{\textbf{第三部分后续各章会更详细地介绍每一个组成部分。在本书最后一部分中，我会展示三个例子，说明这一框架如何分别用于半自动交易者、资产配置型投资者以及坚定的系统化交易者。}} \\
 \end{tabularx}
+\end{bilingualtableblock}
 
-\section*{A bad example}
-\phantomsection
-\addcontentsline{toc}{section}{A bad example}
-\bisectiontitle{一个糟糕的例子}
+\bilingualsection{A bad example}{一个糟糕的例子}
 
 \begin{enumerate}
-  \item This is a hypothetical example and as far as I know isn't identical to any publicly available system. Here's an example of the kind of trading system you find in many books and websites.69
-\end{enumerate}
+\item This is a hypothetical example and as far as I know isn't identical to any publicly available system. Here's an example of the kind of trading system you find in many books and websites.69 \end{enumerate}
 
 \begin{enumerate}
-  \item 这是一个假设性的例子，而且据我所知，它并不与任何公开可见的系统完全相同。下面这个例子展示了许多书籍和网站中常见的那类交易系统。69
-\end{enumerate}
+\item 这是一个假设性的例子，而且据我所知，它并不与任何公开可见的系统完全相同。下面这个例子展示了许多书籍和网站中常见的那类交易系统。69 \end{enumerate}
 
-Entry rule Buy when the 20 day moving average rises over the 40 day, and vice versa.
+\begin{englishblock} Entry rule Buy when the 20 day moving average rises over the 40 day, and vice versa. \end{englishblock}
 
-入场规则 当 20 日移动平均线上穿 40 日均线时买入；反之亦然。
+\begin{chineseblock}入场规则 当 20 日移动平均线上穿 40 日均线时买入；反之亦然。\end{chineseblock}
 
-Exit rule Reverse when the entry rule is broken, so if you are long close when the 20 day moving average falls behind the 40 day and go short.
+\bipairgap
 
-离场规则 当入场规则被破坏时反向操作。因此，如果你当前持有多头，当 20 日均线跌破 40 日均线时就平多并做空。
+\begin{englishblock} Exit rule Reverse when the entry rule is broken, so if you are long close when the 20 day moving average falls behind the 40 day and go short. \end{englishblock}
 
-Position size Never trade more than 10 Eurodollar futures, 1 FTSE contract or £10 per spread bet point.
+\begin{chineseblock}离场规则 当入场规则被破坏时反向操作。因此，如果你当前持有多头，当 20 日均线跌破 40 日均线时就平多并做空。\end{chineseblock}
 
-仓位规模 每次交易最多不超过 10 手欧元美元期货、1 手 FTSE 合约，或点差投注每点 10 英镑。
+\bipairgap
 
-Money management Never bet more than 3\% of your capital on each trade.
+\begin{englishblock} Position size Never trade more than 10 Eurodollar futures, 1 FTSE contract or £10 per spread bet point. \end{englishblock}
 
-资金管理 每笔交易下注金额不要超过你资金的 3\%。
+\begin{chineseblock}仓位规模 每次交易最多不超过 10 手欧元美元期货、1 手 FTSE 合约，或点差投注每点 10 英镑。\end{chineseblock}
 
-Stop loss Set a trailing stop to close once you have lost 3\% of your capital. If you find yourself triggering stops too frequently, then widen them.
+\bipairgap
 
-止损 设置一个跟踪止损；一旦亏损达到你资金的 3\%，就平仓。如果你发现自己触发止损过于频繁，那就把止损放宽。
+\begin{englishblock} Money management Never bet more than 3\% of your capital on each trade. \end{englishblock}
 
-I am not going to discuss the entry or exit rule.70 However the position sizing, money management and stop loss are a mess. Firstly why 3\%? Will this generate the right amount of risk? What if I'm particularly conservative, should I still use 3\%? If I don't like a particular trade that much, what should I bet? I typically have 40 positions in my portfolio, so should I be putting 40 lots of 3\% of my portfolio at risk at any one time (meaning 120\% of my total portfolio is at risk)? Does 3\% make sense if I am using a slower trading rule? The position sizes above might make sense for someone with an account size of perhaps £50,000 and a certain risk appetite, but what about everyone else? They might be correct when the book was written, but are they still right when we read it five years later? What about an instrument that isn't listed, can we trade it? How? Finally, setting a stop loss based solely on your capital and personal pain threshold is incorrect.71 Someone with a tiny account who hated losing money would be triggering their very tight stops after a few minutes, whilst a large hedge fund might close a losing position after decades. Stops that would make sense in oil futures would be completely wrong in the relatively quiet USD/CAD FX market. A stop that was correct in the peaceful calm of 2006 would be absurdly tight in the insanity we saw in 2008. The solution is to separate out the components of your system: trading rules (including explicit or implicit stop losses), position sizing, and the calculation of your volatility
+\begin{chineseblock}资金管理 每笔交易下注金额不要超过你资金的 3\%。 \end{chineseblock}
 
-我不会讨论这套系统的入场规则或离场规则。70 但它的仓位规模、资金管理和止损设置是一团糟。首先，为什么是 3\%？这会产生正确的风险水平吗？
-如果我是一个特别保守的人，我也还应该用 3\% 吗？如果我并不那么喜欢某一笔交易，那我又该下多少注？我的投资组合里通常有 40 个头寸，
-那么我是否应该在任何时点都让 40 份 3\% 的仓位同时暴露于风险中
-（也就是总共有 120\% 的投资组合暴露在风险中）？如果我使用的是一条更慢的交易规则，3\% 这个数值还有意义吗？
-上面那些仓位规模，也许适用于某个账户规模大约为 50,000 英镑、同时具有特定风险偏好的人，但其他人怎么办？
-这些数值在本书写作时可能是合理的，但当我们五年后读到这本书时，它们还合理吗？如果某个品种不在清单里，我们还能交易它吗？该怎么交易？
-最后，仅仅基于你的资金规模和个人痛苦阈值来设置止损，本身就是错误的。71 一个账户很小、又特别讨厌亏钱的人，可能几分钟后就会被极窄的止损扫出去；
-而一家大型对冲基金则可能要等上几十年才会平掉一笔亏损头寸。对原油期货来说合理的止损，放到相对平静的美元/加元外汇市场里就会完全不合适。
-在 2006 年那种平静环境下合理的止损，到了我们在 2008 年看到的疯狂市场里，就会变得荒谬地紧。解决办法，是把你的系统拆分为不同组件：
-交易规则（包括显式或隐式止损）、仓位规模，以及你的波动率目标
+\bipairgap
 
-\begin{enumerate}
-  \item The rules aren't too bad, as they are purely systematic and very simple. However they are binary (you're either fully in or out) which isn't ideal, and having only one trading rule variation is also less than perfect.
-  \item This is recognised by most good traders. Here is Jack Schwager, in Hedge Fund Wizards, interviewing hedge fund manager Colm O'Shea: Jack: "So you don't use stops?" Colm: "No I do. I just set them wide enough. In those early days I wasn't setting stops at levels that made sense on the underlying hypothesis of the trade. I was setting stops based on my pain threshold. When I get out of a trade now it is because I was wrong. ... Prices are inconsistent with my hypothesis. I'm wrong and I need to get out and rethink the situation." (My emphasis.)
-\end{enumerate}
+\begin{englishblock} Stop loss Set a trailing stop to close once you have lost 3\% of your capital. If you find yourself triggering stops too frequently, then widen them. \end{englishblock}
+
+\begin{chineseblock}止损 设置一个跟踪止损；一旦亏损达到你资金的 3\%，就平仓。如果你发现自己触发止损过于频繁，那就把止损放宽。\end{chineseblock}
+
+\bipairgap
+
+\begin{englishblock} I am not going to discuss the entry or exit rule.70 However the position sizing, money management and stop loss are a mess. Firstly why 3\%? Will this generate the right amount of risk? What if I'm particularly conservative, should I still use 3\%? If I don't like a particular trade that much, what should I bet? I typically have 40 positions in my portfolio, so should I be putting 40 lots of 3\% of my portfolio at risk at any one time (meaning 120\% of my total portfolio is at risk)? Does 3\% make sense if I am using a slower trading rule? The position sizes above might make sense for someone with an account size of perhaps £50,000 and a certain risk appetite, but what about everyone else? They might be correct when the book was written, but are they still right when we read it five years later? What about an instrument that isn't listed, can we trade it? How? Finally, setting a stop loss based solely on your capital and personal pain threshold is incorrect.71 Someone with a tiny account who hated losing money would be triggering their very tight stops after a few minutes, whilst a large hedge fund might close a losing position after decades. Stops that would make sense in oil futures would be completely wrong in the relatively quiet USD/CAD FX market. A stop that was correct in the peaceful calm of 2006 would be absurdly tight in the insanity we saw in 2008. The solution is to separate out the components of your system: trading rules (including explicit or implicit stop losses), position sizing, and the calculation of your volatility \end{englishblock}
+
+\begin{chineseblock}我不会讨论这套系统的入场规则或离场规则。70 但它的仓位规模、资金管理和止损设置是一团糟。首先，为什么是 3\%？这会产生正确的风险水平吗？如果我是一个特别保守的人，我也还应该用 3\% 吗？如果我并不那么喜欢某一笔交易，那我又该下多少注？我的投资组合里通常有 40 个头寸，那么我是否应该在任何时点都让 40 份 3\% 的仓位同时暴露于风险中（也就是总共有 120\% 的投资组合暴露在风险中）？如果我使用的是一条更慢的交易规则，3\% 这个数值还有意义吗？上面那些仓位规模，也许适用于某个账户规模大约为 50,000 英镑、同时具有特定风险偏好的人，但其他人怎么办？这些数值在本书写作时可能是合理的，但当我们五年后读到这本书时，它们还合理吗？如果某个品种不在清单里，我们还能交易它吗？该怎么交易？最后，仅仅基于你的资金规模和个人痛苦阈值来设置止损，本身就是错误的。71 一个账户很小、又特别讨厌亏钱的人，可能几分钟后就会被极窄的止损扫出去；而一家大型对冲基金则可能要等上几十年才会平掉一笔亏损头寸。对原油期货来说合理的止损，放到相对平静的美元/加元外汇市场里就会完全不合适。在 2006 年那种平静环境下合理的止损，到了我们在 2008 年看到的疯狂市场里，就会变得荒谬地紧。解决办法，是把你的系统拆分为不同组件：交易规则（包括显式或隐式止损）、仓位规模，以及你的波动率目标\end{chineseblock}
 
 \begin{enumerate}
-  \item 这些规则本身倒不算太差，因为它们完全系统化，而且非常简单。不过它们是二元的
-  （你要么满仓持有，要么完全空仓），这并不理想；而且只有一种交易规则变体，也谈不上完美。
-  \item 大多数优秀交易者都意识到了这一点。以下是 Jack Schwager 在《Hedge Fund Wizards》中采访对冲基金经理 Colm O'Shea 时的一段对话：
-  Jack：“所以你不用止损？”
-  Colm：“不，我用。我只是把止损设得足够宽。早年我设止损时，并不是依据这笔交易背后的核心假设去定的，而是依据我自己能忍受多大痛苦来定的。
-  现在如果我离开一笔交易，那是因为我错了。……价格走势已经和我的假设不一致。是我错了，我得退出并重新思考局势。”
-  （加粗为我所强调。）
-\end{enumerate}
+\item The rules aren't too bad, as they are purely systematic and very simple. However they are binary (you're either fully in or out) which isn't ideal, and having only one trading rule variation is also less than perfect.
+\item This is recognised by most good traders. Here is Jack Schwager, in Hedge Fund Wizards, interviewing hedge fund manager Colm O'Shea: Jack: "So you don't use stops?" Colm: "No I do. I just set them wide enough. In those early days I wasn't setting stops at levels that made sense on the underlying hypothesis of the trade. I was setting stops based on my pain threshold. When I get out of a trade now it is because I was wrong. ... Prices are inconsistent with my hypothesis. I'm wrong and I need to get out and rethink the situation." (My emphasis.) \end{enumerate}
 
-target (the average amount of cash you are willing to risk). You can then design each component independently of the other moving parts. Trading rules and stop losses should be based only on expected market price volatility, and should never take your account size into consideration. Calculating a volatility target, how much of your capital to put at risk, is a function of account size and your pain threshold.\footnote{There are other considerations, such as the amount of leverage required versus what is available, and the expected performance of the system. I'll discuss these in more detail in chapter nine, ‘Volatility targeting'.\par 还存在其他考虑因素，
-例如所需杠杆和可获得杠杆之间的关系，以及系统的预期表现。我会在第九章“波动率目标”中更详细地讨论这些问题。} Positions should then be sized based on how volatile markets are, how confident your price forecasts are, and the amount of capital you wish to gamble. Each of these components is part of the modular framework which together form a complete trading system.
+\begin{enumerate}
+\item 这些规则本身倒不算太差，因为它们完全系统化，而且非常简单。不过它们是二元的（你要么满仓持有，要么完全空仓），这并不理想；而且只有一种交易规则变体，也谈不上完美。
+\item 大多数优秀交易者都意识到了这一点。以下是 Jack Schwager 在《Hedge Fund Wizards》中采访对冲基金经理 Colm O'Shea 时的一段对话：Jack：“所以你不用止损？”Colm：“不，我用。我只是把止损设得足够宽。早年我设止损时，并不是依据这笔交易背后的核心假设去定的，而是依据我自己能忍受多大痛苦来定的。现在如果我离开一笔交易，那是因为我错了。……价格走势已经和我的假设不一致。是我错了，我得退出并重新思考局势。”（加粗为我所强调。）\end{enumerate}
 
-（也就是你平均愿意承担多少现金风险）的计算。这样一来，你就可以把每个组件独立于其他活动部件来设计。交易规则和止损只应当基于预期的市场价格波动率，
-绝不应把你的账户规模纳入考虑。至于如何计算波动率目标，也就是你愿意拿多少资本去承担风险，则取决于账户规模以及你的痛苦阈值。
-随后，仓位规模应当根据市场的波动性、你对价格预测的信心，以及你愿意投入多少资本来“下注”进行设定。这些组件共同构成了模块化框架，
-组合起来就形成了一套完整的交易系统。
+\begin{englishblock} target (the average amount of cash you are willing to risk). You can then design each component independently of the other moving parts. Trading rules and stop losses should be based only on expected market price volatility, and should never take your account size into consideration. Calculating a volatility target, how much of your capital to put at risk, is a function of account size and your pain threshold.\footnote{There are other considerations, such as the amount of leverage required versus what is available, and the expected performance of the system. I'll discuss these in more detail in chapter nine, ‘Volatility targeting'. \par 还存在其他考虑因素，例如所需杠杆和可获得杠杆之间的关系，以及系统的预期表现。我会在第九章“波动率目标”中更详细地讨论这些问题。} Positions should then be sized based on how volatile markets are, how confident your price forecasts are, and the amount of capital you wish to gamble. Each of these components is part of the modular framework which together form a complete trading system. \end{englishblock}
 
-\section*{Why a modular framework?}
-\phantomsection
-\addcontentsline{toc}{section}{Why a modular framework?}
-\bisectiontitle{为什么要用模块化框架？}
+\begin{chineseblock}（也就是你平均愿意承担多少现金风险）的计算。这样一来，你就可以把每个组件独立于其他活动部件来设计。交易规则和止损只应当基于预期的市场价格波动率，绝不应把你的账户规模纳入考虑。至于如何计算波动率目标，也就是你愿意拿多少资本去承担风险，则取决于账户规模以及你的痛苦阈值。随后，仓位规模应当根据市场的波动性、你对价格预测的信心，以及你愿意投入多少资本来“下注”进行设定。这些组件共同构成了模块化框架，组合起来就形成了一套完整的交易系统。\end{chineseblock}
 
-Remember that I drew an analogy between cars and trading systems in the introduction of this book. Trading rules are the engine of the system. These give you a forecast for instrument prices; whether they are expected to go up or down and by how much.In a car the chassis, drive train and gearbox translate the power the engine is producing into forward movement. Similarly, you will have a position risk management framework wrapped around your trading rules. This translates forecasts into the actual positions you need to hold. As I said in the introduction the components of a modern car are modular, so they can be individually substituted for alternatives. The trading rules and other components in my framework can also be swapped and changed. The words module and component could imply that these are complex processes which need thousands of lines of computer code to implement. This is not the case. Every part involves just a few steps of basic arithmetic which require just a calculator or simple spreadsheet. Let's look in more detail at the advantages of the modular approach.
+\bilingualsection{Why a modular framework?}{为什么要用模块化框架？}
 
-请记住，我在本书导言中曾把汽车和交易系统作过类比。交易规则就是系统的引擎。它们会为你提供对某个交易品种价格的预测：价格会涨还是会跌，幅度大概是多少。
-在汽车中，底盘、传动系统和变速箱会把引擎输出的动力转化为前进的运动。同样地，在交易系统里，你会有一套围绕交易规则而构建的仓位风险管理框架，
-它负责把预测转化为你实际应当持有的仓位。正如我在导言中说过的，现代汽车的零部件是模块化的，因此可以单独替换为其他备选件。
-我的框架中的交易规则和其他组件也同样可以替换和改动。“模块”与“组件”这两个词，可能会让人以为这是一套非常复杂的过程，
-需要成千上万行代码才能实现。但事实并非如此。每个部分都只涉及几个简单的算术步骤，用计算器或简易电子表格就能完成。下面我们更详细地看看模块化方法有哪些优点。
+\begin{englishblock} Remember that I drew an analogy between cars and trading systems in the introduction of this book. Trading rules are the engine of the system. These give you a forecast for instrument prices; whether they are expected to go up or down and by how much.In a car the chassis, drive train and gearbox translate the power the engine is producing into forward movement. Similarly, you will have a position risk management framework wrapped around your trading rules. This translates forecasts into the actual positions you need to hold. As I said in the introduction the components of a modern car are modular, so they can be individually substituted for alternatives. The trading rules and other components in my framework can also be swapped and changed. The words module and component could imply that these are complex processes which need thousands of lines of computer code to implement. This is not the case. Every part involves just a few steps of basic arithmetic which require just a calculator or simple spreadsheet. Let's look in more detail at the advantages of the modular approach. \end{englishblock}
 
-\subsection*{Flexibility}
-\bisubsectiontitle{灵活性}
+\begin{chineseblock}请记住，我在本书导言中曾把汽车和交易系统作过类比。交易规则就是系统的引擎。它们会为你提供对某个交易品种价格的预测：价格会涨还是会跌，幅度大概是多少。在汽车中，底盘、传动系统和变速箱会把引擎输出的动力转化为前进的运动。同样地，在交易系统里，你会有一套围绕交易规则而构建的仓位风险管理框架，它负责把预测转化为你实际应当持有的仓位。正如我在导言中说过的，现代汽车的零部件是模块化的，因此可以单独替换为其他备选件。我的框架中的交易规则和其他组件也同样可以替换和改动。“模块”与“组件”这两个词，可能会让人以为这是一套非常复杂的过程，需要成千上万行代码才能实现。但事实并非如此。每个部分都只涉及几个简单的算术步骤，用计算器或简易电子表格就能完成。下面我们更详细地看看模块化方法有哪些优点。\end{chineseblock}
 
-The most obvious benefit of a modular design is flexibility. Cars really can be any colour you like, including black. Similarly my framework can be adapted for almost any trading rule, including the discretionary forecasts used by semi-automatic traders and the very simple rule used by asset allocating investors. If you don't like the position sizing component, or any other part of the framework, you can replace it with your own.
+\bilingualsubsection{Flexibility}{灵活性}
 
-模块化设计最显而易见的好处，就是灵活性。汽车确实可以有你喜欢的任何颜色，包括黑色。同样地，我的框架几乎可以适配任何交易规则，
-包括半自动交易者使用的主观预测，以及资产配置型投资者所使用的极其简单的规则。如果你不喜欢仓位规模这一组件，或者不喜欢框架中的其他任何部分，
-你都可以把它替换成自己的版本。
+\begin{englishblock} The most obvious benefit of a modular design is flexibility. Cars really can be any colour you like, including black. Similarly my framework can be adapted for almost any trading rule, including the discretionary forecasts used by semi-automatic traders and the very simple rule used by asset allocating investors. If you don't like the position sizing component, or any other part of the framework, you can replace it with your own. \end{englishblock}
 
-\subsection*{Transparent modules}
-\bisubsectiontitle{透明的模块}
+\begin{chineseblock}模块化设计最显而易见的好处，就是灵活性。汽车确实可以有你喜欢的任何颜色，包括黑色。同样地，我的框架几乎可以适配任何交易规则，包括半自动交易者使用的主观预测，以及资产配置型投资者所使用的极其简单的规则。如果你不喜欢仓位规模这一组件，或者不喜欢框架中的其他任何部分，你都可以把它替换成自己的版本。\end{chineseblock}
 
-It's possible to have frameworks that are nicely modular but which contain entirely opaque black boxes. Most PCs are built like this. You can replace the hard disc or graphics card, but you can't easily modify them or make your own, so you are stuck with substituting one mysterious part with another. In contrast each component in my framework is transparent -- I'll explain how and why it is constructed. This should give you the understanding and confidence to adapt each module, or create your own from scratch.
+\bilingualsubsection{Transparent modules}{透明的模块}
 
-完全可以存在一种框架：它的模块化程度很好，但其中的模块却全都是不透明的黑箱。大多数个人电脑就是这样。你可以更换硬盘或显卡，
-但你没法轻易修改它们，也很难自己做一个，所以你实际上只是把一个神秘部件换成另一个神秘部件。相比之下，我的框架中每一个组件都是透明的
---- 我会解释它是如何构造出来的，以及为什么要这样构造。这应当能让你具备足够的理解和信心，去调整每个模块，甚至从零开始创建自己的版本。
+\begin{englishblock} It's possible to have frameworks that are nicely modular but which contain entirely opaque black boxes. Most PCs are built like this. You can replace the hard disc or graphics card, but you can't easily modify them or make your own, so you are stuck with substituting one mysterious part with another. In contrast each component in my framework is transparent -- I'll explain how and why it is constructed. This should give you the understanding and confidence to adapt each module, or create your own from scratch. \end{englishblock}
 
-\subsection*{Individual components with well defined interface}
-\bisubsectiontitle{接口定义清晰的独立组件}
+\begin{chineseblock}完全可以存在一种框架：它的模块化程度很好，但其中的模块却全都是不透明的黑箱。大多数个人电脑就是这样。你可以更换硬盘或显卡，但你没法轻易修改它们，也很难自己做一个，所以你实际上只是把一个神秘部件换成另一个神秘部件。相比之下，我的框架中每一个组件都是透明的--- 我会解释它是如何构造出来的，以及为什么要这样构造。这应当能让你具备足够的理解和信心，去调整每个模块，甚至从零开始创建自己的版本。\end{chineseblock}
 
-If you replace the gearbox in your car you need to be sure that the car will still go forward or backwards as required. But if the drive shaft output is reversed on your new gearbox you will end up driving into your front door when you wanted to reverse out of your driveway. To avoid this we need to specify that the shaft on the gearbox must rotate clockwise to make the car go forward, and vice versa. Similarly if you use a new trading rule then the rest of the modular trading system framework should still work correctly and give you appropriately sized positions. To do this the individual components need to have a well defined interface -- a specification describing how they interact with other parts of the system. For example in the framework it will be important that a trading rule forecast of say +1.5 has a consistent meaning, no matter what style of trading or instrument you are using.73
+\bilingualsubsection{Individual components with well defined interface}{接口定义清晰的独立组件}
 
-如果你更换了汽车的变速箱，就必须确保这辆车仍然能够按照要求前进或后退。但如果新变速箱的传动轴输出方向反了，
-那么当你本想把车从车道里倒出来时，结果可能会一头撞进自家前门。为了避免这种事，我们就需要明确规定：变速箱上的轴顺时针旋转时汽车必须前进，反之亦然。
-类似地，如果你使用了一条新的交易规则，那么模块化交易系统框架中的其他部分也仍然应该能够正确工作，并给出大小适当的仓位。要做到这一点，
-各个独立组件就必须具备定义清晰的接口
---- 也就是一份描述它们如何与系统其他部分互动的规范。比如在这个框架中，一条交易规则给出 +1.5 的预测值时，它必须始终具有一致的含义，
-无论你采用的是哪种交易风格，也无论你交易的是哪种品种。73
+\begin{englishblock} If you replace the gearbox in your car you need to be sure that the car will still go forward or backwards as required. But if the drive shaft output is reversed on your new gearbox you will end up driving into your front door when you wanted to reverse out of your driveway. To avoid this we need to specify that the shaft on the gearbox must rotate clockwise to make the car go forward, and vice versa. Similarly if you use a new trading rule then the rest of the modular trading system framework should still work correctly and give you appropriately sized positions. To do this the individual components need to have a well defined interface -- a specification describing how they interact with other parts of the system. For example in the framework it will be important that a trading rule forecast of say +1.5 has a consistent meaning, no matter what style of trading or instrument you are using.73 \end{englishblock}
 
-\subsection*{Getting the boring bit right}
-\bisubsectiontitle{把无聊的部分做好}
+\begin{chineseblock}如果你更换了汽车的变速箱，就必须确保这辆车仍然能够按照要求前进或后退。但如果新变速箱的传动轴输出方向反了，那么当你本想把车从车道里倒出来时，结果可能会一头撞进自家前门。为了避免这种事，我们就需要明确规定：变速箱上的轴顺时针旋转时汽车必须前进，反之亦然。类似地，如果你使用了一条新的交易规则，那么模块化交易系统框架中的其他部分也仍然应该能够正确工作，并给出大小适当的仓位。要做到这一点，各个独立组件就必须具备定义清晰的接口--- 也就是一份描述它们如何与系统其他部分互动的规范。比如在这个框架中，一条交易规则给出 +1.5 的预测值时，它必须始终具有一致的含义，无论你采用的是哪种交易风格，也无论你交易的是哪种品种。73 \end{chineseblock}
 
-The part of the trading system wrapped around the trading rules, the framework, is something that's easily ignored. Creating it is a boring task compared with developing new and exciting trading rules, or making your own discretionary forecasts. But it's incredibly important. By creating a standard framework I've done this dull but vital work for you. The framework will work correctly for any trading rule that produces forecasts in a consistent way with the right interface. So it won't need to be radically redesigned for any new rules. Also by using the framework asset allocating investors and semi-automatic traders can get much of the benefits of systematic trading without using trading rules to forecast prices.
+\bilingualsubsection{Getting the boring bit right}{把无聊的部分做好}
 
-交易系统中包裹在交易规则外围的那一部分，也就是框架，很容易被忽视。和开发新鲜刺激的交易规则，或者做自己的主观预测相比，构建框架显得枯燥得多。
-但它又极其重要。通过创建一套标准框架，我已经替你完成了这份乏味却关键的工作。对于任何能够以一致方式、通过正确接口输出预测的交易规则，
-这个框架都能正常工作。因此，它不会因为你引入了某条新规则，就必须被彻底重新设计。与此同时，资产配置型投资者和半自动交易者即便不使用交易规则来预测价格，
-也可以通过使用这套框架，获得系统化交易的大部分好处。
+\begin{englishblock} The part of the trading system wrapped around the trading rules, the framework, is something that's easily ignored. Creating it is a boring task compared with developing new and exciting trading rules, or making your own discretionary forecasts. But it's incredibly important. By creating a standard framework I've done this dull but vital work for you. The framework will work correctly for any trading rule that produces forecasts in a consistent way with the right interface. So it won't need to be radically redesigned for any new rules. Also by using the framework asset allocating investors and semi-automatic traders can get much of the benefits of systematic trading without using trading rules to forecast prices. \end{englishblock}
 
-\subsection*{Examples give you a starting point}
-\bisubsectiontitle{示例为你提供起点}
+\begin{chineseblock}交易系统中包裹在交易规则外围的那一部分，也就是框架，很容易被忽视。和开发新鲜刺激的交易规则，或者做自己的主观预测相比，构建框架显得枯燥得多。但它又极其重要。通过创建一套标准框架，我已经替你完成了这份乏味却关键的工作。对于任何能够以一致方式、通过正确接口输出预测的交易规则，这个框架都能正常工作。因此，它不会因为你引入了某条新规则，就必须被彻底重新设计。与此同时，资产配置型投资者和半自动交易者即便不使用交易规则来预测价格，也可以通过使用这套框架，获得系统化交易的大部分好处。\end{chineseblock}
 
-Creating a new trading system from scratch is quite a daunting prospect. In the final part of this book there are three detailed examples showing how the framework can be used to suit asset allocating investors, semi-automatic traders and staunch systematic traders. Together these provide a set of systems you can use as a starting point for developing your own ideas.
+\bilingualsubsection{Examples give you a starting point}{示例为你提供起点}
 
-从零开始创建一套新的交易系统，是一件相当令人生畏的事情。在本书最后一部分中，我给出了三个详细示例，展示这套框架如何分别适配资产配置型投资者、
-半自动交易者和坚定的系统化交易者。它们共同构成了一组可供你使用的起点系统，帮助你进一步发展自己的想法。
+\begin{englishblock} Creating a new trading system from scratch is quite a daunting prospect. In the final part of this book there are three detailed examples showing how the framework can be used to suit asset allocating investors, semi-automatic traders and staunch systematic traders. Together these provide a set of systems you can use as a starting point for developing your own ideas. \end{englishblock}
 
-\section*{The elements of the framework}
-\phantomsection
-\addcontentsline{toc}{section}{The elements of the framework}
-\bisectiontitle{框架的各个要素}
+\begin{chineseblock}从零开始创建一套新的交易系统，是一件相当令人生畏的事情。在本书最后一部分中，我给出了三个详细示例，展示这套框架如何分别适配资产配置型投资者、半自动交易者和坚定的系统化交易者。它们共同构成了一组可供你使用的起点系统，帮助你进一步发展自己的想法。\end{chineseblock}
 
-Table 15 shows the components you'd have in a small trading system with two trading rules, a total of four trading rule variations, and two instruments. You first create a trading subsystem for each instrument. Each subsystem tries to predict the price of an individual instrument, and calculate the appropriate position required. These subsystems are then combined into a portfolio, which forms the final trading system.
+\bilingualsection{The elements of the framework}{框架的各个要素}
 
-表 15 展示的是这样一套小型交易系统的组成部分：它包含两条交易规则、总共四个交易规则变体，以及两个交易品种。你首先需要为每个品种创建一个交易子系统。
-每个子系统都尝试预测单个品种的价格，并计算出所需的合适仓位。随后，这些子系统会被组合成一个投资组合，从而形成最终的交易系统。
+\begin{englishblock} Table 15 shows the components you'd have in a small trading system with two trading rules, a total of four trading rule variations, and two instruments. You first create a trading subsystem for each instrument. Each subsystem tries to predict the price of an individual instrument, and calculate the appropriate position required. These subsystems are then combined into a portfolio, which forms the final trading system. \end{englishblock}
 
-\rawtablecaption{EXAMPLE OF COMPONENTS IN A TRADING SYSTEM\\交易系统组成示例}
-\begingroup
-\small
-\noindent This trading system has two trading rules A and B, three rule variations A1, A2 and B1, and two instruments X and Y. The framework naturally creates one trading subsystem per instrument before combining those subsystems into a portfolio.
+\begin{chineseblock}表 15 展示的是这样一套小型交易系统的组成部分：它包含两条交易规则、总共四个交易规则变体，以及两个交易品种。你首先需要为每个品种创建一个交易子系统。每个子系统都尝试预测单个品种的价格，并计算出所需的合适仓位。随后，这些子系统会被组合成一个投资组合，从而形成最终的交易系统。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.24\textwidth}Y@{}}
+\rawtablecaption{EXAMPLE OF COMPONENTS IN A TRADING SYSTEM\\交易系统组成示例}\begingroup \small
+
+\begin{englishtableblock} \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{Component} & \textbf{Example in this system} & \textbf{Role in the framework} \\
 \midrule
@@ -195,16 +136,14 @@ Table 15 shows the components you'd have in a small trading system with two trad
 \bottomrule
 \end{tabularx}
 }
+\end{englishtableblock}
 \endgroup
 
-\begingroup
-\small
-\noindent 这套交易系统有两条交易规则 A 和 B、三个规则变体 A1、A2 和 B1，以及两个交易品种 X 和 Y。这个框架会先为每个品种形成一个独立的交易子系统，再把这些子系统组合成投资组合。
+\begin{englishblock} \noindent This trading system has two trading rules A and B, three rule variations A1, A2 and B1, and two instruments X and Y. The framework naturally creates one trading subsystem per instrument before combining those subsystems into a portfolio. \end{englishblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{3pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}p{0.19\textwidth}p{0.24\textwidth}Y@{}}
+\begin{chineseblock} \noindent 这套交易系统有两条交易规则 A 和 B、三个规则变体 A1、A2 和 B1，以及两个交易品种 X 和 Y。这个框架会先为每个品种形成一个独立的交易子系统，再把这些子系统组合成投资组合。\end{chineseblock}
+
+\begin{chinesetableblock} \begingroup \small \noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.15} \begin{tabularx}{\textwidth}{@{} p{0.19\textwidth} p{0.24\textwidth} Y@{}}
 \toprule
 \textbf{组成部分} & \textbf{在本系统中的示例} & \textbf{在框架中的作用} \\
 \midrule
@@ -224,4 +163,4 @@ Table 15 shows the components you'd have in a small trading system with two trad
 \bottomrule
 \end{tabularx}
 }
-\endgroup
+\endgroup \end{chinesetableblock}

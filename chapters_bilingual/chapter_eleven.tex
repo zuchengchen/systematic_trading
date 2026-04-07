@@ -1,561 +1,261 @@
-\chapter{Portfolios}
-\bichaptertitle{投资组合}
+\bilingualchapter{Portfolios}{投资组合}
 
-QUESTION: WHAT DO MANY TRADERS AND AMATEUR INVESTORS who buy individual equities rather than invest in collective funds have in common? Answer: They both tend to have too few assets in their portfolios. Research into individual investors finds many hold less than five shares, whilst traders often only prefer to deal with one or two markets where they feel most expert. So far I haven't helped solve this problem, since in the last chapter I showed you how to put together a trading subsystem which holds positions in just a single instrument. But diversification really is the only free lunch in investment. Allocating across different asset classes can easily double your expected Sharpe ratio, as we saw in chapter two (page 46). It's best to simultaneously run a portfolio of as many trading subsystems and instruments as possible and allocate your trading capital between them. To allocate
+\begin{englishblock} QUESTION: WHAT DO MANY TRADERS AND AMATEUR INVESTORS who buy individual equities rather than invest in collective funds have in common? Answer: They both tend to have too few assets in their portfolios. Research into individual investors finds many hold less than five shares, whilst traders often only prefer to deal with one or two markets where they feel most expert. So far I haven't helped solve this problem, since in the last chapter I showed you how to put together a trading subsystem which holds positions in just a single instrument. But diversification really is the only free lunch in investment. Allocating across different asset classes can easily double your expected Sharpe ratio, as we saw in chapter two (page 46). It's best to simultaneously run a portfolio of as many trading subsystems and instruments as possible and allocate your trading capital between them. To allocate within this portfolio you will use instrument weights. Even though semi-automatic traders don't have a fixed set of assets they should also try and hold a number of positions in several instruments at once. \end{englishblock}
 
-问题：许多交易者，以及那些购买个股而不是投资集合基金的普通投资者，共同的毛病是什么？答案是：他们的投资组合里持有的资产通常都太少了。
-针对个人投资者的研究发现，很多人持有的股票少于五只；而交易者则往往只愿意参与一两个自己感觉最熟悉的市场。到目前为止，
-我还没有帮你解决这个问题，因为上一章里我展示的，是如何构建一个只持有单一品种仓位的交易子系统。但分散化，的确是投资中唯一的免费午餐。
-正如我们在第二章
-（第 46 页）中看到的那样，在不同资产类别之间进行配置，完全可以轻松地把预期夏普比率翻倍。最好的做法，是尽可能同时运行一个包含多种交易子系统、
-多种品种的投资组合，并在这些子系统之间分配你的交易资本。为了在这个投资组合内部进行配置
+\begin{chineseblock}问题：许多交易者，以及那些购买个股而不是投资集合基金的普通投资者，共同的毛病是什么？答案是：他们的投资组合里持有的资产通常都太少了。针对个人投资者的研究发现，很多人持有的股票少于五只；而交易者则往往只愿意参与一两个自己感觉最熟悉的市场。到目前为止，我还没有帮你解决这个问题，因为上一章里我展示的，是如何构建一个只持有单一品种仓位的交易子系统。但分散化，的确是投资中唯一的免费午餐。正如我们在第二章（第 46 页）中看到的那样，在不同资产类别之间进行配置，完全可以轻松地把预期夏普比率翻倍。最好的做法，是尽可能同时运行一个包含多种交易子系统、多种品种的投资组合，并在这些子系统之间分配你的交易资本。为了在这个投资组合内部进行配置，你需要使用品种权重。即便半自动交易者没有一个固定的资产集合，他们也应当尽量同时持有多个品种上的若干头寸。\end{chineseblock}
 
-within this portfolio you will use instrument weights. Even though semi-automatic traders don't have a fixed set of assets they should also try and hold a number of positions in several instruments at once.
+\bilingualsection{Chapter overview}{本章概览}
 
-，你需要使用品种权重（instrument weights）。即便半自动交易者没有一个固定的资产集合，他们也应当尽量同时持有多个品种上的若干头寸。
+\begin{bilingualtableblock} \begin{tabularx}{\textwidth}{@{} L{0.30\textwidth} Y@{}}\textbf{Portfolios and instrument weights} & What is a portfolio of trading subsystems and what are instrument weights? \\
 
-\section*{Chapter overview}
-\phantomsection
-\addcontentsline{toc}{section}{Chapter overview}
-\bisectiontitle{本章概览}
-
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
-\textbf{Portfolios and instrument weights} & What is a portfolio of trading subsystems and what are instrument weights? \\
-\textbf{Instrument weights – Asset allocators and} & How to allocate weights when you are trading a fixed set of trading subsystems. Staunch systems traders \\
-\textbf{Instrument weights – Semi-automatic traders} & The special case of semi-automatic traders who have multiple bets on, but not necessarily in the same instruments. \\
-\textbf{Instrument diversification multiplier} & Accounting for diversification between subsystems for different instruments. \\
-\textbf{A portfolio of positions and trades} & Calculating what position you should hold, given your instrument weights, and what trades you should generate. \\
-\end{tabularx}
-
-\medskip
-
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
 \textbf{投资组合与品种权重} & 什么是交易子系统组成的投资组合？什么又是品种权重？ \\
+\textbf{Instrument weights – Asset allocators and} & How to allocate weights when you are trading a fixed set of trading subsystems. Staunch systems traders \\
 \textbf{品种权重——} & 当你交易一组固定的交易子系统时，应如何分配权重？ 资产配置者与 坚定的系统化交易者 \\
+\textbf{Instrument weights – Semi-automatic traders} & The special case of semi-automatic traders who have multiple bets on, but not necessarily in the same instruments. \\
 \textbf{品种权重—— 半自动交易者} & 半自动交易者的特殊情况：他们同时持有多笔下注， 但这些下注未必总在同样的品种上。 \\
+\textbf{Instrument diversification multiplier} & Accounting for diversification between subsystems for different instruments. \\
 \textbf{品种分散化乘数} & 如何把不同品种子系统之间的分散化效应纳入考虑。 \\
+\textbf{A portfolio of positions and trades} & Calculating what position you should hold, given your instrument weights, and what trades you should generate. \\
 \textbf{仓位与交易组成的投资组合} & 在给定品种权重的情况下，你应当持有什么仓位， 以及你应当生成哪些交易。 \\
 \end{tabularx}
+\end{bilingualtableblock}
 
-\section*{Portfolios and instrument weights}
-\phantomsection
-\addcontentsline{toc}{section}{Portfolios and instrument weights}
-\bisectiontitle{投资组合与品种权重}
+\bilingualsection{Portfolios and instrument weights}{投资组合与品种权重}
 
-\subsection*{This section is suitable for all readers}
-\bisubsectiontitle{这一节适合所有读者}
+\bilingualsubsection{This section is suitable for all readers}{这一节适合所有读者}
 
-In an earlier chapter I used an example of a three asset portfolio to illustrate the black art of portfolio optimisation. The three assets were the S\&P 500, NASDAQ and a 20 year US Bond. Suppose now that you're asset allocator investors who are trying to allocate capital between these instruments, or staunch systems traders who have forecasting rules that predict their returns. Alternatively, imagine that you're a semi-automatic trader who happens to have placed bets on each of these three assets. Using the methods in the previous chapter you would calculate three subsystem positions, one for each instrument. Each position will depend on your forecast and how risky each instrument is. You would also have pretended to put all of your trading capital into trading each one of these systems. Effectively you will create three trading subsystems, each of which nominally uses your entire capital to trade one instrument. In practice though you're going to share your capital across a portfolio of subsystems; similar to the way I created a portfolio with the same three underlying assets in chapter four. Each instrument's trading subsystem will get a positive instrument weight, with weights summing to 100\%. Your portfolio weighted position will be the instrument's subsystem position, multiplied by the relevant instrument weight to reflect its portfolio share. Once you have this you can work out what trades are needed for each instrument. As I'll show you later in the chapter you also need to account for the effect of portfolio diversification. But first we need to consider how to calculate the instrument weights.
+\begin{englishblock} In an earlier chapter I used an example of a three asset portfolio to illustrate the black art of portfolio optimisation. The three assets were the S\&P 500, NASDAQ and a 20 year US Bond. Suppose now that you're asset allocator investors who are trying to allocate capital between these instruments, or staunch systems traders who have forecasting rules that predict their returns. Alternatively, imagine that you're a semi-automatic trader who happens to have placed bets on each of these three assets. Using the methods in the previous chapter you would calculate three subsystem positions, one for each instrument. Each position will depend on your forecast and how risky each instrument is. You would also have pretended to put all of your trading capital into trading each one of these systems. Effectively you will create three trading subsystems, each of which nominally uses your entire capital to trade one instrument. In practice though you're going to share your capital across a portfolio of subsystems; similar to the way I created a portfolio with the same three underlying assets in chapter four. Each instrument's trading subsystem will get a positive instrument weight, with weights summing to 100\%. Your portfolio weighted position will be the instrument's subsystem position, multiplied by the relevant instrument weight to reflect its portfolio share. Once you have this you can work out what trades are needed for each instrument. As I'll show you later in the chapter you also need to account for the effect of portfolio diversification. But first we need to consider how to calculate the instrument weights. \end{englishblock}
 
-在前面某一章里，我曾用一个三资产投资组合的例子，来说明投资组合优化这门“黑魔法”。那三个资产分别是 S\&P 500、NASDAQ 和美国 20 年期国债。
-现在假设，你是一名资产配置型投资者，正试图在这些工具之间分配资本；或者你是一名坚定的系统化交易者，拥有能够预测它们收益的交易规则。
-又或者，假设你是一名半自动交易者，只是碰巧同时在这三个资产上都下了注。使用上一章的方法，你将会为每个品种分别计算出一个子系统仓位，
-总共三个。每个仓位都取决于你的预测值，以及每个品种本身的风险程度。同时，你在计算时还会假装自己把全部交易资本都投入到了这三套系统的每一套当中。
-从本质上说，你会建立三个交易子系统，每个子系统名义上都使用你的全部资本去交易一个单独品种。但在实际中，你会把资本分配到一个由多个子系统构成的投资组合中；
-这和我在第四章中用同样三个底层资产构建投资组合的思路是一样的。每个品种对应的交易子系统，都会得到一个正的品种权重，且所有权重加总为 100\%。
-你的投资组合加权仓位，将等于该品种的子系统仓位，再乘以相应的品种权重，以反映它在整体组合中的占比。有了这一点，你就可以算出每个品种需要做哪些交易。
-正如我在本章稍后会展示的那样，你还需要把投资组合分散化的影响考虑进去。但在那之前，我们首先要讨论的是：如何计算品种权重。
+\begin{chineseblock}在前面某一章里，我曾用一个三资产投资组合的例子，来说明投资组合优化这门“黑魔法”。那三个资产分别是 S\&P 500、NASDAQ 和美国 20 年期国债。现在假设，你是一名资产配置型投资者，正试图在这些工具之间分配资本；或者你是一名坚定的系统化交易者，拥有能够预测它们收益的交易规则。又或者，假设你是一名半自动交易者，只是碰巧同时在这三个资产上都下了注。使用上一章的方法，你将会为每个品种分别计算出一个子系统仓位，总共三个。每个仓位都取决于你的预测值，以及每个品种本身的风险程度。同时，你在计算时还会假装自己把全部交易资本都投入到了这三套系统的每一套当中。从本质上说，你会建立三个交易子系统，每个子系统名义上都使用你的全部资本去交易一个单独品种。但在实际中，你会把资本分配到一个由多个子系统构成的投资组合中；这和我在第四章中用同样三个底层资产构建投资组合的思路是一样的。每个品种对应的交易子系统，都会得到一个正的品种权重，且所有权重加总为 100\%。你的投资组合加权仓位，将等于该品种的子系统仓位，再乘以相应的品种权重，以反映它在整体组合中的占比。有了这一点，你就可以算出每个品种需要做哪些交易。正如我在本章稍后会展示的那样，你还需要把投资组合分散化的影响考虑进去。但在那之前，我们首先要讨论的是：如何计算品种权重。\end{chineseblock}
 
-\section*{Instrument weights -- asset allocators and systems traders}
-\phantomsection
-\addcontentsline{toc}{section}{Instrument weights -- asset allocators and systems traders}
-\bisectiontitle{品种权重——资产配置者与系统化交易者}
+\bilingualsection{Instrument weights -- asset allocators and systems traders}{品种权重——资产配置者与系统化交易者}
 
-\subsection*{Asset Allocating Investor / Staunch Systems Trader}
-\bisubsectiontitle{资产配置型投资者 / 坚定的系统化交易者}
+\bilingualsubsection{Asset Allocating Investor / Staunch Systems Trader}{资产配置型投资者 / 坚定的系统化交易者}
 
-Asset allocating investors run a fixed portfolio of trading subsystems, one per instrument, each consisting of a single trading rule -- the ‘no-rule' rule producing a constant identical forecast. Staunch systems traders have a group of trading rules whose forecasts are combined and then scaled into a position. In both cases you are allocating your trading capital between subsystems relating to a fixed set of instruments. This is different to traditional portfolio allocation, where you allocate capital directly to positions in each instrument. Because of your hard work in the last couple of chapters all the subsystems will be volatility standardised and have the same expected standard deviation of returns. As you saw in chapter four, this makes the job of portfolio optimisation simpler. You can easily use the handcrafting method introduced in chapter four to determine the instrument weight each subsystem gets. It's also possible to use bootstrapping as an alternative.115 To handcraft your weights you need to group the assets and for this you need correlations. There are two alternatives that can be used to find these. Firstly you can estimate them using back-tested data. Alternatively if you don't have back-tested correlations then tables 50 to 55 (from page 291 in appendix C) give indicative correlations between instrument returns. But you need the correlations between trading subsystem returns, not the returns of the underlying instruments. For dynamic trading systems the correlations between subsystem returns tend to be lower than those of the underlying instruments. A good approximation is that the correlation between subsystem returns will be 0.70 of the correlation of instrument returns. So if two assets have a correlation of 0.5 between their instrument returns in appendix C, then their subsystems will have a correlation of 0.7 × 0.5 = 0.35. Because asset allocating investors use a static strategy, the correlation of your subsystems is likely to be much closer to what you'd have with fixed long positions in the underlying instruments. So rather than multiplying the correlations in appendix C by 0.7, I recommend that you use them without adjustment. In chapter four I showed you how to change portfolio weights if you had evidence that assets had different Sharpe ratios. But I wouldn't recommend adjusting instrument weights for Sharpe ratios, since there's rarely enough evidence of different performance between subsystems for different instruments, even once we account for different levels of costs. I come back to this in the chapter on ‘Speed and Size'. Let's look at an example. Here's how I would handcraft the instrument weights for the simple example of three instruments (S\&P 500, NASDAQ, 20 year bond). Row numbers refer to the relevant rows of table 8 (page 79). First level grouping Group one (bonds): One asset, so 100\% in 20 year bond. Row 1. Within asset classes Group two (equities): Two assets, 50\% in each. Row 2. Second level grouping I have two groups to allocate to, each gets 50\%. Row 2. Across asset classes This gives me the same weights I had in chapter four for the actual assets, as shown in table 28. Of course this wouldn't normally be the case; it's only because this is a trivial example with no more than two assets in each group, and the same groupings as before.
+\begin{englishblock} Asset allocating investors run a fixed portfolio of trading subsystems, one per instrument, each consisting of a single trading rule -- the ‘no-rule' rule producing a constant identical forecast. Staunch systems traders have a group of trading rules whose forecasts are combined and then scaled into a position. In both cases you are allocating your trading capital between subsystems relating to a fixed set of instruments. This is different to traditional portfolio allocation, where you allocate capital directly to positions in each instrument. Because of your hard work in the last couple of chapters all the subsystems will be volatility standardised and have the same expected standard deviation of returns. As you saw in chapter four, this makes the job of portfolio optimisation simpler. You can easily use the handcrafting method introduced in chapter four to determine the instrument weight each subsystem gets. It's also possible to use bootstrapping as an alternative.115 To handcraft your weights you need to group the assets and for this you need correlations. There are two alternatives that can be used to find these. Firstly you can estimate them using back-tested data. Alternatively if you don't have back-tested correlations then tables 50 to 55 (from page 291 in appendix C) give indicative correlations between instrument returns. But you need the correlations between trading subsystem returns, not the returns of the underlying instruments. For dynamic trading systems the correlations between subsystem returns tend to be lower than those of the underlying instruments. A good approximation is that the correlation between subsystem returns will be 0.70 of the correlation of instrument returns. So if two assets have a correlation of 0.5 between their instrument returns in appendix C, then their subsystems will have a correlation of 0.7 × 0.5 = 0.35. Because asset allocating investors use a static strategy, the correlation of your subsystems is likely to be much closer to what you'd have with fixed long positions in the underlying instruments. So rather than multiplying the correlations in appendix C by 0.7, I recommend that you use them without adjustment. In chapter four I showed you how to change portfolio weights if you had evidence that assets had different Sharpe ratios. But I wouldn't recommend adjusting instrument weights for Sharpe ratios, since there's rarely enough evidence of different performance between subsystems for different instruments, even once we account for different levels of costs. I come back to this in the chapter on ‘Speed and Size'. Let's look at an example. Here's how I would handcraft the instrument weights for the simple example of three instruments (S\&P 500, NASDAQ, 20 year bond). Row numbers refer to the relevant rows of table 8 (page 79). First level grouping Group one (bonds): One asset, so 100\% in 20 year bond. Row 1. Within asset classes Group two (equities): Two assets, 50\% in each. Row 2. Second level grouping I have two groups to allocate to, each gets 50\%. Row 2. Across asset classes This gives me the same weights I had in chapter four for the actual assets, as shown in table 28. Of course this wouldn't normally be the case; it's only because this is a trivial example with no more than two assets in each group, and the same groupings as before. \end{englishblock}
 
-资产配置型投资者运行的是一个固定的交易子系统组合，每个品种对应一个子系统，而每个子系统只包含一条交易规则
---- 也就是那个会生成恒定相同预测值的“无规则”规则。坚定的系统化交易者则拥有一组交易规则，这些规则的预测值会被先合成、再转换成仓位。
-在这两种情况下，你都是在一组固定品种对应的子系统之间分配交易资本。这与传统的投资组合配置不同；后者是直接把资本配置到每个品种的具体头寸上。
-由于你在前几章里已经付出了不少努力，现在这些子系统都已经完成了波动率标准化，并且拥有相同的预期收益标准差。正如你在第四章中看到的那样，
-这会让投资组合优化变得更简单。你完全可以使用第四章中介绍过的手工构造方法，来决定每个子系统应当获得多大的品种权重。当然，你也可以把 bootstrapping 作为替代方案。115
-如果要手工构造权重，你需要先对这些“资产”进行分组，而要做到这点，你需要相关性数据。你可以通过两种方式获得它。第一种，是利用回测数据来估计。
-第二种，如果你没有回测得到的相关性，那么附录 C 中表 50 到表 55
-（第 291 页起）提供了品种收益之间的经验相关性。但你真正需要的，是交易子系统收益之间的相关性，而不是底层品种本身的收益相关性。
-对于动态交易系统而言，子系统收益之间的相关性通常会低于底层品种本身的相关性。一个不错的近似做法是：子系统收益相关性大约等于品种收益相关性的 0.70。
-因此，如果附录 C 中某两项资产的品种收益相关性为 0.5，那么它们对应子系统的相关性就大约是 0.7 × 0.5 = 0.35。
-由于资产配置型投资者使用的是静态策略，你的子系统相关性会更接近于直接持有底层资产固定多头头寸时的相关性。因此，我建议你不要再把附录 C 中的相关性乘以 0.7，
-而是直接不做调整地使用它们。在第四章中，我曾展示过：如果你有证据表明资产的夏普比率不同，那么你可以如何调整投资组合权重。
-但我并不建议你根据夏普比率去调整品种权重，因为在不同品种对应子系统之间，通常很难获得足够有力的证据来证明它们的表现存在差异，
-即使我们已经考虑了不同程度的交易成本也是如此。我会在“速度与规模”那一章中再次回到这个问题。我们来看一个例子。
-下面是我会如何为那个简单的三品种示例
-（S\&P 500、NASDAQ、20 年期国债）手工构造品种权重。这里所提到的行号，对应的是表 8
-（第 79 页）中的相应行。
-第一层分组：
-第一组
-（债券）：只有一个资产，因此 20 年期国债权重为 100\%。对应第 1 行。
-在资产类别内部：
-第二组
-（股票）：两个资产，各占 50\%。对应第 2 行。
-第二层分组：
-我有两个组要在它们之间做配置，因此每组各占 50\%。对应第 2 行。
-在资产类别之间：
-这样得到的结果，就是表 28 中所展示的、与我在第四章中对这些实际资产所给出的权重完全相同的权重。当然，通常情况下并不会这么巧；
-这里只是因为这是一个非常简单的例子，每组里都不超过两个资产，而且分组方式也与之前保持一致。
+\begin{chineseblock}资产配置型投资者运行的是一个固定的交易子系统组合，每个品种对应一个子系统，而每个子系统只包含一条交易规则--- 也就是那个会生成恒定相同预测值的“无规则”规则。坚定的系统化交易者则拥有一组交易规则，这些规则的预测值会被先合成、再转换成仓位。在这两种情况下，你都是在一组固定品种对应的子系统之间分配交易资本。这与传统的投资组合配置不同；后者是直接把资本配置到每个品种的具体头寸上。由于你在前几章里已经付出了不少努力，现在这些子系统都已经完成了波动率标准化，并且拥有相同的预期收益标准差。正如你在第四章中看到的那样，这会让投资组合优化变得更简单。你完全可以使用第四章中介绍过的手工构造方法，来决定每个子系统应当获得多大的品种权重。当然，你也可以把 bootstrapping 作为替代方案。115如果要手工构造权重，你需要先对这些“资产”进行分组，而要做到这点，你需要相关性数据。你可以通过两种方式获得它。第一种，是利用回测数据来估计。第二种，如果你没有回测得到的相关性，那么附录 C 中表 50 到表 55（第 291 页起）提供了品种收益之间的经验相关性。但你真正需要的，是交易子系统收益之间的相关性，而不是底层品种本身的收益相关性。对于动态交易系统而言，子系统收益之间的相关性通常会低于底层品种本身的相关性。一个不错的近似做法是：子系统收益相关性大约等于品种收益相关性的 0.70。因此，如果附录 C 中某两项资产的品种收益相关性为 0.5，那么它们对应子系统的相关性就大约是 0.7 × 0.5 = 0.35。由于资产配置型投资者使用的是静态策略，你的子系统相关性会更接近于直接持有底层资产固定多头头寸时的相关性。因此，我建议你不要再把附录 C 中的相关性乘以 0.7，而是直接不做调整地使用它们。在第四章中，我曾展示过：如果你有证据表明资产的夏普比率不同，那么你可以如何调整投资组合权重。但我并不建议你根据夏普比率去调整品种权重，因为在不同品种对应子系统之间，通常很难获得足够有力的证据来证明它们的表现存在差异，即使我们已经考虑了不同程度的交易成本也是如此。我会在“速度与规模”那一章中再次回到这个问题。我们来看一个例子。下面是我会如何为那个简单的三品种示例（S\&P 500、NASDAQ、20 年期国债）手工构造品种权重。这里所提到的行号，对应的是表 8（第 79 页）中的相应行。第一层分组：第一组（债券）：只有一个资产，因此 20 年期国债权重为 100\%。对应第 1 行。在资产类别内部：第二组（股票）：两个资产，各占 50\%。对应第 2 行。第二层分组：我有两个组要在它们之间做配置，因此每组各占 50\%。对应第 2 行。在资产类别之间：这样得到的结果，就是表 28 中所展示的、与我在第四章中对这些实际资产所给出的权重完全相同的权重。当然，通常情况下并不会这么巧；这里只是因为这是一个非常简单的例子，每组里都不超过两个资产，而且分组方式也与之前保持一致。\end{chineseblock}
 
-\rawtablecaption{IN THIS SIMPLE EXAMPLE HANDCRAFTED WEIGHTS FOR TRADING SUBSYSTEMS ARE THE SAME AS FOR THE ASSETS THEMSELVES\\在这个简单示例中，交易子系统的手工权重与资产本身的权重相同}
-\begingroup
-\small
-\centering
-\begin{tabular}{@{}lr@{}}
+\begin{bilingualtableblock} \rawtablecaption{IN THIS SIMPLE EXAMPLE HANDCRAFTED WEIGHTS FOR TRADING SUBSYSTEMS ARE THE SAME AS FOR THE ASSETS THEMSELVES\\在这个简单示例中，交易子系统的手工权重与资产本身的权重相同}\begingroup \small \centering \begin{tabular}{@{} lr@{}}
 \toprule
 & Handcrafted weight \\
-\midrule
-US 20 year bond & 50\% \\
-S\&P 500 equities & 25\% \\
-NASDAQ equities & 25\% \\
-\bottomrule
-\end{tabular}
-\par
-\endgroup
-
-\begingroup
-\small
-\centering
-\begin{tabular}{@{}lr@{}}
-\toprule
 & 手工构造权重 \\
 \midrule
+US 20 year bond & 50\% \\
 美国 20 年期国债 & 50\% \\
+S\&P 500 equities & 25\% \\
 S\&P 500 股票 & 25\% \\
+NASDAQ equities & 25\% \\
 NASDAQ 股票 & 25\% \\
 \bottomrule
 \end{tabular}
-\par
-\endgroup
+\par \endgroup \end{bilingualtableblock}
 
-I give more complex examples of handcrafting instrument weights in each of the example
-chapters in part four.
+\begin{englishblock} I give more complex examples of handcrafting instrument weights in each of the example chapters in part four. \end{englishblock}
 
-在第四部分的每个示例章节中，
-我都会给出更复杂一些的品种权重手工构造案例。
+\begin{chineseblock}在第四部分的每个示例章节中，我都会给出更复杂一些的品种权重手工构造案例。\end{chineseblock}
 
-\section*{Instrument weights -- semi-automatic trading}
-\phantomsection
-\addcontentsline{toc}{section}{Instrument weights -- semi-automatic trading}
-\bisectiontitle{品种权重——半自动交易}
+\bilingualsection{Instrument weights -- semi-automatic trading}{品种权重——半自动交易}
 
-\subsection*{Semi-automatic Trader}
-\bisubsectiontitle{半自动交易者}
+\bilingualsubsection{Semi-automatic Trader}{半自动交易者}
 
-Semi-automatic traders don't have fixed portfolios of instruments, always creating forecasts and holding positions in each and every instrument. Instead you're likely to have a relatively small number of opportunistic positions (bets) on your books at any one time, drawn from a larger pool of potential trading ideas. Each time you enter a new bet for a different instrument you need to make a forecast, and then size your positions according to the size of your account and the risk of the instrument. This presents a problem because the make-up of your portfolio, and hence the correlation of returns, will change over time as different instruments come in and out. The simplest thing to do is to allocate trading capital equally between potential opportunities. To ensure your risk is properly controlled you must also limit the maximum number of bets that can be placed at any time. So you should allocate your risk equally between a notional maximum number of concurrent bets, each of which represents a potential trading subsystem. For example if the notional maximum number is ten bets this implies each instrument weight will be 100\% divided by 10, which equals 10\% for each instrument. For reasons that will become clear later in this chapter, I recommend that this maximum shouldn't be more than 2.5 times the average number of bets you expect to be holding over time.
+\begin{englishblock} Semi-automatic traders don't have fixed portfolios of instruments, always creating forecasts and holding positions in each and every instrument. Instead you're likely to have a relatively small number of opportunistic positions (bets) on your books at any one time, drawn from a larger pool of potential trading ideas. Each time you enter a new bet for a different instrument you need to make a forecast, and then size your positions according to the size of your account and the risk of the instrument. This presents a problem because the make-up of your portfolio, and hence the correlation of returns, will change over time as different instruments come in and out. The simplest thing to do is to allocate trading capital equally between potential opportunities. To ensure your risk is properly controlled you must also limit the maximum number of bets that can be placed at any time. So you should allocate your risk equally between a notional maximum number of concurrent bets, each of which represents a potential trading subsystem. For example if the notional maximum number is ten bets this implies each instrument weight will be 100\% divided by 10, which equals 10\% for each instrument. For reasons that will become clear later in this chapter, I recommend that this maximum shouldn't be more than 2.5 times the average number of bets you expect to be holding over time. \end{englishblock}
 
-半自动交易者并不会持有一个固定的品种组合，也不会永远为每一个品种持续生成预测并持有头寸。更常见的情况是，
-你在任何时刻账上只会有少量机会型头寸
-（也就是下注），而这些头寸是从一个更大范围的潜在交易想法池中挑出来的。每次你在一个新的品种上建立一笔新下注时，
-你都需要先给出一个预测值，然后根据自己的账户规模和该品种的风险来设定仓位大小。这里会出现一个问题：随着不同品种不断进入或离开你的组合，
-你的投资组合构成以及收益相关性都会随着时间而变化。最简单的做法，是在所有潜在机会之间平均分配交易资本。为了确保风险得到适当控制，
-你还必须限制任何时刻最多能同时持有多少笔下注。因此，你应当把风险平均分配到某个名义上的“最大并发下注数量”之上，
-其中每一笔下注都代表一个潜在的交易子系统。例如，如果这个名义上的最大数量是 10 笔下注，那么这就意味着每个品种的权重等于 100\% ÷ 10，
-也就是每个品种 10\%。出于本章后面会进一步说明的原因，我建议这个最大值不要超过你长期平均持有下注数量的 2.5 倍。
+\begin{chineseblock}半自动交易者并不会持有一个固定的品种组合，也不会永远为每一个品种持续生成预测并持有头寸。更常见的情况是，你在任何时刻账上只会有少量机会型头寸（也就是下注），而这些头寸是从一个更大范围的潜在交易想法池中挑出来的。每次你在一个新的品种上建立一笔新下注时，你都需要先给出一个预测值，然后根据自己的账户规模和该品种的风险来设定仓位大小。这里会出现一个问题：随着不同品种不断进入或离开你的组合，你的投资组合构成以及收益相关性都会随着时间而变化。最简单的做法，是在所有潜在机会之间平均分配交易资本。为了确保风险得到适当控制，你还必须限制任何时刻最多能同时持有多少笔下注。因此，你应当把风险平均分配到某个名义上的“最大并发下注数量”之上，其中每一笔下注都代表一个潜在的交易子系统。例如，如果这个名义上的最大数量是 10 笔下注，那么这就意味着每个品种的权重等于 100\% ÷ 10，也就是每个品种 10\%。出于本章后面会进一步说明的原因，我建议这个最大值不要超过你长期平均持有下注数量的 2.5 倍。\end{chineseblock}
 
-\section*{Instrument diversification multiplier}
-\phantomsection
-\addcontentsline{toc}{section}{Instrument diversification multiplier}
-\bisectiontitle{品种分散化乘数}
+\bilingualsection{Instrument diversification multiplier}{品种分散化乘数}
 
-Once you've parcelled out your trading capital to each trading subsystem you're faced with a problem you might have seen before in chapter seven, which is the issue of diversification reducing your risk. If you skipped that chapter please go back and read the concept box on page 129. Diversified portfolios of volatility standardised assets like trading subsystems nearly always have a lower expected standard deviation of returns than the individual assets they are trading. The lower the average correlation, the worse the undershooting of risk will be. You already know that the correlation between the two equity indices and the bond in the simple example is very low (the rule of thumb value from table 50 in appendix C is 0.1, and the estimated value I calculated in chapter four was negative). The correlation between the subsystem returns is likely to be even lower. So it's very unlikely that you'll get the same desired level of average risk from a portfolio of these three instrument subsystems as you would if you ran each one individually.
+\begin{englishblock} Once you've parcelled out your trading capital to each trading subsystem you're faced with a problem you might have seen before in chapter seven, which is the issue of diversification reducing your risk. If you skipped that chapter please go back and read the concept box on page 129. Diversified portfolios of volatility standardised assets like trading subsystems nearly always have a lower expected standard deviation of returns than the individual assets they are trading. The lower the average correlation, the worse the undershooting of risk will be. You already know that the correlation between the two equity indices and the bond in the simple example is very low (the rule of thumb value from table 50 in appendix C is 0.1, and the estimated value I calculated in chapter four was negative). The correlation between the subsystem returns is likely to be even lower. So it's very unlikely that you'll get the same desired level of average risk from a portfolio of these three instrument subsystems as you would if you ran each one individually. \end{englishblock}
 
-一旦你把交易资本分配给各个交易子系统，就会遇到一个你在第七章里已经见过的问题：分散化会降低风险。如果你跳过了那一章，
-请回去看一下第 129 页的概念框。像交易子系统这样、已经完成波动率标准化的资产所组成的分散化组合，几乎总会拥有比其中各个单独资产更低的预期收益标准差。
-平均相关性越低，风险目标“打不满”的问题就会越严重。你已经知道，在那个简单示例中，两个股票指数与债券之间的相关性是非常低的
-（附录 C 表 50 中的经验法则数值是 0.1，而我在第四章里估出来的值甚至是负的）。而子系统收益之间的相关性，很可能比这还要更低。
-因此，如果你把这三个品种子系统放进同一个投资组合，那么它们极不可能像单独运行时那样，给你带来相同水平的平均目标风险。
+\begin{chineseblock}一旦你把交易资本分配给各个交易子系统，就会遇到一个你在第七章里已经见过的问题：分散化会降低风险。如果你跳过了那一章，请回去看一下第 129 页的概念框。像交易子系统这样、已经完成波动率标准化的资产所组成的分散化组合，几乎总会拥有比其中各个单独资产更低的预期收益标准差。平均相关性越低，风险目标“打不满”的问题就会越严重。你已经知道，在那个简单示例中，两个股票指数与债券之间的相关性是非常低的（附录 C 表 50 中的经验法则数值是 0.1，而我在第四章里估出来的值甚至是负的）。而子系统收益之间的相关性，很可能比这还要更低。因此，如果你把这三个品种子系统放进同一个投资组合，那么它们极不可能像单独运行时那样，给你带来相同水平的平均目标风险。\end{chineseblock}
 
-As in chapter seven you're going to need to apply a factor to account for the diversification in your portfolio: an instrument diversification multiplier. You multiply the portfolio weighted positions you've calculated by this multiplier to ensure that the overall portfolio has the right level of expected risk.
+\bipairgap
 
-和第七章中一样，你需要引入一个因子来修正投资组合中的分散化效应：品种分散化乘数
-（instrument diversification multiplier）。你需要把之前算出的投资组合加权仓位乘上这个乘数，
-以确保整个投资组合拥有正确水平的预期风险。
+\begin{englishblock} As in chapter seven you're going to need to apply a factor to account for the diversification in your portfolio: an instrument diversification multiplier. You multiply the portfolio weighted positions you've calculated by this multiplier to ensure that the overall portfolio has the right level of expected risk. \end{englishblock}
 
-\subsection*{Staunch Systems Trader / Asset Allocating Investor}
-\bisubsectiontitle{坚定的系统化交易者 / 资产配置型投资者}
+\begin{chineseblock}和第七章中一样，你需要引入一个因子来修正投资组合中的分散化效应：也就是品种分散化乘数。你需要把之前算出的投资组合加权仓位乘上这个乘数，以确保整个投资组合拥有正确水平的预期风险。\end{chineseblock}
 
-Asset allocating investors and staunch systems traders should use the correlations between the returns of each instrument trading subsystem to calculate the expected degree of diversification in the portfolio. You have the option of either using estimated correlations from a back-test, or using rule of thumb correlations.116 Once again be warned that tables 50 to 55 (from page 291 in appendix C) give indicative correlations between instrument returns. Staunch systems traders can multiply these by 0.7 to give the correlation between trading subsystem returns. Asset allocating investors should use instrument return correlations without adjustment. Once you have the correlations, from whichever source, you have two options for the calculation: either use the formula in appendix D on page 297, or the approximations in table 18 (page 131). The number of assets in table 18 will be the number of subsystems you are running. Let's return to the simple three asset example. From table 50 the correlation between bonds and equities is 0.1, and from table 54 the correlation between the S\&P 500 and NASDAQ is around 0.75.117 I'll assume for the sake of the example that I have a dynamic trading system, so I'm not a static asset allocator. This implies I should multiply correlations by 0.7, giving the correlation matrix in table 29. The average correlation is around 0.25, and from table 18 with three assets I get a diversification multiplier of 1.41.118 It's possible to get very high values for the diversification multiplier, if you have enough assets, and they are relatively uncorrelated. However in a crisis such as the 2008 crash, correlations tend to jump higher exposing us to serious losses -- an example of unpredictable risk. To avoid the serious dangers this poses I strongly recommend limiting the value of the multiplier to an absolute maximum of 2.5. 116. Any negative correlations you estimate should be floored at zero to avoid an excessively large multiplier.
+\bilingualsubsection{Staunch Systems Trader / Asset Allocating Investor}{坚定的系统化交易者 / 资产配置型投资者}
 
-资产配置型投资者和坚定的系统化交易者，应当利用每个品种交易子系统收益之间的相关性，来计算投资组合的预期分散化程度。
-你可以选择两种数据来源：使用回测得到的相关性估计，或者使用经验法则相关性。116 再次提醒你，附录 C 中表 50 到表 55
-（第 291 页起）给出的，是品种收益之间的经验相关性。坚定的系统化交易者可以把这些数值乘以 0.7，来近似得到交易子系统收益之间的相关性。
-而资产配置型投资者则应当直接使用品种收益相关性，不做调整。一旦你从任意来源得到了这些相关性，接下来在计算时有两种选择：
-要么使用附录 D 第 297 页里的公式，要么使用表 18
-（第 131 页）中的近似值。在表 18 中，资产数量就等于你运行的子系统数量。让我们回到那个简单的三资产例子。
-根据表 50，债券与股票之间的相关性是 0.1；根据表 54，S\&P 500 与 NASDAQ 之间的相关性大约是 0.75。117
-为了说明问题，我这里假设自己运行的是动态交易系统，而不是静态的资产配置策略。这意味着我应当把相关性乘以 0.7，于是得到表 29 中的相关矩阵。
-它的平均相关性大约是 0.25，而根据表 18，在三个资产的情况下，我得到的分散化乘数是 1.41。118
-如果你拥有足够多的资产，而且它们之间的相关性又相对较低，那么分散化乘数完全可能变得非常高。然而，在像 2008 年崩盘那样的危机时期，
-相关性往往会突然大幅上升，从而让我们暴露在严重亏损之下
---- 这是不可预测风险的一个典型例子。为了避免这种危险，我强烈建议把这个乘数的绝对最大值限制在 2.5。116
-同时，任何你估计出来的负相关都应当先被截断为 0，以避免乘数大得离谱。
+\begin{englishblock} Asset allocating investors and staunch systems traders should use the correlations between the returns of each instrument trading subsystem to calculate the expected degree of diversification in the portfolio. You have the option of either using estimated correlations from a back-test, or using rule of thumb correlations.116 Once again be warned that tables 50 to 55 (from page 291 in appendix C) give indicative correlations between instrument returns. Staunch systems traders can multiply these by 0.7 to give the correlation between trading subsystem returns. Asset allocating investors should use instrument return correlations without adjustment. Once you have the correlations, from whichever source, you have two options for the calculation: either use the formula in appendix D on page 297, or the approximations in table 18 (page 131). The number of assets in table 18 will be the number of subsystems you are running. Let's return to the simple three asset example. From table 50 the correlation between bonds and equities is 0.1, and from table 54 the correlation between the S\&P 500 and NASDAQ is around 0.75.117 I'll assume for the sake of the example that I have a dynamic trading system, so I'm not a static asset allocator. This implies I should multiply correlations by 0.7, giving the correlation matrix in table 29. The average correlation is around 0.25, and from table 18 with three assets I get a diversification multiplier of 1.41.118 It's possible to get very high values for the diversification multiplier, if you have enough assets, and they are relatively uncorrelated. However in a crisis such as the 2008 crash, correlations tend to jump higher exposing us to serious losses -- an example of unpredictable risk. To avoid the serious dangers this poses I strongly recommend limiting the value of the multiplier to an absolute maximum of 2.5. 116. Any negative correlations you estimate should be floored at zero to avoid an excessively large multiplier. \end{englishblock}
 
-\rawtablecaption{CORRELATION MATRIX OF TRADING SUBSYSTEMS FOR THREE EXAMPLE ASSETS\\三个示例资产对应交易子系统的相关矩阵}
-\begingroup
-\small
-\centering
-\begin{tabular}{@{}lccc@{}}
+\begin{chineseblock}资产配置型投资者和坚定的系统化交易者，应当利用每个品种交易子系统收益之间的相关性，来计算投资组合的预期分散化程度。你可以选择两种数据来源：使用回测得到的相关性估计，或者使用经验法则相关性。116 再次提醒你，附录 C 中表 50 到表 55（第 291 页起）给出的，是品种收益之间的经验相关性。坚定的系统化交易者可以把这些数值乘以 0.7，来近似得到交易子系统收益之间的相关性。而资产配置型投资者则应当直接使用品种收益相关性，不做调整。一旦你从任意来源得到了这些相关性，接下来在计算时有两种选择：要么使用附录 D 第 297 页里的公式，要么使用表 18（第 131 页）中的近似值。在表 18 中，资产数量就等于你运行的子系统数量。让我们回到那个简单的三资产例子。根据表 50，债券与股票之间的相关性是 0.1；根据表 54，S\&P 500 与 NASDAQ 之间的相关性大约是 0.75。117为了说明问题，我这里假设自己运行的是动态交易系统，而不是静态的资产配置策略。这意味着我应当把相关性乘以 0.7，于是得到表 29 中的相关矩阵。它的平均相关性大约是 0.25，而根据表 18，在三个资产的情况下，我得到的分散化乘数是 1.41。118如果你拥有足够多的资产，而且它们之间的相关性又相对较低，那么分散化乘数完全可能变得非常高。然而，在像 2008 年崩盘那样的危机时期，相关性往往会突然大幅上升，从而让我们暴露在严重亏损之下--- 这是不可预测风险的一个典型例子。为了避免这种危险，我强烈建议把这个乘数的绝对最大值限制在 2.5。116同时，任何你估计出来的负相关都应当先被截断为 0，以避免乘数大得离谱。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CORRELATION MATRIX OF TRADING SUBSYSTEMS FOR THREE EXAMPLE ASSETS\\三个示例资产对应交易子系统的相关矩阵}\begingroup \small \centering \begin{tabular}{@{} lccc@{}}
 \toprule
 & Bond & S\&P & NASDAQ \\
-\midrule
-US 20 year bond & 1 & & \\
-S\&P 500 & 0.07 & 1 & \\
-NASDAQ & 0.07 & 0.53 & 1 \\
-\bottomrule
-\end{tabular}
-\par
-\endgroup
-
-\begingroup
-\small
-\centering
-\begin{tabular}{@{}lccc@{}}
-\toprule
 & 债券 & S\&P & NASDAQ \\
 \midrule
+US 20 year bond & 1 & & \\
 美国 20 年期国债 & 1 & & \\
 S\&P 500 & 0.07 & 1 & \\
+S\&P 500 & 0.07 & 1 & \\
+NASDAQ & 0.07 & 0.53 & 1 \\
 NASDAQ & 0.07 & 0.53 & 1 \\
 \bottomrule
 \end{tabular}
-\par
-\endgroup
+\par \endgroup \end{bilingualtableblock}
 
-Correlations are 0.7 of the indicative correlations of instrument returns from tables 50 and 54 in appendix C.
+\begin{englishblock} Correlations are 0.7 of the indicative correlations of instrument returns from tables 50 and 54 in appendix C. \end{englishblock}
 
-这里的相关性，是附录 C 表 50 和表 54 中品种收益经验相关性的 0.7 倍。
+\begin{chineseblock}这里的相关性，是附录 C 表 50 和表 54 中品种收益经验相关性的 0.7 倍。\end{chineseblock}
 
-\subsection*{Semi-automatic Trader}
-\bisubsectiontitle{半自动交易者}
+\bilingualsubsection{Semi-automatic Trader}{半自动交易者}
 
-For semi-automatic traders I recommend using the following simple calculation. The instrument diversification multiplier should be your maximum numbers of bets divided by the average number of bets.119 So if you had an average of four bets on at any given time, with a maximum of five, then your multiplier would be 5 ÷ 4 = 1.25. I advocate that the multiplier is limited to a maximum of 2.5, since if you end up frequently trading more than your average then your expected risk will be too high. As I said earlier this means it's advisable that the maximum number of bets isn't more than 2.5 times the expected average.
+\begin{englishblock} For semi-automatic traders I recommend using the following simple calculation. The instrument diversification multiplier should be your maximum numbers of bets divided by the average number of bets.119 So if you had an average of four bets on at any given time, with a maximum of five, then your multiplier would be 5 ÷ 4 = 1.25. I advocate that the multiplier is limited to a maximum of 2.5, since if you end up frequently trading more than your average then your expected risk will be too high. As I said earlier this means it's advisable that the maximum number of bets isn't more than 2.5 times the expected average. \end{englishblock}
 
-对于半自动交易者，我建议使用如下这个简单计算方法：品种分散化乘数应当等于你的最大下注数量，除以平均下注数量。119
-因此，如果你在任何时刻平均持有四笔下注，而最大同时下注数是五笔，那么你的乘数就是 5 ÷ 4 = 1.25。
-我仍然主张把这个乘数的最大值限制在 2.5，因为如果你最终经常交易得比自己的平均下注数量还多，那么你的预期风险就会过高。
-正如我前面提到过的，这也意味着，建议你把最大下注数控制在长期平均下注数的 2.5 倍以内。
+\begin{chineseblock}对于半自动交易者，我建议使用如下这个简单计算方法：品种分散化乘数应当等于你的最大下注数量，除以平均下注数量。119因此，如果你在任何时刻平均持有四笔下注，而最大同时下注数是五笔，那么你的乘数就是 5 ÷ 4 = 1.25。我仍然主张把这个乘数的最大值限制在 2.5，因为如果你最终经常交易得比自己的平均下注数量还多，那么你的预期风险就会过高。正如我前面提到过的，这也意味着，建议你把最大下注数控制在长期平均下注数的 2.5 倍以内。\end{chineseblock}
 
-\section*{A portfolio of positions and trades}
-\phantomsection
-\addcontentsline{toc}{section}{A portfolio of positions and trades}
-\bisectiontitle{由仓位与交易构成的投资组合}
+\bilingualsection{A portfolio of positions and trades}{由仓位与交易构成的投资组合}
 
-\subsection*{This section is relevant to all readers}
-\bisubsectiontitle{这一节与所有读者都相关}
+\bilingualsubsection{This section is relevant to all readers}{这一节与所有读者都相关}
 
-You're now in a position to see how a complete trading system for the simple three asset example could work. I'm assuming that I use futures to trade these assets and that I have an annualised cash volatility target of €100,000. The price volatility and exchange rates are correct as I 119. This essentially assumes that all of a semi-automatic trader's bets are always perfectly correlated, which is very conservative. Here is the proof of this result. Suppose you're aiming for a daily volatility target of \$1,000 and have an average of five bets, with a maximum of 10. All portfolio weights are 100\% ÷ 10 = 10\%. Each trading subsystem will also have a volatility target of \$1,000. Once multiplied by the portfolio weight each subsystem position will have an average volatility of \$100. On average with five bets, all of which are perfectly correlated, your daily portfolio returns will be 5 × \$100 = \$500 (note had they all been uncorrelated the risk would only be \$223). So to hit the overall target of \$1,000 you need a diversification multiplier of 2. write, but I've used some arbitrary forecasts to make this example interesting but not too specific. You'll see some more specific examples in part four. First of all tables 30 and 31 are there to remind you of the calculations in earlier chapters for each of the three trading subsystems.
+\begin{englishblock} You're now in a position to see how a complete trading system for the simple three asset example could work. I'm assuming that I use futures to trade these assets and that I have an annualised cash volatility target of €100,000. The price volatility and exchange rates are correct as I 119. This essentially assumes that all of a semi-automatic trader's bets are always perfectly correlated, which is very conservative. Here is the proof of this result. Suppose you're aiming for a daily volatility target of \$1,000 and have an average of five bets, with a maximum of 10. All portfolio weights are 100\% ÷ 10 = 10\%. Each trading subsystem will also have a volatility target of \$1,000. Once multiplied by the portfolio weight each subsystem position will have an average volatility of \$100. On average with five bets, all of which are perfectly correlated, your daily portfolio returns will be 5 × \$100 = \$500 (note had they all been uncorrelated the risk would only be \$223). So to hit the overall target of \$1,000 you need a diversification multiplier of 2. write, but I've used some arbitrary forecasts to make this example interesting but not too specific. You'll see some more specific examples in part four. First of all tables 30 and 31 are there to remind you of the calculations in earlier chapters for each of the three trading subsystems. \end{englishblock}
 
-现在，你已经可以看到：在那个简单的三资产例子中，一套完整的交易系统会如何运作。这里我假设自己使用期货来交易这些资产，
-并且年化现金波动率目标是 €100,000。价格波动率和汇率都与我写作当时一致，而我则人为设定了一些预测值，让这个例子既有意思，又不过分具体。
-你会在第四部分里看到更多更具体的示例。首先，表 30 和表 31 的作用，是提醒你回顾前面章节中针对这三个交易子系统各自进行的计算。
-119. 这一做法本质上假设半自动交易者的所有下注始终完全相关，因此是非常保守的。下面给出这个结果的证明。
-假设你的目标是达到 \$1,000 的日波动率，同时你平均持有五笔下注，最大下注数是十笔。所有投资组合权重都是 100\% ÷ 10 = 10\%。
-每个交易子系统本身也拥有 \$1,000 的波动率目标。一旦乘上投资组合权重，每个子系统仓位的平均波动率就是 \$100。
-在平均有五笔下注、且它们彼此完全相关的情况下，你的日投资组合收益波动就是 5 × \$100 = \$500
-（注意，如果它们完全不相关，那么风险其实只有 \$223）。因此，为了达到整体 \$1,000 的目标，你需要一个值为 2 的分散化乘数。
+\begin{chineseblock}现在，你已经可以看到：在那个简单的三资产例子中，一套完整的交易系统会如何运作。这里我假设自己使用期货来交易这些资产，并且年化现金波动率目标是 €100,000。价格波动率和汇率都与我写作当时一致，而我则人为设定了一些预测值，让这个例子既有意思，又不过分具体。你会在第四部分里看到更多更具体的示例。首先，表 30 和表 31 的作用，是提醒你回顾前面章节中针对这三个交易子系统各自进行的计算。119. 这一做法本质上假设半自动交易者的所有下注始终完全相关，因此是非常保守的。下面给出这个结果的证明。假设你的目标是达到 \$1,000 的日波动率，同时你平均持有五笔下注，最大下注数是十笔。所有投资组合权重都是 100\% ÷ 10 = 10\%。每个交易子系统本身也拥有 \$1,000 的波动率目标。一旦乘上投资组合权重，每个子系统仓位的平均波动率就是 \$100。在平均有五笔下注、且它们彼此完全相关的情况下，你的日投资组合收益波动就是 5 × \$100 = \$500（注意，如果它们完全不相关，那么风险其实只有 \$223）。因此，为了达到整体 \$1,000 的目标，你需要一个值为 2 的分散化乘数。\end{chineseblock}
 
-\rawtablecaption{CALCULATING THE INSTRUMENT VALUE VOLATILITY FOR THE THREE ASSETS IN THE EXAMPLE PORTFOLIO\\为示例投资组合中的三个资产计算品种价值波动率}
-\begingroup
-\small
-\centering
+\begin{bilingualtableblock} \rawtablecaption{CALCULATING THE INSTRUMENT VALUE VOLATILITY FOR THE THREE ASSETS IN THE EXAMPLE PORTFOLIO\\为示例投资组合中的三个资产计算品种价值波动率}\begingroup \small \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{} lccccc@{}}
 \toprule
-& \shortstack{(A)\\Price\\volatility\\\% per day}
-& \shortstack{(B)\\Block\\value}
-& \shortstack{(C)\\Instrument\\currency\\volatility\\A$\times$B}
-& \shortstack{(D)\\Exchange\\rate\\USD/EUR}
-& \shortstack{(E)\\Instrument\\value\\volatility\\C$\times$D} \\
+& \shortstack{(A)\\Price\\volatility\\\% per day}& \shortstack{(B)\\Block\\value}& \shortstack{(C)\\Instrument\\currency\\volatility\\A$\times$B}& \shortstack{(D)\\Exchange\\rate\\USD/EUR}& \shortstack{(E)\\Instrument\\value\\volatility\\C$\times$D} \\
+& \shortstack{(A)\\价格\\波动率\\\%/天}& \shortstack{(B)\\单位价值}& \shortstack{(C)\\品种货币\\波动率\\A$\times$B}& \shortstack{(D)\\汇率\\USD/EUR}& \shortstack{(E)\\品种价值\\波动率\\C$\times$D} \\
 \midrule
 US 20 year bond & 0.52 & \$1500 & \$780 & 0.88 & €686 \\
-S\&P 500 equities & 0.84 & \$1145 & \$956 & 0.88 & €841 \\
-NASDAQ equities & 0.87 & \$880 & \$766 & 0.88 & €674 \\
-\bottomrule
-\end{tabular}%
-}
-\par
-\endgroup
-
-\begingroup
-\small
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-& \shortstack{(A)\\价格\\波动率\\\%/天}
-& \shortstack{(B)\\单位价值}
-& \shortstack{(C)\\品种货币\\波动率\\A$\times$B}
-& \shortstack{(D)\\汇率\\USD/EUR}
-& \shortstack{(E)\\品种价值\\波动率\\C$\times$D} \\
-\midrule
 美国 20 年期国债 & 0.52 & \$1500 & \$780 & 0.88 & €686 \\
+S\&P 500 equities & 0.84 & \$1145 & \$956 & 0.88 & €841 \\
 S\&P 500 股票 & 0.84 & \$1145 & \$956 & 0.88 & €841 \\
+NASDAQ equities & 0.87 & \$880 & \$766 & 0.88 & €674 \\
 NASDAQ 股票 & 0.87 & \$880 & \$766 & 0.88 & €674 \\
 \bottomrule
 \end{tabular}%
 }
-\par
-\endgroup
+\par \endgroup \end{bilingualtableblock}
 
-Values in table assume we're using futures and assuming a Euro investor. Figures correct as of January 2015.
+\begin{englishblock} Values in table assume we're using futures and assuming a Euro investor. Figures correct as of January 2015. \end{englishblock}
 
-表中的数值是假设我们使用期货、且投资者以欧元计价时得到的。数据以 2015 年 1 月为准。
+\begin{chineseblock}表中的数值是假设我们使用期货、且投资者以欧元计价时得到的。数据以 2015 年 1 月为准。\end{chineseblock}
 
-\rawtablecaption{CALCULATING THE SUBSYSTEM POSITION FOR THE THREE TRADING SUBSYSTEMS IN THE EXAMPLE PORTFOLIO\\为示例投资组合中的三个交易子系统计算子系统仓位}
-\begingroup
-\small
-\centering
+\begin{bilingualtableblock} \rawtablecaption{CALCULATING THE SUBSYSTEM POSITION FOR THE THREE TRADING SUBSYSTEMS IN THE EXAMPLE PORTFOLIO\\为示例投资组合中的三个交易子系统计算子系统仓位}\begingroup \small \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
+\begin{tabular}{@{} lccccc@{}}
 \toprule
-& \shortstack{(F)\\Instrument\\value\\volatility}
-& \shortstack{(G)\\Daily cash\\volatility\\target}
-& \shortstack{(H)\\Volatility\\scalar\\G$\div$F}
-& \shortstack{(J)\\Combined\\forecast}
-& \shortstack{(K)\\Subsystem\\position\\(H$\times$J)$\div$10} \\
+& \shortstack{(F)\\Instrument\\value\\volatility}& \shortstack{(G)\\Daily cash\\volatility\\target}& \shortstack{(H)\\Volatility\\scalar\\G$\div$F}& \shortstack{(J)\\Combined\\forecast}& \shortstack{(K)\\Subsystem\\position\\(H$\times$J)$\div$10} \\
+& \shortstack{(F)\\品种价值\\波动率}& \shortstack{(G)\\日现金\\波动率目标}& \shortstack{(H)\\波动率\\缩放因子\\G$\div$F}& \shortstack{(J)\\合成预测}& \shortstack{(K)\\子系统仓位\\(H$\times$J)$\div$10} \\
 \midrule
 US 20 year bond & €686 & €6,250 & 9.11 & 10 & 9.11 \\
-S\&P 500 equities & €841 & €6,250 & 7.43 & -10 & -7.43 \\
-NASDAQ equities & €674 & €6,250 & 9.28 & -15 & -13.9 \\
-\bottomrule
-\end{tabular}%
-}
-\par
-\endgroup
-
-\begingroup
-\small
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lccccc@{}}
-\toprule
-& \shortstack{(F)\\品种价值\\波动率}
-& \shortstack{(G)\\日现金\\波动率目标}
-& \shortstack{(H)\\波动率\\缩放因子\\G$\div$F}
-& \shortstack{(J)\\合成预测}
-& \shortstack{(K)\\子系统仓位\\(H$\times$J)$\div$10} \\
-\midrule
 美国 20 年期国债 & €686 & €6,250 & 9.11 & 10 & 9.11 \\
+S\&P 500 equities & €841 & €6,250 & 7.43 & -10 & -7.43 \\
 S\&P 500 股票 & €841 & €6,250 & 7.43 & -10 & -7.43 \\
+NASDAQ equities & €674 & €6,250 & 9.28 & -15 & -13.9 \\
 NASDAQ 股票 & €674 & €6,250 & 9.28 & -15 & -13.9 \\
 \bottomrule
 \end{tabular}%
 }
-\par
-\endgroup
+\par \endgroup \end{bilingualtableblock}
 
-The investor has a €100,000 cash volatility target, which implies a €6,250 daily target.120
-Forecasts are arbitrary.
+\begin{englishblock} The investor has a €100,000 cash volatility target, which implies a €6,250 daily target.120 Forecasts are arbitrary. \end{englishblock}
 
-这位投资者的现金波动率目标是 €100,000，
-意味着其日目标为 €6,250。120
-预测值是人为设定的。
+\begin{chineseblock}这位投资者的现金波动率目标是 €100,000，意味着其日目标为 €6,250。120预测值是人为设定的。\end{chineseblock}
 
-The subsystem positions in column K assume one instrument is traded with the
-entire trading capital. In table 32 I bring in the instrument weights and instrument
-diversification multiplier that I calculated earlier in this chapter. So to get the final
-portfolio instrument position I just need to multiply each subsystem position by the
-relevant instrument weight and the multiplier which compensates for the diversification
-in the portfolio.
+\bipairgap
 
-K 列中的子系统仓位是假设每个品种都单独使用全部交易资本来交易时得到的。
-在表 32 中，我把本章前面已经算出的品种权重和品种分散化乘数纳入进来。
-因此，要得到最终的投资组合品种仓位，
-我只需要把每个子系统仓位乘以相应的品种权重，
-再乘以那个用于补偿投资组合分散化效应的乘数即可。
+\begin{englishblock} The subsystem positions in column K assume one instrument is traded with the entire trading capital. In table 32 I bring in the instrument weights and instrument diversification multiplier that I calculated earlier in this chapter. So to get the final portfolio instrument position I just need to multiply each subsystem position by the relevant instrument weight and the multiplier which compensates for the diversification in the portfolio. \end{englishblock}
 
-\rawtablecaption{CALCULATING THE PORTFOLIO INSTRUMENT POSITION FOR THE EXAMPLE PORTFOLIO\\为示例投资组合计算投资组合品种仓位}
-\begingroup
-\small
-\centering
+\begin{chineseblock} K 列中的子系统仓位是假设每个品种都单独使用全部交易资本来交易时得到的。在表 32 中，我把本章前面已经算出的品种权重和品种分散化乘数纳入进来。因此，要得到最终的投资组合品种仓位，我只需要把每个子系统仓位乘以相应的品种权重，再乘以那个用于补偿投资组合分散化效应的乘数即可。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CALCULATING THE PORTFOLIO INSTRUMENT POSITION FOR THE EXAMPLE PORTFOLIO\\为示例投资组合计算投资组合品种仓位}\begingroup \small \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{} lcccc@{}}
 \toprule
-& \shortstack{(K)\\Subsystem\\position}
-& \shortstack{(L)\\Instrument\\weight}
-& \shortstack{(M)\\Instrument\\diversification\\multiplier}
-& \shortstack{(N)\\Portfolio instrument\\position\\K$\times$L$\times$M} \\
+& \shortstack{(K)\\Subsystem\\position}& \shortstack{(L)\\Instrument\\weight}& \shortstack{(M)\\Instrument\\diversification\\multiplier}& \shortstack{(N)\\Portfolio instrument\\position\\K$\times$L$\times$M} \\
+& \shortstack{(K)\\子系统\\仓位}& \shortstack{(L)\\品种权重}& \shortstack{(M)\\品种分散化\\乘数}& \shortstack{(N)\\投资组合品种仓位\\K$\times$L$\times$M} \\
 \midrule
 US 20 year bond & 9.11 & 50\% & 1.41 & 6.42 \\
-S\&P 500 equities & -7.43 & 25\% & 1.41 & -2.62 \\
-NASDAQ equities & -13.9 & 25\% & 1.41 & -4.91 \\
-\bottomrule
-\end{tabular}%
-}
-\par
-\endgroup
-
-\begingroup
-\small
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-& \shortstack{(K)\\子系统\\仓位}
-& \shortstack{(L)\\品种权重}
-& \shortstack{(M)\\品种分散化\\乘数}
-& \shortstack{(N)\\投资组合品种仓位\\K$\times$L$\times$M} \\
-\midrule
 美国 20 年期国债 & 9.11 & 50\% & 1.41 & 6.42 \\
+S\&P 500 equities & -7.43 & 25\% & 1.41 & -2.62 \\
 S\&P 500 股票 & -7.43 & 25\% & 1.41 & -2.62 \\
+NASDAQ equities & -13.9 & 25\% & 1.41 & -4.91 \\
 NASDAQ 股票 & -13.9 & 25\% & 1.41 & -4.91 \\
 \bottomrule
 \end{tabular}%
 }
-\par
-\endgroup
+\par \endgroup \end{bilingualtableblock}
 
-The table is using the instrument weights and diversification multiplier derived earlier in the chapter.
+\begin{englishblock} The table is using the instrument weights and diversification multiplier derived earlier in the chapter. \end{englishblock}
 
-这张表使用的是本章前面已经推导出的品种权重和分散化乘数。
+\begin{chineseblock}这张表使用的是本章前面已经推导出的品种权重和分散化乘数。\end{chineseblock}
 
-The final table 33 shows how I generate actual trades. To begin with I round the instrument position to get a rounded target position. This is the first time that I've rounded in my calculations. I then compare this to the current position which I already have. If I'd only just started trading this will be zero, but column P shows some arbitrary current positions to demonstrate the logic. Finally I can calculate the size of any trade needed. I recommend that if the current position is within 10\% of the rounded target position, then you shouldn't trade. I call this position inertia. So for example if I had a target position of 50 crude oil contracts and my current position was between 45 and 55 contracts then I wouldn't bother trading. Conversely if the current position was 42 contracts versus a target of 50, I'd buy 8 contracts to hit my target. In the table the positions are relatively small so position inertia isn't used.
+\bipairgap
 
-最后的表 33 展示了我是如何生成实际交易指令的。首先，我会把品种仓位四舍五入，得到一个四舍五入后的目标仓位。
-这是我在整个计算过程中第一次进行四舍五入。然后，我会把这个目标仓位与当前已经持有的实际仓位进行比较。
-如果我是刚开始交易，那么当前仓位当然是零；不过表中的 P 列给出了一些任意设定的当前仓位，以便展示逻辑。
-最后，我就能算出所需交易的规模。我建议，如果当前仓位距离四舍五入后的目标仓位在 10\% 以内，那么你就不需要交易。
-我把这个机制称为仓位惯性
-（position inertia）。举个例子，如果我的目标仓位是 50 手原油期货，而当前仓位处在 45 到 55 手之间，那我就不会去交易。
-反过来，如果当前仓位是 42 手，而目标是 50 手，那我就会买入 8 手，来达到目标。在这张表中，由于仓位都相对较小，因此并没有启用仓位惯性。
+\begin{englishblock} The final table 33 shows how I generate actual trades. To begin with I round the instrument position to get a rounded target position. This is the first time that I've rounded in my calculations. I then compare this to the current position which I already have. If I'd only just started trading this will be zero, but column P shows some arbitrary current positions to demonstrate the logic. Finally I can calculate the size of any trade needed. I recommend that if the current position is within 10\% of the rounded target position, then you shouldn't trade. I call this position inertia. So for example if I had a target position of 50 crude oil contracts and my current position was between 45 and 55 contracts then I wouldn't bother trading. Conversely if the current position was 42 contracts versus a target of 50, I'd buy 8 contracts to hit my target. In the table the positions are relatively small so position inertia isn't used. \end{englishblock}
 
-\rawtablecaption{CALCULATING THE REQUIRED TRADE GIVEN THE ROUNDED TARGET POSITIONS AND SOME ARBITRARY CURRENT POSITIONS\\给定四舍五入后的目标仓位和一些任意设定的当前仓位，计算所需交易}
-\begingroup
-\small
-\centering
+\begin{chineseblock}最后的表 33 展示了我是如何生成实际交易指令的。首先，我会把品种仓位四舍五入，得到一个四舍五入后的目标仓位。这是我在整个计算过程中第一次进行四舍五入。然后，我会把这个目标仓位与当前已经持有的实际仓位进行比较。如果我是刚开始交易，那么当前仓位当然是零；不过表中的 P 列给出了一些任意设定的当前仓位，以便展示逻辑。最后，我就能算出所需交易的规模。我建议，如果当前仓位距离四舍五入后的目标仓位在 10\% 以内，那么你就不需要交易。我把这个机制称为仓位惯性（position inertia）。举个例子，如果我的目标仓位是 50 手原油期货，而当前仓位处在 45 到 55 手之间，那我就不会去交易。反过来，如果当前仓位是 42 手，而目标是 50 手，那我就会买入 8 手，来达到目标。在这张表中，由于仓位都相对较小，因此并没有启用仓位惯性。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{CALCULATING THE REQUIRED TRADE GIVEN THE ROUNDED TARGET POSITIONS AND SOME ARBITRARY CURRENT POSITIONS\\给定四舍五入后的目标仓位和一些任意设定的当前仓位，计算所需交易}\begingroup \small \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
+\begin{tabular}{@{} lcccc@{}}
 \toprule
-& \shortstack{(N)\\Portfolio\\instrument\\position}
-& \shortstack{(P)\\Rounded target\\position\\Round (N)}
-& \shortstack{(Q)\\Current\\position}
-& \shortstack{(R)\\Trade\\P-Q} \\
+& \shortstack{(N)\\Portfolio\\instrument\\position}& \shortstack{(P)\\Rounded target\\position\\Round (N)}& \shortstack{(Q)\\Current\\position}& \shortstack{(R)\\Trade\\P-Q} \\
+& \shortstack{(N)\\投资组合\\品种仓位}& \shortstack{(P)\\四舍五入后的\\目标仓位\\Round (N)}& \shortstack{(Q)\\当前\\仓位}& \shortstack{(R)\\交易\\P-Q} \\
 \midrule
 US 20 year bond & 6.42 & 6 & 4 & Buy 2 \\
-S\&P 500 equities & -2.62 & -3 & -2 & Sell 1 \\
-NASDAQ equities & -4.91 & -5 & -5 & None \\
-\bottomrule
-\end{tabular}%
-}
-\par
-\endgroup
-
-\begingroup
-\small
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-& \shortstack{(N)\\投资组合\\品种仓位}
-& \shortstack{(P)\\四舍五入后的\\目标仓位\\Round (N)}
-& \shortstack{(Q)\\当前\\仓位}
-& \shortstack{(R)\\交易\\P-Q} \\
-\midrule
 美国 20 年期国债 & 6.42 & 6 & 4 & 买入 2 \\
+S\&P 500 equities & -2.62 & -3 & -2 & Sell 1 \\
 S\&P 500 股票 & -2.62 & -3 & -2 & 卖出 1 \\
+NASDAQ equities & -4.91 & -5 & -5 & None \\
 NASDAQ 股票 & -4.91 & -5 & -5 & 无 \\
 \bottomrule
 \end{tabular}%
 }
-\par
-\endgroup
+\par \endgroup \end{bilingualtableblock}
 
-\medskip
-\noindent\textbf{CONCEPT: POSITION INERTIA}
+\medskip \noindent\textbf{CONCEPT: POSITION INERTIA}
 
-Position inertia is a way of avoiding small frequent trades that increase costs
-without earning additional returns.
+\begin{englishblock} Position inertia is a way of avoiding small frequent trades that increase costs without earning additional returns. For example suppose your desired unrounded position is 133.48 Italian government bond futures, which is 133 contracts rounded. If your desired position goes to 133.52, 134 rounded, you’d buy one contract. If it drops back to 133.48 you would sell again. But the changes in desired position were only 0.04. Is it worth buying and selling, paying two lots of commission and market spreads, for such a small adjustment? Probably not. The solution is to avoid trading until the target position is more than 10\% away from the current position. For Italian bond futures the first movement in the desired position to 133.52 wouldn’t result in a trade, since your current position of 133 would only be 0.75\% away from the desired rounded position of 134. In fact the target position would have to go to 147 blocks before you traded. Position inertia significantly reduces trading costs, which as you’ll see in the next chapter can seriously affect your returns. My research shows position inertia usually has a negligible effect on pre-cost performance, so there is no downside to using it.121 Trades can be done manually or by an algorithm if you have a completely automated system. There is information on how I automate my own trading with simple algorithms on my website (see appendix A). \end{englishblock}
 
-For example suppose your desired unrounded position is 133.48 Italian government
-bond futures, which is 133 contracts rounded. If your desired position goes to
-133.52, 134 rounded, you’d buy one contract. If it drops back to 133.48 you
-would sell again. But the changes in desired position were only 0.04. Is it worth
-buying and selling, paying two lots of commission and market spreads, for such a
-small adjustment? Probably not.
+\medskip \noindent\textbf{概念：仓位惯性}
 
-The solution is to avoid trading until the target position is more than 10\% away
-from the current position. For Italian bond futures the first movement in the
-desired position to 133.52 wouldn’t result in a trade, since your current position of
-133 would only be 0.75\% away from the desired rounded position of 134. In fact
-the target position would have to go to 147 blocks before you traded.
+\begin{chineseblock}仓位惯性是一种避免为了微小调整而频繁交易的方法；这些小交易会增加成本，却不会带来额外收益。例如，假设你想要的未四舍五入仓位是 133.48 手意大利国债期货，四舍五入后是 133 手。如果你的目标仓位上升到 133.52，四舍五入后就会变成 134 手，那么你就会买入 1 手合约。如果它随后又跌回 133.48，你又会卖出这 1 手。但实际上，你想要的仓位只变化了 0.04。为了这样一个微小调整而反复买卖、支付两次佣金和买卖价差，真的值得吗？很可能不值得。解决办法是：只有当目标仓位与当前仓位相差超过 10\% 时，你才进行交易。对于意大利国债期货来说，当目标仓位第一次变成 133.52 时，其实并不会触发交易，因为你当前的 133 手仓位，距离四舍五入后目标仓位 134 手只差 0.75\%。事实上，目标仓位得一路上升到 147 手，你才会真正开始交易。仓位惯性能显著降低交易成本，而你会在下一章看到，成本会严重影响收益。我的研究表明，仓位惯性对成本前表现的影响通常微乎其微，因此使用它几乎没有坏处。121 如果你有一个完全自动化的系统，那么这些交易既可以手工完成，也可以由算法自动完成。关于我如何使用简单算法来自动化自己的交易，我的网站上有相关信息（见附录 A）。\end{chineseblock}
 
-Position inertia significantly reduces trading costs, which as you’ll see in the next
-chapter can seriously affect your returns. My research shows position inertia usually
-has a negligible effect on pre-cost performance, so there is no downside to using
-it.121
+\bilingualsection{Summary for creating a portfolio of trading subsystems}{构建交易子系统投资组合总结}
 
-Trades can be done manually or by an algorithm if you have a completely automated
-system. There is information on how I automate my own trading with simple algorithms
-on my website (see appendix A).
+\begin{englishblock} Subsystem This is the number of instrument blocks you hold in each trading position subsystem, given your forecasts, the instrument riskiness and your daily cash volatility target, as calculated in chapter ten. It is in instrument blocks. \end{englishblock}
 
-\medskip
-\noindent\textbf{概念：仓位惯性}
+\begin{chineseblock}子系统仓位 这是在给定预测值、品种风险程度以及日现金波动率目标的情况下，你在每个交易子系统中应持有的品种单位数量，其计算方法见第十章。单位为品种单位数。\end{chineseblock}
 
-仓位惯性是一种避免为了微小调整而频繁交易的方法；
-这些小交易会增加成本，却不会带来额外收益。
+\bipairgap
 
-例如，假设你想要的未四舍五入仓位是 133.48 手意大利国债期货，
-四舍五入后是 133 手。如果你的目标仓位上升到 133.52，
-四舍五入后就会变成 134 手，那么你就会买入 1 手合约。
-如果它随后又跌回 133.48，你又会卖出这 1 手。
-但实际上，你想要的仓位只变化了 0.04。
-为了这样一个微小调整而反复买卖、支付两次佣金和买卖价差，真的值得吗？
-很可能不值得。
+\begin{englishblock} Instrument Each trading subsystem should have an instrument weight. Weights weights should add up 100\%. Staunch systems traders and asset allocating investors can use handcrafting or bootstrapping to find weights. Correlations can be estimated from a back-test of trading subsystems, or using rules of thumb. In the latter case you should multiply instrument return correlations from appendix C by 0.7 if you're trading a dynamic strategy, or by 1.0 if you're asset allocating investors using fixed constant forecasts. Semi-automatic traders should use equal instrument weights of 100\% divided by the maximum number of possible bets. \end{englishblock}
 
-解决办法是：只有当目标仓位与当前仓位相差超过 10\% 时，你才进行交易。
-对于意大利国债期货来说，当目标仓位第一次变成 133.52 时，
-其实并不会触发交易，因为你当前的 133 手仓位，
-距离四舍五入后目标仓位 134 手只差 0.75\%。
-事实上，目标仓位得一路上升到 147 手，
-你才会真正开始交易。
+\begin{chineseblock}品种权重 每个交易子系统都应当有一个品种权重。所有权重加总应为 100\%。坚定的系统化交易者和资产配置型投资者可以使用手工构造法或 bootstrapping 来找到这些权重。相关性既可以从交易子系统的回测结果中估计，也可以使用经验法则。在后一种情况下，如果你运行的是动态策略，就应当把附录 C 中的品种收益相关性乘以 0.7；如果你是使用固定恒定预测值的资产配置型投资者，则应使用 1.0，不做调整。半自动交易者则应使用相等的品种权重，即 100\% 除以最大可能下注数量。\end{chineseblock}
 
-仓位惯性能显著降低交易成本，而你会在下一章看到，
-成本会严重影响收益。我的研究表明，仓位惯性对成本前表现的影响通常微乎其微，
-因此使用它几乎没有坏处。121
+\bipairgap
 
-如果你有一个完全自动化的系统，
-那么这些交易既可以手工完成，也可以由算法自动完成。
-关于我如何使用简单算法来自动化自己的交易，
-我的网站上有相关信息
-（见附录 A）。
+\begin{englishblock} Instrument For asset allocating investors and staunch systems traders this is calculated diversification using the correlation of trading subsystem returns. The multiplier can be multiplier calculated precisely using the formula in appendix C on page 297 or approximately using table 18 on page 131. For semi-automatic traders this will be equal to the maximum number of bets divided by the average number of bets. I recommend that in all cases the multiplier is limited to a maximum value of 2.5. \end{englishblock}
 
-\section*{Summary for creating a portfolio of trading subsystems}
-\phantomsection
-\addcontentsline{toc}{section}{Summary for creating a portfolio of trading subsystems}
-\bisectiontitle{构建交易子系统投资组合总结}
+\begin{chineseblock}品种分散化乘数 对于资产配置型投资者和坚定的系统化交易者来说，它是根据交易子系统收益之间的相关性来计算的。该乘数既可以使用附录 C第 297 页中的公式精确计算，也可以用第 131 页表 18 中的近似值来估算。对于半自动交易者来说，它等于最大下注数量除以平均下注数量。我建议在所有情况下，都把这个乘数的最大值限制在 2.5。 \end{chineseblock}
 
-Subsystem This is the number of instrument blocks you hold in each trading position subsystem, given your forecasts, the instrument riskiness and your daily cash volatility target, as calculated in chapter ten. It is in instrument blocks.
+\bipairgap
 
-子系统仓位 这是在给定预测值、品种风险程度以及日现金波动率目标的情况下，你在每个交易子系统中应持有的品种单位数量，
-其计算方法见第十章。单位为品种单位数。
+\begin{englishblock} Portfolio Equal to instrument subsystem position multiplied by instrument weight instrument and then by instrument diversification multiplier. position \end{englishblock}
 
-Instrument Each trading subsystem should have an instrument weight. Weights weights should add up 100\%. Staunch systems traders and asset allocating investors can use handcrafting or bootstrapping to find weights. Correlations can be estimated from a back-test of trading subsystems, or using rules of thumb. In the latter case you should multiply instrument return correlations from appendix C by 0.7 if you're trading a dynamic strategy, or by 1.0 if you're asset allocating investors using fixed constant forecasts. Semi-automatic traders should use equal instrument weights of 100\% divided by the maximum number of possible bets.
+\begin{chineseblock}投资组合品种仓位 等于品种子系统仓位乘以品种权重，再乘以品种分散化乘数。\end{chineseblock}
 
-品种权重 每个交易子系统都应当有一个品种权重。所有权重加总应为 100\%。坚定的系统化交易者和资产配置型投资者可以使用手工构造法或 bootstrapping 来找到这些权重。
-相关性既可以从交易子系统的回测结果中估计，也可以使用经验法则。在后一种情况下，如果你运行的是动态策略，就应当把附录 C 中的品种收益相关性乘以 0.7；
-如果你是使用固定恒定预测值的资产配置型投资者，则应使用 1.0，不做调整。半自动交易者则应使用相等的品种权重，
-即 100\% 除以最大可能下注数量。
+\bipairgap
 
-Instrument For asset allocating investors and staunch systems traders this is calculated diversification using the correlation of trading subsystem returns. The multiplier can be multiplier calculated precisely using the formula in appendix C on page 297 or approximately using table 18 on page 131. For semi-automatic traders this will be equal to the maximum number of bets divided by the average number of bets. I recommend that in all cases the multiplier is limited to a maximum value of 2.5.
+\begin{englishblock} Rounded This is the portfolio instrument position rounded to the nearest integer target position number of instrument blocks. \end{englishblock}
 
-品种分散化乘数 对于资产配置型投资者和坚定的系统化交易者来说，它是根据交易子系统收益之间的相关性来计算的。该乘数既可以使用附录 C
-第 297 页中的公式精确计算，也可以用第 131 页表 18 中的近似值来估算。对于半自动交易者来说，它等于最大下注数量除以平均下注数量。
-我建议在所有情况下，都把这个乘数的最大值限制在 2.5。
+\begin{chineseblock}四舍五入后的目标仓位 这是把投资组合品种仓位四舍五入到最接近的整数品种单位之后得到的值。\end{chineseblock}
 
-Portfolio Equal to instrument subsystem position multiplied by instrument weight instrument and then by instrument diversification multiplier. position
+\bipairgap
 
-投资组合品种仓位 等于品种子系统仓位乘以品种权重，再乘以品种分散化乘数。
+\begin{englishblock} Desired trade After calculating the rounded target position you compare this to your actual current position and generate the necessary trade. If the current position is within 10\% of the target then you don't need to trade (position inertia). \end{englishblock}
 
-Rounded This is the portfolio instrument position rounded to the nearest integer target position number of instrument blocks.
+\begin{chineseblock}目标交易 在算出四舍五入后的目标仓位之后，你需要把它与当前实际仓位进行比较，并生成必要的交易。如果当前仓位距离目标仓位在 10\% 以内，那你就不需要交易（也就是启用仓位惯性）。\end{chineseblock}
 
-四舍五入后的目标仓位 这是把投资组合品种仓位四舍五入到最接近的整数品种单位之后得到的值。
+\bipairgap
 
-Desired trade After calculating the rounded target position you compare this to your actual current position and generate the necessary trade. If the current position is within 10\% of the target then you don't need to trade (position inertia).
+\begin{englishblock} This completes the main part of the framework. I've now shown you how to create a complete trading system, consisting of a portfolio of trading subsystems. In the next chapter we will consider how to design systems which cope with the varying costs you'd see trading at different speeds, and with larger or smaller amounts of capital. \end{englishblock}
 
-目标交易 在算出四舍五入后的目标仓位之后，你需要把它与当前实际仓位进行比较，并生成必要的交易。如果当前仓位距离目标仓位在 10\% 以内，
-那你就不需要交易
-（也就是启用仓位惯性）。
-
-This completes the main part of the framework. I've now shown you how to create a complete trading system, consisting of a portfolio of trading subsystems. In the next chapter we will consider how to design systems which cope with the varying costs you'd see trading at different speeds, and with larger or smaller amounts of capital.
-
-到这里，框架的主体部分就完成了。我现在已经向你展示了，如何创建一套完整的交易系统，它由一个交易子系统投资组合构成。
-下一章中，我们将讨论如何设计这样的系统：它既能应对不同交易速度下出现的不同成本，也能适配更大或更小规模的资本。
+\begin{chineseblock}到这里，框架的主体部分就完成了。我现在已经向你展示了，如何创建一套完整的交易系统，它由一个交易子系统投资组合构成。下一章中，我们将讨论如何设计这样的系统：它既能应对不同交易速度下出现的不同成本，也能适配更大或更小规模的资本。\end{chineseblock}

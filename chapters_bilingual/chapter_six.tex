@@ -1,249 +1,185 @@
-\chapter{Instruments}
-\bichaptertitle{交易品种}
+\bilingualchapter{Instruments}{交易品种}
 
-BEFORE YOU THINK ABOUT HOW YOU TRADE YOU NEED TO consider what you're going to trade -- the actual instruments to buy or sell. It's likely you will know which asset classes you want to deal with, based on your knowledge and familiarity with different markets. However there are certain instruments that should be completely avoided for systematic trading. Others have characteristics which make them worse than other alternatives, or would force you to trade them in a particular way. Finally there is often a choice of how you can access a particular market; you could get Euro Stoxx 50 European equity index exposure by buying the individual shares, trading a future, a spread bet, a contract for difference, a passive index fund or an active fund. Which is best?
+\begin{englishblock} BEFORE YOU THINK ABOUT HOW YOU TRADE YOU NEED TO consider what you're going to trade -- the actual instruments to buy or sell. It's likely you will know which asset classes you want to deal with, based on your knowledge and familiarity with different markets. However there are certain instruments that should be completely avoided for systematic trading. Others have characteristics which make them worse than other alternatives, or would force you to trade them in a particular way. Finally there is often a choice of how you can access a particular market; you could get Euro Stoxx 50 European equity index exposure by buying the individual shares, trading a future, a spread bet, a contract for difference, a passive index fund or an active fund. Which is best? \end{englishblock}
 
-在考虑“如何交易”之前，你得先想清楚“交易什么” --- 也就是你真正要买卖的那些具体品种。基于你对不同市场的知识和熟悉程度，
-你大概已经知道自己想接触哪些资产类别。不过，有些品种对于系统化交易来说应当彻底避开；另一些品种则因为某些特征，
-使它们相比替代方案更差，或者迫使你必须以某种特定方式去交易。最后，进入某个市场往往还有多种路径可选；
-例如，如果你想获得 Euro Stoxx 50 欧洲股票指数的敞口，你可以购买成分股、交易期货、点差投注、差价合约、被动指数基金，或者主动型基金。
-那么，哪一种才是最优选择？
+\begin{chineseblock}在考虑“如何交易”之前，你得先想清楚“交易什么” --- 也就是你真正要买卖的那些具体品种。基于你对不同市场的知识和熟悉程度，你大概已经知道自己想接触哪些资产类别。不过，有些品种对于系统化交易来说应当彻底避开；另一些品种则因为某些特征，使它们相比替代方案更差，或者迫使你必须以某种特定方式去交易。最后，进入某个市场往往还有多种路径可选；例如，如果你想获得 Euro Stoxx 50 欧洲股票指数的敞口，你可以购买成分股、交易期货、点差投注、差价合约、被动指数基金，或者主动型基金。那么，哪一种才是最优选择？\end{chineseblock}
 
-\section*{Chapter overview}
-\phantomsection
-\addcontentsline{toc}{section}{Chapter overview}
-\bisectiontitle{本章概览}
+\bilingualsection{Chapter overview}{本章概览}
 
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
-\textbf{Necessities} & The minimum requirements that need to be met before you can trade an instrument. \\
-\textbf{Instrument choice and trading style} & Characteristics that influence instrument choice        between alternatives and how to trade particular instruments. \\
-\textbf{Access} & Different ways to get exposure to instruments, and the benefits and downside of each. \\
-\end{tabularx}
+\begin{bilingualtableblock} \begin{tabularx}{\textwidth}{@{} L{0.30\textwidth} Y@{}}\textbf{Necessities} & The minimum requirements that need to be met before you can trade an instrument. \\
 
-\medskip
-
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
 \textbf{基本条件} & 在你能够交易某个品种之前，必须满足的最低要求。 \\
+\textbf{Instrument choice and trading style} & Characteristics that influence instrument choice between alternatives and how to trade particular instruments. \\
 \textbf{品种选择与交易风格} & 在不同替代品种之间影响选择的特征，以及某些品种应当如何交易。 \\
+\textbf{Access} & Different ways to get exposure to instruments, and the benefits and downside of each. \\
 \textbf{进入方式} & 获得某个品种敞口的不同方法，以及每种方法的优点与缺点。 \\
 \end{tabularx}
+\end{bilingualtableblock}
 
-\section*{Necessities}
-\phantomsection
-\addcontentsline{toc}{section}{Necessities}
-\bisectiontitle{基本条件}
+\bilingualsection{Necessities}{基本条件}
 
-There are a few points to consider when deciding whether an instrument is suitable for systematic trading.
+\begin{englishblock} There are a few points to consider when deciding whether an instrument is suitable for systematic trading. \end{englishblock}
 
-在判断某个品种是否适合系统化交易时，有几个方面需要考虑。
+\begin{chineseblock}在判断某个品种是否适合系统化交易时，有几个方面需要考虑。\end{chineseblock}
 
-\subsection*{Data availability}
-\bisubsectiontitle{数据可得性}
+\bilingualsubsection{Data availability}{数据可得性}
 
-I'd like to be able to trade UK Gilt futures, but I don't have the right data licence so I can't get quoted prices. You can't trade systematically without access to prices and other relevant data. At a minimum you will need accurate daily price information. Fully automated strategies that trade quickly or incorporate execution algorithms will need live tick prices. Fundamental trading strategies require yet more kinds of data. The costs of acquiring data on certain instruments, like Gilts perhaps, may be uneconomic for amateur investors.
+\begin{englishblock} I'd like to be able to trade UK Gilt futures, but I don't have the right data licence so I can't get quoted prices. You can't trade systematically without access to prices and other relevant data. At a minimum you will need accurate daily price information. Fully automated strategies that trade quickly or incorporate execution algorithms will need live tick prices. Fundamental trading strategies require yet more kinds of data. The costs of acquiring data on certain instruments, like Gilts perhaps, may be uneconomic for amateur investors. \end{englishblock}
 
-我很想交易英国国债期货（UK Gilt futures），但我没有合适的数据许可，因此拿不到报价。没有价格和其他相关数据，你就无法进行系统化交易。
-最低限度，你需要准确的每日价格信息。那些交易频率较高、或者包含执行算法的全自动策略，则需要实时逐笔价格。基本面交易策略还会需要更多类型的数据。
-对于某些品种，比如 Gilts，获取数据的成本对普通投资者来说可能根本不划算。
+\begin{chineseblock}我很想交易英国国债期货（UK Gilt futures），但我没有合适的数据许可，因此拿不到报价。没有价格和其他相关数据，你就无法进行系统化交易。最低限度，你需要准确的每日价格信息。那些交易频率较高、或者包含执行算法的全自动策略，则需要实时逐笔价格。基本面交易策略还会需要更多类型的数据。对于某些品种，比如 Gilts，获取数据的成本对普通投资者来说可能根本不划算。\end{chineseblock}
 
-\subsection*{Minimum sizes}
-\bisubsectiontitle{最小交易单位}
+\bilingualsubsection{Minimum sizes}{最小交易单位}
 
-Another future I would like to trade -- but can't -- is the Japanese government bond (JGB) future. The contract currently sells for around 150 million yen, which is well over a million dollars. If I put this into my portfolio the maximum position I would want is 0.1 of a contract, which obviously isn't possible. Few amateur investors will be able to trade these behemoths. In stocks the minimum size is one share, normally costing less than \$1,000, although the A class of Berkshire Hathaway shares currently sell for over \$100,000. Even for cheaper stocks, it may not be economic to trade in lots of less than 100 shares. Minimum sizes reduce the granularity of what you can trade. Your positions become binary -- all or nothing (in the case of JGBs, always nothing). This is an important subject and I will return to it in chapter twelve, ‘Speed and Size'. As you'll see in that chapter this problem also affects the number of instruments you can hold in your portfolio.
+\begin{englishblock} Another future I would like to trade -- but can't -- is the Japanese government bond (JGB) future. The contract currently sells for around 150 million yen, which is well over a million dollars. If I put this into my portfolio the maximum position I would want is 0.1 of a contract, which obviously isn't possible. Few amateur investors will be able to trade these behemoths. In stocks the minimum size is one share, normally costing less than \$1,000, although the A class of Berkshire Hathaway shares currently sell for over \$100,000. Even for cheaper stocks, it may not be economic to trade in lots of less than 100 shares. Minimum sizes reduce the granularity of what you can trade. Your positions become binary -- all or nothing (in the case of JGBs, always nothing). This is an important subject and I will return to it in chapter twelve, ‘Speed and Size'. As you'll see in that chapter this problem also affects the number of instruments you can hold in your portfolio. \end{englishblock}
 
-我还想交易、但实际上做不到的另一个期货，是日本国债期货（JGB future）。这个合约当前的名义价值大约是 1.5 亿日元，远远超过一百万美元。
-如果我把它放进自己的投资组合里，我真正想持有的最大仓位可能只有 0.1 手，而这显然做不到。很少有普通投资者能够交易这种庞然大物。
-在股票市场里，最小交易单位是一股，通常成本低于 1,000 美元，尽管伯克希尔·哈撒韦 A 类股目前一股就要超过 100,000 美元。即便是价格较低的股票，
-如果每次交易少于 100 股，也可能并不划算。最小交易单位会降低你交易决策的颗粒度。你的仓位会变成二元的
---- 要么全有，要么全无（对于 JGB 而言，通常永远是“全无”）。这是个非常重要的话题，我会在第十二章“速度与规模”中再次回到它。
-正如你会在那一章看到的，这个问题也会影响你投资组合中能够持有多少个品种。
+\begin{chineseblock}我还想交易、但实际上做不到的另一个期货，是日本国债期货（JGB future）。这个合约当前的名义价值大约是 1.5 亿日元，远远超过一百万美元。如果我把它放进自己的投资组合里，我真正想持有的最大仓位可能只有 0.1 手，而这显然做不到。很少有普通投资者能够交易这种庞然大物。在股票市场里，最小交易单位是一股，通常成本低于 1,000 美元，尽管伯克希尔·哈撒韦 A 类股目前一股就要超过 100,000 美元。即便是价格较低的股票，如果每次交易少于 100 股，也可能并不划算。最小交易单位会降低你交易决策的颗粒度。你的仓位会变成二元的--- 要么全有，要么全无（对于 JGB 而言，通常永远是“全无”）。这是个非常重要的话题，我会在第十二章“速度与规模”中再次回到它。正如你会在那一章看到的，这个问题也会影响你投资组合中能够持有多少个品种。\end{chineseblock}
 
-\subsection*{Why do prices move?}
-\bisubsectiontitle{价格为什么会动？}
+\bilingualsubsection{Why do prices move?}{价格为什么会动？}
 
-Do you know why bonds, equities and other instruments go up, or down, in price? "More buyers than sellers" is not an acceptable answer! I personally think it's important to have an understanding of what makes a market function; whether it be interest rates, economic news or corporate profits. This is vital if you're going to design ideas first trading rules. It's also important to understand market dynamics once your system is running, if you want to avoid unpleasant surprises in markets that have become dysfunctional. As I'm redrafting this chapter, the Swiss government has just removed the peg which had held since 2011 fixing their currency at 1.20 to the euro, resulting in a massive Swiss franc (CHF) appreciation against all currencies. Thousands of traders including large hedge funds and banks were on the losing side, including many who were trading systematically. Fortunately I wasn't trading the EUR/CHF or USD/CHF FX pairs. For me there didn't seem any point in trying to make systematic forecasts, since I knew the market was controlled by central bank intervention rather than the normal historic factors driving prices in the back-test. Keeping abreast of markets will help you to avoid similarly dangerous instruments.
+\begin{englishblock} Do you know why bonds, equities and other instruments go up, or down, in price? "More buyers than sellers" is not an acceptable answer! I personally think it's important to have an understanding of what makes a market function; whether it be interest rates, economic news or corporate profits. This is vital if you're going to design ideas first trading rules. It's also important to understand market dynamics once your system is running, if you want to avoid unpleasant surprises in markets that have become dysfunctional. As I'm redrafting this chapter, the Swiss government has just removed the peg which had held since 2011 fixing their currency at 1.20 to the euro, resulting in a massive Swiss franc (CHF) appreciation against all currencies. Thousands of traders including large hedge funds and banks were on the losing side, including many who were trading systematically. Fortunately I wasn't trading the EUR/CHF or USD/CHF FX pairs. For me there didn't seem any point in trying to make systematic forecasts, since I knew the market was controlled by central bank intervention rather than the normal historic factors driving prices in the back-test. Keeping abreast of markets will help you to avoid similarly dangerous instruments. \end{englishblock}
 
-你知道债券、股票和其他品种的价格为什么会上涨或下跌吗？“因为买家比卖家多”这种回答并不能算数！我个人认为，理解一个市场是如何运作的非常重要；
-无论驱动它的是利率、经济新闻还是企业利润。如果你打算设计基于想法的交易规则，这一点至关重要。并且，在系统实际运行之后，理解市场动态同样重要，
-因为这样你才能避开那些已经失灵的市场里可能出现的糟糕意外。就在我重写这一章时，瑞士政府刚刚取消了自 2011 年以来将瑞郎固定在欧元 1.20 的汇率上限，
-导致瑞士法郎（CHF）对所有货币大幅升值。成千上万的交易者，包括大型对冲基金和银行，都站在亏损的一边，其中很多人也是在做系统化交易。
-幸运的是，我当时没有交易 EUR/CHF 或 USD/CHF 这两个外汇对。对我来说，在那种市场里尝试做系统化预测没有意义，因为我知道，
-价格并不是由回测中那些正常的历史驱动因素决定的，而是被央行干预所控制。持续跟踪市场，会帮助你避开类似这样危险的品种。
+\begin{chineseblock}你知道债券、股票和其他品种的价格为什么会上涨或下跌吗？“因为买家比卖家多”这种回答并不能算数！我个人认为，理解一个市场是如何运作的非常重要；无论驱动它的是利率、经济新闻还是企业利润。如果你打算设计基于想法的交易规则，这一点至关重要。并且，在系统实际运行之后，理解市场动态同样重要，因为这样你才能避开那些已经失灵的市场里可能出现的糟糕意外。就在我重写这一章时，瑞士政府刚刚取消了自 2011 年以来将瑞郎固定在欧元 1.20 的汇率上限，导致瑞士法郎（CHF）对所有货币大幅升值。成千上万的交易者，包括大型对冲基金和银行，都站在亏损的一边，其中很多人也是在做系统化交易。幸运的是，我当时没有交易 EUR/CHF 或 USD/CHF 这两个外汇对。对我来说，在那种市场里尝试做系统化预测没有意义，因为我知道，价格并不是由回测中那些正常的历史驱动因素决定的，而是被央行干预所控制。持续跟踪市场，会帮助你避开类似这样危险的品种。\end{chineseblock}
 
-\subsection*{Standard deviation}
-\bisubsectiontitle{标准差}
+\bilingualsubsection{Standard deviation}{标准差}
 
-There is another reason why I excluded Swiss FX positions from my systematic trading strategies, which was the extremely low volatility of prices whilst the peg was in place. In principle my framework can deal equally well both with assets whose returns naturally have low standard deviations and those that are very risky. It can also cope with changes in volatility over time. However instruments which have extremely low risk like pegged currencies should be excluded. Firstly, when risk returns to normal it is liable to do so very sharply, potentially creating significant losses. Secondly, these positions need more leverage to achieve a given amount of risk, magnifying the danger when they do inevitably blow up. Even if you don't use leverage they will limit the risk your overall trading system can achieve.\footnote{I'll return to this topic in chapter nine, ‘Volatility targeting'.\par 我会在第九章“波动率目标”中再次讨论这个问题。} Finally, they also tend to be more costly to trade, as you will discover in chapter twelve, ‘Speed and Size'.
+\begin{englishblock} There is another reason why I excluded Swiss FX positions from my systematic trading strategies, which was the extremely low volatility of prices whilst the peg was in place. In principle my framework can deal equally well both with assets whose returns naturally have low standard deviations and those that are very risky. It can also cope with changes in volatility over time. However instruments which have extremely low risk like pegged currencies should be excluded. Firstly, when risk returns to normal it is liable to do so very sharply, potentially creating significant losses. Secondly, these positions need more leverage to achieve a given amount of risk, magnifying the danger when they do inevitably blow up. Even if you don't use leverage they will limit the risk your overall trading system can achieve.\footnote{I'll return to this topic in chapter nine, ‘Volatility targeting'. \par 我会在第九章“波动率目标”中再次讨论这个问题。} Finally, they also tend to be more costly to trade, as you will discover in chapter twelve, ‘Speed and Size'. \end{englishblock}
 
-我之所以把瑞郎相关外汇头寸排除在自己的系统化交易策略之外，还有另一个原因，那就是在汇率上限存在期间，它们的价格波动率极低。原则上说，
-我的框架既可以处理那些收益天然标准差很低的资产，也可以处理那些风险极高的资产。它也能够应对波动率随时间变化的情况。然而，像盯住汇率的货币这种风险极低的品种，
-仍然应该被排除。首先，当风险回归正常时，它往往会以极其猛烈的方式发生，从而造成巨大损失。其次，这类头寸为了达到既定风险水平，需要使用更多杠杆，
-这会在它们不可避免地爆炸时放大危险。即便你不用杠杆，它们也会限制你的整个交易系统能够达到的风险水平。最后，正如你会在第十二章“速度与规模”中看到的，
-它们交易起来往往也更昂贵。
+\begin{chineseblock}我之所以把瑞郎相关外汇头寸排除在自己的系统化交易策略之外，还有另一个原因，那就是在汇率上限存在期间，它们的价格波动率极低。原则上说，我的框架既可以处理那些收益天然标准差很低的资产，也可以处理那些风险极高的资产。它也能够应对波动率随时间变化的情况。然而，像盯住汇率的货币这种风险极低的品种，仍然应该被排除。首先，当风险回归正常时，它往往会以极其猛烈的方式发生，从而造成巨大损失。其次，这类头寸为了达到既定风险水平，需要使用更多杠杆，这会在它们不可避免地爆炸时放大危险。即便你不用杠杆，它们也会限制你的整个交易系统能够达到的风险水平。最后，正如你会在第十二章“速度与规模”中看到的，它们交易起来往往也更昂贵。\end{chineseblock}
 
-\section*{Instrument choice and trading style}
-\phantomsection
-\addcontentsline{toc}{section}{Instrument choice and trading style}
-\bisectiontitle{品种选择与交易风格}
+\bilingualsection{Instrument choice and trading style}{品种选择与交易风格}
 
-With your pool of available instruments narrowed by excluding those which don't have the necessary attributes mentioned above, you need to decide which of those remaining you prefer to trade. These characteristics will also influence how you'll trade the instruments you've chosen.
+\begin{englishblock} With your pool of available instruments narrowed by excluding those which don't have the necessary attributes mentioned above, you need to decide which of those remaining you prefer to trade. These characteristics will also influence how you'll trade the instruments you've chosen. \end{englishblock}
 
-当你把那些不具备上述必要属性的品种都排除掉之后，可选范围就缩小了。接下来，你需要决定在剩下的品种中，自己更愿意交易哪些。
-这些特征也会进一步影响你应当如何交易所选中的品种。
+\begin{chineseblock}当你把那些不具备上述必要属性的品种都排除掉之后，可选范围就缩小了。接下来，你需要决定在剩下的品种中，自己更愿意交易哪些。这些特征也会进一步影响你应当如何交易所选中的品种。\end{chineseblock}
 
-\subsection*{How many instruments?}
-\bisubsectiontitle{应该持有多少个品种？}
+\bilingualsubsection{How many instruments?}{应该持有多少个品种？}
 
-I like my portfolio of instruments to be as large and diversified as possible, as long as I don't run into issues with minimum sizes, for example as I would do with Japanese government bonds. The maximum number of instruments you can have will depend on minimum sizes, the value of your account and how much risk you're targeting (which you'll learn about in chapter nine, ‘Volatility targeting'). In chapter twelve, ‘Speed and Size', you'll see how to calculate the point at which you could run into problems with minimum instrument size. You will then be able to work out what size of portfolio makes sense. Then in part four I will give some recommended portfolios in each example chapter, which have been constructed to be as diversified as possible given the level of the volatility target and the available instruments.
+\begin{englishblock} I like my portfolio of instruments to be as large and diversified as possible, as long as I don't run into issues with minimum sizes, for example as I would do with Japanese government bonds. The maximum number of instruments you can have will depend on minimum sizes, the value of your account and how much risk you're targeting (which you'll learn about in chapter nine, ‘Volatility targeting'). In chapter twelve, ‘Speed and Size', you'll see how to calculate the point at which you could run into problems with minimum instrument size. You will then be able to work out what size of portfolio makes sense. Then in part four I will give some recommended portfolios in each example chapter, which have been constructed to be as diversified as possible given the level of the volatility target and the available instruments. \end{englishblock}
 
-只要不会碰到最小交易单位的问题，比如日本国债那样的情况，我就希望自己的品种投资组合尽可能大、尽可能分散。你最多能持有多少个品种，
-取决于最小交易单位、你的账户规模，以及你的目标风险水平
-（这些内容你会在第九章“波动率目标”中学到）。在第十二章“速度与规模”中，你会看到如何计算自己会在什么位置上开始碰到最小交易单位的问题。
-然后，你就能算出一个多大的投资组合才是合理的。到了第四部分，我会在每个示例章节中给出一些推荐投资组合，
-这些组合都是在既定波动率目标和可选品种约束下，尽可能追求分散化而构造出来的。
+\begin{chineseblock}只要不会碰到最小交易单位的问题，比如日本国债那样的情况，我就希望自己的品种投资组合尽可能大、尽可能分散。你最多能持有多少个品种，取决于最小交易单位、你的账户规模，以及你的目标风险水平（这些内容你会在第九章“波动率目标”中学到）。在第十二章“速度与规模”中，你会看到如何计算自己会在什么位置上开始碰到最小交易单位的问题。然后，你就能算出一个多大的投资组合才是合理的。到了第四部分，我会在每个示例章节中给出一些推荐投资组合，这些组合都是在既定波动率目标和可选品种约束下，尽可能追求分散化而构造出来的。\end{chineseblock}
 
-\subsection*{Correlation}
-\bisubsectiontitle{相关性}
+\bilingualsubsection{Correlation}{相关性}
 
-If you already owned shares in RBS and Barclays then the last thing you would want to add to your portfolio is another UK bank like Lloyd's. Generally you should want to own or trade the most diversified portfolio possible, where the average correlation between the assets is lower than the alternatives. If there are a limited number of instruments that you can fit in your portfolio then it makes sense to pick those with lower correlations.
+\begin{englishblock} If you already owned shares in RBS and Barclays then the last thing you would want to add to your portfolio is another UK bank like Lloyd's. Generally you should want to own or trade the most diversified portfolio possible, where the average correlation between the assets is lower than the alternatives. If there are a limited number of instruments that you can fit in your portfolio then it makes sense to pick those with lower correlations. \end{englishblock}
 
-如果你已经持有了苏格兰皇家银行（RBS）和巴克莱的股票，那么你最不应该再往组合里加的，大概就是另一家英国银行，比如劳埃德（Lloyd's）。
-一般来说，你应当追求持有或交易尽可能分散的投资组合，也就是资产之间平均相关性低于其他替代方案的那一种。如果你能塞进投资组合中的品种数量有限，
-那么优先选择那些相关性更低的品种才是合理的。
+\begin{chineseblock}如果你已经持有了苏格兰皇家银行（RBS）和巴克莱的股票，那么你最不应该再往组合里加的，大概就是另一家英国银行，比如劳埃德（Lloyd's）。一般来说，你应当追求持有或交易尽可能分散的投资组合，也就是资产之间平均相关性低于其他替代方案的那一种。如果你能塞进投资组合中的品种数量有限，那么优先选择那些相关性更低的品种才是合理的。\end{chineseblock}
 
-\subsection*{Costs}
-\bisubsectiontitle{成本}
+\bilingualsubsection{Costs}{成本}
 
-Given the choice between two otherwise identical instruments you should choose the cheapest to trade. So, if you can, use a cheap FTSE 100 future rather than an expensive spread bet to get exposure to the UK equity index.\footnote{I'll explain why the spread bet is more expensive in chapter twelve, ‘Speed and Size'.\par 我会在第十二章“速度与规模”中解释，
-为什么点差投注会更贵。} Instruments that are expensive to trade are clearly less suitable for dynamic strategies, particularly those that involve faster trading. Sometimes you have to trade an expensive instrument, if it's the only way of accessing a particular asset. In this case you should trade it more slowly. There is however a maximum acceptable cost depending on the type of trading that you're doing, so some instruments will be completely unsuitable. Because the cost of trading is so important it will be covered in great detail in chapter twelve, ‘Speed and Size'.
+\begin{englishblock} Given the choice between two otherwise identical instruments you should choose the cheapest to trade. So, if you can, use a cheap FTSE 100 future rather than an expensive spread bet to get exposure to the UK equity index.\footnote{I'll explain why the spread bet is more expensive in chapter twelve, ‘Speed and Size'. \par 我会在第十二章“速度与规模”中解释，为什么点差投注会更贵。} Instruments that are expensive to trade are clearly less suitable for dynamic strategies, particularly those that involve faster trading. Sometimes you have to trade an expensive instrument, if it's the only way of accessing a particular asset. In this case you should trade it more slowly. There is however a maximum acceptable cost depending on the type of trading that you're doing, so some instruments will be completely unsuitable. Because the cost of trading is so important it will be covered in great detail in chapter twelve, ‘Speed and Size'. \end{englishblock}
 
-如果你面前有两个在其他方面都差不多相同的品种可选，那你就应该选成本更低的那个。所以，如果可以的话，
-在想获取英国股票指数敞口时，就应选择便宜的 FTSE 100 期货，而不是昂贵的点差投注。交易成本高的品种，显然不适合动态策略，尤其是不适合那些交易速度较快的策略。
-有时候，如果想进入某个特定资产，昂贵的品种可能是唯一的方式。在这种情况下，你就应当用更慢的方式去交易它。不过，某种交易方式能够接受的最大成本，
-终究还是取决于你的交易类型，因此有些品种会完全不适合你。由于交易成本极其重要，我会在第十二章“速度与规模”中非常详细地讨论它。
+\begin{chineseblock}如果你面前有两个在其他方面都差不多相同的品种可选，那你就应该选成本更低的那个。所以，如果可以的话，在想获取英国股票指数敞口时，就应选择便宜的 FTSE 100 期货，而不是昂贵的点差投注。交易成本高的品种，显然不适合动态策略，尤其是不适合那些交易速度较快的策略。有时候，如果想进入某个特定资产，昂贵的品种可能是唯一的方式。在这种情况下，你就应当用更慢的方式去交易它。不过，某种交易方式能够接受的最大成本，终究还是取决于你的交易类型，因此有些品种会完全不适合你。由于交易成本极其重要，我会在第十二章“速度与规模”中非常详细地讨论它。\end{chineseblock}
 
-\subsection*{Liquidity}
-\bisubsectiontitle{流动性}
+\bilingualsubsection{Liquidity}{流动性}
 
-Closely related to costs is liquidity. Less liquid instruments are likely to be more expensive to trade quickly or in larger amounts. This is more of a problem for large institutional investors and those trading fast. Liquidity is not constant and can reduce quickly in times of severe market stress, particularly for non exchange traded ‘over the counter' instruments, as in the Credit Default Swap derivatives markets in 2008. Again chapter twelve, ‘Speed and Size', will explain how those with larger account sizes will need to understand costs and liquidity better than small investors.
+\begin{englishblock} Closely related to costs is liquidity. Less liquid instruments are likely to be more expensive to trade quickly or in larger amounts. This is more of a problem for large institutional investors and those trading fast. Liquidity is not constant and can reduce quickly in times of severe market stress, particularly for non exchange traded ‘over the counter' instruments, as in the Credit Default Swap derivatives markets in 2008. Again chapter twelve, ‘Speed and Size', will explain how those with larger account sizes will need to understand costs and liquidity better than small investors. \end{englishblock}
 
-times of severe market stress, particularly for non exchange traded ‘over the counter' instruments, as in the Credit Default Swap derivatives markets in 2008. Again chapter twelve, ‘Speed and Size', will explain how those with larger account sizes will need to understand costs and liquidity better than small investors.
+\begin{chineseblock}与成本密切相关的，是流动性。流动性较差的品种，在快速交易或大额交易时，通常会更贵。这对于大型机构投资者以及交易速度快的人来说，是更严重的问题。流动性并不是恒定不变的，在市场压力极端严重的时候，它可能迅速恶化，尤其是那些非交易所上市的场外（OTC）品种，2008 年的信用违约掉期（CDS）衍生品市场就是如此。同样，第十二章“速度与规模”也会解释：账户规模较大的投资者，比小型投资者更需要深入理解成本和流动性。\end{chineseblock}
 
-与成本密切相关的，是流动性。流动性较差的品种，在快速交易或大额交易时，通常会更贵。这对于大型机构投资者以及交易速度快的人来说，是更严重的问题。
-流动性并不是恒定不变的，在市场压力极端严重的时候，它可能迅速恶化，尤其是那些非交易所上市的场外（OTC）品种，2008 年的信用违约掉期（CDS）衍生品市场就是如此。
-同样，第十二章“速度与规模”也会解释：账户规模较大的投资者，比小型投资者更需要深入理解成本和流动性。
+\bilingualsubsection{Skew}{偏度}
 
-\subsection*{Skew}
-\bisubsectiontitle{偏度}
+\begin{englishblock} Should you avoid negative skew in your portfolio from instruments like holding short VIX (US equity volatility index) futures? Remember I covered the skew of assets and trading rules in chapter two, ‘Systematic Trading Rules'. Static strategies will inherit the skew of their underlying instruments, but the skew of a dynamic strategy also depends on the style of your trading rule. So using a positive skew rule like trend following on a negative skew asset will alleviate some of the danger. As you will see in chapter nine, ‘Volatility targeting', you need to be extremely careful if the overall returns of your trading system are expected to have negative skew. Instruments with extreme negative skew will often have very low standard deviation for most of the time, and should be excluded on those grounds. \end{englishblock}
 
-Should you avoid negative skew in your portfolio from instruments like holding short VIX (US equity volatility index) futures? Remember I covered the skew of assets and trading rules in chapter two, ‘Systematic Trading Rules'. Static strategies will inherit the skew of their underlying instruments, but the skew of a dynamic strategy also depends on the style of your trading rule. So using a positive skew rule like trend following on a negative skew asset will alleviate some of the danger. As you will see in chapter nine, ‘Volatility targeting', you need to be extremely careful if the overall returns of your trading system are expected to have negative skew. Instruments with extreme negative skew will often have very low standard deviation for most of the time, and should be excluded on those grounds.
+\begin{chineseblock}对于像做空 VIX（美国股票波动率指数）期货这类会在组合中引入负偏度的品种，你是否应当回避？请记得，我在第二章“系统化交易规则”中讲过资产和交易规则的偏度问题。静态策略会继承其底层品种本身的偏度，而动态策略的偏度还取决于你所使用交易规则的风格。因此，在一个负偏度资产上使用趋势跟踪这种正偏度规则，可以在一定程度上缓解风险。正如你会在第九章“波动率目标”中看到的那样，如果你预期整个交易系统的总体收益呈负偏度，就必须极其谨慎。那些具有极端负偏度的品种，在绝大多数时候往往还会表现出很低的标准差，因此仅凭这一点，也应当把它们排除出去。\end{chineseblock}
 
-对于像做空 VIX（美国股票波动率指数）期货这类会在组合中引入负偏度的品种，你是否应当回避？请记得，我在第二章“系统化交易规则”中讲过资产和交易规则的偏度问题。
-静态策略会继承其底层品种本身的偏度，而动态策略的偏度还取决于你所使用交易规则的风格。因此，在一个负偏度资产上使用趋势跟踪这种正偏度规则，
-可以在一定程度上缓解风险。正如你会在第九章“波动率目标”中看到的那样，如果你预期整个交易系统的总体收益呈负偏度，就必须极其谨慎。
-那些具有极端负偏度的品种，在绝大多数时候往往还会表现出很低的标准差，因此仅凭这一点，也应当把它们排除出去。
+\bilingualsection{Access}{进入方式}
 
-\section*{Access}
-\phantomsection
-\addcontentsline{toc}{section}{Access}
-\bisectiontitle{进入方式}
+\begin{englishblock} Finally you need to choose the route by which you access the underlying assets you're going to trade. \end{englishblock}
 
-Finally you need to choose the route by which you access the underlying assets you're going to trade.
+\begin{chineseblock}最后，你还需要选择自己将通过哪条路径去接触并交易那些底层资产。\end{chineseblock}
 
-最后，你还需要选择自己将通过哪条路径去接触并交易那些底层资产。
+\bilingualsubsection{Exchange or OTC}{交易所还是场外（OTC）？}
 
-\subsection*{Exchange or OTC}
-\bisubsectiontitle{交易所还是场外（OTC）？}
+\begin{englishblock} Does your instrument trade on an exchange like shares in General Electric and Corn futures, or over the counter (OTC) like foreign exchange (FX)? There are often different ways of trading the same underlying asset, some via exchange, others OTC. So a spread bet on the CHF/USD FX rate is OTC, whilst the Chicago future on the same rate is exchange traded. If you have a choice then, all other things being equal, should you trade on exchange or OTC? In the January 2015 Swiss franc meltdown traders using OTC brokers suffered a variety of difficulties, including dealers not accepting orders or displaying quotes, trades not being honoured and fills re-marked after the fact, and in extreme cases potential account losses as brokers went into liquidation. Those who traded the CHF/USD future had difficulty finding deep liquidity, but otherwise the market operated as normal. In conclusion it's normally better to trade on exchange if you can. \end{englishblock}
 
-Does your instrument trade on an exchange like shares in General Electric and Corn futures, or over the counter (OTC) like foreign exchange (FX)? There are often different ways of trading the same underlying asset, some via exchange, others OTC. So a spread bet on the CHF/USD FX rate is OTC, whilst the Chicago future on the same rate is exchange traded. If you have a choice then, all other things being equal, should you trade on exchange or OTC? In the January 2015 Swiss franc meltdown traders using OTC brokers suffered a variety of difficulties, including dealers not accepting orders or displaying quotes, trades not being honoured and fills re-marked after the fact, and in extreme cases potential account losses as brokers went into liquidation. Those who traded the CHF/USD future had difficulty finding deep liquidity, but otherwise the market operated as normal. In conclusion it's normally better to trade on exchange if you can.
+\begin{chineseblock}你要交易的品种，是像通用电气股票和玉米期货那样在交易所上市交易，还是像外汇（FX）那样在场外（OTC）交易？同一个底层资产往往有不同的交易方式，有些通过交易所，有些通过场外。比如，对 CHF/USD 汇率的点差投注属于场外交易，而芝加哥交易所的同一汇率期货则属于交易所交易。如果你有得选，那么在其他条件都相同的情况下，你应该选择交易所还是 OTC？在 2015 年 1 月瑞郎崩盘事件中，使用 OTC 经纪商的交易者遭遇了各种问题，包括交易商拒绝接受订单或显示报价、成交不被承认、成交价格事后被重新标记，而在极端情况下，经纪商破产清算还可能导致账户遭受额外损失。而那些交易 CHF/USD 期货的人，虽然也曾面临流动性不足的问题，但除此之外，市场整体还是正常运作的。结论是：如果可以，通常最好在交易所交易。\end{chineseblock}
 
-你要交易的品种，是像通用电气股票和玉米期货那样在交易所上市交易，还是像外汇（FX）那样在场外（OTC）交易？同一个底层资产往往有不同的交易方式，
-有些通过交易所，有些通过场外。比如，对 CHF/USD 汇率的点差投注属于场外交易，而芝加哥交易所的同一汇率期货则属于交易所交易。
-如果你有得选，那么在其他条件都相同的情况下，你应该选择交易所还是 OTC？在 2015 年 1 月瑞郎崩盘事件中，使用 OTC 经纪商的交易者遭遇了各种问题，
-包括交易商拒绝接受订单或显示报价、成交不被承认、成交价格事后被重新标记，而在极端情况下，经纪商破产清算还可能导致账户遭受额外损失。
-而那些交易 CHF/USD 期货的人，虽然也曾面临流动性不足的问题，但除此之外，市场整体还是正常运作的。结论是：如果可以，通常最好在交易所交易。
+\bilingualsubsection{Cash or derivative}{现货还是衍生品？}
 
-\subsection*{Cash or derivative}
-\bisubsectiontitle{现货还是衍生品？}
+\begin{englishblock} ‘Cash' is simply where you own the underlying asset directly -- perhaps a share in British Gas or a bond issued by General Electric. Alternatively you can own a derivative on an asset, like a future, Contract for Difference or spread bet.\footnote{I've deliberately excluded options and other non-linear derivatives from this list, since these can't be used casually as substitutes for the underlying assets. \par 我刻意把期权和其他非线性衍生品排除在这个列表之外，因为它们不能被轻率地拿来当作底层资产的简单替代品。} The main advantage of derivatives is that they offer straightforward leverage. Without leverage it might be difficult to reach your volatility target, which will reduce the returns you can earn. There may also be different tax treatments; in the UK for example spread bets are treated as gambling, which means winnings are tax free but losses aren't deductible. Various types of derivatives may have different trading costs, and also have different minimum sizes, liquidity and market access. For example a FTSE 100 future is cheaper to trade and more liquid than the corresponding spread bet. It also has the advantage of being accessed via an exchange, whereas the spread bet is OTC. But the future has a larger minimum size which precludes its use by smaller investors. \end{englishblock}
 
-‘Cash' is simply where you own the underlying asset directly -- perhaps a share in British Gas or a bond issued by General Electric. Alternatively you can own a derivative on an asset, like a future, Contract for Difference or spread bet.\footnote{I've deliberately excluded options and other non-linear derivatives from this list, since these can't be used casually as substitutes for the underlying assets.\par 我刻意把期权和其他非线性衍生品排除在这个列表之外，
-因为它们不能被轻率地拿来当作底层资产的简单替代品。} The main advantage of derivatives is that they offer straightforward leverage. Without leverage it might be difficult to reach your volatility target, which will reduce the returns you can earn. There may also be different tax treatments; in the UK for example spread bets are treated as gambling, which means winnings are tax free but losses aren't deductible. Various types of derivatives may have different trading costs, and also have different minimum sizes, liquidity and market access. For example a FTSE 100 future is cheaper to trade and more liquid than the corresponding spread bet. It also has the advantage of being accessed via an exchange, whereas the spread bet is OTC. But the future has a larger minimum size which precludes its use by smaller investors.
+\begin{chineseblock}“现货（cash）”的意思很简单，就是你直接持有底层资产本身 --- 例如一股英国天然气公司的股票，或一张通用电气发行的债券。另一种方式，则是持有该资产的衍生品，比如期货、差价合约或点差投注。衍生品的主要优势，在于它们能够直接提供杠杆。如果没有杠杆，你可能很难达到自己的波动率目标，从而降低可获得的收益。不同工具还可能面临不同的税务处理；例如在英国，点差投注会被视作赌博，因此盈利免税，但亏损也不能抵扣。各种衍生品的交易成本、最小交易单位、流动性以及市场进入方式也可能各不相同。比如，FTSE 100 期货的交易成本就比对应的点差投注更低，流动性也更好。它还有一个优点，就是通过交易所进入市场；而点差投注则属于 OTC。只不过，期货的最小交易单位更大，这会让小型投资者无法使用它。\end{chineseblock}
 
-“现货（cash）”的意思很简单，就是你直接持有底层资产本身 --- 例如一股英国天然气公司的股票，或一张通用电气发行的债券。另一种方式，
-则是持有该资产的衍生品，比如期货、差价合约或点差投注。衍生品的主要优势，在于它们能够直接提供杠杆。如果没有杠杆，你可能很难达到自己的波动率目标，
-从而降低可获得的收益。不同工具还可能面临不同的税务处理；例如在英国，点差投注会被视作赌博，因此盈利免税，但亏损也不能抵扣。
-各种衍生品的交易成本、最小交易单位、流动性以及市场进入方式也可能各不相同。比如，FTSE 100 期货的交易成本就比对应的点差投注更低，流动性也更好。
-它还有一个优点，就是通过交易所进入市场；而点差投注则属于 OTC。只不过，期货的最小交易单位更大，这会让小型投资者无法使用它。
+\bilingualsubsection{Funds}{基金}
 
-\subsection*{Funds}
-\bisubsectiontitle{基金}
+\begin{englishblock} Other options for trading the FTSE 100 are to buy an index tracker like an exchange traded fund (ETF). These are collective funds -- instruments which buy you a share in a portfolio of assets. As well as ETFs, collective funds include US mutual funds, UK unit trusts and investment trusts. Normally for systematic trading you will be interested in passive funds like index trackers. These contain baskets of assets weighted to match an index like the FTSE 100 or S\&P 500. Passive funds normally have relatively low annual fees and minimum sizes, but frequently cost more than the relevant derivative to trade. But they can be useful instruments when leverage can't be used, or when a market can't be accessed another way. In some cases you might want to use active funds, where the weights to different assets are determined by the fund manager. This might make sense if there is no relevant passive fund or derivative, but fees are higher on active funds, and the presence of any compensating manager skill or alpha is very hard to prove. Collective funds can have quirks such as daily remarking, tax treatment, internal leverage and discounts to net asset value which you should fully understand before using them. \end{englishblock}
 
-Other options for trading the FTSE 100 are to buy an index tracker like an exchange traded fund (ETF). These are collective funds -- instruments which buy you a share in a portfolio of assets. As well as ETFs, collective funds include US mutual funds, UK unit trusts and investment trusts. Normally for systematic trading you will be interested in passive funds like index trackers. These contain baskets of assets weighted to match an index like the FTSE 100 or S\&P 500. Passive funds normally have relatively low annual fees and minimum sizes, but frequently cost more than the relevant derivative to trade. But they can be useful instruments when leverage can't be used, or when a market can't be accessed another way. In some cases you might want to use active funds, where the weights to different assets are determined by the fund manager. This might make sense if there is no relevant passive fund or derivative, but fees are higher on active funds, and the presence of any compensating manager skill or alpha is very hard to prove. Collective funds can have quirks such as daily remarking, tax treatment, internal leverage and discounts to net asset value which you should fully understand before using them.
+\begin{chineseblock}交易 FTSE 100 的另一种方式，是购买指数跟踪工具，例如交易所交易基金（ETF）。这类工具属于集合基金--- 也就是买入后，你获得的是一个资产组合中的份额。除了 ETF 之外，集合基金还包括美国共同基金、英国单位信托和投资信托。在系统化交易里，你通常更关心的是像指数跟踪器这样的被动型基金。它们持有一篮子资产，并按照 FTSE 100 或 S\&P 500 这类指数的权重进行配置。被动型基金通常具有相对较低的年度费用和较低的最小交易单位，但交易成本却常常比对应的衍生品更高。不过，当你无法使用杠杆，或者某个市场无法通过其他方式进入时，它们仍然会是有用的工具。在某些情况下，你也可能会使用主动型基金，在这种基金中，不同资产的权重由基金经理决定。如果没有合适的被动基金或衍生品，这样做可能是有道理的；但主动基金的费用更高，而其背后是否真的存在足以抵消这些费用的经理人技能或 alpha，则很难证明。集合基金还可能带有一些特殊之处，例如每日重估值、税务处理、内部杠杆，以及相对净值的折价等；在使用它们之前，你都应当彻底弄清楚这些问题。\end{chineseblock}
 
-交易 FTSE 100 的另一种方式，是购买指数跟踪工具，例如交易所交易基金（ETF）。这类工具属于集合基金
---- 也就是买入后，你获得的是一个资产组合中的份额。除了 ETF 之外，集合基金还包括美国共同基金、英国单位信托和投资信托。
-在系统化交易里，你通常更关心的是像指数跟踪器这样的被动型基金。它们持有一篮子资产，并按照 FTSE 100 或 S\&P 500 这类指数的权重进行配置。
-被动型基金通常具有相对较低的年度费用和较低的最小交易单位，但交易成本却常常比对应的衍生品更高。不过，当你无法使用杠杆，
-或者某个市场无法通过其他方式进入时，它们仍然会是有用的工具。在某些情况下，你也可能会使用主动型基金，在这种基金中，
-不同资产的权重由基金经理决定。如果没有合适的被动基金或衍生品，这样做可能是有道理的；但主动基金的费用更高，
-而其背后是否真的存在足以抵消这些费用的经理人技能或 alpha，则很难证明。集合基金还可能带有一些特殊之处，
-例如每日重估值、税务处理、内部杠杆，以及相对净值的折价等；在使用它们之前，你都应当彻底弄清楚这些问题。
+\bilingualsection{Summary of instrument choice}{品种选择总结}
 
-\section*{Summary of instrument choice}
-\phantomsection
-\addcontentsline{toc}{section}{Summary of instrument choice}
-\bisectiontitle{品种选择总结}
+\begin{englishblock} Data availability At a minimum you need daily price data to trade an instrument systematically. For fundamental strategies you also need other relevant data, e.g. price:earnings if you're using an equity value rule. \end{englishblock}
 
-Data availability At a minimum you need daily price data to trade an instrument systematically. For fundamental strategies you also need other relevant data, e.g. price:earnings if you're using an equity value rule.
+\begin{chineseblock}数据可得性 最低限度，你需要每日价格数据，才能对某个品种进行系统化交易。对于基本面策略，你还需要其他相关数据，例如如果你使用的是股票价值规则，就需要市盈率之类的数据。\end{chineseblock}
 
-数据可得性 最低限度，你需要每日价格数据，才能对某个品种进行系统化交易。对于基本面策略，你还需要其他相关数据，例如如果你使用的是股票价值规则，
-就需要市盈率之类的数据。
+\bipairgap
 
-Minimum sizes For small investors large minimum trading sizes can be a problem.
+\begin{englishblock} Minimum sizes For small investors large minimum trading sizes can be a problem. \end{englishblock}
 
-最小交易单位 对小型投资者来说，过大的最小交易单位会成为问题。
+\begin{chineseblock}最小交易单位 对小型投资者来说，过大的最小交易单位会成为问题。\end{chineseblock}
 
-Understand what moves Don't trade from an ivory tower; have some idea of the factors returns driving returns. If unusual forces are at play then avoid that instrument.
+\bipairgap
 
-理解价格驱动因素 不要待在象牙塔里交易；至少要对推动收益变化的因素有一些理解。如果市场中存在异常力量在起作用，那就避开那个品种。
+\begin{englishblock} Understand what moves Don't trade from an ivory tower; have some idea of the factors returns driving returns. If unusual forces are at play then avoid that instrument. \end{englishblock}
 
-Standard deviation of Volatility must not be extremely low. returns
+\begin{chineseblock}理解价格驱动因素 不要待在象牙塔里交易；至少要对推动收益变化的因素有一些理解。如果市场中存在异常力量在起作用，那就避开那个品种。\end{chineseblock}
 
-收益的标准差 波动率绝不能低得离谱。
+\bipairgap
 
-How many instruments? Given the size of your account and the minimum size of each instrument you can determine whether you will run into problems given a particular sized portfolio. You should then hold the largest portfolio you can given those constraints.
+\begin{englishblock} Standard deviation of Volatility must not be extremely low. returns \end{englishblock}
 
-应该持有多少个品种？ 给定你的账户规模和每个品种的最小交易单位，你就能判断在某一投资组合规模下自己是否会遇到问题。然后，
-你应当在这些约束条件下持有尽可能大的投资组合。
+\begin{chineseblock}收益的标准差 波动率绝不能低得离谱。\end{chineseblock}
 
-Correlation of returns You should always try and have a portfolio where assets are as diversified as possible.
+\bipairgap
 
-收益相关性 你应始终尽量让自己的投资组合在资产之间保持尽可能高的分散化。
+\begin{englishblock} How many instruments? Given the size of your account and the minimum size of each instrument you can determine whether you will run into problems given a particular sized portfolio. You should then hold the largest portfolio you can given those constraints. \end{englishblock}
 
-Costs Cheaper is better. Expensive instruments will need to be traded more slowly, and may be too pricey to trade at all.
+\begin{chineseblock}应该持有多少个品种？ 给定你的账户规模和每个品种的最小交易单位，你就能判断在某一投资组合规模下自己是否会遇到问题。然后，你应当在这些约束条件下持有尽可能大的投资组合。\end{chineseblock}
 
-成本 越便宜越好。成本高的品种需要以更慢的方式交易，有时甚至可能贵到根本不值得交易。
+\bipairgap
 
-Liquidity For larger and less patient investors liquidity is vital.
+\begin{englishblock} Correlation of returns You should always try and have a portfolio where assets are as diversified as possible. \end{englishblock}
 
-流动性 对于账户更大、也更缺乏耐心的投资者来说，流动性至关重要。
+\begin{chineseblock}收益相关性 你应始终尽量让自己的投资组合在资产之间保持尽可能高的分散化。\end{chineseblock}
 
-Skew of returns Assets with strong negative skew need careful handling and shouldn't dominate your portfolio. Using the right trading rules can improve skew to some degree.
+\bipairgap
 
-收益偏度 具有强烈负偏度的资产需要被谨慎处理，不应在你的投资组合中占据主导。使用合适的交易规则，能够在一定程度上改善偏度特征。
+\begin{englishblock} Costs Cheaper is better. Expensive instruments will need to be traded more slowly, and may be too pricey to trade at all. \end{englishblock}
 
-Trading venue Is the market accessed via exchange, or over the counter (OTC)? On exchange is preferable.
+\begin{chineseblock}成本 越便宜越好。成本高的品种需要以更慢的方式交易，有时甚至可能贵到根本不值得交易。\end{chineseblock}
 
-交易场所 市场是通过交易所进入，还是通过场外（OTC）进入？如果可以，交易所更优。
+\bipairgap
 
-Cash or derivative Should you trade the asset outright, or a derivative based on its value, and if so which one?
+\begin{englishblock} Liquidity For larger and less patient investors liquidity is vital. \end{englishblock}
 
-现货还是衍生品 你应该直接交易资产本身，还是交易基于其价值的衍生品？如果是后者，又该选哪一种？
+\begin{chineseblock}流动性 对于账户更大、也更缺乏耐心的投资者来说，流动性至关重要。\end{chineseblock}
 
-Collective funds Investment through collective funds can make sense when derivatives can't be used.
+\bipairgap
 
-集合基金 当无法使用衍生品时，通过集合基金进行投资可能是有意义的。
+\begin{englishblock} Skew of returns Assets with strong negative skew need careful handling and shouldn't dominate your portfolio. Using the right trading rules can improve skew to some degree. \end{englishblock}
 
-Now you know what you are going to trade, the next step is to think about how. So the next chapter will cover the business of forecasting prices.
+\begin{chineseblock}收益偏度 具有强烈负偏度的资产需要被谨慎处理，不应在你的投资组合中占据主导。使用合适的交易规则，能够在一定程度上改善偏度特征。\end{chineseblock}
 
-现在你已经知道自己要交易什么了，下一步就该思考如何交易。因此，下一章会讨论价格预测这件事。
+\bipairgap
+
+\begin{englishblock} Trading venue Is the market accessed via exchange, or over the counter (OTC)? On exchange is preferable. \end{englishblock}
+
+\begin{chineseblock}交易场所 市场是通过交易所进入，还是通过场外（OTC）进入？如果可以，交易所更优。\end{chineseblock}
+
+\bipairgap
+
+\begin{englishblock} Cash or derivative Should you trade the asset outright, or a derivative based on its value, and if so which one? \end{englishblock}
+
+\begin{chineseblock}现货还是衍生品 你应该直接交易资产本身，还是交易基于其价值的衍生品？如果是后者，又该选哪一种？\end{chineseblock}
+
+\bipairgap
+
+\begin{englishblock} Collective funds Investment through collective funds can make sense when derivatives can't be used. \end{englishblock}
+
+\begin{chineseblock}集合基金 当无法使用衍生品时，通过集合基金进行投资可能是有意义的。\end{chineseblock}
+
+\bipairgap
+
+\begin{englishblock} Now you know what you are going to trade, the next step is to think about how. So the next chapter will cover the business of forecasting prices. \end{englishblock}
+
+\begin{chineseblock}现在你已经知道自己要交易什么了，下一步就该思考如何交易。因此，下一章会讨论价格预测这件事。\end{chineseblock}

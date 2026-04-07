@@ -1,101 +1,55 @@
-\chapter{Speed and Size}
-\bichaptertitle{速度与规模}
+\bilingualchapter{Speed and Size}{速度与规模}
 
-SO FAR EVERYTHING YOU'VE SEEN IN THE FRAMEWORK IS EQUALLY relevant to a nimble amateur trader, holding 100 share positions for a few hours, and the portfolio manager of a massive hedge fund, following trends lasting for months. However in practice these two people will need to trade quite differently to account for the frequency and size of their trades. In this chapter I will look at how you should design your trading systems given these two interrelated issues of speed and account size.
+\begin{englishblock} SO FAR EVERYTHING YOU'VE SEEN IN THE FRAMEWORK IS EQUALLY relevant to a nimble amateur trader, holding 100 share positions for a few hours, and the portfolio manager of a massive hedge fund, following trends lasting for months. However in practice these two people will need to trade quite differently to account for the frequency and size of their trades. In this chapter I will look at how you should design your trading systems given these two interrelated issues of speed and account size. \end{englishblock}
 
-到目前为止，你在框架中看到的内容，既适用于那种灵活的业余交易者
---- 他们可能只持有 100 股、几个小时后就平仓
---- 也适用于大型对冲基金的投资组合经理
---- 他们可能追踪一个持续数月的趋势。
-但在现实中，这两类人显然必须以非常不同的方式去交易，因为他们的交易频率和交易规模完全不同。
-本章讨论的，就是在这两个相互关联的问题
---- 交易速度与账户规模
---- 之下，你究竟应当如何设计自己的交易系统。
+\begin{chineseblock}到目前为止，你在框架中看到的内容，既适用于那种灵活的业余交易者--- 他们可能只持有 100 股、几个小时后就平仓--- 也适用于大型对冲基金的投资组合经理--- 他们可能追踪一个持续数月的趋势。但在现实中，这两类人显然必须以非常不同的方式去交易，因为他们的交易频率和交易规模完全不同。本章讨论的，就是在这两个相互关联的问题--- 交易速度与账户规模--- 之下，你究竟应当如何设计自己的交易系统。\end{chineseblock}
 
-\section*{Chapter overview}
-\phantomsection
-\addcontentsline{toc}{section}{Chapter overview}
-\bisectiontitle{本章概览}
+\bilingualsection{Chapter overview}{本章概览}
 
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
-\textbf{Speed of trading} & The thorny question of how quickly you should trade given the costs of doing so. \\
-\textbf{Decomposing and calculating the cost of trading} & How to work out what you expect to pay in costs, given which instruments you are trading and the characteristics of your trading system. \\
-\textbf{Using trading costs to make design decisions} & Once you know your costs, how you should adjust your system to cope. \\
-\textbf{Trading with more or less capital} & The issues of trading with relatively small or large amounts of capital. \\
-\textbf{Determining overall portfolio size} & Having a smaller account of capital limits how many instruments you can trade. I’ll explain how best to determine the size and shape of your portfolio. \\
-\end{tabularx}
+\begin{bilingualtableblock} \begin{tabularx}{\textwidth}{@{} L{0.30\textwidth} Y@{}}\textbf{Speed of trading} & The thorny question of how quickly you should trade given the costs of doing so. \\
 
-\medskip
-
-\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
 \textbf{交易速度} & 在考虑交易成本之后，你到底该交易多快，这是个棘手问题。 \\
+\textbf{Decomposing and calculating the cost of trading} & How to work out what you expect to pay in costs, given which instruments you are trading and the characteristics of your trading system. \\
 \textbf{分解并计算交易成本} & 在已知你交易哪些工具、以及系统具有什么特征的情况下， 如何估算你将支付多少成本。 \\
+\textbf{Using trading costs to make design decisions} & Once you know your costs, how you should adjust your system to cope. \\
 \textbf{利用交易成本做设计决策} & 一旦知道了成本，你该如何调整系统以适应它们。 \\
+\textbf{Trading with more or less capital} & The issues of trading with relatively small or large amounts of capital. \\
 \textbf{大资金与小资金交易} & 使用相对较大或较小资金交易时会遇到哪些问题。 \\
+\textbf{Determining overall portfolio size} & Having a smaller account of capital limits how many instruments you can trade. I’ll explain how best to determine the size and shape of your portfolio. \\
 \textbf{确定整体投资组合规模} & 资金账户越小，你能交易的品种就越少。 我会解释如何更合理地确定组合的规模和形状。 \\
 \end{tabularx}
+\end{bilingualtableblock}
 
-\section*{Speed of trading}
-\phantomsection
-\addcontentsline{toc}{section}{Speed of trading}
-\bisectiontitle{交易速度}
+\bilingualsection{Speed of trading}{交易速度}
 
-How fast should you trade? If you go long USD/EUR FX at 11:05am on Tuesday 23 September 2014, should you expect to be selling at 11:06? Or by Thursday? Perhaps you will be holding on until December, or even March the following year? The answer to this question depends on two things: how you expect prices to behave and the cost of each trade. Suppose you have a crystal ball and know with certainty that prices will increase by 10 cents in the next week. If it costs you 1 cent to trade then you should buy as you'll definitely make 8 cents by next Tuesday.\footnote{10 cents raw profit, less 1 cent to buy in and 1 cent to sell out.\par 原始利润 10 美分，
-减去买入 1 美分、卖出 1 美分的成本后，
-净赚 8 美分。} Unfortunately crystal balls are in short supply. Instead we have forecasts which don't provide certainty, but hopefully shift the odds in our favour. You might have a trading rule where after looking at the back-test you expect to get a Sharpe ratio (SR) of 1.5 before costs. But this strategy pays out two-thirds of its profits in trading costs, so the after-cost SR is just 0.5. If you were running at a 20\% volatility target you'd be expecting pre-cost returns of 30\% a year, annual costs of 20\% and net returns of just 10\%.\footnote{Annual returns are the expected annualised standard deviation of percentage returns (percentage volatility target) multiplied by Sharpe ratio. For pre-cost returns 20\% × 1.5 = 30\%. For after cost returns 20\% × 0.5 = 10\%. Hence you must be paying 30\% - 10\% = 20\% in costs.\par 年化收益等于年化百分比波动率目标乘以夏普比率。
-成本前收益是 20\% × 1.5 = 30\%，
-成本后收益是 20\% × 0.5 = 10\%，
-因此成本就是 20\%。} Is it wise to trade this rule?
+\begin{englishblock} How fast should you trade? If you go long USD/EUR FX at 11:05am on Tuesday 23 September 2014, should you expect to be selling at 11:06? Or by Thursday? Perhaps you will be holding on until December, or even March the following year? The answer to this question depends on two things: how you expect prices to behave and the cost of each trade. Suppose you have a crystal ball and know with certainty that prices will increase by 10 cents in the next week. If it costs you 1 cent to trade then you should buy as you'll definitely make 8 cents by next Tuesday.\footnote{10 cents raw profit, less 1 cent to buy in and 1 cent to sell out. \par 原始利润 10 美分，减去买入 1 美分、卖出 1 美分的成本后，净赚 8 美分。} Unfortunately crystal balls are in short supply. Instead we have forecasts which don't provide certainty, but hopefully shift the odds in our favour. You might have a trading rule where after looking at the back-test you expect to get a Sharpe ratio (SR) of 1.5 before costs. But this strategy pays out two-thirds of its profits in trading costs, so the after-cost SR is just 0.5. If you were running at a 20\% volatility target you'd be expecting pre-cost returns of 30\% a year, annual costs of 20\% and net returns of just 10\%.\footnote{Annual returns are the expected annualised standard deviation of percentage returns (percentage volatility target) multiplied by Sharpe ratio. For pre-cost returns 20\% × 1.5 = 30\%. For after cost returns 20\% × 0.5 = 10\%. Hence you must be paying 30\% - 10\% = 20\% in costs. \par 年化收益等于年化百分比波动率目标乘以夏普比率。成本前收益是 20\% × 1.5 = 30\%，成本后收益是 20\% × 0.5 = 10\%，因此成本就是 20\%。} Is it wise to trade this rule? \end{englishblock}
 
-你到底该交易多快？假设你在 2014 年 9 月 23 日周二上午 11:05 做多 USD/EUR，你应该预期自己在 11:06 就卖掉吗？还是等到周四？
-又或者，你会一直持有到 12 月，甚至到来年 3 月？这个问题的答案只取决于两件事：你预期价格会如何运动，以及每一笔交易的成本是多少。
-如果你真有一颗水晶球，并且确定价格在下一周会上涨 10 美分，那么只要交易成本是 1 美分，你当然应该买，因为到下周二你一定能净赚 8 美分。
-可惜水晶球并不常见。现实里我们拥有的是“预测”，它们不会给你确定性，但至少能让胜率向你倾斜。
-假设你有一条交易规则，回测显示它的成本前夏普比率
-（SR）可以达到 1.5；但这条规则会把三分之二的利润都花在交易成本上，因此成本后的 SR 只剩下 0.5。
-如果你以 20\% 的波动率目标来运行它，那么你预期的成本前收益是每年 30\%，成本则高达每年 20\%，最终净收益只剩 10\%。
-你真的应该去交易这样一条规则吗？
+\begin{chineseblock}你到底该交易多快？假设你在 2014 年 9 月 23 日周二上午 11:05 做多 USD/EUR，你应该预期自己在 11:06 就卖掉吗？还是等到周四？又或者，你会一直持有到 12 月，甚至到来年 3 月？这个问题的答案只取决于两件事：你预期价格会如何运动，以及每一笔交易的成本是多少。如果你真有一颗水晶球，并且确定价格在下一周会上涨 10 美分，那么只要交易成本是 1 美分，你当然应该买，因为到下周二你一定能净赚 8 美分。可惜水晶球并不常见。现实里我们拥有的是“预测”，它们不会给你确定性，但至少能让胜率向你倾斜。假设你有一条交易规则，回测显示它的成本前夏普比率（SR）可以达到 1.5；但这条规则会把三分之二的利润都花在交易成本上，因此成本后的 SR 只剩下 0.5。如果你以 20\% 的波动率目标来运行它，那么你预期的成本前收益是每年 30\%，成本则高达每年 20\%，最终净收益只剩 10\%。你真的应该去交易这样一条规则吗？\end{chineseblock}
 
-Personally I think it is very unwise indeed. If the actual pre-cost SR turned out to be less than 1.0, giving raw returns below 20\% a year, then the strategy will lose money after costs. You'd be trading far too quickly relative to the available pre-cost performance. Overtrading is a result of overconfidence, one of the cognitive biases I discussed in chapter one. Only someone who was very bullish would assume the realised pre-cost SR would definitely be 1.0 or over in actual trading. You shouldn't trade systems like this and hope for the best. Instead it's much better to design trading systems that aren't vulnerable to such high levels of costs. In the next part of the chapter I'm going to show you how to calculate the cost of trading a particular instrument at a given speed, and how to work out the likely costs you'll face. Then you'll see how to construct trading systems to ensure you won't be making more money for brokers and market makers, than for yourself.
+\bipairgap
 
-我个人认为，这样做非常不明智。如果这条规则最终实现的成本前 SR 低于 1.0，也就是原始收益低于每年 20\%，那么扣除成本后它就会直接亏钱。
-这意味着，你相对于可实现的成本前表现，交易得太快了。过度交易，本质上是过度自信的产物，而过度自信正是我在第一章里讨论过的认知偏差之一。
-只有一个极度乐观的人，才会假设自己的实际成本前 SR 一定会达到 1.0 或更高。你不应该运行这种系统，然后寄希望于好运。
-更好的做法，是设计那些不会被高成本轻易击穿的交易系统。本章后面我会展示：如何计算某个品种在某个速度下的交易成本，
-以及如何估算你真正要面对的成本。之后你就会看到，如何据此构建交易系统，从而避免最后赚得最多的不是你，而是经纪商和做市商。
+\begin{englishblock} Personally I think it is very unwise indeed. If the actual pre-cost SR turned out to be less than 1.0, giving raw returns below 20\% a year, then the strategy will lose money after costs. You'd be trading far too quickly relative to the available pre-cost performance. Overtrading is a result of overconfidence, one of the cognitive biases I discussed in chapter one. Only someone who was very bullish would assume the realised pre-cost SR would definitely be 1.0 or over in actual trading. You shouldn't trade systems like this and hope for the best. Instead it's much better to design trading systems that aren't vulnerable to such high levels of costs. In the next part of the chapter I'm going to show you how to calculate the cost of trading a particular instrument at a given speed, and how to work out the likely costs you'll face. Then you'll see how to construct trading systems to ensure you won't be making more money for brokers and market makers, than for yourself. \end{englishblock}
 
-\section*{Calculating the cost of trading}
-\phantomsection
-\addcontentsline{toc}{section}{Calculating the cost of trading}
-\bisectiontitle{计算交易成本}
+\begin{chineseblock}我个人认为，这样做非常不明智。如果这条规则最终实现的成本前 SR 低于 1.0，也就是原始收益低于每年 20\%，那么扣除成本后它就会直接亏钱。这意味着，你相对于可实现的成本前表现，交易得太快了。过度交易，本质上是过度自信的产物，而过度自信正是我在第一章里讨论过的认知偏差之一。只有一个极度乐观的人，才会假设自己的实际成本前 SR 一定会达到 1.0 或更高。你不应该运行这种系统，然后寄希望于好运。更好的做法，是设计那些不会被高成本轻易击穿的交易系统。本章后面我会展示：如何计算某个品种在某个速度下的交易成本，以及如何估算你真正要面对的成本。之后你就会看到，如何据此构建交易系统，从而避免最后赚得最多的不是你，而是经纪商和做市商。\end{chineseblock}
 
-本节的核心思想很直接：只知道“某次交易花了多少钱”是没有意义的，你还必须知道，为了达到同样的风险暴露，
-不同工具到底要交易多大规模。也就是说，成本必须经过风险标准化之后，才具有可比性。
+\bilingualsection{Calculating the cost of trading}{计算交易成本}
 
-\subsection*{The cost of execution}
-\bisubsectiontitle{执行成本}
+\bilingualsubsection{The cost of execution}{执行成本}
 
-The first kind of cost we'll analyse is execution cost. Back-tests nearly always assume that when you trade you get the mid-price. In practice the difference between the mid and the price you actually achieve depends on your order size relative to the available liquidity. Smaller traders can often conservatively assume that they will pay half the usual bid-offer spread. Larger traders, or those operating in less liquid markets, cannot safely make that assumption.
+\begin{englishblock} The first kind of cost we'll analyse is execution cost. Back-tests nearly always assume that when executing a trade you will pay the mid-price. But in practice the difference between the mid and the price you achieve will depend on how large your trades are compared to the available volume. This difference is the execution cost. Look at figure 24, which shows a snapshot of the order book for the Euro Stoxx European equity index future. At this point the mid-price was halfway between the bid of 3,369 and the offer of 3,370; equal to 3,369.5. Smaller traders can assume they will pay at most half the usual spread between bid and offer in execution cost, which is what you get from submitting a market order that crosses the spread and hits the best bid or offer. If you're selling 437 contracts or fewer then the price you'd receive is 3,369. Similarly if you're buying fewer than 8 contracts the most you would pay is 3,370. In this example the expected execution cost is 0.5 of a point (half of the one point spread between 3369 and 3370). If you placed limit orders you might do better, but it's better to be conservative and assume costs are higher than you'd hope. This assumption is reasonable if your typical trade is less than the usual size available on the inside of the spread. Larger traders cannot assume this, and I discuss this further in the final part of this chapter. Also remember that this is not a book about high frequency trading. These assumptions are wrong if you are constantly submitting orders every few seconds or fractions of a second, as the order book will be affected by each of your successive trades. \end{englishblock}
 
-\rawfigurecaption{ORDER BOOK FOR EURO STOXX INDEX MARCH 2015 FUTURES, AS OF 23 JANUARY 2015 11:13 GMT\\2015 年 1 月 23 日 11:13 GMT 的 Euro Stoxx 50 指数 2015 年 3 月期货订单簿}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\noindent\begin{tabularx}{\textwidth}{@{}lXl@{}}
-\textbf{Product} & Euro Stoxx 50 Index Futures & \textbf{Product ID:} FESX \\
+\begin{chineseblock}我们先分析的第一类成本，是执行成本。回测几乎总是假设，在执行交易时你总能按中间价成交。但在现实里，中间价与你实际成交价之间的差额，取决于你的交易规模相对于当时可成交量有多大。这个差额就是执行成本。看看图 24，它展示的是 Euro Stoxx 欧洲股票指数期货订单簿在某一时刻的快照。当时的中间价位于 3,369 的买价和 3,370 的卖价之间，正好是 3,369.5。对于规模较小的交易者，可以假设执行成本最多就是平常买卖价差的一半；这相当于你提交一个市价单，跨过买卖价差，吃掉最优买价或卖价。如果你卖出 437 手或更少，那么你拿到的价格就是 3,369；同样，如果你买入少于 8 手，最多支付的价格就是 3,370。这个例子里，预期执行成本就是 0.5 个点，也就是 3369 和 3370 之间 1 点价差的一半。如果你用限价单，也许能做得更好，但更稳妥的做法是保守一些，假设成本会比你希望的更高。只要你的典型交易规模小于盘口最内层通常可见的数量，这个假设就是合理的。大资金交易者则不能这样假设，我会在本章最后一部分进一步讨论这一点。另外别忘了，这本书并不是讲高频交易的。如果你每几秒甚至几分之一秒就持续提交订单，那么这些假设就不成立，因为你的连续订单本身就会影响订单簿。\end{chineseblock}
+
+\rawfigurecaption{ORDER BOOK FOR EURO STOXX INDEX MARCH 2015 FUTURES, AS OF 23 JANUARY 2015 11:13 GMT\\2015 年 1 月 23 日 11:13 GMT 的 Euro Stoxx 50 指数 2015 年 3 月期货订单簿}\begingroup \scriptsize \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.08} \begin{englishtableblock} \noindent\begin{tabularx}{\textwidth}{@{} lXl@{}}\textbf{Product} & Euro Stoxx 50 Index Futures & \textbf{Product ID:} FESX \\
 \textbf{Contract} & Mar 2015 & \textbf{Last / Volume:} 3,368.00 / 652,226 \\
 \end{tabularx}
+\end{englishtableblock}
 
 \medskip
 
-\noindent
-\begin{minipage}[t]{0.48\textwidth}
-\centering
-\textbf{Bid Side}
+\noindent \begin{minipage}[t]{0.48\textwidth} \centering \begingroup\color{\englishbodycolorname}\arrayrulecolor{\englishbodycolorname!22!bookrule} \textbf{Bid Side}
 
-\smallskip
-\begin{tabular}{@{}rrrr@{}}
+\smallskip \begin{tabular}{@{} rrrr@{}}
 \toprule
 Avg. Pr. & Cum. Qty. & Quantity & Bid \\
 \midrule
@@ -111,13 +65,9 @@ Avg. Pr. & Cum. Qty. & Quantity & Bid \\
 3,364.07 & 6,587 & 790 & 3,360.00 \\
 \bottomrule
 \end{tabular}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
-\textbf{Ask Side}
+\endgroup \end{minipage}\hfill \begin{minipage}[t]{0.48\textwidth} \centering \begingroup\color{\englishbodycolorname}\arrayrulecolor{\englishbodycolorname!22!bookrule} \textbf{Ask Side}
 
-\smallskip
-\begin{tabular}{@{}rrrr@{}}
+\smallskip \begin{tabular}{@{} rrrr@{}}
 \toprule
 Ask & Quantity & Cum. Qty. & Avg. Pr. \\
 \midrule
@@ -133,29 +83,21 @@ Ask & Quantity & Cum. Qty. & Avg. Pr. \\
 3,379.00 & 571 & 7,119 & 3,374.96 \\
 \bottomrule
 \end{tabular}
-\end{minipage}
+\endgroup \end{minipage}
 \endgroup
 
 \medskip
 
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.08}
-\noindent\begin{tabularx}{\textwidth}{@{}lXl@{}}
-\textbf{产品} & Euro Stoxx 50 指数期货 & \textbf{产品代码：} FESX \\
+\begingroup \scriptsize \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.08} \begin{chinesetableblock} \noindent\begin{tabularx}{\textwidth}{@{} lXl@{}}\textbf{产品} & Euro Stoxx 50 指数期货 & \textbf{产品代码：} FESX \\
 \textbf{合约} & 2015 年 3 月 & \textbf{最新价 / 成交量：} 3,368.00 / 652,226 \\
 \end{tabularx}
+\end{chinesetableblock}
 
 \medskip
 
-\noindent
-\begin{minipage}[t]{0.48\textwidth}
-\centering
-\textbf{买盘}
+\noindent \begin{minipage}[t]{0.48\textwidth} \centering \begingroup\color{\chinesebodycolorname}\arrayrulecolor{\chinesebodycolorname!22!bookrule} \textbf{买盘}
 
-\smallskip
-\begin{tabular}{@{}rrrr@{}}
+\smallskip \begin{tabular}{@{} rrrr@{}}
 \toprule
 均价 & 累计数量 & 数量 & 买价 \\
 \midrule
@@ -171,13 +113,9 @@ Ask & Quantity & Cum. Qty. & Avg. Pr. \\
 3,364.07 & 6,587 & 790 & 3,360.00 \\
 \bottomrule
 \end{tabular}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.48\textwidth}
-\centering
-\textbf{卖盘}
+\endgroup \end{minipage}\hfill \begin{minipage}[t]{0.48\textwidth} \centering \begingroup\color{\chinesebodycolorname}\arrayrulecolor{\chinesebodycolorname!22!bookrule} \textbf{卖盘}
 
-\smallskip
-\begin{tabular}{@{}rrrr@{}}
+\smallskip \begin{tabular}{@{} rrrr@{}}
 \toprule
 卖价 & 数量 & 累计数量 & 均价 \\
 \midrule
@@ -193,713 +131,384 @@ Ask & Quantity & Cum. Qty. & Avg. Pr. \\
 3,379.00 & 571 & 7,119 & 3,374.96 \\
 \bottomrule
 \end{tabular}
-\end{minipage}
+\endgroup \end{minipage}
 \endgroup
 
-\subsection*{Source: EUREX}
-\bisubsectiontitle{来源：EUREX}
+\bilingualsubsection{Source: EUREX}{来源：EUREX}
 
-回测几乎总是假设，你成交的价格就是中间价。但现实里，你真正拿到的成交价取决于委托簿深度、你的订单大小以及流动性情况。
-这两者之间的差额，就是执行成本。对于小规模交易者而言，一个合理而保守的假设是：每次交易至少会付出半个买卖价差。
-而对于大资金、流动性差的市场、或者交易得非常快的人来说，情况就复杂得多，此时绝不能轻率地假设“只付半个点差”。
+\bilingualsubsection{Types of cost}{成本的类型}
 
-\subsection*{Types of cost}
-\bisubsectiontitle{成本的类型}
+The execution cost I calculated above is a key element of costs, but it's not the only one. There are also fees: commissions and taxes to pay. Here is a list of the types of cost you might face. Expected This is the execution cost you saw above; the difference between the midexecution price and what you get when you actually trade. cost per Smaller traders can usually assume they will pay at most half the usual block spread between bid and offer, as in the 0.5 points for Euro Stoxx in figure \begin{enumerate}
+\item As a percentage of 3,370 this will be 0.01484\%. To get the cost in cash terms multiply the percentage spread in price points by the value of each 1\%.* For Euro Stoxx futures at a price of 3,370 this happens to be €337, so the execution cost is equal to 0.01484 multiplied by 3,370, which is €5.**\end{enumerate}
+Fee per Many UK retail brokers impose a per trade commission regardless of the ticket trade size. £5 to £15 is typical. Fee based Other brokers charge per 100 shares or single futures contract traded. My on trade size broker charges €3 per contract to trade Euro Stoxx futures. Percentage Certain jurisdictions charge a percentage tax on the value of the trade, value fee such as UK stamp duty at 0.5\%. Some brokers also charge percentage commissions on larger transactions; 0.1\% is typical.* Remember this was defined in chapter ten, ‘Position sizing', page 154, as the block value, the amount we make in cash terms when a price moves by 1\%. ** For Euro Stoxx each one point move in the futures price costs €10. So a 1\% move of 33.7 points is worth €337. There may also be a holding cost for certain instruments. Futures, spread bets and contracts for difference require rolling over monthly or quarterly. Nearly all collective funds impose an annual charge. These holding costs are usually relatively small compared to trading costs, and they don't affect decisions about speed, so we'll ignore them.124
 
-The execution cost I calculated above is a key element of costs, but it's not the only one. There are also fees: commissions and taxes to pay. Here is a list of the types of cost you might face.
+\begin{chineseblock}我前面算出的执行成本，是交易成本中非常关键的一部分，但并不是全部。你还要支付其他费用，例如佣金和税费。下面是你可能会遇到的几类成本。每个头寸块的预期执行成本：这就是前面看到的执行成本，也就是中间价与你实际成交价之间的差额。对规模较小的交易者而言，通常可以假设自己支付的最多只是平常买卖价差的一半，就像图中 Euro Stoxx 的 0.5 点那样。1. 这相当于 3,370 点价格的 0.01484\%。若要把它换算成现金成本，就要把价格点数对应的百分比乘以“价格每变动 1\% 的现金价值”。* 对于价格为 3,370 的 Euro Stoxx 期货来说，这个值恰好是 €337，因此执行成本等于 0.01484\% 乘以 3,370，也就是 €5。**每张委托单的费用：许多英国零售经纪商无论委托规模大小，都会按笔收取固定佣金，典型水平在 £5 到 £15 之间。按交易规模计费的费用：另一些经纪商会按每 100 股股票、或者每张单一期货合约收费。我自己的经纪商交易 Euro Stoxx 期货时，每张合约收费 €3。按成交金额收取的百分比费用：有些司法辖区会对成交金额征收比例税费，例如英国 0.5\% 的印花税。有些经纪商在较大额交易上也会收取按金额百分比计的佣金，0.1\% 很常见。* 记住，这在第十章“仓位规模设定”第 154 页中被定义为头寸块价值，也就是价格每变动 1\% 时我们在现金上会赚或亏多少钱。** 对于 Euro Stoxx，每 1 点期货价格变动值 €10，因此 33.7 点、也就是 1\% 的价格变动，对应 €337。某些工具还会有持有成本。期货、点差投注和差价合约都需要按月或按季展期。几乎所有集合投资基金都会收取年度费用。不过这些持有成本通常比交易成本小得多，而且不会影响你对交易速度的判断，所以这里我们把它忽略掉。\end{chineseblock}
 
-Expected This is the execution cost you saw above; the difference between the midexecution price and what you get when you actually trade. cost per Smaller traders can usually assume they will pay at most half the usual block spread between bid and offer, as in the 0.5 points for Euro Stoxx in figure
+\bilingualsubsection{Standardising cost measurement}{标准化成本度量}
 
-\begin{enumerate}
-  \item As a percentage of 3,370 this will be 0.01484\%. To get the cost in cash terms multiply the percentage spread in price points by the value of each 1\%.* For Euro Stoxx futures at a price of 3,370 this happens to be €337, so the execution cost is equal to 0.01484 multiplied by 3,370, which is €5.**
-\end{enumerate}
+Suppose it costs €8 in total to trade one Euro Stoxx futures contract (€5 in execution costs and €3 in brokerage fees). Is this a lot? How does it compare with €5 to trade a German 2 year bond Schatz futures contract? Naively, €5 sounds cheaper than €8, but the answer is not as simple as you might expect. What if you have to buy 20 Schatz versus 10 Euro Stoxx to achieve the same amount of risk? (This is the volatility scalar from chapter ten, page 159.) Despite Schatz looking like a bargain it's going to cost you €100 versus €80 to put equivalent positions on, so Euro Stoxx is actually cheaper to trade. This is another opportunity to use the technique of volatility standardisation. You should use a measure of costs that accounts for how risky different instruments are. The measure is defined as follows: if you buy one instrument block and then sell it, how much does that round trip cost when divided by the annualised risk of that instrument? This standardised cost is equivalent to how much of your annualised raw Sharpe ratio (SR) you'll lose in costs for each round trip. To calculate it you take the cost to trade one block in instrument currency C, and double it because a round trip is two trades. You then divide by the annualised standard deviation of the value of one block of an instrument. This is the annualised version of the daily instrument currency volatility ICV (which was defined on page 158). Remember that to annualise daily volatilities you need to multiply by 16.125 So the standardised cost will be (2 × C) ÷ (16 × ICV). An important implication of this formula is that the effective cost of trading is higher for instruments with lower price volatility. This is another reason to exclude very low risk instruments from your portfolio. As I'm writing this, the price of the Euro Stoxx future has volatility of around 1.5\% a day (the instrument riskiness defined on page 155), and as each 1\% move is worth €337 (the block value I discussed on page 154) this equates to a daily standard deviation of the contract value of €506 (the ICV or instrument currency volatility). When I annualise this I get 506 × 16 = €8,096. Given the cost of trading at €8 per block, this is a standardised cost of 2 × €8 divided by €8,096, or 0.002 SR units. Like most futures this is cheap to trade.126 Average standardised costs in 2014 for the futures contracts I traded ranged from around 0.001 SR for the most liquid like the FTSE 100, up to around 0.03 SR for Australian interest rate futures.\footnote{These are the conservative costs assuming you pay half the spread each time. In practice I paid a fraction of this by using simple automated execution algorithms. Nevertheless, I still use the more conservative costs when back-testing. \par 这些是偏保守的成本估计，假设你每次都要支付半个买卖价差。实际上，我通过使用简单的自动执行算法，只支付了其中的一小部分。尽管如此，在做回测时我仍然使用这种更保守的成本。} Now let's look at a spread bet\footnote{This is what semi-automatic traders will use in the example in part four. \par 这是第四部分示例中半自动交易者会使用的工具。} on the FTSE 100, where I am betting £1 per point. First I need to work out the instrument currency volatility. \begin{enumerate}
+\item This is the usual ‘square root of time' factor of 16, assuming a 256 business day year.
+\item Staunch systems traders will use futures in the example in part four. \end{enumerate}
+Price volatility Currently 0.75\% a day. Instrument block £1 per point. Block value With the FTSE at 6600 a 1\% move will be 66 points, the value of which at £1 per point will be £66. Instrument This is the price volatility multiplied by the block value: 0.75 × £66 = currency volatility £49.50. (ICV) Now I can work out the costs. Expected Half the typical spread is 4 points, i.e. £4.* There are no fees or taxes. execution costs per block Total cost per £4 block (C) Instrument From above £49.50. currency volatility (ICV) Cost in SR units 2 × C ÷ (16 × ICV) = 2 × £4 ÷ (16 × £49.50) = 0.01 SR* This is for a quarterly forward bet -- spreads on spot FTSE are tighter but with my typical holding period they would end up being more expensive. This is about ten times larger than for the FTSE 100 future, which isn't surprising as the spread bet is a retail product with a smaller block size.\footnote{Spread bets generally have higher trading costs than futures, and are OTC traded rather than on exchange. On the upside as well as smaller block sizes they offer tax free returns under current UK legislation. \par 点差投注的交易成本通常高于期货，而且属于场外交易而不是交易所交易。好处是，除了头寸块更小之外，按照现行英国法律，它们的收益还享有免税待遇。} Generally bets on most major indices come in around the 0.01 SR level, although those on individual shares will usually cost more. I'll use 0.01 SR as the benchmark cost for spread bets. The third type of instrument we'll consider is exchange traded funds (ETFs). Like many equities, these are cheaper to trade in 100 share blocks. The precise cost will depend on volatility, and the volatility for ETFs depends on the underlying assets and whether any leverage is used. I will be conservative and check the cost of a relatively low volatility instrument, the iShares IGIL global inflation linked bond ETF, which is one of the ETFs I use in the asset allocator example in part four. Price volatility Around 0.43\% a day in early 2015. Instrument block 100 shares. Block value 100 shares at \$144 per share is \$14,400. 1\% of this is \$144. Instrument currency This is the block value multiplied by the price volatility: \$144 × volatility 0.43 = \$62 Now for the costs. Expected execution The typical bid offer on this ETF is 70 cents wide or 0.486\% of the cost per block current price of \$144. The block value is \$144. So if I pay half the spread I'd pay 0.486 × \$144 × 0.5 = \$35 for each block. Fee per ticket My broker charges me \$5.00 per trade. I assume there are no other fees or taxes due. Total cost per \$35 + \$5 = \$40 block (C) Instrument currency \$62 (from above). volatility (ICV) Cost in SR units 2 × C ÷ (16 × ICV) = 2 × \$40 ÷ (16 × \$62) = 0.08 SR ETFs with higher price volatility, such as equities, will cost less than this on a risk normalised basis, but to be safe I'll use the figure of 0.08 SR as my expected cost for ETFs. The costs in these examples are correct given current market conditions and the brokerage fees I'm paying, but you should calculate your own figures before making any decisions.
 
-Fee per Many UK retail brokers impose a per trade commission regardless of the ticket trade size. £5 to £15 is typical.
+\begin{chineseblock}假设交易一个 Euro Stoxx 期货头寸块总共要花 €8，其中 €5 是执行成本、€3 是经纪佣金。这算多吗？如果拿它和交易一个德国两年期国债 Schatz 期货头寸块只要 €5 来比较，又该怎么看？乍一看，€5 似乎当然比 €8 便宜，但答案并不像你以为的那么简单。要是为了得到同样规模的风险暴露，你必须买 20 个 Schatz 头寸块，而只需要买 10 个 Euro Stoxx 呢？这正是第十章第 159 页里讲到的波动率缩放因子。这样一来，虽然 Schatz 看起来单块更便宜，但建立等风险仓位时它要花 €100，而 Euro Stoxx 只要 €80，所以真正更便宜的反而是 Euro Stoxx。这里又是一次使用波动率标准化技术的机会。你需要一种能够把不同工具风险程度考虑进去的成本度量方式。这个度量的定义是：买入一个头寸块再卖出时，这次往返交易的成本除以该工具的年化风险以后是多少？我把它叫做标准化成本。它等价于：每做一次往返交易，你会损失多少年化原始夏普比率（SR）。计算时，先取以工具货币表示的单个头寸块交易成本 \(C\)，因为往返交易包含两笔，所以乘以 2；然后除以一个头寸块价值的年化标准差。这个标准差就是第 158 页定义的日品种货币波动率 ICV 的年化版本。记住，把日波动率年化时需要乘以 16。因此，标准化成本就是 \((2 \times C) \div (16 \times ICV)\)。这个公式有一个重要含义：价格波动率越低的工具，在风险标准化之后看起来就越贵。这也是为什么我建议你把那些特别低风险的工具排除在组合之外的又一个原因。以我写作时的 Euro Stoxx 期货为例，它的日价格波动率大约是 1.5\%（第 155 页定义的工具风险性），而价格每变动 1\% 的价值是 €337（第 154 页介绍过的头寸块价值），因此合约价值的日标准差就是 €506，也就是 ICV。把它年化后得到 \(506 \times 16 = €8,096\)。如果交易一个头寸块的成本是 €8，那么标准化成本就是 \(2 \times €8 \div €8,096 = 0.002\) 个 SR 单位。和大多数期货一样，这非常便宜。2014 年我交易的期货合约，标准化成本从最液态的 FTSE 100 附近的 0.001 SR，到澳大利亚利率期货大约 0.03 SR 不等。现在再看 FTSE 100 的点差投注，我下注的规模是每点 £1。首先要计算品种货币波动率。1. 价格波动率：当前约为每天 0.75\%。 2. 头寸块：每点 £1。 3. 头寸块价值：FTSE 在 6600 点时，1\% 的变动是 66 点；按每点 £1 计算，价值就是 £66。 4. 品种货币波动率（ICV）：等于价格波动率乘以头寸块价值，即 \(0.75 \times £66 = £49.50\)。然后再算成本。预期的每个头寸块执行成本，是典型价差的一半，也就是 4 点，即 £4。这里没有其他费用或税费，因此每个头寸块的总成本 \(C\) 就是 £4，而 ICV 是前面算出的 £49.50。换算成 SR 单位之后，成本就是 \(2 \times £4 \div (16 \times £49.50) = 0.01\) SR。这里说的是季度远期点差投注；现货 FTSE 的价差更窄，但按我的典型持有期来算，最后反而会更贵。这个成本大约是 FTSE 100 期货的十倍，这并不奇怪，因为点差投注本来就是头寸块更小的零售产品。一般而言，大多数主要指数上的点差投注都在 0.01 SR 左右，不过个股点差投注通常会更贵。我会把 0.01 SR 当作点差投注的基准成本。第三类要看的工具是交易所交易基金（ETF）。和很多股票一样，它们通常以 100 股为一个较合算的交易单位。具体成本取决于波动率，而 ETF 的波动率又取决于标的资产以及是否使用杠杆。我会保守地去看一只波动率相对较低的工具，即 iShares IGIL 全球通胀挂钩债券 ETF，它也是我在第四部分资产配置示例里使用的 ETF 之一。它在 2015 年初的日价格波动率大约是 0.43\%，头寸块是 100 股。按每股 \$144 计算，100 股的价值是 \$14,400，其中 1\% 对应 \$144。品种货币波动率就是头寸块价值乘以价格波动率，即 \( \$144 \times 0.43 = \$62 \)。再来看成本：这只 ETF 的典型买卖价差是 70 美分，约占 \$144 现价的 0.486\%。头寸块价值是 \$144，所以如果我支付半个价差，每个头寸块的执行成本就是 \(0.486 \times \$144 \times 0.5 = \$35\)。我的经纪商每笔再收 \$5.00，假设没有其他费用或税费，于是每个头寸块总成本 \(C\) 为 \$40，ICV 为 \$62，对应的标准化成本就是 \(2 \times \$40 \div (16 \times \$62) = 0.08\) SR。波动率更高的 ETF，例如股票 ETF，在风险标准化后的成本会低于这个数字；但为了安全起见，我会把 0.08 SR 作为 ETF 的预期成本。这里这些示例成本，都是根据我写作时的市场环境和自己支付的经纪费用算出来的；在真正做决定之前，你应该先用自己的数据再算一遍。\end{chineseblock}
 
-Fee based Other brokers charge per 100 shares or single futures contract traded. My on trade size broker charges €3 per contract to trade Euro Stoxx futures.
+\bilingualsubsection{Introducing turnover}{引入换手率}
 
-Percentage Certain jurisdictions charge a percentage tax on the value of the trade, value fee such as UK stamp duty at 0.5\%. Some brokers also charge percentage commissions on larger transactions; 0.1\% is typical.
+\begin{englishblock} What is the point in knowing it will cost us 0.08 Sharpe ratio (SR) units, 0.01 SR or 0.002 SR, to buy and sell a risk adjusted amount of each instrument? It's pointless having just a standardised measure of costs; you also need a standardised measure of how quickly you're trading. Since you know the cost per round trip in annualised SR units you'll need to count the number of round trips done annually, where a round trip is a buy and then a sell. I measured standardised costs by making them volatility standardised. Similarly each buy and sell should be of a volatility standardised quantity of instrument blocks. Because of the way the framework works, this is equivalent to your expected average absolute position, or the position you'd have with an average sized forecast (defined as the volatility scalar in chapter ten, page 159). The number of round trips per year is the turnover. A turnover of 1 unit means you expect to do one buy and one sell of an average sized position per year; so your average holding period will be 12 months. Similarly a turnover of 52 units would imply you're hanging on to positions for an average of one week. Because turnover is volatility standardised it means you can consider the trading pattern of each instrument in isolation (the so called trading subsystem that was defined in chapter ten), without worrying about the rest of your portfolio. For example suppose it costs a standardised 0.01 Sharpe ratio units for each round trip in spread bets, and your turnover is 10 units of average position each year. Then over a year of ten round trips (ten buys and ten sells), you'd lose 10 × 0.01 = 0.10 SR in costs. That means an SR of 0.5 would be reduced to 0.5 - 0.1 = 0.4. \end{englishblock}
 
-* Remember this was defined in chapter ten, ‘Position sizing', page 154, as the block value, the amount we make in cash terms when a price moves by 1\%. ** For Euro Stoxx each one point move in the futures price costs €10. So a 1\% move of 33.7 points is worth €337.
+\begin{chineseblock}知道买卖一个风险标准化头寸块要花 0.08、0.01 或 0.002 个夏普比率（SR）单位，还不够。只有标准化的成本度量是没有意义的，你还需要一个标准化的交易速度度量。既然你已经知道每次往返交易的成本，以年化 SR 单位表示，那下一步就要数出一年里会做多少次这样的往返交易，而所谓一次往返，就是先买后卖。我把成本标准化，是通过波动率标准化来完成的。同样地，每次买入和卖出，也都应该对应一个波动率标准化后的头寸块数量。按照整套框架的定义，这等价于你的预期平均绝对仓位，也就是当预测值处在平均水平时你会持有的仓位大小，在第十章第 159 页里这被定义为波动率缩放因子。每年的往返交易次数就是换手率。换手率为 1，表示你预期一年里会对一个平均规模的仓位做一次买入和一次卖出，因此平均持有期是 12 个月。类似地，换手率为 52，就意味着你的平均持有期大约是一周。由于换手率本身也是经过波动率标准化的，所以你可以单独看待每个工具的交易模式，也就是第十章里所谓的交易子系统，而不用担心组合的其余部分。例如，假设点差投注每次往返交易的标准化成本是 0.01 SR，而你的换手率是一年 10 个平均仓位单位。那么一年做完 10 次往返交易之后，你就会在成本上损失 \(10 \times 0.01 = 0.10\) SR。也就是说，一条原本 0.5 SR 的规则，净下来只剩 0.4 SR。 \end{chineseblock}
 
-There may also be a holding cost for certain instruments. Futures, spread bets and contracts for difference require rolling over monthly or quarterly. Nearly all collective funds impose an annual charge. These holding costs are usually relatively small compared to trading costs, and they don't affect decisions about speed, so we'll ignore them.124
+\bilingualsubsection{Where does turnover come from?}{换手率从哪里来？}
 
-Execution cost is only one part of trading cost. You may also face per-ticket commissions, fees based on traded size, and value-based taxes such as stamp duty. Certain instruments also have holding costs, but for decisions about trading speed the most important items are the direct costs you incur every time you enter and exit a position.
+\begin{englishblock} Before continuing you also need to understand where turnover comes from. For what reasons would you want to trade? Here's a list, in order of descending importance. Forecast A change in forecast from one or more of the trading rules used by staunch systems traders, or because a semi-automatic trader is placing new bets or closing old ones. This is the main source of position changes, except for asset allocating investors for whom forecasts do not change. Instrument Movements in the expected daily standard deviation of the value of each currency instrument block (price volatility multiplied by block size). This is the volatility second most important reason for position changes. Trading capital Changes in the amount of capital you currently have at risk. This is determined by your profits and losses and by any additional funds you add or withdraw. Ignoring withdrawals and injections of money, with the highest recommended 50\% volatility target, this will change by an average of 3\% each day. You can't reduce the trades that result from this component, except by using a lower percentage volatility target. So with a target of 16\% it would move by around 1\% a day. Exchange rate This is the exchange rate between an instrument's currency and the currency your current trading capital is in. Rates usually move by less than 1\% a day in major currencies. You can't reduce these trades, which in any case are relatively small. System These are parameters in the trading system which should only change parameters infrequently if at all: Forecast weights, Instrument weights, forecast and instrument diversification multipliers, and the percentage volatility target. You can eliminate the trades that result from this element by not meddling with your system! In the rest of this chapter I will focus on how forecasts and changes in price volatility influence trading speed, since these can readily be adjusted and have the biggest effect. \end{englishblock}
 
-执行成本只是交易成本的一部分。除此之外，还有佣金、固定手续费、按交易规模计费的费用、印花税等按成交金额征收的税费，
-以及某些工具在持有期间本身就会持续产生的持有成本。对于交易速度设计来说，真正决定性的是前者
---- 也就是每一次进出场所付出的直接交易成本。
+\begin{chineseblock}在继续之前，你还需要理解换手率究竟从哪里来。你为什么会需要交易？按重要性从高到低，大致有以下几个来源。1. 预测值：对坚定系统化交易者来说，是一条或多条交易规则给出的预测发生了变化；对半自动交易者来说，则可能是你新开了赌注或平掉了旧赌注。除了资产配置型投资者之外，这通常都是仓位变化最主要的来源，因为他们的预测值并不会变化。2. 品种货币波动率：也就是每个头寸块价值的预期日标准差发生变化，而这个值等于价格波动率乘以头寸块大小。它是仓位变化的第二大来源。3. 交易资本：你当前承担风险的资本数量发生变化。这由盈亏，以及你额外注入或提取的资金决定。先忽略资金申购与赎回不看，在最高建议的 50\% 波动率目标下，这个量平均每天会变化大约 3\%。除了把百分比波动率目标设得更低之外，你几乎无法减少这部分带来的交易；如果目标是 16\%，那么它每天大约只会变化 1\%。 4. 汇率：也就是工具计价货币与你交易资本计价货币之间的汇率。主要货币的汇率每天通常波动不到 1\%。这部分交易你也无法减少，而且通常影响相对较小。5. 系统参数：例如预测权重、品种权重、预测与品种分散化乘数，以及百分比波动率目标。这些参数如果会变，也只应该非常偶尔地变动。要消除这部分带来的交易，最好的办法就是别去乱动你的系统。本章剩余部分里，我会重点讨论预测值变化和价格波动率变化如何影响交易速度，因为这两项最重要，而且也最容易通过系统设计来调整。\end{chineseblock}
 
-\subsection*{Standardising cost measurement}
-\bisubsectiontitle{标准化成本度量}
+\bilingualsubsection{Estimating the number of round trips}{估算往返交易次数}
 
-Suppose it costs €8 in total to trade one Euro Stoxx futures contract (€5 in execution costs and €3 in brokerage fees). Is this a lot? How does it compare with €5 to trade a German 2 year bond Schatz futures contract? Naively, €5 sounds cheaper than €8, but the
+\begin{englishblock} You can now calculate the expected costs of trading each instrument, given the units of turnover of the trading system and the standardised costs. But how do you find the turnover? There are three ways to estimate it. Sophisticated back- If you have access to decent back-testing software, or can write test your own, then you can include a function that estimates turnover directly. Simple back-test More rudimentary back-testing tools can give you an estimate of the average number of instrument blocks traded each year and the average absolute number of blocks you held. You can then calculate turnover as: Average number of blocks traded per year ÷ (2 × average absolute number of blocks held) Rule of thumb The third alternative is to use rules of thumb. This approach is fine for semi-automatic traders whose turnover will depend on the tightness of their stop loss, asset allocating investors who don't get turnover from forecast changes, and for those staunch systems traders who are using only the trading rules I provided in chapter seven (the carry and EWMAC rules). There will be relevant rules of thumb later in this chapter and in the example chapters of part four. \end{englishblock}
 
-answer is not as simple as you might expect. What if you have to buy 20 Schatz versus 10 Euro Stoxx to achieve the same amount of risk? (This is the volatility scalar from chapter ten, page 159.) Despite Schatz looking like a bargain it's going to cost you €100 versus €80 to put equivalent positions on, so Euro Stoxx is actually cheaper to trade. This is another opportunity to use the technique of volatility standardisation. You should use a measure of costs that accounts for how risky different instruments are. The measure is defined as follows: if you buy one instrument block and then sell it, how much does that round trip cost when divided by the annualised risk of that instrument? This standardised cost is equivalent to how much of your annualised raw Sharpe ratio (SR) you'll lose in costs for each round trip. To calculate it you take the cost to trade one block in instrument currency C, and double it because a round trip is two trades. You then divide by the annualised standard deviation of the value of one block of an instrument. This is the annualised version of the daily instrument currency volatility ICV (which was defined on page 158). Remember that to annualise daily volatilities you need to multiply by 16.125 So the standardised cost will be (2 × C) ÷ (16 × ICV). An important implication of this formula is that the effective cost of trading is higher for instruments with lower price volatility. This is another reason to exclude very low risk instruments from your portfolio. As I'm writing this, the price of the Euro Stoxx future has volatility of around 1.5\% a day (the instrument riskiness defined on page 155), and as each 1\% move is worth €337 (the block value I discussed on page 154) this equates to a daily standard deviation of the contract value of €506 (the ICV or instrument currency volatility). When I annualise this I get 506 × 16 = €8,096. Given the cost of trading at €8 per block, this is a standardised cost of 2 × €8 divided by €8,096, or 0.002 SR units. Like most futures this is cheap to trade.126 Average standardised costs in 2014 for the futures contracts I traded ranged from around 0.001 SR for the most liquid like the FTSE 100, up to around 0.03 SR for Australian interest rate futures.\footnote{These are the conservative costs assuming you pay half the spread each time. In practice I paid a fraction of this by using simple automated execution algorithms. Nevertheless, I still use the more conservative costs when back-testing.} Now let's look at a spread bet\footnote{This is what semi-automatic traders will use in the example in part four.} on the FTSE 100, where I am betting £1 per point. First I need to work out the instrument currency volatility.
+\begin{chineseblock}既然你已经有了系统的换手率单位和标准化成本，就可以计算每个工具的预期交易成本了。但换手率本身该怎么得到？大体有三种估计方法。复杂回测：如果你能使用足够像样的回测软件，或者自己会写，那么完全可以在系统里直接加入一个估算换手率的功能。简化回测：更基础的回测工具，也许只能告诉你每年平均交易了多少个头寸块，以及平均持有了多少个绝对头寸块。那你就可以用“每年交易的头寸块平均数量 ÷（2 × 平均持有的绝对头寸块数量）”来计算换手率。经验法则：第三种选择就是使用经验法则。对于半自动交易者来说，他们的换手率取决于止损设得多紧；对于资产配置型投资者来说，他们不会因为预测值变化而产生换手；对于只使用我在第七章提供的那几条规则（carry 和 EWMAC）的坚定系统化交易者来说，经验法则也往往已经足够。本章后面以及第四部分的示例章节里，我都会给出相关的经验法则。\end{chineseblock}
 
-\begin{enumerate}
-  \item This is the usual ‘square root of time' factor of 16, assuming a 256 business day year.
-  \item Staunch systems traders will use futures in the example in part four.
-\end{enumerate}
+\bilingualsection{Using trading costs to make design decisions}{利用交易成本来做设计决策}
 
-Price volatility Currently 0.75\% a day.
+\bilingualsubsection{Setting a speed limit}{设定速度上限}
 
-Instrument block £1 per point.
+\begin{englishblock} Let's return to the Euro Stoxx future, which had a standardised cost of 0.002 Sharpe ratio (SR). Suppose you have a rule with a back-tested pre-cost return of 0.40 SR, and a turnover of 50 round trips per year. You'd expect to pay 50 × 0.002 = 0.10 SR annually in costs and receive 0.30 SR of net performance. What if you had an alternative rule, with a turnover of 100, but with a pre-cost return of 0.60 SR? Though your costs have doubled to 0.20 SR, the net return has increased to 0.40 SR. Surely you should choose the more expensive option? In chapter three when I discussed fitting I pointed out that there is always considerable uncertainty about expected pre-cost performance. An implication of that is you need a lot of historical data to prove that a trading rule variation is likely to be profitable (as shown in table 5 on page 62), let alone make enough money to cover its costs. It also means you need a lot of data to make it probable that one trading rule had better performance in the past than another. So considerable evidence is required to justify trading a faster, and apparently superior, variation rather than a slower, cheaper and supposedly inferior alternative (see table 6 on page 64). The relative pre-cost Sharpe ratio you will achieve in practice is extremely uncertain, whilst expected costs can be predicted with much more accuracy. There is one further danger in blindly accepting the back-test results of expensive systems. What I've shown you in this chapter is an estimate of current costs, which could be very different from what they were 20 years ago. In many markets trading costs were much higher in the distant past than they are now. A fast trading rule might look great in the past, but if the market was very expensive nobody could have actually exploited it. Now costs have fallen there is a good chance the effect will vanish. To ensure you don't chase performance, or trade faster than was viable in the past, I recommend that you set a speed limit; a maximum expected turnover you will allow your systems to have. At the start of this chapter I said I wouldn't trade a strategy which paid two-thirds of its profits out as costs, amounting to 1.0 in SR annually. I personally think it's foolhardy to pay more than a third of your expected profits in trading costs and I use that to set my own speed limits. If you're being realistic then the Sharpe ratio from trading each instrument using its trading subsystem is unlikely to be higher than 0.4 on average.130 This implies you should never pay more than a third of 0.4, or 0.13 SR, in costs, regardless of how good your back-test is. Remember that cost in SR terms is equal to the standardised cost multiplied by the turnover in round trips per year. So dividing 0.13 by the standardised cost of an instrument will give you the turnover speed limit for that instrument. For a relatively cheap futures market like the Euro Stoxx this implies a maximum turnover of 0.13 ÷ 0.002 = 65 round trips per year, or an average holding period of just under a week. With the very cheapest instruments like NASDAQ futures you might be able to double that turnover to give a holding period of a couple of days. However this precludes day trading, which with two or more round trips per day would be a turnover of at least 500 round trips each year. To trade that fast without spending more than a third of your returns on costs you'd need to get a significantly higher pre-cost Sharpe ratio, or reduce your standardised cost to around 0.13 ÷ 500 = 0.00025 SR units. That level of costs is around a quarter of what the cheapest futures can achieve. As it happens about a quarter of the standardised costs of these super cheap futures are commissions of around \$1 per contract, with the rest coming from execution costs. So to day trade you'd need to get your execution costs down to zero, which means consistently achieving the mid-price or better. To trade even faster, with three or more round trips a day, you'd have to be getting consistently negative execution costs. In conclusion then, to day trade even the cheapest instruments you will need to achieve very high pre-cost Sharpe ratios, or have an execution strategy that consistently captures the spread. This isn't impossible, but clearly only those with a proven record of achieving these goals should contemplate trading this quickly. This capability is relatively rare in practice, which is why the vast majority of amateur day traders are unprofitable. With a cost of 0.13 SR a year if you're using the maximum suggested 50\% volatility target (as defined on page 137 in chapter nine), then you'll be paying 0.13 × 50\% = 6.5\% a year in costs. This is a reasonably large drag on performance and personally I wouldn't want to see anything bigger. As discretionary semi-automatic traders can't use back-tests they need to avoid overconfidence about their performance expectations. Rather than a maximum Sharpe ratio (SR) of 0.40 on each instrument, you should conservatively expect to get at most 0.25 SR.\footnote{Again refer back to chapter two, page 46. \par 这里同样请回看第二章第 46 页。} This implies paying no more than a third of 0.25, or 0.08 SR in costs annually. Asset allocating investors, whose static trading systems will have similar performance to the underlying assets, should also use this lower figure. You're now ready to think about how you can customise your trading systems with an understanding of costs. There are several areas in the framework where performance expectations are used. These decisions should now be made using costs as well as expected pre-cost performance. Which instruments to trade It's going to be difficult to trade instruments with costs which are too high for the kind of system we want to use. Deciding average holding Semi-automatic traders should use stop losses which period by setting stop losses target a particular average holding period for positions. (semi-automatic traders) When setting the level of these stops you need to consider the costs of your preferred instruments. Selecting, fitting and If you decide to fit your trading rules then you must calibrating trading rules consider both pre-cost Sharpe ratio and costs. Remember (staunch systems traders) that you have more certainty of costs than of pre-cost performance. With my preferred method of fitting you shouldn't look at pre-cost performance but should still exclude trading rule variations whose likely costs will be too high. Setting forecast weights You need to use likely costs to avoid overweighting trading (staunch systems traders) rule variations which perform well but are also relatively expensive to trade. Setting the risk percentage When checking your Sharpe ratio to set the risk percentage, you should use after-cost performance. Setting the look-back for After forecast changes this is the next key source of estimating price volatility turnover in your trading systems. The costlier your trading is, the slower you should update your estimate of price volatility. Allocating instrument weights You should consider giving less weight to more expensive (semi-automatic traders and instruments, unless you think additional pre-cost asset allocating investors) performance compensates you. \end{englishblock}
 
-Block value With the FTSE at 6600 a 1\% move will be 66 points, the value of which at £1 per point will be £66.
+\begin{chineseblock}让我们回到标准化成本为 0.002 个夏普比率（SR）单位的 Euro Stoxx 期货。假设你有一条规则，回测得到的成本前收益为 0.40 SR，换手率为每年 50 次往返交易，那么你预期每年要支付 \(50 \times 0.002 = 0.10\) SR 的成本，净表现只剩 0.30 SR。那如果另一条规则的换手率是 100，但成本前收益高达 0.60 SR 呢？虽然成本翻倍到 0.20 SR，净收益却提高到 0.40 SR。那你是否一定应该选这个更贵的方案？第三章讨论拟合时，我说过，成本前表现的预期总是带有很大的不确定性。这意味着，你需要大量历史数据，才能证明某个规则变体大概率确实赚钱（见第 62 页表 5），更别说证明它能赚到足以覆盖成本的钱了。你同样也需要很多数据，才能较有把握地认定某一条规则过去比另一条更好。因此，除非证据非常充分，否则你不该因为一个更快、表面上更优秀的变体在回测里看起来更强，就轻易放弃一个更慢、更便宜、看似较差的替代方案（见第 64 页表 6）。在实践中，你真正能拿到的成本前 SR 非常不确定，而预期成本却通常可以更准确地预测。盲目接受高成本系统的回测结果还有另一个危险：本章给出的只是当前成本估计，而 20 年前的成本可能完全不同。很多市场在很久以前的交易成本远高于今天。一条快速交易规则在历史上看起来也许很漂亮，但如果当时市场贵得根本没人能真正利用它，那么如今即便成本下降，这种效应也很可能已经消失。为了避免追逐表现，或者让系统交易得比历史上可行的速度还快，我建议你设定一个速度上限，也就是你愿意让系统拥有的最大预期换手率。本章开头我说过，我不会交易那种三分之二利润都被成本吃掉、也就是每年成本达到 1.0 SR 的策略。就我个人而言，让交易成本超过预期利润的三分之一是非常鲁莽的，所以我就用这个标准来设定自己的速度上限。如果现实一点看，单个品种的交易子系统平均而言不太可能实现高于 0.4 的 SR。130这意味着，无论回测看起来多好，你都不应该支付超过 0.4 三分之一、也就是 0.13 SR 的成本。记住，以 SR 表示的成本等于标准化成本乘以每年的往返交易次数。所以，用 0.13 除以某个工具的标准化成本，就能得到它的换手速度上限。对于像 Euro Stoxx 这样相对便宜的期货市场，这意味着最大换手率为 \(0.13 \div 0.002 = 65\) 次往返交易/年，平均持有期略短于一周。对于像 NASDAQ 期货这样最便宜的品种，这个换手率甚至可能翻倍，对应两天左右的持有期。但这实际上已经排除了日内交易，因为如果每天做两次或更多次往返交易，一年换手率至少有 500。要想在这种速度下又不让成本吃掉超过三分之一的收益，你要么需要显著更高的成本前 SR，要么得把标准化成本降到大约 \(0.13 \div 500 = 0.00025\) SR。这一成本水平大概只有最便宜期货的四分之一。事实上，这些超级便宜的期货里，大约四分之一的标准化成本只是每张合约约 \$1 的佣金，其余都来自执行成本。所以，要做日内交易，你就得把执行成本压到零，也就是持续拿到中间价，甚至更好的成交价。若要更快，例如一天三次或更多次往返交易，你甚至得持续获得负的执行成本。因此，结论是：即便是在最便宜的工具上做日内交易，你也需要极高的成本前 SR，或者拥有一种能持续捕捉价差的执行策略。这并非绝对不可能，但显然只有那些已经证明自己能做到的人，才应该考虑这么快地交易。现实中，这种能力非常罕见，这也是绝大多数业余日内交易者不赚钱的原因。如果你的年度成本是 0.13 SR，而你又采用建议上限 50\% 的波动率目标（第九章第 137 页定义），那么每年的实际成本拖累就是 \(0.13 \times 50\% = 6.5\%\)。这已经是相当可观的拖累，就我个人而言，我不希望看到更高的数字。由于主观的半自动交易者无法依靠回测，他们更应该避免高估自己的表现预期。与其假定单个品种最多能实现 0.40 SR，不如保守地预期至多 0.25 SR。这意味着每年成本最多支付 0.25 的三分之一，也就是 0.08 SR。资产配置型投资者的静态交易系统表现通常与底层资产相近，因此也应当采用这个较低的标准。到这里，你已经可以在理解成本的前提下去定制自己的交易系统了。框架里有几个地方都会用到对表现的预期，这些决策以后都应该同时考虑成本和成本前表现。哪些工具值得交易：如果某些工具对你想运行的系统来说太贵，那它们就会非常难以交易。通过设置止损来决定平均持有期（半自动交易者）：半自动交易者应当用止损把持有期控制在某个目标水平。设定止损宽度时，需要考虑你偏好工具的成本。选择、拟合和校准交易规则（坚定系统化交易者）：如果你决定拟合交易规则，就必须同时考虑成本前 SR 和成本。记住，你对成本的把握要比对成本前表现的把握更强。按我偏好的拟合方法，你不该盯着成本前表现看，但仍应排除那些预期成本过高的规则变体。设置规则预测权重（坚定系统化交易者）：你需要利用预期成本，避免对那些虽然表现好、但交易起来也更昂贵的规则变体赋予过高权重。设置风险百分比：当你用夏普比率来确定风险百分比时，应使用成本后的表现。设置价格波动率估计的回看期：在预测变化之后，这是系统换手的下一个关键来源。你的交易越贵，就应该越慢地更新价格波动率估计。分配品种权重（半自动交易者和资产配置型投资者）：除非你认为更高的成本前表现足以补偿成本，否则应考虑对更昂贵的工具赋予更低权重。\end{chineseblock}
 
-Instrument This is the price volatility multiplied by the block value: 0.75 × £66 = currency volatility £49.50. (ICV)
+\bilingualsubsection{Which instruments to trade?}{该交易哪些工具？}
 
-Now I can work out the costs.
+\begin{englishblock} There are two routes to take when designing your trading systems so that they don't exceed any speed limits. Firstly you could decide what sort of speed you wish to trade at and then choose instruments that are cheap enough to trade that quickly. Alternatively if you have a preference for particular instruments then that will limit how fast you could trade them. So for example if you can't trade futures and prefer ETFs, then that will heavily curtail your trading speed. If you use my recommended maximum of 0.08 Sharpe ratio (SR) units paid annually in costs for asset allocating investors and semi-automatic traders, then table 34 gives the maximum possible standardised cost for a given holding period and turnover. It also shows instruments which typically have that level of cost. You can then infer which instruments to trade for a given speed of trading, or how quickly to trade given a preferred set of instruments. The table also shows the lower limit on how slowly you can trade a particular kind of system, with a minimum achievable turnover in round trips per year. Given your limit on what you're willing to pay in costs, you can imply from this turnover which instruments will be too expensive to trade at all. \end{englishblock}
 
-Expected Half the typical spread is 4 points, i.e. £4.* There are no fees or taxes. execution costs per block
+\begin{chineseblock}利用上面的速度上限表，你可以从两个方向来设计系统。第一种，是先决定你想交易得多快，然后反过来挑选那些足够便宜、支撑这一速度的工具。第二种，则是先决定你偏好哪些工具，再倒推出它们最多只能以多快的速度去交易。例如，如果你不能碰期货、又偏爱 ETF，那么你的交易速度就必然非常慢；如果你交易的是指数点差投注，那么你的系统就不可能做成接近日内级别的快系统。\end{chineseblock}
 
-Total cost per £4 block (C)
-
-Instrument From above £49.50. currency volatility (ICV)
-
-Cost in SR units 2 × C ÷ (16 × ICV) = 2 × £4 ÷ (16 × £49.50) = 0.01 SR
-
-* This is for a quarterly forward bet -- spreads on spot FTSE are tighter but with my typical holding period they would end up being more expensive.
-
-This is about ten times larger than for the FTSE 100 future, which isn't surprising as the spread bet is a retail product with a smaller block size.\footnote{Spread bets generally have higher trading costs than futures, and are OTC traded rather than on exchange. On the upside as well as smaller block sizes they offer tax free returns under current UK legislation.} Generally bets on most major indices come in around the 0.01 SR level, although those on individual shares will usually cost more. I'll use 0.01 SR as the benchmark cost for spread bets. The third type of instrument we'll consider is exchange traded funds (ETFs). Like many equities, these are cheaper to trade in 100 share blocks. The precise cost will depend on volatility, and the volatility for ETFs depends on the underlying assets and whether any leverage is used. I will be conservative and check the cost of a relatively low volatility instrument, the iShares IGIL global inflation linked bond ETF, which is one of the ETFs I use in the asset allocator example in part four.
-
-Price volatility Around 0.43\% a day in early 2015.
-
-Instrument block 100 shares.
-
-Block value 100 shares at \$144 per share is \$14,400. 1\% of this is \$144.
-
-Instrument currency This is the block value multiplied by the price volatility: \$144 × volatility 0.43 = \$62
-
-Now for the costs.
-
-Expected execution The typical bid offer on this ETF is 70 cents wide or 0.486\% of the cost per block current price of \$144. The block value is \$144. So if I pay half the spread I'd pay 0.486 × \$144 × 0.5 = \$35 for each block.
-
-Fee per ticket My broker charges me \$5.00 per trade. I assume there are no other fees or taxes due.
-
-Total cost per \$35 + \$5 = \$40 block (C)
-
-Instrument currency \$62 (from above). volatility (ICV)
-
-Cost in SR units 2 × C ÷ (16 × ICV) = 2 × \$40 ÷ (16 × \$62) = 0.08 SR
-
-ETFs with higher price volatility, such as equities, will cost less than this on a risk normalised basis, but to be safe I'll use the figure of 0.08 SR as my expected cost for ETFs. The costs in these examples are correct given current market conditions and the brokerage fees I'm paying, but you should calculate your own figures before making any decisions.
-
-Suppose it costs EUR8 to trade one Euro Stoxx future and EUR5 to trade one Schatz future. The smaller absolute number does not automatically mean the Schatz is cheaper if you need more contracts to achieve the same level of risk. That is why costs must be volatility standardised. The key question is: how much Sharpe ratio do I lose by buying and then selling a risk-adjusted amount of this instrument? The standardised cost is
-\[
-\text{standardised cost} = \frac{2 \times C}{16 \times ICV}
-\]
-where \(C\) is the cost of trading one instrument block and \(ICV\) is the daily instrument currency volatility of that block.
-
-如果交易一手 Euro Stoxx 期货总共花费 €8，而交易一手德国 Schatz 国债期货只花 €5，那么后者就一定更便宜吗？不一定。
-因为也许为了达到同样的风险暴露，你需要买 20 手 Schatz，却只需要 10 手 Euro Stoxx。于是，看似单手更便宜的 Schatz，
-最终反而在总成本上更贵。解决办法，依然是波动率标准化。你真正需要的度量是：
-“买入再卖出一个风险标准化后的头寸，会花掉多少年化夏普比率单位？”
-我把这称为标准化成本。它的公式是：
-\[
-\text{standardised cost} = \frac{2 \times C}{16 \times ICV}
-\]
-其中 \(C\) 是交易一个头寸块的成本，\(ICV\) 是该头寸块的日品种货币波动率，而 16 是日波动率年化时的时间平方根因子。
-
-这一公式有一个重要含义：对于低波动率工具，交易成本在风险标准化之后会显得更高。这也是为什么我反复建议你避开那些天然波动率极低的工具。
-它们不但需要夸张的杠杆，而且在标准化成本维度上往往也更糟。
-
-\subsection*{Introducing turnover}
-\bisubsectiontitle{引入换手率}
-
-What is the point in knowing it will cost us 0.08 Sharpe ratio (SR) units, 0.01 SR or 0.002 SR, to buy and sell a risk adjusted amount of each instrument? It's pointless having just a standardised measure of costs; you also need a standardised measure of how quickly you're trading. Since you know the cost per round trip in annualised SR units you'll need to count the number of round trips done annually, where a round trip is a buy and then a sell.
-
-I measured standardised costs by making them volatility standardised. Similarly each buy and sell should be of a volatility standardised quantity of instrument blocks. Because of the way the framework works, this is equivalent to your expected average absolute position, or the position you'd have with an average sized forecast (defined as the volatility scalar in chapter ten, page 159). The number of round trips per year is the turnover. A turnover of 1 unit means you expect to do one buy and one sell of an average sized position per year; so your average holding period will be 12 months. Similarly a turnover of 52 units would imply you're hanging on to positions for an average of one week. Because turnover is volatility standardised it means you can consider the trading pattern of each instrument in isolation (the so called trading subsystem that was defined in chapter ten), without worrying about the rest of your portfolio. For example suppose it costs a standardised 0.01 Sharpe ratio units for each round trip in spread bets, and your turnover is 10 units of average position each year. Then over a year of ten round trips (ten buys and ten sells), you'd lose 10 × 0.01 = 0.10 SR in costs. That means an SR of 0.5 would be reduced to 0.5 - 0.1 = 0.4.
-
-Knowing the cost of a standardised round trip is not enough; you also need to know how many such round trips you make each year. Turnover measures the number of annualised buy-and-sell cycles done in an average sized, risk-adjusted position. If standardised cost is 0.01 SR and turnover is 10, then costs remove 0.10 Sharpe ratio from annual performance.
-
-一旦你知道了每次“标准化往返交易”要花多少 SR 单位，下一步就要知道你一年会做多少次这样的往返交易。
-这就是换手率
-（turnover）。一个系统的换手率，是按“标准化头寸每年完成多少次买入 + 卖出”来衡量的。
-例如，如果某个品种的标准化成本是 0.01 SR，而你的换手率是每年 10 次，那么一年之后，你就会在成本上失去 10 × 0.01 = 0.10 SR。
-也就是说，一条原本 0.5 SR 的规则，净下来只剩 0.4 SR。
-
-\subsection*{Where does turnover come from?}
-\bisubsectiontitle{换手率从哪里来？}
-
-Before continuing you also need to understand where turnover comes from. For what reasons would you want to trade? Here's a list, in order of descending importance.
-
-Forecast A change in forecast from one or more of the trading rules used by staunch systems traders, or because a semi-automatic trader is placing new bets or closing old ones. This is the main source of position changes, except for asset allocating investors for whom forecasts do not change.
-
-Instrument Movements in the expected daily standard deviation of the value of each currency instrument block (price volatility multiplied by block size). This is the volatility second most important reason for position changes.
-
-Trading capital Changes in the amount of capital you currently have at risk. This is determined by your profits and losses and by any additional funds you add or withdraw. Ignoring withdrawals and injections of money, with the highest recommended 50\% volatility target, this will change by an average of 3\% each day. You can't reduce the trades that result from this component, except by using a lower percentage volatility target. So with a target of 16\% it would move by around 1\% a day.
-
-Exchange rate This is the exchange rate between an instrument's currency and the currency your current trading capital is in. Rates usually move by less than 1\% a day in major currencies. You can't reduce these trades, which in any case are relatively small.
-
-System These are parameters in the trading system which should only change parameters infrequently if at all: Forecast weights, Instrument weights, forecast and instrument diversification multipliers, and the percentage volatility target. You can eliminate the trades that result from this element by not meddling with your system!
-
-In the rest of this chapter I will focus on how forecasts and changes in price volatility influence trading speed, since these can readily be adjusted and have the biggest effect.
-
-Turnover mainly comes from five sources: forecast changes, changes in instrument volatility, changes in trading capital, exchange rate changes, and changes to system parameters such as weights or targets. In practice the most important sources are usually forecast changes and updates to price volatility, which is why later in the chapter I focus on those.
-
-换手率主要来自以下几个来源：
-1. 预测值变化。这通常是最主要的来源，尤其是对坚定系统化交易者和半自动交易者来说。
-2. 品种货币波动率变化。你的价格波动率估计一旦改变，就会触发仓位调整。
-3. 交易资本变化。盈亏滚动、资金申购赎回都会改变风险资本，从而改变目标仓位。
-4. 汇率变化。对于跨货币资产，汇率变化也会带来额外微小调整。
-5. 系统参数变化。包括预测权重、品种权重、分散化乘数以及百分比波动率目标等。最好的办法通常是不去碰它们。
-
-本章后面重点讨论的，其实主要是前两项：预测变化和价格波动率估计变化，因为它们既最重要，也最可以被系统设计所调整。
-
-\subsection*{Estimating the number of round trips}
-\bisubsectiontitle{估算往返交易次数}
-
-You can now calculate the expected costs of trading each instrument, given the units of turnover of the trading system and the standardised costs. But how do you find the turnover? There are three ways to estimate it.
-
-Sophisticated back- If you have access to decent back-testing software, or can write test your own, then you can include a function that estimates turnover directly.
-
-Simple back-test More rudimentary back-testing tools can give you an estimate of the average number of instrument blocks traded each year and the average absolute number of blocks you held. You can then calculate turnover as: Average number of blocks traded per year ÷ (2 × average absolute number of blocks held)
-
-Rule of thumb The third alternative is to use rules of thumb. This approach is fine for semi-automatic traders whose turnover will depend on the tightness of their stop loss, asset allocating investors who don't get turnover from forecast changes, and for those staunch systems traders who are using only the trading rules I provided in chapter seven (the carry and EWMAC rules). There will be relevant rules of thumb later in this chapter and in the example chapters of part four.
-
-Once you know standardised cost, the remaining task is to estimate turnover. You can do that in three broad ways: directly from a sophisticated back-test, approximately from a simpler back-test using traded blocks divided by average held blocks, or by rules of thumb. The rules-of-thumb route is often sufficient for semi-automatic traders, for asset allocating investors whose forecasts do not change, and for staunch systems traders using the relatively standard rules advocated in this book.
-
-一旦标准化成本确定下来，剩下要估计的就是换手率。大体有三种方法：第一，直接让较完整的回测系统输出换手率；第二，用简化回测得到“每年交易的头寸块数量”和“平均持有的绝对头寸大小”，再近似换算；第三，使用经验法则。对于半自动交易者、预测不变化的资产配置型投资者，以及使用本书推荐那类较标准规则的坚定系统化交易者来说，经验法则往往已经够用了。
-
-\section*{Using trading costs to make design decisions}
-\phantomsection
-\addcontentsline{toc}{section}{Using trading costs to make design decisions}
-\bisectiontitle{利用交易成本来做设计决策}
-
-\subsection*{Setting a speed limit}
-\bisubsectiontitle{设定速度上限}
-
-Let's return to the Euro Stoxx future, which had a standardised cost of 0.002 Sharpe ratio (SR). Suppose you have a rule with a back-tested pre-cost return of 0.40 SR, and a turnover of 50 round trips per year. You'd expect to pay 50 × 0.002 = 0.10 SR annually in costs and receive 0.30 SR of net performance. What if you had an alternative rule, with a turnover of 100, but with a pre-cost return of 0.60 SR? Though your costs have doubled to 0.20 SR, the net return has increased to 0.40 SR. Surely you should choose the more expensive option? In chapter three when I discussed fitting I pointed out that there is always considerable uncertainty about expected pre-cost performance. An implication of that is you need a lot of historical data to prove that a trading rule variation is likely to be profitable (as shown in table 5 on page 62), let alone make enough money to cover its costs. It also means you need a lot of data to make it probable that one trading rule had better performance in the past than another. So considerable evidence is required to justify trading a faster, and apparently superior, variation rather than a slower, cheaper and supposedly inferior alternative (see table 6 on page 64). The relative pre-cost Sharpe ratio you will achieve in practice is extremely uncertain, whilst expected costs can be predicted with much more accuracy. There is one further danger in blindly accepting the back-test results of expensive systems. What I've shown you in this chapter is an estimate of current costs, which could be very different from what they were 20 years ago. In many markets trading costs were much higher in the distant past than they are now. A fast trading rule might look great in the past, but if the market was very expensive nobody could have actually exploited it. Now costs have fallen there is a good chance the effect will vanish. To ensure you don't chase performance, or trade faster than was viable in the past, I recommend that you set a speed limit; a maximum expected turnover you will allow your systems to have. At the start of this chapter I said I wouldn't trade a strategy which paid two-thirds of its profits out as costs, amounting to 1.0 in SR annually. I personally think it's foolhardy to pay more than a third of your expected profits in trading costs and I use that to set my own speed limits. If you're being realistic then the Sharpe ratio from trading each instrument using its trading subsystem is unlikely to be higher than 0.4 on average.130
-
-This implies you should never pay more than a third of 0.4, or 0.13 SR, in costs, regardless of how good your back-test is. Remember that cost in SR terms is equal to the standardised cost multiplied by the turnover in round trips per year. So dividing 0.13 by the standardised cost of an instrument will give you the turnover speed limit for that instrument. For a relatively cheap futures market like the Euro Stoxx this implies a maximum turnover of 0.13 ÷ 0.002 = 65 round trips per year, or an average holding period of just under a week. With the very cheapest instruments like NASDAQ futures you might be able to double that turnover to give a holding period of a couple of days. However this precludes day trading, which with two or more round trips per day would be a turnover of at least 500 round trips each year. To trade that fast without spending more than a third of your returns on costs you'd need to get a significantly higher pre-cost Sharpe ratio, or reduce your standardised cost to around 0.13 ÷ 500 = 0.00025 SR units. That level of costs is around a quarter of what the cheapest futures can achieve. As it happens about a quarter of the standardised costs of these super cheap futures are commissions of around \$1 per contract, with the rest coming from execution costs. So to day trade you'd need to get your execution costs down to zero, which means consistently achieving the mid-price or better. To trade even faster, with three or more round trips a day, you'd have to be getting consistently negative execution costs. In conclusion then, to day trade even the cheapest instruments you will need to achieve very high pre-cost Sharpe ratios, or have an execution strategy that consistently captures the spread. This isn't impossible, but clearly only those with a proven record of achieving these goals should contemplate trading this quickly. This capability is relatively rare in practice, which is why the vast majority of amateur day traders are unprofitable. With a cost of 0.13 SR a year if you're using the maximum suggested 50\% volatility target (as defined on page 137 in chapter nine), then you'll be paying 0.13 × 50\% = 6.5\% a year in costs. This is a reasonably large drag on performance and personally I wouldn't want to see anything bigger. As discretionary semi-automatic traders can't use back-tests they need to avoid overconfidence about their performance expectations. Rather than a maximum Sharpe ratio (SR) of 0.40 on each instrument, you should conservatively expect to get at most 0.25 SR.\footnote{Again refer back to chapter two, page 46.} This implies paying no more than a third of 0.25, or 0.08 SR in costs annually. Asset allocating investors, whose static trading systems will have similar performance to the underlying assets, should also use this lower figure. You're now ready to think about how you can customise your trading systems with an understanding of costs. There are several areas in the framework where performance expectations are used. These decisions should now be made using costs as well as expected pre-cost performance.
-
-Which instruments to trade It's going to be difficult to trade instruments with costs which are too high for the kind of system we want to use.
-
-Deciding average holding Semi-automatic traders should use stop losses which period by setting stop losses target a particular average holding period for positions. (semi-automatic traders) When setting the level of these stops you need to consider the costs of your preferred instruments.
-
-Selecting, fitting and If you decide to fit your trading rules then you must calibrating trading rules consider both pre-cost Sharpe ratio and costs. Remember (staunch systems traders) that you have more certainty of costs than of pre-cost performance. With my preferred method of fitting you shouldn't look at pre-cost performance but should still exclude trading rule variations whose likely costs will be too high.
-
-Setting forecast weights You need to use likely costs to avoid overweighting trading (staunch systems traders) rule variations which perform well but are also relatively expensive to trade.
-
-Setting the risk percentage When checking your Sharpe ratio to set the risk percentage, you should use after-cost performance.
-
-Setting the look-back for After forecast changes this is the next key source of estimating price volatility turnover in your trading systems. The costlier your trading is, the slower you should update your estimate of price volatility.
-
-Allocating instrument weights You should consider giving less weight to more expensive (semi-automatic traders and instruments, unless you think additional pre-cost asset allocating investors) performance compensates you.
-
-本章最重要的设计原则之一，是你必须给系统设定一个“速度上限”。我自己的原则是：
-一套系统每年花在成本上的 SR 单位，不应超过其保守预估成本前 SR 的三分之一。
-对坚定系统化交易者而言，我建议把单个品种上的最大可实现成本前 SR 保守看作 0.40，因此成本上限就是 0.13 SR；
-对于半自动交易者和资产配置型投资者，则应把这个值保守看作 0.25，因此成本上限就是 0.08 SR。
-
-一旦你知道某个工具的标准化成本，再用“成本上限 ÷ 标准化成本”，就可以直接得到它允许的最大换手率。于是你立刻就能反推出：
-哪些工具能交易得快，
-哪些工具只能慢慢来，
-哪些工具压根就不值得碰。
-
-\rawtablecaption{WHAT SPEEDS AND HOLDING PERIODS CAN SEMI-AUTOMATIC TRADERS AND ASSET ALLOCATING INVESTORS TRADE WITH PARTICULAR INSTRUMENTS?\\半自动交易者与资产配置型投资者，在不同工具上能承受怎样的速度与持仓周期？}
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.12\textwidth}p{0.14\textwidth}Yp{0.18\textwidth}@{}}
+\begin{bilingualtableblock} \rawtablecaption{WHAT SPEEDS AND HOLDING PERIODS CAN SEMI-AUTOMATIC TRADERS AND ASSET ALLOCATING INVESTORS TRADE WITH PARTICULAR INSTRUMENTS?\\半自动交易者与资产配置型投资者，在不同工具上能承受怎样的速度与持仓周期？}\noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.08} \begin{tabularx}{\textwidth}{@{} p{0.16\textwidth} p{0.12\textwidth} p{0.14\textwidth} Yp{0.18\textwidth}@{}}
 \toprule
 \textbf{Holding period} & \textbf{Typical turnover} & \textbf{Maximum cost SR} & \textbf{Likely instruments} & \textbf{Notes} \\
-\midrule
-1 day & 256 & 0.00031 & None & \\
-3 days & 85 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
-1 month & 12 & 0.0067 & Nearly all futures except short maturity bonds, STIR* & \\
-6.5 weeks & 8 & 0.01 & Index spread bets, e.g. FTSE & \\
-3 months & 4 & 0.02 & Individual equity spread bets & \\
-6 months & 2.0 & 0.04 & Cheapest ETFs, e.g. equity indices & Slowest semi-automatic trader \\
-One year & 1.0 & 0.08 & Benchmark inflation linked bond ETF & \\
-2.5 years & 0.4 & 0.20 & Most individual equities & Slowest asset allocating investor \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.12\textwidth}p{0.14\textwidth}Yp{0.18\textwidth}@{}}
-\toprule
 \textbf{持有期} & \textbf{典型换手率} & \textbf{最大成本 SR} & \textbf{典型可用品种} & \textbf{备注} \\
 \midrule
+1 day & 256 & 0.00031 & None & \\
 1 天 & 256 & 0.00031 & 无 & \\
+3 days & 85 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
 3 天 & 85 & 0.001 & 最便宜的期货，例如 NASDAQ & \\
+1 month & 12 & 0.0067 & Nearly all futures except short maturity bonds, STIR* & \\
 1 个月 & 12 & 0.0067 & 几乎所有期货，但不包括短久期债券、STIR* & \\
+6.5 weeks & 8 & 0.01 & Index spread bets, e.g. FTSE & \\
 6.5 周 & 8 & 0.01 & 指数点差投注，例如 FTSE & \\
+3 months & 4 & 0.02 & Individual equity spread bets & \\
 3 个月 & 4 & 0.02 & 个股点差投注 & \\
+6 months & 2.0 & 0.04 & Cheapest ETFs, e.g. equity indices & Slowest semi-automatic trader \\
 6 个月 & 2.0 & 0.04 & 最便宜的 ETF，例如股票指数 ETF & 最慢的半自动交易者 \\
+One year & 1.0 & 0.08 & Benchmark inflation linked bond ETF & \\
 1 年 & 1.0 & 0.08 & 基准通胀挂钩债券 ETF & \\
+2.5 years & 0.4 & 0.20 & Most individual equities & Slowest asset allocating investor \\
 2.5 年 & 0.4 & 0.20 & 大多数个股 & 最慢的资产配置型投资者 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-\smallskip
-\smallskip
-\noindent\textit{这张表展示的是：在不同持仓周期下，每年的往返交易次数、在“每年成本不超过 0.08 SR”前提下允许的最大工具成本，以及各成本层级上典型可交易的工具
-（2015 年 1 月估计值）。}
+\smallskip \smallskip \noindent\textit{The table shows for different holding periods the turnover in round trips per year, maximum instrument cost if we pay no more than the recommended 0.08 SR a year, and typical instruments at each cost level (estimates as of January 2015).}
 
-\smallskip
-\noindent\textit{* 短期利率期货}
+\smallskip \noindent\textit{这张表展示的是：在不同持仓周期下，每年的往返交易次数、在“每年成本不超过 0.08 SR”前提下允许的最大工具成本，以及各成本层级上典型可交易的工具（2015 年 1 月估计值）。}
 
-资产配置型投资者可以交易得非常慢，因此即便是价格中等偏贵的工具，也仍然可能可行。
-相比之下，半自动交易者通常不可能把速度放慢到每年只有一两次往返交易以下，
-因为止损机制仍然必须存在。
-这自然会把那些更昂贵的工具排除在他们的可交易范围之外。
+\smallskip \noindent\textit{* Short term interest rate futures}
 
-\rawtablecaption{WHAT SPEED SYSTEMS CAN STAUNCH SYSTEMS TRADERS USE?\\坚定系统化交易者能运行怎样速度的系统？}
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.14\textwidth}Yp{0.30\textwidth}@{}}
+\smallskip \noindent\textit{* 短期利率期货}
+
+\begin{englishblock} Asset allocating investors can get down to an annual turnover of 0.40 round trips per year, implying that a cost of 0.08 ÷ 0.40 = 0.20 SR is affordable.\footnote{As you'll see later in the chapter on page 195, this requires using a very slow look-back of 20 weeks for volatility estimation. \par 正如你在本章后面第 195 页会看到的，这要求把波动率估计的回看期放慢到非常慢的 20 周。} So ETFs, which we estimated will cost at most 0.08 SR, will be fine. As I explain in the next section, semiautomatic traders with very wide stop losses will realise a turnover of 2.0 round trips a year. A cost of 0.08 ÷ 2.0 = 0.04 SR is the maximum they could pay. This rules out ETFs but allows spread bets, which we costed at 0.01 SR. I've done a similar analysis for staunch systems traders, for whom I recommend a maximum of 0.13 SR units of cost per year. Table 35 gives the figures and I've also shown how each level of turnover relates to the trading rules I presented in chapter seven, ‘Forecasts'. \end{englishblock}
+
+\begin{chineseblock}资产配置型投资者最低可以做到每年只有 0.40 次往返交易，这意味着他们可以承受的成本为 \(0.08 \div 0.40 = 0.20\) SR。因此，我们估算标准化成本最多约为 0.08 SR 的 ETF 是完全可行的。正如下一节将解释的那样，使用非常宽止损的半自动交易者，换手率大约会是每年 2.0 次往返交易。这样他们能够承受的最高成本就是 \(0.08 \div 2.0 = 0.04\) SR。这会把 ETF 排除在外，但允许使用我们估算为 0.01 SR 的点差投注。我对坚定系统化交易者也做了类似分析。我建议他们每年最多支付 0.13 个 SR 单位的成本。表 35 给出了对应的数字，同时也标出了不同换手率与我在第七章“预测值”里介绍的那些交易规则之间的关系。\end{chineseblock}
+
+\begin{bilingualtableblock} \rawtablecaption{WHAT SPEED SYSTEMS CAN STAUNCH SYSTEMS TRADERS USE?\\坚定系统化交易者能运行怎样速度的系统？}\noindent{\scriptsize \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.08} \begin{tabularx}{\textwidth}{@{} p{0.14\textwidth} p{0.14\textwidth} Yp{0.30\textwidth}@{}}
 \toprule
 \textbf{Typical turnover} & \textbf{Maximum cost SR} & \textbf{Likely instruments} & \textbf{Notes} \\
-\midrule
-128 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
-54 & 0.0024 & Average future, e.g. WTI Crude & Fastest single trend following rule I use, the EWMAC 2, 8 rule* \\
-28 & 0.0046 & Most futures except short end bonds, equity volatility indices, STIR & Second fastest single trend following rule, the EWMAC 4, 16 rule \\
-12.5 & 0.01 & Nearly all futures, index spread bets & Set of rules used in chapter 15 \\
-7.5 & 0.017 & Cheaper individual equity spread bets & Slowest trend following rule I use, the EWMAC 64, 256 rule \\
-\bottomrule
-\end{tabularx}
-}
-
-\smallskip
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.14\textwidth}Yp{0.30\textwidth}@{}}
-\toprule
 \textbf{典型换手率} & \textbf{最大成本 SR} & \textbf{典型可用品种} & \textbf{备注} \\
 \midrule
+128 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
 128 & 0.001 & 最便宜的期货，例如 NASDAQ & \\
+54 & 0.0024 & Average future, e.g. WTI Crude & Fastest single trend following rule I use, the EWMAC 2, 8 rule* \\
 54 & 0.0024 & 平均水平的期货，例如 WTI 原油 & 我使用过的最快单条趋势规则，EWMAC 2, 8 规则* \\
+28 & 0.0046 & Most futures except short end bonds, equity volatility indices, STIR & Second fastest single trend following rule, the EWMAC 4, 16 rule \\
 28 & 0.0046 & 大多数期货，但不包括短端债券、股票波动率指数、STIR & 第二快的单条趋势规则，EWMAC 4, 16 规则 \\
+12.5 & 0.01 & Nearly all futures, index spread bets & Set of rules used in chapter 15 \\
 12.5 & 0.01 & 几乎所有期货、指数点差投注 & 第 15 章使用的那组规则 \\
+7.5 & 0.017 & Cheaper individual equity spread bets & Slowest trend following rule I use, the EWMAC 64, 256 rule \\
 7.5 & 0.017 & 较便宜的个股点差投注 & 我使用过的最慢趋势规则，EWMAC 64, 256 规则 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-\smallskip
-\smallskip
-\noindent\textit{这张表展示的是：对于坚定系统化交易者，在“每年成本不超过 0.13 SR”的建议下，不同年换手率所对应的最大可接受标准化工具成本，以及各成本水平下的典型工具
-（2015 年 1 月估计值）。}
+\smallskip \smallskip \noindent\textit{The table shows for different levels of turnover in round trips per year the maximum standardised instrument cost if you pay no more than the recommended 0.13 SR a year for staunch systems traders, and typical instruments at each cost level (estimates as of January 2015).}
 
-\smallskip
-\noindent\textit{* 定义见第七章“预测值”和附录 B。}
+\smallskip \noindent\textit{这张表展示的是：对于坚定系统化交易者，在“每年成本不超过 0.13 SR”的建议下，不同年换手率所对应的最大可接受标准化工具成本，以及各成本水平下的典型工具（2015 年 1 月估计值）。}
 
-这张表还说明，我为坚定系统化交易者推荐的那组规则本身是相对较慢的。
-这也正是为什么：对于范围很广的主要期货和指数点差投注而言，
-大约 0.01 SR 的标准化成本仍然是可以接受的。
+\smallskip \noindent\textit{* Defined in chapter seven, ‘Forecasts', and appendix B (page 282).}
 
-\subsection*{Which instruments to trade?}
-\bisubsectiontitle{该交易哪些工具？}
+\smallskip \noindent\textit{* 定义见第七章“预测值”和附录 B。}
 
-There are two routes to take when designing your trading systems so that they don't exceed any speed limits. Firstly you could decide what sort of speed you wish to trade at and then choose instruments that are cheap enough to trade that quickly. Alternatively if you have a preference for particular instruments then that will limit how fast you could trade them. So for example if you can't trade futures and prefer ETFs, then that will heavily curtail your trading speed. If you use my recommended maximum of 0.08 Sharpe ratio (SR) units paid annually in costs for asset allocating investors and semi-automatic traders, then table 34 gives the maximum possible standardised cost for a given holding period and turnover. It also shows instruments which typically have that level of cost. You can then infer which
+\begin{englishblock} I've also shown the level of turnover that you'll get with the set of trading rules that I advocate using in chapter fifteen, where I explain in detail the design of the staunch systems trader example. Staunch systematic traders who use this recommended set of trading rules, which is fairly slow, will get a turnover of 12.5 round trips per year.\footnote{This figure is calculated when we cover the staunch systems trader example in chapter fifteen on page 251. \par 这个数字会在第十五章第 251 页讲到坚定系统化交易者示例时具体算出来。} You'd get a maximum standardised cost of 0.13 ÷ 12.5 = 0.01 SR, which is fine for nearly all major futures markets and index spread bets. \end{englishblock}
 
-instruments to trade for a given speed of trading, or how quickly to trade given a preferred set of instruments. The table also shows the lower limit on how slowly you can trade a particular kind of system, with a minimum achievable turnover in round trips per year. Given your limit on what you're willing to pay in costs, you can imply from this turnover which instruments will be too expensive to trade at all.
+\begin{chineseblock}我还标出了在第十五章里我主张使用的那一组交易规则所对应的换手率，在那里我会详细解释坚定系统化交易者示例的设计。使用这组推荐规则的坚定系统化交易者，因为规则整体偏慢，换手率会是每年 12.5 次往返交易。这样你可接受的最大标准化成本就是 \(0.13 \div 12.5 = 0.01\) SR，这对于几乎所有主要期货市场和指数点差投注来说都没有问题。\end{chineseblock}
 
-\rawtablecaption{WHAT SPEEDS AND HOLDING PERIODS CAN SEMI-AUTOMATIC TRADERS AND ASSET ALLOCATING INVESTORS TRADE WITH PARTICULAR INSTRUMENTS?}
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}p{0.12\textwidth}p{0.14\textwidth}Yp{0.18\textwidth}@{}}
-\toprule
-\textbf{Holding period} & \textbf{Typical turnover} & \textbf{Maximum cost SR} & \textbf{Likely instruments} & \textbf{Notes} \\
-\midrule
-1 day & 256 & 0.00031 & None & \\
-3 days & 85 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
-1 month & 12 & 0.0067 & Nearly all futures except short maturity bonds, STIR* & \\
-6.5 weeks & 8 & 0.01 & Index spread bets, e.g. FTSE & \\
-3 months & 4 & 0.02 & Individual equity spread bets & \\
-6 months & 2.0 & 0.04 & Cheapest ETFs, e.g. equity indices & Slowest semi-automatic trader \\
-One year & 1.0 & 0.08 & Benchmark inflation linked bond ETF & \\
-2.5 years & 0.4 & 0.20 & Most individual equities & Slowest asset allocating investor \\
-\bottomrule
-\end{tabularx}
-}
+\bilingualsubsection{Deciding average holding period by setting stop losses}{通过止损设置平均持仓周期}
 
-The table shows for different holding periods the turnover in round trips per year, maximum instrument cost if we pay no more than the recommended 0.08 SR a year, and typical instruments at each cost level (estimates as of January 2015).
+\bilingualsubsection{Semi-automatic trader}{半自动交易者}
 
-* Short term interest rate futures
+\begin{englishblock} How should semi-automatic traders determine how quickly to trade? You might think it depends on how trigger happy you are, with itchy fingered day traders clicking in and out every few minutes, and relaxed macro traders trading every few weeks or months. But I advocate that traders exclusively use a systematic stop loss to exit positions, no matter how they decide to enter them. This means the average holding period will depend mainly on how tight, or loose, your stops are set. You should then ensure that your trading style, and the horizon you are trying to predict price movements for, is in line with your stop levels. If stops are set very tight then you'll have short holding periods and high turnover. You won't be able to trade more expensive instruments with tight stops, since with a speed limit on what you're willing to pay in Sharpe ratio (SR) costs there will be a maximum viable standardised cost. Table 34 shows that with the cheapest futures you can use a relatively tight stop, with a holding period of three days. However this would be far too expensive if you're using spread bets. I mentioned a particular spread betting system in the introductory chapter which held positions for around a week. This would have a turnover of 52 round trips per year. The standardised cost I'm using for spread bets is 0.01 SR, so this gives costs of 52 × 0.01 = 0.52 annually. Earlier (page 150) I calculated the implied volatility target of that system at 160\%. This implies you'd need to make 0.52 × 160\% = 83\% a year on your trading capital before costs -- just to break even! Table 34 shows that with spread bets you can't use stops with holding periods of less than about six weeks. Furthermore it's unlikely that any trader will be happy with a holding period of more than six months. So the slowest turnover you can get is 2 round trips a year, which is the figure I used earlier in the chapter when looking at instrument selection. \end{englishblock}
 
-Asset allocating investors can get down to an annual turnover of 0.40 round trips per year, implying that a cost of 0.08 ÷ 0.40 = 0.20 SR is affordable.\footnote{As you'll see later in the chapter on page 195, this requires using a very slow look-back of 20 weeks for volatility estimation.} So ETFs, which we estimated will cost at most 0.08 SR, will be fine. As I explain in the next section, semiautomatic traders with very wide stop losses will realise a turnover of 2.0 round trips a year. A cost of 0.08 ÷ 2.0 = 0.04 SR is the maximum they could pay. This rules out ETFs but allows spread bets, which we costed at 0.01 SR. I've done a similar analysis for staunch systems traders, for whom I recommend a maximum of 0.13 SR units of cost per year. Table 35 gives the figures and I've also shown how each level of turnover relates to the trading rules I presented in chapter seven, ‘Forecasts'.
+\begin{chineseblock}半自动交易者该如何决定自己要交易得多快？你也许会以为这取决于自己到底有多“手痒”：有些日内交易者几分钟就进出一次，而有些更从容的宏观交易者则是几周甚至几个月才动一次。但我的主张是：无论你如何决定进场，出场都应当一律使用系统化止损。这意味着，平均持有期主要取决于你的止损到底设得有多紧或多松。然后你还必须确保，你的交易风格以及你试图预测价格运动的时间跨度，与止损宽度是匹配的。如果止损设得很紧，你的持有期就会很短，换手也会很高。这样一来，你就无法在更昂贵的工具上交易，因为在“你愿意支付多少 SR 成本”这一速度上限约束下，工具会有一个最大可承受的标准化成本。表 34 显示，在最便宜的期货上，你可以把止损设得相对较紧，对应大约三天的持有期。但如果你交易的是点差投注，这就会贵得离谱。我在导言里提到过一套特定的点差投注系统，它的持仓期大约是一周。那对应的换手率是每年 52 次往返交易。我对点差投注采用的标准化成本是假定为 0.01 SR，因此年度成本就是 \(52 \times 0.01 = 0.52\)。前面（第 150 页）我算过，那套系统隐含的波动率目标约为 160\%。这意味着，你必须在扣除成本之前每年先赚到 \(0.52 \times 160\% = 83\%\) 的交易资本收益，才仅仅只是打平！表 34 说明，用点差投注时，你的止损对应的持有期不能短于大约六周。另一方面，也不太可能有谁愿意把持有期放慢到六个月以上。因此，你能达到的最慢换手率大约是每年 2 次往返交易，这也正是我前面在讨论工具选择时用到的那个数字。\end{chineseblock}
 
-\rawtablecaption{WHAT SPEED SYSTEMS CAN STAUNCH SYSTEMS TRADERS USE?}
-\noindent{\scriptsize
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.08}
-\begin{tabularx}{\textwidth}{@{}p{0.14\textwidth}p{0.14\textwidth}Yp{0.30\textwidth}@{}}
-\toprule
-\textbf{Typical turnover} & \textbf{Maximum cost SR} & \textbf{Likely instruments} & \textbf{Notes} \\
-\midrule
-128 & 0.001 & Cheapest futures, e.g. NASDAQ & \\
-54 & 0.0024 & Average future, e.g. WTI Crude & Fastest single trend following rule I use, the EWMAC 2, 8 rule* \\
-28 & 0.0046 & Most futures except short end bonds, equity volatility indices, STIR & Second fastest single trend following rule, the EWMAC 4, 16 rule \\
-12.5 & 0.01 & Nearly all futures, index spread bets & Set of rules used in chapter 15 \\
-7.5 & 0.017 & Cheaper individual equity spread bets & Slowest trend following rule I use, the EWMAC 64, 256 rule \\
-\bottomrule
-\end{tabularx}
-}
+\bilingualsubsection{Selecting trading rules}{筛选交易规则}
 
-The table shows for different levels of turnover in round trips per year the maximum standardised instrument cost if you pay no more than the recommended 0.13 SR a year for staunch systems traders, and typical instruments at each cost level (estimates as of January 2015).
+\bilingualsubsection{Staunch systems trader}{坚定系统化交易者}
 
-* Defined in chapter seven, ‘Forecasts', and appendix B (page 282).
+\begin{englishblock} In chapter three I said I don't like to fit or calibrate trading rules using real performance. But that prohibition only applies to pre-cost performance. I positively encourage you to back-test and find the expected turnover of your trading rules and then reject variations which are too expensive. Using my recommended guideline for setting speed limits from above you don't want costs greater than 0.13 Sharpe ratio (SR). So you should be rejecting trading rules with turnovers greater than 130 round trips per year for the very cheapest futures (cost 0.001 SR for each unit of turnover), over 65 round trips for the Euro Stoxx future (cost 0.002), and with turnovers over 13 for a spread bet with a standardised cost of 0.01 SR.134 It is simplest to use the same trading rules and variations for all the instruments you trade. This means you will need to drop any rules which are too fast for the most expensive instrument you have; remaining rules will automatically be fine for the cheaper ones. You'll see how this is done in more detail in part four, chapter fifteen, which is the example chapter for the staunch systems trader. However if the set of instruments you have features trading costs that vary significantly you might consider using faster variations only with the cheapest instruments, and using a slower set of variations for the expensive ones. Costs in my own portfolio vary by a factor of 40 across the futures that I trade, so this is the approach I use. \end{englishblock}
 
-I've also shown the level of turnover that you'll get with the set of trading rules that I advocate using in chapter fifteen, where I explain in detail the design of the staunch systems trader example. Staunch systematic traders who use this recommended set of trading rules, which is fairly slow, will get a turnover of 12.5 round trips per year.\footnote{This figure is calculated when we cover the staunch systems trader example in chapter fifteen on page 251.} You'd get a maximum standardised cost of 0.13 ÷ 12.5 = 0.01 SR, which is fine for nearly all major futures markets and index spread bets.
+\begin{chineseblock}在第三章里我说过，我不喜欢根据真实表现去拟合或校准交易规则。但那个禁令只针对成本前表现。我反而非常鼓励你通过回测找出各条规则的预期换手率，然后把那些贵得离谱的变体剔除掉。按照我前面建议的速度上限，你不希望成本高于 0.13 个夏普比率（SR）单位。因此，对于最便宜的期货（每单位换手率成本为 0.001 SR），任何换手率高于每年 130 次往返交易的规则都应该被排除；对 Euro Stoxx 期货（成本为 0.002）来说，上限是 65 次；而对于标准化成本为 0.01 SR 的点差投注，上限只有 13 次。134最简单的做法，是让所有你交易的工具都使用同一套交易规则与变体。这意味着，你需要把那些对你最昂贵工具来说速度过快的规则全部删掉；剩下来的规则自然也会适用于更便宜的工具。你会在第四部分第十五章（坚定系统化交易者的示例章节）里看到更详细的做法。不过，如果你持有的那组工具在交易成本上相差非常大，那么你也可以考虑：只在最便宜的工具上使用更快的变体，而在昂贵工具上使用更慢的一组变体。我自己的期货组合里，不同工具的成本相差可达 40 倍，所以我本人就是这么做的。\end{chineseblock}
 
-利用上面的速度上限表，你可以从两个方向来设计系统。
-第一种，是先决定你想交易得多快，然后反过来挑选那些足够便宜、支撑这一速度的工具。
-第二种，则是先决定你偏好哪些工具，再倒推出它们最多只能以多快的速度去交易。
-例如，如果你不能碰期货、又偏爱 ETF，那么你的交易速度就必然非常慢；如果你交易的是指数点差投注，
-那么你的系统就不可能做成接近日内级别的快系统。
+\bilingualsubsection{Trading slower rules -- Weights to trading rules}{更慢的规则，以及如何给规则分配权重}
 
-\subsection*{Deciding average holding period by setting stop losses}
-\bisubsectiontitle{通过止损设置平均持仓周期}
+\bilingualsubsection{Staunch systems trader}{坚定系统化交易者}
 
-\subsection*{Semi-automatic trader}
-\bisubsectiontitle{半自动交易者}
+\begin{englishblock} How should you determine the forecast weights to use when forming a combined forecast? Unless you think that faster rules will give you a pre-cost Sharpe ratio (SR) advantage which compensates for their costs you're going to have less weight on higher turnover rules, especially in instruments which are expensive to trade. If you use bootstrapping to determine weights on a rolling out of sample basis then you can include a correction for costs in estimates of returns. Bootstrapping will automatically 134. As I showed you earlier, trading rules aren't the only source of turnover; we also have changes in price volatility, which we'll discuss later in the chapter. The costs you actually pay will also be inflated by the effect of the forecast diversification multiplier. But for faster rules these are more than compensated by the effect of position inertia: not trading position changes of less than 10\%. All this makes it very hard in practice to estimate the expected costs of trading a particular rule. Looking solely at the turnover of the forecast is the simplest approach and is usually conservative enough. determine the right weights, accounting for predictable costs and uncertain profits. By comparing the weights found when pooling results across the portfolio with those from individual instruments it will also tell you if different forecast weights make sense, or if you should use the same weights. Personally I've never found consistent evidence in my own system that faster trading rules, whether in general or as variations of a single rule, have a higher pre-cost Sharpe ratio (SR).135 So if you're deciding weights using handcrafting then I recommend that you assume the same pre-cost SR for all trading rules, but account for their different trading costs. You can then adjust forecast weights for trading rules based on your estimate of the SR of costs, as we did in chapter four on page 86. How do we do this? Remember from chapter four that the adjustment is done by comparing the SR of an asset versus the average across the portfolio. For each instrument and trading rule variation, you should use the cost per round trip and the turnover to calculate the total cost in SR units per year. If you've decided to keep the same set of trading rules for all instruments you may want to use the same adjustments on every instrument, which means using the highest and most conservative instrument standardised cost to do your adjustment, rather than the specific cost for each instrument. On a given instrument you should then take the average cost in SR points over all rules you are finding weights for. Because costs are fairly predictable you should use column A ‘With Certainty' of the SR adjustment table 12 in chapter four (page 86). As an extreme example, if you think that a particular rule is going to cost 0.13 SR per year, versus an average for all rules of 0.03 SR, then the performance difference is 0.10 SR worse than average and you should multiply its weight by 0.95. With my recommended speed limit applying to exclude any trading rules with costs of more than 0.13 SR, the adjustments made here will never be larger than 0.95 or 1.05. In most cases they will be much smaller and not worth bothering with. However if you're using a higher speed limit then adjusting for trading rule costs could significantly alter your weights. 135. The set of rules in my own system have turnovers of between 65 and six times a year, i.e. holding periods of between four business days and a couple of months. As rules get slower than a turnover of six their performance does start to worsen, and I exclude these rules entirely. For a turnover between six and 65, pre-cost performance is relatively similar across variations of the same trading rules (and is often worse for quicker trend following rules as most markets do not trend well at shorter horizons). However some kinds of rules show better performance at shorter holding periods and you should do your own bootstrapping with realistic costs to check this. \end{englishblock}
 
-How should semi-automatic traders determine how quickly to trade? You might think it depends on how trigger happy you are, with itchy fingered day traders clicking in and out every few minutes, and relaxed macro traders trading every few weeks or months. But I advocate that traders exclusively use a systematic stop loss to exit positions, no matter how they decide to enter them. This means the average holding period will depend mainly on how tight, or loose, your stops are set. You should then ensure that your trading style, and the horizon you are trying to predict price movements for, is in line with your stop levels. If stops are set very tight then you'll have short holding periods and high turnover. You won't be able to trade more expensive instruments with tight stops, since with a speed limit on what you're willing to pay in Sharpe ratio (SR) costs there will be a maximum viable standardised cost. Table 34 shows that with the cheapest futures you can use a relatively tight stop, with a holding period of three days. However this would be far too expensive if you're using spread bets. I mentioned a particular spread betting system in the introductory chapter which held positions for around a week. This would have a turnover of 52 round trips per year. The standardised cost I'm using for spread bets is 0.01 SR, so this gives costs of 52 × 0.01 = 0.52 annually. Earlier (page 150) I calculated the implied volatility target of that system at 160\%. This implies you'd need to make 0.52 × 160\% = 83\% a year on your trading capital before costs -- just to break even! Table 34 shows that with spread bets you can't use stops with holding periods of less than about six weeks. Furthermore it's unlikely that any trader will be happy with a holding period of more than six months. So the slowest turnover you can get is 2 round trips a year, which is the figure I used earlier in the chapter when looking at instrument selection.
+\begin{chineseblock}在形成合成预测时，你该如何决定各条规则的预测权重？除非你认为更快的规则能够提供足以弥补其成本的成本前夏普比率优势，否则，换手率更高的规则就应该获得更低的权重，尤其是在那些交易成本更高的工具上更是如此。如果你使用自助法在滚动样本外的框架下决定权重，那么你可以直接在收益估计里加入成本修正。自助法会自动把可预测的成本和不确定的利润一起考虑进去，从而给出合适的权重。通过比较“在整个组合范围内汇总后得到的权重”和“在单个工具上得到的权重”，它还会告诉你，到底是否真的有必要对不同工具使用不同的预测权重。就我自己的系统而言，我从未发现稳定证据表明：更快的交易规则，无论是一般意义上的，还是同一条规则的更快变体，在成本前 SR 上会更高。135 因此，如果你使用的是手工构造法，我建议你先假定所有交易规则的成本前 SR 都相同，然后只对不同规则的交易成本做调整。做法和第四章第 86 页讨论过的一样：根据“某条规则的成本 SR 相对于全部规则平均成本 SR 的高低”来调整权重。对每个工具和每个规则变体，你都应当用“每次往返交易的成本”乘以“换手率”，得到该规则每年的总成本（以 SR 单位计）。如果你决定让所有工具都使用同一套规则，那么你可能希望在每个工具上都使用同一套调整，这就意味着应该拿“成本最高、最保守的那个工具”的标准化成本来做调整，而不是对每个工具分别处理。然后，在单个工具内部，你还需要对所有待分配权重的规则求一个平均成本（以 SR 点数计）。由于成本通常是比较可预测的，所以你应当使用第四章第 86 页表 12 中 A 列“确定无疑（With Certainty）”的调整系数。举一个极端例子：如果你认为某条规则每年的成本会是 0.13 SR，而所有规则的平均成本只有 0.03 SR，那么它就比平均水平差了 0.10 SR，因此其权重应乘以 0.95。在我建议的速度上限下，凡是成本高于 0.13 SR 的规则都已经被排除了，所以这里做出的调整永远不会大于 0.95 或 1.05。大多数时候，这种调整甚至会小到不值得你费心去管。不过，如果你采用了更高的速度上限，那么根据规则成本来调权，确实可能显著改变最终权重。\end{chineseblock}
 
-对半自动交易者来说，平均持仓周期并不是由“你今天有多想点一下鼠标”决定的，而主要是由止损有多紧决定的。
-止损越紧，持仓期越短，换手越高，成本越大。于是，你必须让自己的预测期限与止损宽度相互匹配。
-如果你做的是六周左右的趋势判断，
-那么像本书建议的 \(X=4\) 这类较宽止损就更合理；
-如果你用的是点差投注这样的昂贵工具，
-那么也几乎只能接受这种相对慢一些的风格。
+\smallskip \noindent\textit{More conservative estimation of Sharpe ratio to set risk percentage}
 
-\subsection*{Selecting trading rules}
-\bisubsectiontitle{筛选交易规则}
+\smallskip \noindent\textit{更保守地估计夏普比率以设定风险比例}
 
-\subsection*{Staunch systems trader}
-\bisubsectiontitle{坚定系统化交易者}
+\bilingualsubsection{This section is relevant to all readers}{本节与所有读者相关}
 
-In chapter three I said I don't like to fit or calibrate trading rules using real performance. But that prohibition only applies to pre-cost performance. I positively encourage you to back-test and find the expected turnover of your trading rules and then reject variations which are too expensive. Using my recommended guideline for setting speed limits from above you don't want costs greater than 0.13 Sharpe ratio (SR). So you should be rejecting trading rules with turnovers greater than 130 round trips per year for the very cheapest futures (cost 0.001 SR for each unit of turnover), over 65 round trips for the Euro Stoxx future (cost 0.002), and with turnovers over 13 for a spread bet with a standardised cost of 0.01 SR.134 It is simplest to use the same trading rules and variations for all the instruments you trade. This means you will need to drop any rules which are too fast for the most expensive instrument you have; remaining rules will automatically be fine for the cheaper ones. You'll see how this is done in more detail in part four, chapter fifteen, which is the example chapter for the staunch systems trader. However if the set of instruments you have features trading costs that vary significantly you might consider using faster variations only with the cheapest instruments, and using a slower set of variations for the expensive ones. Costs in my own portfolio vary by a factor of 40 across the futures that I trade, so this is the approach I use.
+\bilingualsubsection{Slower estimation of price volatility}{更慢地估计价格波动率}
 
-对坚定系统化交易者来说，我不希望你根据“成本前表现”来拟合规则，
-但我强烈鼓励你根据“成本后可行性”来剔除规则。
-也就是说，
-如果某条规则在某个工具上的换手率太高，
-高到其年度成本会突破我建议的 0.13 SR 上限，
-那它就应当被排除。
-如果你想让所有工具都使用同一套规则，
-那么你最终应当依据“最昂贵的那个工具”来做筛选；
-这样留下来的规则，
-自动也会适用于那些更便宜的工具。
+\bilingualsubsection{This section is relevant to all readers}{本节与所有读者相关}
 
-\subsection*{Trading slower rules -- Weights to trading rules}
-\bisubsectiontitle{更慢的规则，以及如何给规则分配权重}
+\begin{englishblock} Back in chapter nine, ‘Volatility targeting', I said that you should have realistic expectations of likely Sharpe ratio (SR) to determine the optimal level of risk to take. If you're doing your own back-test, or estimating your likely performance in some other way, this needs to be done on an after-cost basis. Alternatively if you're using the suggested figures for Sharpe ratio in the relevant chapters of part four, then there's nothing more to do as all these assumptions are post-cost. \end{englishblock}
 
-\subsection*{Staunch systems trader}
-\bisubsectiontitle{坚定系统化交易者}
+\begin{chineseblock}回到第九章“波动率目标”，我曾说过：为了确定最优风险水平，你必须对自己可能实现的夏普比率有现实预期。如果你是自己做回测，或者用其他方式估计未来表现，那么这个估计必须建立在“扣除成本之后”的基础上。反过来，如果你采用的是第四部分各示例章节里我给出的默认夏普假设，那么这些数字本身就已经是成本后假设，因此这里不需要再额外调整。\end{chineseblock}
 
-How should you determine the forecast weights to use when forming a combined forecast? Unless you think that faster rules will give you a pre-cost Sharpe ratio (SR) advantage which compensates for their costs you're going to have less weight on higher turnover rules, especially in instruments which are expensive to trade. If you use bootstrapping to determine weights on a rolling out of sample basis then you can include a correction for costs in estimates of returns. Bootstrapping will automatically 134. As I showed you earlier, trading rules aren't the only source of turnover; we also have changes in price volatility, which we'll discuss later in the chapter. The costs you actually pay will also be inflated by the effect of the forecast diversification multiplier. But for faster rules these are more than compensated by the effect of position inertia: not trading position changes of less than 10\%. All this makes it very hard in practice to estimate the expected costs of trading a particular rule. Looking solely at the turnover of the forecast is the simplest approach and is usually conservative enough. determine the right weights, accounting for predictable costs and uncertain profits. By comparing the weights found when pooling results across the portfolio with those from individual instruments it will also tell you if different forecast weights make sense, or if you should use the same weights. Personally I've never found consistent evidence in my own system that faster trading rules, whether in general or as variations of a single rule, have a higher pre-cost Sharpe ratio (SR).135 So if you're deciding weights using handcrafting then I recommend that you assume the same pre-cost SR for all trading rules, but account for their different trading costs. You can then adjust forecast weights for trading rules based on your estimate of the SR of costs, as we did in chapter four on page 86. How do we do this? Remember from chapter four that the adjustment is done by comparing the SR of an asset versus the average across the portfolio. For each instrument and trading rule variation, you should use the cost per round trip and the turnover to calculate the total cost in SR units per year. If you've decided to keep the same set of trading rules for all instruments you may want to use the same adjustments on every instrument, which means using the highest and most conservative instrument standardised cost to do your adjustment, rather than the specific cost for each instrument. On a given instrument you should then take the average cost in SR points over all rules you are finding weights for. Because costs are fairly predictable you should use column A ‘With Certainty' of the SR adjustment table 12 in chapter four (page 86). As an extreme example, if you think that a particular rule is going to cost 0.13 SR per year, versus an average for all rules of 0.03 SR, then the performance difference is 0.10 SR worse than average and you should multiply its weight by 0.95. With my recommended speed limit applying to exclude any trading rules with costs of more than 0.13 SR, the adjustments made here will never be larger than 0.95 or 1.05. In most cases they will be much smaller and not worth bothering with. However if you're using a higher speed limit then adjusting for trading rule costs could significantly alter your weights. 135. The set of rules in my own system have turnovers of between 65 and six times a year, i.e. holding periods of between four business days and a couple of months. As rules get slower than a turnover of six their performance does start to worsen, and I exclude these rules entirely. For a turnover between six and 65, pre-cost performance is relatively similar across variations of the same trading rules (and is often worse for quicker trend following rules as most markets do not trend well at shorter horizons). However some kinds of rules show better performance at shorter holding periods and you should do your own bootstrapping with realistic costs to check this. More conservative estimation of Sharpe ratio to set risk percentage
+\bipairgap
 
-If faster rules are not demonstrably better before costs, they should usually carry less weight once costs are included. Bootstrapping can incorporate this naturally. If you are handcrafting weights, assume pre-cost Sharpe ratios are broadly similar and make only modest adjustments based on relative trading cost.
+\begin{englishblock} After forecasts the next source of turnover is the adjustment of positions to cope with changes in the risk of each instrument -- the instrument currency volatility, which I defined on page 158. This in turn depends on how quickly you update your estimate of the standard deviation of daily percentage returns, the price volatility, which was also defined in chapter ten. I mentioned three ways of estimating price volatility in that chapter. Two of these methods involved formally calculating the standard deviation of price changes over a volatility look-back period, either with a moving average or an exponentially weighted moving average (EWMA). I suggested that these should be used by asset allocators and staunch systems traders, with a default look-back of 25 business days, or 36 days with an EWMA. The other method involved eyeballing the chart, which I recommended for semi-automatic traders. \end{englishblock}
 
-一旦成本被纳入视野，你就不能再假设所有规则变体的权重都应当相同。通常情况下，
-高换手、成本高的规则，除非你有充分证据表明它们在成本前就显著更强，否则它们应当被降权。
-如果你用自助法做权重分配，那么成本可以自然地被纳入进去；
-如果你用手工构造法，
-那么我建议你假设所有规则成本前 SR 都差不多，
-只根据“成本相对平均值高出多少”来做轻微降权。
-需要强调的是，这种调整通常都不应太激烈；大多数情况下，规则权重真正的大差异并不来自成本，而来自相关性与分散化。
+\begin{chineseblock}在预测值之后，换手的下一个来源，是为了应对每个工具风险变化而调整仓位，也就是我在第 158 页定义过的品种货币波动率发生变化。这又取决于你多快去更新对“日收益百分比标准差”的估计，也就是第十章里同样定义过的价格波动率。我在那一章提到过三种估计价格波动率的方法，其中两种是正式地在一个回看窗口上计算价格变化的标准差，可以用简单移动平均，也可以用指数加权移动平均（EWMA）。我建议资产配置型投资者和坚定系统化交易者使用这两种方法，默认回看期是 25 个交易日；若用 EWMA，则相当于 36 天。第三种方法是直接目测图表，而我把这种方法推荐给半自动交易者。\end{chineseblock}
 
-\subsection*{Slower estimation of price volatility}
-\bisubsectiontitle{更慢地估计价格波动率}
+\bilingualsubsection{Asset allocating investor / Staunch systems trader}{资产配置型投资者 / 坚定系统化交易者}
 
-\subsection*{This section is relevant to all readers}
-\bisubsectiontitle{本节与所有读者相关}
+\begin{englishblock} If you're measuring price volatility using a simple moving average, or the equivalent exponentially weighted EWMA, should you use my recommended look-back of 25 days (five weeks of trading days), or a slower look-back of ten, or even 20 weeks? On page 157, figure 23 showed that slower look-backs are very sluggish to react to changes in risk. My research suggests that look-backs over 20 weeks lead to much poorer trading system performance. However faster look-backs change very frequently and will generate additional turnover and thus cost more to trade. First let's quantify the effect of higher costs. You need to check the turnover for each trading subsystem. This is all the trading that you'll be doing for a particular instrument. It will be what you get from any changes in forecasts, plus additional turnover as your estimate of price volatility changes. You can ignore the other reasons for trading that I discussed earlier, as these are relatively unimportant. If you have multiple trading rules then you need to work out the trading coming from your combined forecast across all trading rules. To get this first take the weighted average, using forecast weights, of the turnover in round trips per year for each individual trading rule. Then multiply this by the forecast diversification multiplier to get the turnover of the combined forecast. If you're an asset allocating investor using the ‘no-rule' rule of a constant forecast then there are no forecast changes and you'll have a zero turnover from trading rules. You then need to apply a correction for the effect of changing your estimate of price volatility, which always increases turnover. At the same time, you must also account for the effect of position inertia, which I introduced on page 174 -- not trading any position change greater than 10\%. This slows trading down. You can see the net result of these two corrections in table 36. The table shows that changing the look-back has almost no effect if the turnover of the original combined forecast is five or more round trips per year. So if you're trading fast trading rules, on cheap instruments, then you can safely use the default look-back. For slower rules it will depend on the precise costs of your instruments. Take the ‘no-rule' rule used by asset allocating investors. As before let's assume you're trading ETFs with a standardised cost of 0.08. With zero turnover in forecasts you should refer to the top row of the table. Using the default five week look-back to estimate price volatility gives a turnover of 1.6 round trips per year. You'd have costs of 1.6 × 0.08 = 0.13 Sharpe ratio (SR) units annually. This violates the recommended speed limit of paying 0.08 SR in costs for asset allocating investors, who are unlikely to see high performance from their static portfolios. In contrast with a 20 week look-back, giving a turnover of 0.40, you'd only pay 0.40 × 0.08 = 0.032 SR. This is a quarter of the original cost, saves a substantial 0.10 SR units, and is well within the speed limit. Notice that a turnover of 0.4 round trips per year is the lowest an asset-allocating investor can achieve without slowing down their estimate of price volatility beyond the maximum recommended 20 weeks. \end{englishblock}
 
-Back in chapter nine, ‘Volatility targeting', I said that you should have realistic expectations of likely Sharpe ratio (SR) to determine the optimal level of risk to take. If you're doing your own back-test, or estimating your likely performance in some other way, this needs to be done on an after-cost basis. Alternatively if you're using the suggested figures for Sharpe ratio in the relevant chapters of part four, then there's nothing more to do as all these assumptions are post-cost.
+\begin{chineseblock}如果你用简单移动平均，或者等价的指数加权 EWMA 来估计价格波动率，那么究竟应该采用我推荐的 25 天（五周交易日）回看期，还是 10 周，甚至 20 周这样更慢的回看期？第 157 页的图 23 已经说明，更慢的回看期对风险变化的反应会非常迟钝。我的研究也表明，超过 20 周的回看期会让交易系统表现明显变差。不过，更快的回看期会频繁变动，因此会带来更多换手，也就意味着更高的交易成本。先来量化一下这种成本影响。你需要检查每个交易子系统的换手率。某个工具的交易子系统，包含了这个工具上的全部交易活动，也就是预测值变化带来的换手，再加上价格波动率估计变化带来的额外换手。前面提到的其他交易来源都相对不重要，可以忽略。如果你有多条交易规则，那么你需要先算出“所有规则合成预测值”的换手率：先用预测权重，对各条单独规则的年往返交易次数做加权平均，再乘以预测分散化乘数，就得到合成预测的换手率。若你是资产配置型投资者，使用的是恒定预测值的“无规则”规则，那么来自交易规则的换手率就是零。接下来，你还要修正价格波动率估计变化对换手率的影响，因为它总会提高换手率；同时也必须考虑我在第 174 页介绍的仓位惯性-- 对于不超过 10\% 的仓位变化不去交易，它会把交易速度放慢。表 36 展示了这两种修正叠加后的净效果。这张表告诉你：如果原始合成预测的换手率已经达到每年 5 次往返交易或更高，那么改变波动率回看期几乎不会带来什么影响。所以，如果你用的是快规则、交易的又是便宜工具，那么安心使用默认回看期就行。对于更慢的规则，答案则取决于工具本身的成本。拿资产配置型投资者使用的“无规则”规则来说，和前面一样，假设你交易的是标准化成本为 0.08 的 ETF。因为预测值换手率为零，你应该看表格最上面一行。若使用默认的五周回看期去估计价格波动率，最终换手率会是每年 1.6 次往返交易，对应成本为 \(1.6 \times 0.08 = 0.13\) SR。这已经违反了我建议资产配置型投资者每年最多只支付 0.08 SR 成本的速度上限，因为静态投资组合本来就不太可能带来特别高的表现。相反，如果采用 20 周回看期，对应换手率只有 0.40，你每年只需支付 \(0.40 \times 0.08 = 0.032\) SR。这只有原始成本的四分之一，足足节省了 0.10 SR，而且完全处在速度上限之内。还要注意，0.4 次往返交易/年，已经是资产配置型投资者在不把波动率估计回看期放慢到超过建议上限 20 周的前提下，所能达到的最低换手率。\end{chineseblock}
 
-\subsection*{Slower estimation of price volatility}
-
-\subsection*{This section is relevant to all readers}
-
-After forecasts the next source of turnover is the adjustment of positions to cope with changes in the risk of each instrument -- the instrument currency volatility, which I defined on page 158. This in turn depends on how quickly you update your estimate of the standard deviation of daily percentage returns, the price volatility, which was also defined in chapter ten. I mentioned three ways of estimating price volatility in that chapter. Two of these methods involved formally calculating the standard deviation of price changes over a volatility look-back period, either with a moving average or an exponentially weighted moving average (EWMA). I suggested that these should be used by asset allocators and staunch systems traders, with a default look-back of 25 business days, or 36 days with an EWMA. The other method involved eyeballing the chart, which I recommended for semi-automatic traders.
-
-\subsection*{Asset allocating investor / Staunch systems trader}
-\bisubsectiontitle{资产配置型投资者 / 坚定系统化交易者}
-
-If you're measuring price volatility using a simple moving average, or the equivalent exponentially weighted EWMA, should you use my recommended look-back of 25 days (five weeks of trading days), or a slower look-back of ten, or even 20 weeks? On page 157, figure 23 showed that slower look-backs are very sluggish to react to changes in risk. My research suggests that look-backs over 20 weeks lead to much poorer trading system performance. However faster look-backs change very frequently and will generate additional turnover and thus cost more to trade. First let's quantify the effect of higher costs. You need to check the turnover for each trading subsystem. This is all the trading that you'll be doing for a particular instrument. It will be what you get from any changes in forecasts, plus additional turnover as your estimate of price volatility changes. You can ignore the other reasons for trading that I discussed earlier, as these are relatively unimportant. If you have multiple trading rules then you need to work out the trading coming from your combined forecast across all trading rules. To get this first take the weighted average, using forecast weights, of the turnover in round trips per year for each individual trading rule. Then multiply this by the forecast diversification multiplier to get the turnover of the combined forecast. If you're an asset allocating investor using the ‘no-rule' rule of a constant forecast then there are no forecast changes and you'll have a zero turnover from trading rules. You then need to apply a correction for the effect of changing your estimate of price volatility, which always increases turnover. At the same time, you must also account for the effect of position inertia, which I introduced on page 174 -- not trading any position change greater than 10\%. This slows trading down. You can see the net result of these two corrections in table 36. The table shows that changing the look-back has almost no effect if the turnover of the original combined forecast is five or more round trips per year. So if you're trading fast trading rules, on cheap instruments, then you can safely use the default look-back. For slower rules it will depend on the precise costs of your instruments. Take the ‘no-rule' rule used by asset allocating investors. As before let's assume you're trading ETFs with a standardised cost of 0.08. With zero turnover in forecasts you should refer to the top row of the table. Using the default five week look-back to estimate price volatility gives a turnover of 1.6 round trips per year. You'd have costs of 1.6 × 0.08 = 0.13 Sharpe ratio (SR) units annually. This violates the recommended speed limit of paying 0.08 SR in costs for asset allocating investors, who are unlikely to see high performance from their static portfolios. In contrast with a 20 week look-back, giving a turnover of 0.40, you'd only pay 0.40 × 0.08 = 0.032 SR. This is a quarter of the original cost, saves a substantial 0.10 SR units, and is well within the speed limit. Notice that a turnover of 0.4 round trips per year is the lowest an asset-allocating investor can achieve without slowing down their estimate of price volatility beyond the maximum recommended 20 weeks.
-
-在预测值之后，第二大换手来源就是价格波动率估计的变化。
-如果你把波动率估计窗口设得很短，那么仓位就会频繁变化，成本自然随之上升。
-因此，
-资产配置型投资者和坚定系统化交易者，
-都应根据自己工具的成本来决定波动率估计窗口是否需要放慢。
-而半自动交易者如果采用的是“目测法”，
-那么一个很实用的规则是：
-除非你新的波动率判断与上次相比变化超过 25\%，
-否则就不要更新它。
-
-\rawtablecaption{WHAT EFFECT DOES SLOWING DOWN YOUR ESTIMATE OF PRICE VOLATILITY HAVE? A SLOWER ESTIMATE CAN REDUCE FINAL SYSTEM TURNOVER, IF UNDERLYING TRADING RULES ARE ALSO SLOW\\放慢价格波动率估计会带来什么影响？若底层交易规则本身也较慢，则更慢的估计会降低最终系统换手}
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.32\textwidth}*{3}{>{\centering\arraybackslash}X}@{}}
+\begin{bilingualtableblock} \rawtablecaption{WHAT EFFECT DOES SLOWING DOWN YOUR ESTIMATE OF PRICE VOLATILITY HAVE? A SLOWER ESTIMATE CAN REDUCE FINAL SYSTEM TURNOVER, IF UNDERLYING TRADING RULES ARE ALSO SLOW\\放慢价格波动率估计会带来什么影响？若底层交易规则本身也较慢，则更慢的估计会降低最终系统换手}\noindent{\small \setlength{\tabcolsep}{4pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.32\textwidth}*{3}{>{\centering\arraybackslash} X}@{}}
 \toprule
 \textbf{Starting turnover of trading rules} & \textbf{20 weeks} & \textbf{10 weeks} & \textbf{5 weeks} \\
-\midrule
-0 (no-rule rule) & 0.4 & 0.8 & 1.6 \\
-1 & 1.2 & 1.5 & 2.5 \\
-5 & 4.7 & 5.0 & 5.7 \\
-10 & 9.4 & 9.8 & 10.2 \\
-12.5 & 11.7 & 12.2 & 12.6 \\
-20 & 19.1 & 19.2 & 19.7 \\
-40 & 39.2 & 39.2 & 39.4 \\
-60 & 60 & 60 & 60 \\
-\bottomrule
-\end{tabularx}
-}
-
-\medskip
-
-\noindent{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.12}
-\begin{tabularx}{\textwidth}{@{}p{0.32\textwidth}*{3}{>{\centering\arraybackslash}X}@{}}
-\toprule
 \textbf{交易规则原始换手率} & \textbf{20 周} & \textbf{10 周} & \textbf{5 周} \\
 \midrule
+0 (no-rule rule) & 0.4 & 0.8 & 1.6 \\
 0（无规则规则） & 0.4 & 0.8 & 1.6 \\
 1 & 1.2 & 1.5 & 2.5 \\
+1 & 1.2 & 1.5 & 2.5 \\
+5 & 4.7 & 5.0 & 5.7 \\
 5 & 4.7 & 5.0 & 5.7 \\
 10 & 9.4 & 9.8 & 10.2 \\
+10 & 9.4 & 9.8 & 10.2 \\
+12.5 & 11.7 & 12.2 & 12.6 \\
 12.5 & 11.7 & 12.2 & 12.6 \\
 20 & 19.1 & 19.2 & 19.7 \\
+20 & 19.1 & 19.2 & 19.7 \\
 40 & 39.2 & 39.2 & 39.4 \\
+40 & 39.2 & 39.2 & 39.4 \\
+60 & 60 & 60 & 60 \\
 60 & 60 & 60 & 60 \\
 \bottomrule
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-\smallskip
-\noindent\textit{The table shows the final turnover, in round trips per year, we get from changing the look-back for price volatility (columns) given a starting level of turnover from trading rules (rows). Five weeks (25 business days) is the default look-back. Starting turnover is the average turnover of your trading rules, weighted by forecast weights, multiplied by forecast diversification multiplier. Position inertia is used to slow down trading.}
+\smallskip \noindent\textit{The table shows the final turnover, in round trips per year, we get from changing the look-back for price volatility (columns) given a starting level of turnover from trading rules (rows). Five weeks (25 business days) is the default look-back. Starting turnover is the average turnover of your trading rules, weighted by forecast weights, multiplied by forecast diversification multiplier. Position inertia is used to slow down trading.}
 
-\smallskip
-\noindent\textit{表中展示的是：在给定交易规则原始换手率
-（行）的前提下，如果改变价格波动率估计的回看窗口
-（列），最终系统每年的往返交易次数会变成多少。五周
-（25 个交易日）是默认回看期。原始换手率等于交易规则换手率按预测权重加权后的平均值，再乘以预测分散化乘数。表中的结果已经考虑了仓位惯性。}
+\smallskip \noindent\textit{表中展示的是：在给定交易规则原始换手率（行）的前提下，如果改变价格波动率估计的回看窗口（列），最终系统每年的往返交易次数会变成多少。五周（25 个交易日）是默认回看期。原始换手率等于交易规则换手率按预测权重加权后的平均值，再乘以预测分散化乘数。表中的结果已经考虑了仓位惯性。}
 
-\smallskip
-\noindent\textit{* Using a simple moving average. For an exponentially weighted moving average, the equivalent look-backs are longer.}
+\smallskip \noindent\textit{* Using a simple moving average. For an exponentially weighted moving average, the equivalent look-backs are longer.}
 
-\smallskip
-\noindent\textit{* 这里使用的是简单移动平均。若改用指数加权移动平均，则等效回看期会更长。}
+\smallskip \noindent\textit{* 这里使用的是简单移动平均。若改用指数加权移动平均，则等效回看期会更长。}
 
-\subsection*{Semi-automatic Trader}
-\bisubsectiontitle{半自动交易者}
+\bilingualsubsection{Semi-automatic Trader}{半自动交易者}
 
-The first method of estimating price volatility I discussed in chapter ten was eyeballing; looking at the chart and figuring out what a typical daily move was. It's obviously very difficult to back-test this method as everyone's perception is different. However you should usually use a one month window on a chart to find the price volatility, since this will give similar results to the 25 day volatility look-back I recommended for more formal moving average methods. This is fine if you're trading cheap instruments like futures. With more expensive assets, like spread bets and ETFs, then I'd suggest you still use a one month window. However I would recommend that you also compare your estimate of the cash risk of an existing position (the instrument currency volatility defined on page 158) to the value you had yesterday. If the estimate hasn't changed by more than 25\% from its last value then don't bother to adjust it. Just like position inertia this will reduce any trading caused by updating the volatility estimate on existing positions and keep your costs down. However when opening new positions you should use the most up-to-date estimate of volatility to work out your initial trade size.
+\begin{englishblock} The first method of estimating price volatility I discussed in chapter ten was eyeballing; looking at the chart and figuring out what a typical daily move was. It's obviously very difficult to back-test this method as everyone's perception is different. However you should usually use a one month window on a chart to find the price volatility, since this will give similar results to the 25 day volatility look-back I recommended for more formal moving average methods. This is fine if you're trading cheap instruments like futures. With more expensive assets, like spread bets and ETFs, then I'd suggest you still use a one month window. However I would recommend that you also compare your estimate of the cash risk of an existing position (the instrument currency volatility defined on page 158) to the value you had yesterday. If the estimate hasn't changed by more than 25\% from its last value then don't bother to adjust it. Just like position inertia this will reduce any trading caused by updating the volatility estimate on existing positions and keep your costs down. However when opening new positions you should use the most up-to-date estimate of volatility to work out your initial trade size. \end{englishblock}
 
-\subsection*{Choice of instrument weights}
-\bisubsectiontitle{品种权重的选择}
+\begin{chineseblock}我在第十章中讨论的第一种价格波动率估计方法，是直接目测图表，也就是盯着走势图去判断“典型的一天会波动多少”。显然，这种方法几乎不可能被真正回测，因为每个人的主观看法都不一样。不过，通常你仍然应该用大约一个月的图表窗口来判断价格波动率，因为这样得到的结果，会与我推荐给正式移动平均方法使用的 25 天波动率回看期大体接近。如果你交易的是期货这类便宜工具，这样做完全没有问题。即便你交易的是点差投注、ETF 这类更贵的资产，我仍然建议你维持一个月左右的观察窗口。不过，我还建议你把某个已有头寸的现金风险估计值（也就是第 158 页定义的品种货币波动率）拿来和昨天的估计值做比较。如果新的估计值与上一次相比变化不到 25\%，那就干脆不要调整。和仓位惯性一样，这会减少因为更新已有头寸波动率估计而带来的交易，从而把成本压低。不过，在开新仓时，你仍然应该使用最新的波动率估计来计算初始下单规模。\end{chineseblock}
 
-\subsection*{Asset allocating investor / Staunch systems trader}
-\bisubsectiontitle{资产配置型投资者 / 坚定系统化交易者}
+\bilingualsubsection{Choice of instrument weights}{品种权重的选择}
 
-This isn't relevant to semi-automatic traders who don't trade a fixed set of trading subsystems. Suppose you're running a portfolio including a cheap instrument like a Euro Stoxx future, and a more expensive one like two year German bond (Schatz) futures. Perhaps you've managed to find trading rules that make sense for each instrument and fitted some forecast weights to them; or you could be an asset allocating investor who is going to use the single ‘no-rule' rule with a constant forecast. As in chapter eleven you must now allocate your trading capital and think about the appropriate instrument weights to give to each of these two trading subsystems. Will you get lower after-cost performance from running trading systems for the more expensive Schatz? If so then you should obviously give it a lower instrument weight. But this is not a clear-cut decision. Academic research shows that the extra costs of owning less liquid instruments are often outweighed by higher profits, such as the additional returns you get from investing in the equities of smaller firms. As I briefly mentioned in chapter two, ‘Systematic Trading Rules', we tend to get rewarded for being exposed to illiquid assets. My own research shows that more expensive instruments usually perform somewhat better even once costs are taken into account; but only if they're traded relatively slowly, with a turnover of less than 15 round trips per year. The improvement isn't usually strong enough to warrant a higher allocation, but it does mean that under-weighting costly instruments doesn't make sense. For asset-allocating investors (whose turnover from table 36 will be at most 1.4), and slower staunch systems traders, there is no need to consider adjusting instrument weights in light of costs. If you're a fast systems trader, with a turnover of more than 15 round trips per year, then my research shows that you will see worse relative performance after costs for expensive instruments. However if you've followed the advice I gave earlier then you wouldn't be trading them that quickly anyway, since you'd be breaking the speed limits implied by the recommended limit of 0.08 Sharpe ratio (SR) units or 0.13 SR units, per year spent on costs. When you stick to the speed limit then only the very cheapest instruments would have access to quick trading rules. So in general you'd either be trading cheaper instruments more quickly than expensive ones, or trading all your instruments at the same relatively slow pace. In my own research into systems with these features I don't find any difference in after-cost returns between instruments, regardless of their standardised costs. In conclusion, unless bootstrapping tells you differently, I would recommend assuming the same post-cost SR for all trading subsystems. If you're using handcrafted instrument weights this means no Sharpe ratio adjustment is needed to account for different cost levels.
+\bilingualsubsection{Asset allocating investor / Staunch systems trader}{资产配置型投资者 / 坚定系统化交易者}
 
-半自动交易者经常会用目测方式估计波动率。一个务实的折中方案是：继续使用大致覆盖一个月的图表视角，但不要因为一点点变化就更新既有头寸的波动率估计，除非它已经发生了实质性变化。这样做相当于一种仓位惯性，有助于把交易成本压低。
+\begin{englishblock} This isn't relevant to semi-automatic traders who don't trade a fixed set of trading subsystems. Suppose you're running a portfolio including a cheap instrument like a Euro Stoxx future, and a more expensive one like two year German bond (Schatz) futures. Perhaps you've managed to find trading rules that make sense for each instrument and fitted some forecast weights to them; or you could be an asset allocating investor who is going to use the single ‘no-rule' rule with a constant forecast. As in chapter eleven you must now allocate your trading capital and think about the appropriate instrument weights to give to each of these two trading subsystems. Will you get lower after-cost performance from running trading systems for the more expensive Schatz? If so then you should obviously give it a lower instrument weight. But this is not a clear-cut decision. Academic research shows that the extra costs of owning less liquid instruments are often outweighed by higher profits, such as the additional returns you get from investing in the equities of smaller firms. As I briefly mentioned in chapter two, ‘Systematic Trading Rules', we tend to get rewarded for being exposed to illiquid assets. My own research shows that more expensive instruments usually perform somewhat better even once costs are taken into account; but only if they're traded relatively slowly, with a turnover of less than 15 round trips per year. The improvement isn't usually strong enough to warrant a higher allocation, but it does mean that under-weighting costly instruments doesn't make sense. For asset-allocating investors (whose turnover from table 36 will be at most 1.4), and slower staunch systems traders, there is no need to consider adjusting instrument weights in light of costs. If you're a fast systems trader, with a turnover of more than 15 round trips per year, then my research shows that you will see worse relative performance after costs for expensive instruments. However if you've followed the advice I gave earlier then you wouldn't be trading them that quickly anyway, since you'd be breaking the speed limits implied by the recommended limit of 0.08 Sharpe ratio (SR) units or 0.13 SR units, per year spent on costs. When you stick to the speed limit then only the very cheapest instruments would have access to quick trading rules. So in general you'd either be trading cheaper instruments more quickly than expensive ones, or trading all your instruments at the same relatively slow pace. In my own research into systems with these features I don't find any difference in after-cost returns between instruments, regardless of their standardised costs. In conclusion, unless bootstrapping tells you differently, I would recommend assuming the same post-cost SR for all trading subsystems. If you're using handcrafted instrument weights this means no Sharpe ratio adjustment is needed to account for different cost levels. \end{englishblock}
 
-原则上，如果某些工具在扣除成本后的表现更差，那它们也许应该被赋予较低权重。可在实践中，只要你遵守合理的速度上限，这种影响通常远没有大家想象得那么大。因此，我的一般建议是：不要仅仅因为某个工具稍微更贵，就机械地对它低配，除非你自己的自助法证据明确告诉你应该这么做。
+\begin{chineseblock}这和不交易固定一组交易子系统的半自动交易者无关。假设你正在运行一个投资组合，里面既有像 Euro Stoxx 期货这样便宜的工具，也有像德国两年期 Schatz 国债期货这样更昂贵的工具。也许你已经为每个工具找到了合适的交易规则并拟合了预测权重；或者你是一个资产配置型投资者，只打算使用那条恒定预测值的“无规则”规则。像第十一章那样，你现在必须分配交易资本，并考虑应该给这两个交易子系统分别多少品种权重。问题是：在更贵的 Schatz 上运行交易系统，会不会得到更差的成本后表现？如果答案是肯定的，你似乎就该给它更低的品种权重。但这个问题并没有那么泾渭分明。学术研究显示，持有流动性较差工具所承受的额外成本，往往会被更高的利润抵消，例如投资小型公司股票能获得的额外回报。正如我在第二章“系统化交易规则”中简要提到的那样，暴露于流动性差的资产，往往会得到补偿。我自己的研究表明，更昂贵的工具即使在把成本算进去以后，通常也会表现稍好一些，但前提是它们被交易得相对较慢，换手率低于每年 15 次往返交易。这种改善通常还不足以支持你给它们更高配置，但它确实说明，机械地低配昂贵工具也没有道理。对于资产配置型投资者（他们在表 36 中的换手率最多只有 1.4）以及较慢的坚定系统化交易者来说，完全没有必要仅仅因为成本而调整品种权重。只有当你是一个换手率超过 15 次往返交易/年的快速系统交易者时，我的研究才显示：昂贵工具的成本后相对表现会变差。不过，如果你已经遵循了我前面给出的建议，那么你本来也不该把它们交易得那么快，因为那样会违反“每年成本不超过 0.08 SR 或 0.13 SR”的速度上限。当你遵守这个速度上限时，只有最便宜的工具才有资格使用快速交易规则。因此，总体而言，你要么会让便宜工具比贵工具交易得更快，要么就让所有工具都以相同的较慢速度交易。在我对这类系统所做的研究中，无论标准化成本高低如何，我都没有发现工具之间在成本后收益上存在差异。结论是：除非自助法明确告诉你并非如此，否则我建议假定所有交易子系统的成本后 SR 相同。如果你使用的是手工构造的品种权重，这就意味着不需要为了不同成本水平而额外调整夏普比率。\end{chineseblock}
 
-\section*{Trading with more or less capital}
-\phantomsection
-\addcontentsline{toc}{section}{Trading with more or less capital}
-\bisectiontitle{资本过多或过少时的交易问题}
+\bilingualsection{Trading with more or less capital}{资本过多或过少时的交易问题}
 
 \audiencebox{This section is relevant to all readers}{本节与所有读者都相关。}
 
-\subsection*{Trading with a lot of capital}
-\bisubsectiontitle{资金很多时怎么交易}
+\bilingualsubsection{Trading with a lot of capital}{资金很多时怎么交易}
 
-Let's have another look at the order book in figure 24. An investor who wants to sell 437 contracts or fewer can assume they will pay at worst half the spread, 0.5 price units, as they're selling at 3,369 compared to the mid-price of 3,369.5. But a large hedge fund which needs to sell more than this, like 5,000 lots, has a problem. They have three options when they submit the order. Firstly they can cross the spread and submit a single market order. They will get 3,369 for the first 437 lots, but the next 576 lots will go for 3,368, then 620 at 3,367 and so on. The average price received per lot will be 3365.2, which compared to the original mid of 3,369.5 gives an execution cost of 4.3 points. The exact cost for any given trade will depend on the depth of the order book when it is submitted. Secondly they can offer 5,000 lots at 3,370, adding to the 7 lots already on the order book. They might get lucky and meet a large buyer who takes their offer. This would beat the mid-price by half a point, and get an effectively negative execution cost. But it's much more likely that on seeing this huge order other traders will push the price down, leaving the order unfilled and the market at a worse level. Finally the funds human traders or execution algorithims can break the order up into chunks and execute it gradually. The order will take longer to execute and there will be a lot of uncertainty about the fill level, and even if each chunk is small other market
+\begin{englishblock} Let's have another look at the order book in figure 24. An investor who wants to sell 437 contracts or fewer can assume they will pay at worst half the spread, 0.5 price units, as they're selling at 3,369 compared to the mid-price of 3,369.5. But a large hedge fund which needs to sell more than this, like 5,000 lots, has a problem. They have three options when they submit the order. Firstly they can cross the spread and submit a single market order. They will get 3,369 for the first 437 lots, but the next 576 lots will go for 3,368, then 620 at 3,367 and so on. The average price received per lot will be 3365.2, which compared to the original mid of 3,369.5 gives an execution cost of 4.3 points. The exact cost for any given trade will depend on the depth of the order book when it is submitted. Secondly they can offer 5,000 lots at 3,370, adding to the 7 lots already on the order book. They might get lucky and meet a large buyer who takes their offer. This would beat the mid-price by half a point, and get an effectively negative execution cost. But it's much more likely that on seeing this huge order other traders will push the price down, leaving the order unfilled and the market at a worse level. Finally the funds human traders or execution algorithims can break the order up into chunks and execute it gradually. The order will take longer to execute and there will be a lot of uncertainty about the fill level, and even if each chunk is small other market participants will see the individual orders coming through and react accordingly, which will probably result in the price drifting down. In none of these three cases is the execution cost guaranteed to be exactly 0.5 points. If you are trading in large size, in relatively illiquid markets and relatively quickly, you can't casually assume you will pay half the spread. If your typical order size is going to be greater than the usual depth available at the inside spread, you need to do serious research to calculate your expected trading costs, and to work hard at optimising your execution. \end{englishblock}
 
-participants will see the individual orders coming through and react accordingly, which will probably result in the price drifting down. In none of these three cases is the execution cost guaranteed to be exactly 0.5 points. If you are trading in large size, in relatively illiquid markets and relatively quickly, you can't casually assume you will pay half the spread. If your typical order size is going to be greater than the usual depth available at the inside spread, you need to do serious research to calculate your expected trading costs, and to work hard at optimising your execution.
+\begin{chineseblock}让我们再看看图 24 里的订单簿。一个想卖出 437 张合约或更少的投资者，可以假设自己最差也就是支付半个点差，也就是 0.5 个价格单位，因为他会在 3,369 卖出，而当时的中间价是 3,369.5。但如果是一家需要卖出 5,000 张的大型对冲基金，问题就来了。它在下单时有三种选择。第一，它可以直接跨过价差，一次性提交市价单。前 437 张会成交在 3,369，接下来的 576 张成交在 3,368，再后面 620 张成交在 3,367，以此类推。这样算下来，每张合约的平均成交价会是 3365.2；与最初 3,369.5 的中间价相比，执行成本就是 4.3 个点。某一笔交易的精确成本，还会取决于它下单时订单簿的深度。第二，它可以把 5,000 张挂在 3,370，加入订单簿里原本那 7 张的卖盘队列。这样也许会运气很好，碰到一个大买家直接把单子吃掉，那么它甚至能比中间价多卖出半个点，也就是获得“负的执行成本”。但更可能的情况是，其他交易者一看到这么大的挂单，就先把价格往下打，结果订单既没成交，市场位置还变得更差。第三，基金里的人工交易员或执行算法也可以把订单切成一小块一小块慢慢做。这样做的坏处是成交时间会被拉长，成交程度也很不确定，而且即便每一小块都不大，其他市场参与者也会看到这些零碎订单不断出现并据此做出反应，结果很可能仍然是价格一路往下漂。在这三种情况下，没有一种能保证执行成本一定正好是 0.5 个点。如果你是在大规模、相对不活跃的市场里、并且相对快速地交易，就不能轻率地假设自己只会支付半个点差。如果你典型的订单规模已经大于盘口最优价上的常见深度，那么你就必须认真研究，去计算自己预期的交易成本，并努力优化执行方式。\end{chineseblock}
 
-对于大资金来说，问题在于你不能总是假设自己能用“半个点差”成交。你的订单可能已经大到足以吃掉盘口深度，
-于是真实执行成本会显著高于简单模型。对此，你必须建立更复杂的执行成本模型，
-并认真优化执行方式。
+\bilingualsubsection{Trading with relatively little capital}{资金较少时怎么交易}
 
-\subsection*{Trading with relatively little capital}
-\bisubsectiontitle{资金较少时怎么交易}
+\begin{englishblock} Those with much lower fund values have a different problem. Think back to the example in table 32 on page 173. The imaginary investor there had a €100,000 annualised cash volatility target, and after working out the target positions they needed to short 2.62 S\&P 500 futures contracts, based on the combined forecast of -10. But what if you are an amateur investor with only €40,000? Running at the maximum recommended 50\% percentage volatility target would give you a mere €20,000 cash volatility target. With one-fifth of the risk you'd get one-fifth of the target position. However you can't short the 0.524 contracts this equates to. You'd have to short a rounded position of just one contract. With a €20,000 volatility target if your S\&P 500 combined forecast doubles from -10 to -20, you'd still be short just one contract.\footnote{The number of contracts to hold would be -0.524 and -1.049 respectively. Both round to -1. \par 这两种情况下应持有的合约数量分别是 -0.524 和 -1.049，但它们都会被四舍五入成 -1。} With a forecast of -20 if the price volatility then doubled, you'd still have just the single short.\footnote{Doubling price volatility, all other things being equal, halves position size. The number of contracts to hold would be -1.049 and -0.524 respectively. Both round to -1. \par 在其他条件不变时，价格波动率翻倍会让仓位规模减半。这两种情况下应持有的合约数量分别是 -1.049 和 -0.524，但它们同样都会被四舍五入成 -1。} Your risk is much ‘lumpier' than if you could trade fractional contracts. The problem occurs because the minimum size of the S\&P future is quite big.\footnote{Actually what you're trading here is the E-mini S\&P 500 contract. There is an even larger full size future. \par 实际上，这里交易的是 E-mini S\&P 500 合约；还有一种规模更大的完整标准合约。} As I explained in chapter six, ‘Instruments', the minimum block size is relatively large for many other instruments. Equities with very high prices -- like Berkshire Hathaway A shares, currently trading at \$220,000 each -- are obviously going to be an issue, whilst UK spread betting firms may not allow you to trade in bets of only £1 per point on some indices. Apart from the S\&P, many other futures contracts tend to have large nominal values including long maturity bonds, CME currency futures, and some energy and agricultural commodities. An extreme example is the Japanese 10 year bond future which currently has a price of around 150 million yen, or \$1.3 million. In some cases there are mini versions of these large contracts, but these might not be liquid enough. Even without a large minimum it may be impractical or uneconomic to trade small sizes. With a per ticket cost of €4 to buy ETFs it doesn't make sense to buy in blocks of less than 100. To find out where you could have minimum size problems you need to work through the calculations in earlier chapters, assuming the maximum combined forecast. This will give you the highest possible position for an instrument given the current level of volatility. My recommended maximum absolute forecast of 20 will give you a maximum position of 2 × volatility scalar × instrument weight × instrument diversification multiplier. Staunch systems traders will need to check this for every instrument they are trading. Semi-automatic traders should do the same calculation for any instruments they are planning to place bets on. Asset allocating investors, whose forecast is always a constant +10, should use half of the usual figure to get their maximum position: 1 × volatility scalar × instrument weight × instrument diversification multiplier. Let's check the result for the example we're using. In table 31 (page 172), the volatility scalar for the S\&P 500 was 7.43. This was calculated with a €100,000 cash volatility target, so with a €20,000 volatility target it will be one-fifth the size. Hence the volatility scalar with a lower account size is one-fifth of 7.43, or 1.49. From table 32 the instrument weight is still 25\%, and the diversification multiplier 1.41, so the maximum possible position then is 2 × 1.49 × 25\% × 1.41 = 1.05. This is clearly too low. No matter what happens the position will be long or short one contract, or none. It is a matter of judgment as to what kind of maximum position you'd find acceptable. My recommendation is to be satisfied with a maximum possible position of four or more instrument blocks. If you can't get to this level you will need to consider taking one of the following steps.139 \end{englishblock}
 
-Those with much lower fund values have a different problem. Think back to the example in table 32 on page 173. The imaginary investor there had a €100,000 annualised cash volatility target, and after working out the target positions they needed to short 2.62 S\&P 500 futures contracts, based on the combined forecast of -10. But what if you are an amateur investor with only €40,000? Running at the maximum recommended 50\% percentage volatility target would give you a mere €20,000 cash volatility target. With one-fifth of the risk you'd get one-fifth of the target position. However you can't short the 0.524 contracts this equates to. You'd have to short a rounded position of just one contract. With a €20,000 volatility target if your S\&P 500 combined forecast doubles from -10 to -20, you'd still be short just one contract.\footnote{The number of contracts to hold would be -0.524 and -1.049 respectively. Both round to -1.} With a forecast of -20 if the price volatility then doubled, you'd still have just the single short.\footnote{Doubling price volatility, all other things being equal, halves position size. The number of contracts to hold would be -1.049 and -0.524 respectively. Both round to -1.} Your risk is much ‘lumpier' than if you could trade fractional contracts. The problem occurs because the minimum size of the S\&P future is quite big.\footnote{Actually what you're trading here is the E-mini S\&P 500 contract. There is an even larger full size future.} As I explained in chapter six, ‘Instruments', the minimum block size is relatively large for many other instruments. Equities with very high prices -- like Berkshire Hathaway A shares, currently trading at \$220,000 each -- are obviously going to be an issue, whilst UK spread betting firms may not allow you to trade in bets of only £1 per point on some indices. Apart from the S\&P, many other futures contracts tend to have large nominal values including long maturity bonds, CME currency futures, and some energy and agricultural commodities. An extreme example is the Japanese 10 year bond future which currently has a price of around 150 million yen, or \$1.3 million. In some cases there are mini versions of these large contracts, but these might not be liquid enough. Even without a large minimum it may be impractical or uneconomic to trade small sizes. With a per ticket cost of €4 to buy ETFs it doesn't make sense to buy in blocks of less than 100.
+\begin{chineseblock}资金规模小得多的人会遇到另一类问题。回想第 173 页表 32 的例子：那位虚拟投资者的年化现金波动率目标是 €100,000，在合成预测值为 -10 时，算出的目标仓位是做空 2.62 份 S\&P 500 期货合约。但如果你只是一个只有 €40,000 的业余投资者呢？即便按建议上限 50\% 的百分比波动率目标运行，你的现金波动率目标也只有 €20,000，也就是原来的五分之一，因此目标仓位也只剩五分之一。然而你不能做空 0.524 份合约，只能四舍五入成 1 份空头。若你的 S\&P 500 合成预测从 -10 翻倍到 -20，你仍然可能只会持有 1 份空头；如果价格波动率再翻倍，结果也还是那一份空头。与能够交易分数头寸相比，你的风险会显得更加“颗粒化”。问题出在 S\&P 期货的最小交易单位太大，而许多其他工具也是如此。要判断哪些品种会遭遇最小单位问题，你需要在前面几章的计算基础上，假设最大合成预测值，算出在当前波动率水平下该品种的最大可能仓位。按照我建议的最大绝对预测值 20，坚定系统化交易者和半自动交易者的最大可能仓位为 \(2 \times\) volatility scalar \(\times\) instrument weight \(\times\) instrument diversification multiplier；资产配置型投资者因预测恒为 +10，则应使用上述公式的一半。回到我们的例子：表 31（第 172 页）中 S\&P 500 的 volatility scalar 为 7.43，这是在 €100,000 现金波动率目标下算出的；若目标只有 €20,000，它就会缩小为五分之一，即 1.49。再结合表 32 中 25\% 的品种权重和 1.41 的分散化乘数，最大可能仓位就是 \(2 \times 1.49 \times 25\% \times 1.41 = 1.05\)。这个值显然太低了。无论发生什么，仓位不是多一张、空一张，就是没有仓位。至于多大的最大仓位才算可以接受，需要自行判断；我的建议是至少应达到 4 个或更多头寸块。如果做不到这一点，你就需要考虑下面几种办法。\end{chineseblock}
 
-To find out where you could have minimum size problems you need to work through the calculations in earlier chapters, assuming the maximum combined forecast. This will give you the highest possible position for an instrument given the current level of volatility. My recommended maximum absolute forecast of 20 will give you a maximum position of 2 × volatility scalar × instrument weight × instrument diversification multiplier. Staunch systems traders will need to check this for every instrument they are trading. Semi-automatic traders should do the same calculation for any instruments they are planning to place bets on. Asset allocating investors, whose forecast is always a constant +10, should use half of the usual figure to get their maximum position: 1 × volatility scalar × instrument weight × instrument diversification multiplier. Let's check the result for the example we're using. In table 31 (page 172), the volatility scalar for the S\&P 500 was 7.43. This was calculated with a €100,000 cash volatility target, so with a €20,000 volatility target it will be one-fifth the size. Hence the volatility scalar with a lower account size is one-fifth of 7.43, or 1.49. From table 32 the instrument weight is still 25\%, and the diversification multiplier 1.41, so the maximum possible position then is 2 × 1.49 × 25\% × 1.41 = 1.05. This is clearly too low. No matter what happens the position will be long or short one contract, or none. It is a matter of judgment as to what kind of maximum position you'd find acceptable. My recommendation is to be satisfied with a maximum possible position of four or more instrument blocks. If you can't get to this level you will need to consider taking one of the following steps.139
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Increase weight to instrument, only in moderation} & If instead of 25\% you put 100\% of the example portfolio into the S\&P 500 then your maximum position would be a slightly more reasonable 3 contracts.* However any increase in weight will have to come from other instruments, hence moving instrument weights away from their optimum, unless you also take the next option. \\
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Increase weight to instrument, only in moderation} & If instead of 25\% you put 100\% of the example portfolio into the S\&P 500 then your maximum position would be a slightly more reasonable 3 contracts.* However any increase in weight will have to come from other instruments, hence moving instrument weights away from their optimum, unless you also take the next option. \\
+\textbf{适度提高该品种权重} & 如果不是 25\%，而是把示例组合的 100\% 都投到 S\&P 500 上，那么你的最大仓位会变成稍微更合理的 3 份合约。* 不过，任何权重上调都必须来自其他品种，因此会让品种权重偏离其最优值，除非你同时采用下一项方案。 \\
 \textbf{Reduce overall portfolio size} & It's better to increase the instrument weight by reducing the number of instruments you have, but still using the correct bootstrapped or handcrafted weights. However this still reduces diversification. I'll go into more detail about determining the ideal portfolio size in the next section. \\
+\textbf{缩小整体投资组合规模} & 更好的做法是通过减少持有品种数量来提高单个品种的权重，同时仍然使用正确的 bootstrap 或 handcrafting 权重。不过，这仍会降低分散化程度。我会在下一节更详细地讨论如何确定理想的组合规模。 \\
 \textbf{Remove instrument} & If the instrument size is unreasonably large, and you will need to significantly reduce the total number of assets in your portfolio to accommodate it, then you should exclude it. \\
+\textbf{删除该品种} & 如果该品种的最小单位大得离谱，而为了容纳它你又不得不显著减少组合里的总资产数量，那你就应该把它剔除。 \\
 \textbf{Live with it} & You might have a large portfolio with just a few instruments where size is a problem. For example half a dozen of the futures contracts in my own portfolio of more than 40 have maximum positions of less than four contracts. On average my portfolio risk and return is about right, even if it is lumpier than I would prefer on individual instruments. However I still require that maximum positions are at least one instrument block, or there is clearly no point including the relevant asset. \\
+\textbf{接受这种情况} & 你也可能拥有一个很大的组合，但只有少数几个品种存在规模问题。例如，在我自己那个拥有 40 多个期货合约的组合里，大约有半打期货的最大仓位不到 4 份合约。就平均而言，我组合的风险与收益仍大致正确，即便在单个品种层面它比我希望的更“颗粒化”。不过我仍要求最大仓位至少要有 1 个头寸块，否则把相关资产放进组合显然毫无意义。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-* The instrument weight goes from 25\% to 100\% and the instrument diversification multiplier falls from 1.41 to 1, as there's only one instrument. The former increases the maximum position, the latter reduces it but by less. The new maximum position calculation is 2 x 1.49 x 100\% x 1.0 = 2.98.
+\begin{englishblock}* The instrument weight goes from 25\% to 100\% and the instrument diversification multiplier falls from 1.41 to 1, as there's only one instrument. The former increases the maximum position, the latter reduces it but by less. The new maximum position calculation is 2 x 1.49 x 100\% x 1.0 = 2.98. \end{englishblock}
 
-对于小资金来说，问题则相反：你很可能根本无法把系统给出的“理想仓位”实现出来，因为它小到不足一个合约、一手期货、或者一个经济可交易的股票单位。
-这样一来，
-你的风险就会变得“颗粒化”，
-仓位只能在几个粗糙级别之间跳跃。
-我建议，
-如果某个品种在“最大预测值”情景下，
-最大可能仓位还不到四个头寸块，
-你就应当考虑：
-1. 略微提高它的权重
-（但不要太夸张）；
-2. 减少整个组合中的品种数量；
-3. 干脆把这个品种从组合里删掉；
-4. 如果只有极少数品种存在这个问题，也可以接受整体组合层面上的一点“粗糙感”。
+\begin{chineseblock}* 该品种权重从 25\% 提高到 100\%，而由于只剩一个品种，品种分散化乘数从 1.41 降到 1。前者会提高最大仓位，后者则会降低它，但降幅较小。新的最大仓位计算为 2 x 1.49 x 100\% x 1.0 = 2.98。 \end{chineseblock}
 
-\section*{Determining overall portfolio size}
-\phantomsection
-\addcontentsline{toc}{section}{Determining overall portfolio size}
-\bisectiontitle{确定整体投资组合规模}
+\bilingualsection{Determining overall portfolio size}{确定整体投资组合规模}
 
-\subsection*{Asset Allocating Investor / Staunch Systems Trader}
-\bisubsectiontitle{资产配置型投资者 / 坚定系统化交易者}
+\bilingualsubsection{Asset Allocating Investor / Staunch Systems Trader}{资产配置型投资者 / 坚定系统化交易者}
 
-Given that small account sizes present problems, how would an asset allocating investor with a few thousand euros decide how many of the thousands of exchange traded funds to hold? How does a staunch systems trader without millions of dollars in trading capital work out which of the 200 or so liquid futures contracts they should trade? The principle you should follow is to hold the most diversified portfolio possible without running into any problems with maximum positions. Ideally you want at least one instrument from each major asset class. For each asset class you should choose instruments that don't give you a maximum position that is too small; as I said above my recommendation would be to avoid anything with a maximum of less than four instrument blocks. You then only add additional instruments to an asset class if this doesn't cause a small maximum position problem to appear either in the new instrument or in an existing one. You should also consider costs and the other characteristics which I discussed in chapter six, ‘Instruments'. You'll see examples of constructing these portfolios in the relevant example chapters fourteen and sixteen, in part four.
+\begin{englishblock} Given that small account sizes present problems, how would an asset allocating investor with a few thousand euros decide how many of the thousands of exchange traded funds to hold? How does a staunch systems trader without millions of dollars in trading capital work out which of the 200 or so liquid futures contracts they should trade? The principle you should follow is to hold the most diversified portfolio possible without running into any problems with maximum positions. Ideally you want at least one instrument from each major asset class. For each asset class you should choose instruments that don't give you a maximum position that is too small; as I said above my recommendation would be to avoid anything with a maximum of less than four instrument blocks. You then only add additional instruments to an asset class if this doesn't cause a small maximum position problem to appear either in the new instrument or in an existing one. You should also consider costs and the other characteristics which I discussed in chapter six, ‘Instruments'. You'll see examples of constructing these portfolios in the relevant example chapters fourteen and sixteen, in part four. \end{englishblock}
 
-\subsection*{Semi-automatic Trader}
-\bisubsectiontitle{半自动交易者}
+\begin{chineseblock} \noindent 既然小账户规模会带来问题，那么一个只有几千欧元资金的资产配置型投资者，该如何决定在成千上万只 ETF 中持有多少只？一个没有数百万美元交易资本的坚定系统化交易者，又该如何在大约 200 个流动性不错的期货合约中决定交易哪些？你应该遵循的原则是：在不触发“最大仓位过小”问题的前提下，持有尽可能分散的投资组合。理想情况下，你至少希望每个主要资产类别里都有一个工具。对每个资产类别，你都应该挑选那些不会让最大仓位变得过小的工具；正如我前面说过的，我建议避开任何最大仓位小于 4 个头寸块的工具。只有在新增工具不会让新工具本身、或原有工具，出现“最大仓位过小”的问题时，你才应该继续往同一个资产类别里增加更多工具。除此之外，你还要考虑第六章“品种”里讨论过的成本和其他特征。你会在第四部分第十四章和第十六章对应的示例里，看到这类投资组合是如何被构建出来的。\end{chineseblock}
 
-Semi-automatic traders generally have smaller portfolios, and these are of an ad-hoc group of instruments, rather than the fixed set used by others. But you should still check you have no issues with low maximum positions on anything you're likely to trade, for example by using my recommendation to have at least a four block maximum position. Remember from chapter eleven, ‘Portfolios', (page 169) that your portfolio weights are 100\% divided equally by the maximum number of bets you're likely to make, so adjusting instrument weights is not an option for dealing with size problems. So if you have problems you should consider reducing the size of your portfolio by lowering the maximum number of bets, or not trading that instrument.
+\bilingualsubsection{Semi-automatic Trader}{半自动交易者}
 
-小账户规模会逼着你减少持仓品种数。你的目标应当是：
-在“不出现最大仓位过小问题”的前提下，
-尽可能持有最分散的组合。
-对于资产配置型投资者和坚定系统化交易者，这意味着优先保留那些来自不同大类资产、
-同时又不会因最小单位问题而失真的品种；
-对于半自动交易者，这意味着你在设定“最大下注数”之前，
-应先确认自己不会在常见交易品种上遇到仓位颗粒度过大的问题。
+\begin{englishblock} Semi-automatic traders generally have smaller portfolios, and these are of an ad-hoc group of instruments, rather than the fixed set used by others. But you should still check you have no issues with low maximum positions on anything you're likely to trade, for example by using my recommendation to have at least a four block maximum position. Remember from chapter eleven, ‘Portfolios', (page 169) that your portfolio weights are 100\% divided equally by the maximum number of bets you're likely to make, so adjusting instrument weights is not an option for dealing with size problems. So if you have problems you should consider reducing the size of your portfolio by lowering the maximum number of bets, or not trading that instrument. \end{englishblock}
 
-\section*{Summary of tailoring systems for costs and capital}
-\phantomsection
-\addcontentsline{toc}{section}{Summary of tailoring systems for costs and capital}
-\bisectiontitle{根据成本与资本调整系统的总结}
+\begin{chineseblock}半自动交易者通常持有的投资组合更小，而且往往是一组临时拼出来的工具，而不是别人那种固定工具集合。但你仍然应当检查：自己打算交易的任何工具，是否都会遇到最大仓位过低的问题。一个简单的标准，就是用我建议的“最大仓位至少为 4 个头寸块”来筛查。还要记得第十一章“投资组合”（第 169 页）说过，对半自动交易者来说，投资组合权重等于 100\% 再平均分给你最多可能同时持有的下注数量，因此你不能靠调整品种权重来解决规模过小的问题。所以，如果确实存在问题，你应该考虑的是：降低最多下注数量，从而缩小组合规模，或者干脆不交易那个工具。\end{chineseblock}
 
-\subsection*{Standardised cost estimate}
-\bisubsectiontitle{标准化成本估计}
+\bilingualsection{Summary of tailoring systems for costs and capital}{根据成本与资本调整系统的总结}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Cost to trade one block} & Execution costs: Half the bid-offer spread except for those with large account sizes, dealing in illiquid markets or with very fast trading. Fixed fees per ticket. Fixed fees per position unit traded. Percentage value fees and taxes. The total cost to trade an instrument block should be calculated in the same currency as the instrument's value. \\
+\bilingualsubsection{Standardised cost estimate}{标准化成本估计}
+
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Cost to trade one block} & Execution costs: Half the bid-offer spread except for those with large account sizes, dealing in illiquid markets or with very fast trading. Fixed fees per ticket. Fixed fees per position unit traded. Percentage value fees and taxes. The total cost to trade an instrument block should be calculated in the same currency as the instrument's value. \\
+
+\textbf{交易一个头寸块的成本} & 执行成本：通常是买卖价差的一半；但对大账户、低流动性市场或极快交易并不适用。再加上每笔委托的固定费用、每个仓位单位的固定费用，以及按金额计的费用和税费。交易一个头寸块的总成本，应以与该品种价值相同的货币计算。 \\
 \textbf{Instrument currency volatility} & The expected daily standard deviation of the value of one instrument block in the currency of the instrument, as calculated in chapter ten, ‘Position Sizing', page 158. \\
+\textbf{品种货币波动率} & 如第十章“仓位规模设定”（第 158 页）所示，这是以品种计价货币衡量的、一个头寸块价值的预期日标准差。 \\
 \textbf{Standardised cost} & Annualised cost in Sharpe ratio (SR) per round trip, buy and sell: twice the cost to trade one block divided by annualised instrument currency volatility, that is daily instrument currency volatility multiplied by 16. \\
+\textbf{标准化成本} & 以夏普比率（SR）表示的年化往返成本（买入再卖出）：等于交易一个头寸块成本的两倍，除以年化后的品种货币波动率，也就是日品种货币波动率乘以 16。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-先估计交易一个头寸块的总成本，其中包括执行成本、佣金和税费。然后再把一笔完整往返交易的成本除以年化后的品种货币波动率。这样得到的，就是用夏普比率单位表示的标准化成本。
+\begin{englishblock} First estimate the total cost of trading one instrument block, including execution, commissions and taxes. Then divide the cost of a full round trip by the annualised instrument currency volatility. The result is the standardised cost measured in Sharpe ratio units. \end{englishblock}
 
-\subsection*{Calculating cost of trading rules and trading subsystems}
-\bisubsectiontitle{计算交易规则与交易子系统的成本}
+\begin{chineseblock}先估计交易一个头寸块的总成本，其中包括执行成本、佣金和税费。然后再把一笔完整往返交易的成本除以年化后的品种货币波动率。这样得到的，就是用夏普比率单位表示的标准化成本。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Approximate turnover from a back-test} & To calculate the standardised turnover in round trips, buys and sells, per year: (Number of instrument blocks traded per year) ÷ (2 × average absolute number of blocks held). \\
+\bilingualsubsection{Calculating cost of trading rules and trading subsystems}{计算交易规则与交易子系统的成本}
+
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Approximate turnover from a back-test} & To calculate the standardised turnover in round trips, buys and sells, per year: (Number of instrument blocks traded per year) ÷ (2 × average absolute number of blocks held). \\
+
+\textbf{从回测估算的近似换手率} & 用来计算年化标准化换手率（以往返交易次数计）：（每年交易的头寸块数量）÷（2 × 持有头寸块绝对数量的平均值）。 \\
 \textbf{Turnover for systematic trading rules} & Calculated from back-test or implied from rules of thumb. Rules of thumb for my suggested trading rules explained in chapter seven, ‘Forecasts', are available in the relevant example in chapter fifteen. \\
+\textbf{系统化交易规则的换手率} & 可由回测直接计算，也可由经验法则推断。第七章“预测值”中我建议的交易规则所对应的经验法则，可在第十五章的相关示例中找到。 \\
 \textbf{Cost of trading rule for instrument} & Turnover for trading rule, in round trips per year, multiplied by standardised cost for instrument. \\
+\textbf{某品种上某条交易规则的成本} & 某条交易规则的年往返换手率乘以该品种的标准化成本。 \\
 \textbf{Turnover from forecast changes} & Staunch systems traders can get this from back-test, or by taking a weighted average, using forecast weights of trading rule turnovers, multiplied by forecast diversification multiplier. The turnover of the ‘no-rule' rule used by asset allocating investors is zero. Semi-automatic traders should use the turnover implied by the holding period which is determined by their stop loss, from table 34. More detail is given in chapter thirteen. \\
+\textbf{由预测值变化带来的换手率} & 坚定系统化交易者可以从回测得到，或使用“交易规则换手率按预测权重加权后的平均值”再乘以预测分散化乘数来近似。资产配置型投资者使用的“无规则”规则，其换手率为零。半自动交易者则应使用由止损决定的持有期所隐含的换手率，可参考表 34。第十三章会进一步说明。 \\
 \textbf{Turnover for trading subsystem} & The turnover from forecast changes is corrected for the look-back used to estimate price volatility and position inertia, using table 36. \\
+\textbf{交易子系统的换手率} & 预测值变化带来的换手率，还要结合价格波动率估计所用回看期以及仓位惯性，按表 36 进行修正。 \\
 \textbf{Cost of trading subsystem} & Turnover for trading subsystem multiplied by standardised cost for instrument. \\
+\textbf{交易子系统的成本} & 交易子系统的换手率乘以该品种的标准化成本。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-在交易规则层面，成本等于换手率乘以标准化成本；在交易子系统层面，还要额外把预测值变化、波动率估计变化以及仓位惯性等因素考虑进去。核心思想始终不变：你要把“速度”和“成本”结合起来看，而不是孤立地只看其中一个。
+\begin{englishblock} At the level of an individual trading rule, cost is turnover multiplied by standardised cost. At the level of a trading subsystem, you also need to account for forecast changes, volatility-estimation changes and position inertia. The key idea is always to consider speed and cost together rather than in isolation. \end{englishblock}
 
-\subsection*{Taking action to cope with costs}
-\bisubsectiontitle{如何应对成本}
+\begin{chineseblock}在交易规则层面，成本等于换手率乘以标准化成本；在交易子系统层面，还要额外把预测值变化、波动率估计变化以及仓位惯性等因素考虑进去。核心思想始终不变：你要把“速度”和“成本”结合起来看，而不是孤立地只看其中一个。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Speed limit} & I recommend that the costs of an instrument's trading subsystem should be at most one-third of a conservative estimate of the pre-cost Sharpe ratio (SR). Staunch systems traders should assume a maximum pre-cost SR of 0.40 and others an SR of 0.25. This implies that staunch systems traders should not pay more than 0.13 Sharpe ratio per year in costs, and semi-automatic traders and asset allocators no more than 0.08 SR. \\
+\bilingualsubsection{Taking action to cope with costs}{如何应对成本}
+
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Speed limit} & I recommend that the costs of an instrument's trading subsystem should be at most one-third of a conservative estimate of the pre-cost Sharpe ratio (SR). Staunch systems traders should assume a maximum pre-cost SR of 0.40 and others an SR of 0.25. This implies that staunch systems traders should not pay more than 0.13 Sharpe ratio per year in costs, and semi-automatic traders and asset allocators no more than 0.08 SR. \\
+
+\textbf{速度上限} & 我建议，一个品种交易子系统的成本，最多不应超过成本前夏普比率（SR）保守估计值的三分之一。坚定系统化交易者可假设最大成本前 SR 为 0.40，其余读者为 0.25。这意味着坚定系统化交易者每年成本不应超过 0.13 个夏普单位，半自动交易者和资产配置者则不应超过 0.08。 \\
 \textbf{Which instruments to trade} & For a given type of trader there is a minimum level of turnover in round trips per year. Given a limit on how much you are prepared to pay in costs a year, and this minimum level of turnover, you will get a maximum feasible standardised cost. This implies that certain instruments will be too expensive to trade. Asset allocators can get down to an annual turnover of 0.40, so using my recommended maximum of spending 0.08 Sharpe ratio units on costs would exclude all instruments with costs greater than 0.20 SR. For semi-automatic traders, who I also suggest shouldn't pay more than 0.08 SR on costs, the lowest achievable turnover with a very loose stop loss is 1.8 round trips per year, so instruments with standardised costs greater than 0.044 SR can't be used. For staunch systems traders using my suggested set of trading rules the minimum turnover would be 12.5 round trips per year, which with my recommended limit of 0.13 SR a year on costs, implies that you shouldn't use instruments with costs greater than 0.01 SR. \\
+\textbf{该交易哪些工具} & 对特定类型的交易者而言，每年的往返换手率都有一个最低水平。给定你愿意每年支付的最大成本，以及这个最低换手率，就能推出一个可接受的最大标准化成本。这意味着某些品种会贵得不适合交易。资产配置者最低可做到每年 0.40 次换手，因此若按我建议把成本上限设为 0.08 个夏普单位，就应排除标准化成本高于 0.20 的品种。对半自动交易者而言，我同样建议成本不超过 0.08 SR，而在止损非常宽松时可达到的最低换手率约为每年 1.8 次往返，因此标准化成本高于 0.044 SR 的品种不能使用。对坚定系统化交易者而言，若采用我建议的那组交易规则，最低换手率约为每年 12.5 次往返；结合我建议的每年 0.13 SR 成本上限，这意味着不应使用标准化成本高于 0.01 SR 的品种。 \\
 \textbf{Deciding average holding period} & If you're a semi-automatic trader then I recommend that you should set your stop loss rule to give an average holding period so that turnover multiplied by standardised cost of your most expensive instrument is at most 0.08 Sharpe ratio units a year. \\
+\textbf{决定平均持有期} & 如果你是半自动交易者，我建议把止损规则设定为：使“换手率 × 你最贵品种的标准化成本”每年最多不超过 0.08 个夏普单位，从而得到合适的平均持有期。 \\
 \textbf{Selecting trading rules} & You should exclude trading rules which are unaffordable for a given instrument given my recommended maximum for staunch systems traders of spending no more than 0.13 Sharpe ratio units a year on costs. This can be calculated for each instrument individually, or using the highest and most conservative instrument cost. \\
+\textbf{筛选交易规则} & 对于坚定系统化交易者，我建议将年成本支出上限设为 0.13 个夏普单位，因此应剔除对某个品种来说负担不起的交易规则。这可以按每个品种分别计算，也可以用最高、最保守的品种成本统一计算。 \\
 \textbf{Forecast weights for trading rules} & Bootstrap the weights with cost adjustment or if using handcrafting I recommend assuming the same pre-cost Sharpe ratio (SR). This means adjusting handcrafted weights depending on the SR cost versus average across trading rules, using ‘with certainty' column A of table 13, page 89. \\
+\textbf{交易规则的预测权重} & 可使用带成本修正的 bootstrap 权重；若使用 handcrafting，我建议先假设所有规则的成本前夏普比率相同。这意味着应根据各交易规则“成本导致的 SR 相对平均值差异”，并利用第 89 页表 13 的“完全确定”A 列，对 handcrafting 权重进行调整。 \\
 \textbf{Finding Sharpe ratio to set risk percentage} & If you're back-testing the system yourself then you must deduct costs. You don't need to do anything further if using the default post-cost expectations that I use in the example chapters of part four. \\
+\textbf{用于设定风险比例的夏普比率} & 如果系统是你自己做回测的，那么必须把成本扣除。若你直接采用第四部分示例章节中我使用的默认成本后预期值，则无需额外处理。 \\
 \textbf{Slowing down estimation of price volatility} & Asset allocating investors and staunch systems traders should see table 36 for the effect on turnover of changing the look-back on volatility estimation. You should then check to see if slowing down your estimation will significantly reduce costs. Semi-automatic traders who need to lower costs should not adjust their eyeballed estimate of instrument currency volatility unless it has changed by more than 25\%. \\
+\textbf{放慢价格波动率的估计速度} & 资产配置型投资者和坚定系统化交易者应参考表 36，了解改变波动率估计回看期对换手率的影响，然后判断放慢估计是否能显著降低成本。需要降成本的半自动交易者，不应调整自己目测得到的品种货币波动率估计，除非其变化超过 25\%。 \\
 \textbf{Instrument weights for trading subsystems} & Bootstrap the weights with cost adjustment, or if handcrafting I recommend assuming the same after cost Sharpe ratio, implying no adjustment to instrument weights. \\
+\textbf{交易子系统的品种权重} & 可使用带成本修正的 bootstrap 权重；若采用 handcrafting，我建议假设所有品种的成本后夏普比率相同，这意味着无需对品种权重做额外调整。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-要设定速度上限，选择那些对你的交易风格而言足够便宜的工具；在必要时放慢止损规则或波动率估计的速度；并避免对那些成本后表现很可能较差的规则或工具赋予过高权重。
+\begin{englishblock} Set a speed limit, choose instruments that are cheap enough for your style, slow down stop-loss rules or volatility estimation when necessary, and avoid giving too much weight to rules or instruments whose after-cost performance is likely to be poor. \end{englishblock}
 
-\subsection*{Too much capital}
-\bisubsectiontitle{资金太多}
+\begin{chineseblock}要设定速度上限，选择那些对你的交易风格而言足够便宜的工具；在必要时放慢止损规则或波动率估计的速度；并避免对那些成本后表现很可能较差的规则或工具赋予过高权重。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{When simple cost calculations aren't enough} & If you can't always trade for half the spread, due to trades larger than the typical size at the top of the order book, then you need to use more complex cost models to account for execution costs. \\
+\bilingualsubsection{Too much capital}{资金太多}
+
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{When simple cost calculations aren't enough} & If you can't always trade for half the spread, due to trades larger than the typical size at the top of the order book, then you need to use more complex cost models to account for execution costs. \\
+\textbf{何时简单成本计算已不够用} & 如果由于交易规模大于订单簿顶部常见可见数量，你已经无法稳定地只付出半个价差来成交，那么就必须使用更复杂的成本模型来计入执行成本。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-如果你的订单相对于可见盘口深度已经很大，那么基于简单价差的成本假设就会失效。在这种情况下，你就必须使用更现实的执行模型。
+\begin{englishblock} If your order size is large relative to visible order-book depth, simple half-spread assumptions stop being reliable. In that case you need a more realistic execution-cost model. \end{englishblock}
 
-\subsection*{Too little capital}
-\bisubsectiontitle{资金太少}
+\begin{chineseblock}如果你的订单相对于可见盘口深度已经很大，那么基于简单价差的成本假设就会失效。在这种情况下，你就必须使用更现实的执行模型。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Calculate maximum possible position} & Staunch systems traders and semi-automatic traders should assume the maximum combined forecast of +20, which implies a maximum possible position of \(2 \times\) volatility scalar \(\times\) instrument weight \(\times\) instrument diversification multiplier. For asset allocating investors there is a constant forecast of +10, which implies a maximum possible position of \(1 \times\) volatility scalar \(\times\) instrument weight \(\times\) instrument diversification multiplier. \\
+\bilingualsubsection{Too little capital}{资金太少}
+
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Calculate maximum possible position} & Staunch systems traders and semi-automatic traders should assume the maximum combined forecast of +20, which implies a maximum possible position of \(2 \times\) volatility scalar \(\times\) instrument weight \(\times\) instrument diversification multiplier. For asset allocating investors there is a constant forecast of +10, which implies a maximum possible position of \(1 \times\) volatility scalar \(\times\) instrument weight \(\times\) instrument diversification multiplier. \\
+
+\textbf{计算最大可能仓位} & 坚定系统化交易者和半自动交易者应假设最大合成预测值为 +20，这意味着最大可能仓位为 \(2 \times\) 波动率缩放因子 \(\times\) 品种权重 \(\times\) 品种分散化乘数。资产配置型投资者的预测值恒为 +10，因此其最大可能仓位为 \(1 \times\) 波动率缩放因子 \(\times\) 品种权重 \(\times\) 品种分散化乘数。 \\
 \textbf{Very low rounded maximum possible position} & I recommend taking action if the maximum possible position is less than four instrument blocks. Consider dropping the instrument, increasing the portfolio weight and or reducing the number of instruments traded overall. \\
+\textbf{四舍五入后的最大可能仓位过低} & 如果最大可能仓位低于四个头寸块，我建议你采取行动。可以考虑删除该品种、提高其组合权重，和/或减少整体交易品种数量。 \\
 \textbf{Sufficiently high rounded maximum possible position} & No action required. I would personally be happy if the maximum possible position was at least four instrument blocks. \\
+\textbf{四舍五入后的最大可能仓位足够高} & 无需采取任何行动。就我个人而言，只要最大可能仓位至少有四个头寸块，我就会满意。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-如果某个品种四舍五入后的最大仓位过小，那么风险就会变得颗粒化、难以处理。我的经验法则是：当最大仓位低于大约四个头寸块时，你就应该认真警惕了。
+\begin{englishblock} If the rounded maximum position in an instrument is too small, risk becomes lumpy and hard to manage. My rule of thumb is that you should become cautious whenever the maximum position is below about four instrument blocks. \end{englishblock}
 
-\subsection*{Determining portfolio size and make-up}
-\bisubsectiontitle{决定组合规模与构成}
+\begin{chineseblock}如果某个品种四舍五入后的最大仓位过小，那么风险就会变得颗粒化、难以处理。我的经验法则是：当最大仓位低于大约四个头寸块时，你就应该认真警惕了。\end{chineseblock}
 
-\noindent{\small
-\setlength{\tabcolsep}{2pt}
-\renewcommand{\arraystretch}{1.1}
-\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
-\textbf{Asset allocating investors and Staunch Systems Traders} & You should hold the most diversified portfolio possible, consistent with avoiding issues with maximum positions that are too small. I recommend having a maximum possible position of at least four instrument blocks in any instrument. \\
+\bilingualsubsection{Determining portfolio size and make-up}{决定组合规模与构成}
+
+\begin{bilingualtableblock} \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}\textbf{Asset allocating investors and Staunch Systems Traders} & You should hold the most diversified portfolio possible, consistent with avoiding issues with maximum positions that are too small. I recommend having a maximum possible position of at least four instrument blocks in any instrument. \\
+
+\textbf{资产配置型投资者与坚定系统化交易者} & 你应当在“避免最大仓位过小问题”的前提下，持有尽可能分散的投资组合。我建议任何品种的最大可能仓位都至少应达到四个头寸块。 \\
 \textbf{Semi-automatic traders} & Portfolio size is determined by the maximum number of bets. Check you won't have an issue with low maximum positions with any instrument before trading. \\
+\textbf{半自动交易者} & 组合规模由你允许的最大下注数决定。在开始交易前，应先确认你计划交易的任何品种都不会出现最大仓位过低的问题。 \\
 \end{tabularx}
 }
+\end{bilingualtableblock}
 
-This is the end of part three. Part four will delve further into customising the framework as we look at three examples in detail: the semi-automatic trader, the asset allocating investor and the staunch systems trader.
+\begin{englishblock} This is the end of part three. Part four will delve further into customising the framework as we look at three examples in detail: the semi-automatic trader, the asset allocating investor and the staunch systems trader. \end{englishblock}
 
-在保证仓位仍然有意义、且可以实际交易的前提下，尽可能构建最分散的投资组合。对小账户来说，这通常意味着持有的工具数量会更少，但在挑选时必须更加谨慎。
-
-这一章最终给出的结论可以压缩成几条：
-1. 成本必须做风险标准化之后再比较。
-2. 速度必须有上限，不能因为回测看起来漂亮就无限加快。
-3. 选工具、定止损、选规则、定权重以及设定风险比例时，都要把成本纳入考虑。
-4. 对大资金，要小心真实执行成本；对小资金，要小心最小单位导致的仓位“颗粒化”。
-5. 最终应构建的是一个在你的成本结构和资本规模下，既能实现、又能存活、同时尽可能分散的系统。
-
-这就是第三部分的结尾。第四部分将进一步深入讨论如何定制这个框架，
-并通过三个详细示例来展开：
-半自动交易者、
-资产配置型投资者，
-以及坚定的系统化交易者。
+\begin{chineseblock}在保证仓位仍然有意义、且可以实际交易的前提下，尽可能构建最分散的投资组合。对小账户来说，这通常意味着持有的工具数量会更少，但在挑选时必须更加谨慎。这一章最终给出的结论可以压缩成几条：1. 成本必须做风险标准化之后再比较。2. 速度必须有上限，不能因为回测看起来漂亮就无限加快。3. 选工具、定止损、选规则、定权重以及设定风险比例时，都要把成本纳入考虑。4. 对大资金，要小心真实执行成本；对小资金，要小心最小单位导致的仓位“颗粒化”。5. 最终应构建的是一个在你的成本结构和资本规模下，既能实现、又能存活、同时尽可能分散的系统。这就是第三部分的结尾。第四部分将进一步深入讨论如何定制这个框架，并通过三个详细示例来展开：半自动交易者、资产配置型投资者，以及坚定的系统化交易者。\end{chineseblock}

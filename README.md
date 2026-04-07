@@ -55,6 +55,51 @@ latexmk -xelatex main.tex
 latexmk -xelatex main_bilingual.tex
 ```
 
+检查英文重排版是否与原始 PDF 一致、是否存在明显遗漏：
+
+```bash
+python3 scripts/audit_retype_completeness.py --summary
+```
+
+该审计会输出三类结果：
+
+- `confirmed_omission`: 可以确认的缺失
+- `needs_visual_review`: 自动提取无法可靠判断、仍建议人工翻页复核的内容
+- `formatting_only`: 更像分页、目录、表格线性化或 PDF 文本提取方式导致的差异
+
+检查双语章节是否大体满足“英文段落 -> 中文段落 -> 空一行 -> 下一组”的交替格式：
+
+```bash
+python3 scripts/check_bilingual_format.py --summary
+```
+
+检查双语章节是否同时满足“源稿内容已双语化”与“脚注/标题/图表说明未漏译”：
+
+```bash
+python3 scripts/audit_bilingual_completeness.py --summary
+```
+
+双语版全局规则：
+翻译版源码必须始终采用“英文段落 -> 中文段落 -> 空一行 -> 下一组”的严格对照形式，不允许先连续出现多段英文、再集中补中文。
+
+一键执行“完整性审计 + 格式检查 + 双语版编译”：
+
+```bash
+bash scripts/verify_bilingual.sh
+```
+
+一键执行“英文版编译 + 英文重排版完整性审计”：
+
+```bash
+bash scripts/verify_retype.sh
+```
+
+如需查看具体可疑位置与行号：
+
+```bash
+python3 scripts/check_bilingual_format.py
+```
+
 清理中间文件：
 
 ```bash
