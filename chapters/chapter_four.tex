@@ -1,6 +1,6 @@
 \chapter{Portfolio Allocation}
 
-\audiencebox{Staunch systems trader / Asset allocating investor}{This chapter is about deciding how you share out your trading capital between different \textbf{instruments} or \textbf{trading rules}. Deciding the allocation between instruments is important for \textbf{asset allocating investors}, whilst \textbf{staunch systems} traders have to make both kinds of decision. 
+\audiencebox{Staunch systems trader / Asset allocating investor}{This chapter is about deciding how you share out your trading capital between different \textbf{instruments} or \textbf{trading rules}. Deciding the allocation between instruments is important for \textbf{asset allocating investors}, whilst \textbf{staunch systems} traders have to make both kinds of decision. \\
 	
 It isn't relevant if you're a \textbf{semi-automatic trader}, since you won't use systematic trading rules and will trade different instruments opportunistically. You can skip this chapter.}
 
@@ -77,7 +77,8 @@ What kind of portfolio should we have with...
 
 Let's see if these assumptions are true in the simple example. Figure 15 shows the distribution of Sharpe ratios for each of the three assets. Notice that the lines mostly overlap; this means we can't distinguish between the historic performance of each asset. Although bonds did have a higher average SR the advantage isn't statistically significant. If you read the previous chapter, and remember table 6, it is no surprise that the 15 years of data isn't enough to say with confidence which asset had the best SR.
 
-\begin{figure}[htbp] \centering \includegraphics[width=\textwidth]{figures/raw/img-015.png} \caption{HARDER TO DISTINGUISH SHARPE RATIOS THAN YOU THINK} \end{figure}
+\begin{figure}[htbp] 
+	\centering \includegraphics[width=\textwidth]{figures/raw/img-015.png} \caption{HARDER TO DISTINGUISH SHARPE RATIOS THAN YOU THINK} \end{figure}
 
 The figure shows the distribution of Sharpe ratios for the three assets in my example portfolio.
 
@@ -171,8 +172,8 @@ Any size group with identical correlations & \textbf{3} & Equal weights \\
 
 \smallskip
 
-{\setlength{\fboxsep}{6pt}\setlength{\arrayrulewidth}{0.45pt}\fcolorbox{bookrule}{white}{%
-\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.39\textwidth} c >{\raggedright\arraybackslash}p{0.24\textwidth} @{}}
+{\setlength{\fboxsep}{7pt}\setlength{\arrayrulewidth}{0.5pt}\fcolorbox{bookrule}{white}{%
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.5\textwidth} c >{\raggedright\arraybackslash}p{0.3\textwidth} @{}}
 \textbf{Three assets with correlations AB, AC, BC} & & \textbf{Weights for A, B, C} \\
 3 assets correlation 0.0, 0.5, 0.0 & \textbf{5} & Weights: 30\%, 40\%, 30\% \\
 3 assets correlation 0.0, 0.9, 0.0 & \textbf{6} & Weights: 27\%, 46\%, 27\% \\
@@ -230,7 +231,10 @@ The table shows the final portfolio weights using equal weights, after optimisin
 
 Now for a harder challenge. Suppose I have a portfolio of three UK banks (Barclays, HSBC and RBS), two UK retailers (Tesco and Sainsburys), three US banks (JP Morgan, Citigroup and Bank of America), three US retailers (Safeway, Walmart and Costco), two UK government bonds (5 year and 10 year) and three US bonds (2 year, 20 year and 30 year). I grouped these, from the lowest grouping upwards as follows: equity sector, country and \textbf{asset class}, giving the grouping in table 10.
 
-\rawtablecaption{GROUPING FOR LARGER EXAMPLE PORTFOLIO} \begingroup \small \centering
+\begingroup
+\rawtablecaption{GROUPING FOR LARGER EXAMPLE PORTFOLIO}  
+\small 
+\centering
 \bookfitbox{%
 \begin{tabular}{@{} lllll@{}}
 \toprule
@@ -256,24 +260,55 @@ Costco & US retailers & US equities & Equities & Whole portfolio \\
 \end{tabular}%
 }
 \par
+\endgroup
 
 Here is how I calculated the weights. Relevant rows of table 8 are shown.
 
-\medskip \noindent\textbf{First level grouping, by equity industry within country and by bond country.} Within equities I am going to assume stocks have similar correlations if they are within the same industry and country. UK banks: assuming similar correlations allocate 33.3\% to each. Row 3. UK retail: two assets so allocate 50\% to each. Row 2. US banks: similar correlations so allocate 33.3\%. Row 3. US retail: similar correlations so allocate 33.3\%. Row 3. UK bonds: two assets so allocate 50\% to each. Row 2. US bonds: for the three US bonds things are a little more complex. From table 55 (page 294) the 2 year and 20 year bonds typically have 0.5 correlation, 2 year/30 year 0.5 and 20 year/30 year 0.9. This matches row 10 of table 8, giving weights of 42\% in the 2 year bond and 29\% in each of the 20 and 30 year bonds.
+\medskip \noindent\textbf{First level grouping, by equity industry within country and by bond country.} Within equities I am going to assume stocks have similar correlations if they are within the same industry and country.
+\begin{list}{$\bullet$}{%
+  \setlength{\leftmargin}{1.5em}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\topsep}{3pt}%
+}
+\item UK banks: assuming similar correlations allocate 33.3\% to each. Row 3.
+\item UK retail: two assets so allocate 50\% to each. Row 2.
+\item US banks: similar correlations so allocate 33.3\%. Row 3.
+\item US retail: similar correlations so allocate 33.3\%. Row 3.
+\item UK bonds: two assets so allocate 50\% to each. Row 2.
+\item US bonds: for the three US bonds things are a little more complex. From table 55 (page 294) the 2 year and 20 year bonds typically have 0.5 correlation, 2 year/30 year 0.5 and 20 year/30 year 0.9. This matches row 10 of table 8, giving weights of 42\% in the 2 year bond and 29\% in each of the 20 and 30 year bonds.
+\end{list}
 
-\medskip \noindent\textbf{Second level grouping, by country within asset class.} UK equities: two groups (UK banks and UK retailers) so allocate 50\% to each. Row 2. US equities: two groups (US banks and US retailers) so allocate 50\% to each. Row 2. UK bonds: 100\% as only one group. Row 1. US bonds: 100\%, one group. Row 1.
+\medskip \noindent\textbf{Second level grouping, by country within asset class.}
+\begin{list}{$\bullet$}{%
+  \setlength{\leftmargin}{1.5em}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parsep}{0pt}%
+  \setlength{\topsep}{3pt}%
+}
+\item UK equities: two groups (UK banks and UK retailers) so allocate 50\% to each. Row 2.
+\item US equities: two groups (US banks and US retailers) so allocate 50\% to each. Row 2.
+\item UK bonds: 100\% as only one group. Row 1.
+\item US bonds: 100\%, one group. Row 1.
+\end{list}
 
 \medskip \noindent\textbf{Third level grouping, by asset class.} Equities: two groups (US equities and UK equities) so allocate 50\% to each. Row 2. Bonds: two groups (US and UK bonds) so allocate 50\% to each. Row 2.
 
 \medskip \noindent\textbf{Fourth level grouping, across asset classes.} Two grouped assets (bonds and equities) allocate 50\% to each. Row 2.
 
-\medskip \noindent\textbf{Final weights.} The final weights for each asset, from multiplying the weights they are given at each grouping stage, are shown in table 11.
+
+\medskip \noindent\textbf{Final weights} 
+
+The final weights for each asset, from multiplying the weights they are given at each grouping stage, are shown in table 11.
 
 Notice I mostly did not use correlations except in the US bonds group. If you can keep your groups down to one or two members, or your group members are similarly correlated, then you do not need to use correlations once you have determined your groups.
 
-With 16 assets equal weights would have come out at 6.25\% each. This was an unbalanced portfolio with more equities than bonds, and where it was unrealistic to assume identical correlations. In this situation we should be able to beat equal weights by giving more allocation to more diversifying assets. \endgroup
+With 16 assets equal weights would have come out at 6.25\% each. This was an unbalanced portfolio with more equities than bonds, and where it was unrealistic to assume identical correlations. In this situation we should be able to beat equal weights by giving more allocation to more diversifying assets.
 
-\rawtablecaption{CONSTRUCTION OF WEIGHTS IN LARGER EXAMPLE PORTFOLIO} \begingroup \small \centering
+\begingroup
+\rawtablecaption{CONSTRUCTION OF WEIGHTS IN LARGER EXAMPLE PORTFOLIO} 
+\small 
+\centering
 \bookfitbox{%
 \begin{tabular}{@{} lccccc@{}}
 \toprule
@@ -298,13 +333,14 @@ Costco & 33\% & 50\% & 50\% & 50\% & 4.2\% \\
 \bottomrule
 \end{tabular}%
 }
-\par \endgroup
+\par 
+\endgroup
 
 Calculation of weights is shown for each grouping stage, and in the last column we have the final portfolio weight, which is the product of the weights for each stage. Borders show grouping. There is some rounding.
 
 \subsection*{Are we cheating?}
 
-The handcrafting method cannot easily be repeated automatically in multiple years, so is unsuitable for an \textbf{expanding} or \textbf{rolling out of sample} \textbf{back-test}.\footnote{Actually it is possible to back-test the handcrafting method, and I have done so to validate it, but it requires historical estimates of correlation using only past data and an algorithm to cluster groups into a hierarchy. If you must use a back-tested method then the \textbf{bootstrap} method is much easier to implement. After all, the main benefit of handcrafting is its simplicity.} You fit one single \textbf{in sample} set of portfolio weights, with knowledge of all past data. Arguably there is a danger that the resulting portfolio will be \textbf{over-fitted}. This is more likely if you're using estimated \textbf{correlations}, although it's also an issue with correlations that are educated guesses, since both imply you knew the future at the start of the back-test.
+The handcrafting method cannot easily be repeated automatically in multiple years, so is unsuitable for an \textbf{expanding} or \textbf{rolling out of sample} \textbf{back-test}.\footnote{Actually it is possible to back-test the handcrafting method, and I have done so to validate it, but it requires historical estimates of correlation usingpd only past data and an algorithm to cluster groups into a hierarchy. If you must use a back-tested method then the \textbf{bootstrap} method is much easier to implement. After all, the main benefit of handcrafting is its simplicity.} You fit one single \textbf{in sample} set of portfolio weights, with knowledge of all past data. Arguably there is a danger that the resulting portfolio will be \textbf{over-fitted}. This is more likely if you're using estimated \textbf{correlations}, although it's also an issue with correlations that are educated guesses, since both imply you knew the future at the start of the back-test.
 
 Relax; you will be using information from the future but in mitigation the weights you'll produce will be much less extreme than an in sample \textbf{single period optimisation} will produce. Also correlations usually don't move enough that handcrafted weights would be dramatically different over time. So the weights you will produce using all data are likely to be very similar if you do them earlier in the back-test using only past data. Also for now the method ignores differences in \textbf{Sharpe ratio (SR)}, which also ensures weights are not extreme and relatively stable.
 
@@ -356,15 +392,23 @@ Initially my experiments assumed I knew the true SR difference. For cost adjustm
 
 However if you are using historical estimates of SR, or forecasting them in some other way, then you can't be as confident. You should use the less aggressive adjustment factors in column B. Finally if you're estimating SR based on less than ten years of data I advise not adjusting at all. As you might have seen in the last chapter estimates of SR are extremely unlikely to be statistically different after only a few years. Though it's trivial I've put this in column C of the table.
 
-Follow these steps to adjust handcrafted weights for Sharpe ratio
+\subsection*{Follow these steps to adjust handcrafted weights for Sharpe ratio}
 
-\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} 
+\begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\hline
 \textbf{Starting weights} & Work out the handcrafted weights for the group. These will add up to 100\%. \\
+\hline
 \textbf{Get Sharpe ratios} & In each group using historical data, cost estimates, or some other method, find the expected SR for each asset. \\
+\hline
 \textbf{Sharpe versus average} & Calculate the average SR for the entire group and then work out the relative difference higher or lower than this for each asset. \\
+\hline
 \textbf{Get multiplier} & Find the weight multiplier for each asset from column A, B or C in table 12, depending on how certain you are about the SR estimate, and if relevant how much data was used. \\
+\hline
 \textbf{Multiply} & Multiply each of the weights in the group by the relevant multiplier. \\
+\hline
 \textbf{Normalise} & The resulting weights in the group may not add up to 100\%. If necessary normalise the weights so they sum to exactly 100\%. \\
+\hline
 \end{tabularx}
 }
 
@@ -374,25 +418,41 @@ If you have two or more levels of grouping you'll need to repeat this process. W
 
 Let's return to the simple three asset portfolio of two US equity and one bond market, using handcrafting with groups. My historic estimates of Sharpe ratios are around 0 for NASDAQ, 0.5 for S\&P 500 and 0.75 for bonds. Here is what I did with the equity group (the bond group is still just 100\% in a single asset):
 
-\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} 
+\begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\hline
 \textbf{Starting weights} & NASDAQ: 50\%, S\&P 500: 50\% \\
+\hline
 \textbf{Estimate Sharpes} & NASDAQ: 0, S\&P 500: 0.5 (from historical data) \\
+\hline
 \textbf{Sharpe versus average} & Average: 0.25. Difference to average: \par • NASDAQ 0 - 0.25 = -0.25 \par • S\&P 500 0.5 - 0.25 = 0.25 \\
+\hline
 \textbf{Get multiplier} & I have uncertain estimates with over ten years of data so I use column B of table 12: \par • NASDAQ: 0.85 \par • S\&P 500: 1.15 \\
+\hline
 \textbf{Multiply} & NASDAQ: 50\% × 0.85 = 42\% \par S\&P 500: 50\% × 1.15 = 58\% \\
+\hline
 \textbf{Normalise} & Total is 100\% so no normalisation required. \\
+\hline
 \end{tabularx}
 }
 
-Now for the second level where I mix bonds and equities
+\medskip Now for the second level where I mix bonds and equities
 
-\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} \begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\noindent{\small \setlength{\tabcolsep}{3pt} \renewcommand{\arraystretch}{1.12} 
+\begin{tabularx}{\textwidth}{@{} p{0.28\textwidth} Y@{}}
+\hline
 \textbf{Starting weights} & Equities: 50\%, Bonds: 50\% \\
+\hline
 \textbf{Guess Sharpes} & Equities: using a simple average of NASDAQ with SR of 0 and S\&P 500 with SR 0.5, I get an average of 0.25. \par Bonds: 0.75 from historical data. \\
+\hline
 \textbf{Sharpe versus average} & Average across bonds and equities: 0.50. Difference to average: \par • Equities 0.25 - 0.50 = -0.25 \par • Bonds 0.75 - 0.50 = 0.25 \\
+\hline
 \textbf{Get multiplier} & From column B of table 12: \par • Equities: 0.85 \par • Bonds: 1.15 \\
+\hline
 \textbf{Multiply} & Equities: 50\% × 0.85 = 42\% \par Bonds: 50\% × 1.15 = 58\% \\
+\hline
 \textbf{Normalise} & Total is 100\% so no normalisation required. \\
+\hline
 \end{tabularx}
 }
 
@@ -417,20 +477,20 @@ NASDAQ equities & 0\% & 20\% & 25\% & 18\% \\
 
 When I bring in Sharpe ratio estimates, handcrafting up-weights better performing assets and produces similar results to bootstrapping, but does not result in extreme portfolios like single period optimisation.
 
-Once again, are we cheating?
+\subsection*{Once again, are we cheating?}
 
-Now you’re using \textbf{Sharpe ratios (SR)} to produce your handcrafted weights it’s worth reiterating that this is a mild form of \textbf{in-sample back-test} cheating, since you only use the final SR averaged over all data history, which you wouldn’t have at the beginning of the back-test.\footnote{As with the standard handcrafted weights it's possible to back-test this by doing the SR adjustment on an expanding window. For the first ten years of data you shouldn't adjust the weights at all. After that you should use only past data to estimate the SR at each point in the back-test. But again this is much more work than using the bootstrapping method.}
+Now you’re using \textbf{Sharpe ratios (SR)} to produce your handcrafted weights it’s worth reiterating that this is a mild form of \textbf{in-sample back-test} cheating, since you only use the final SR averaged over all data history, which you wouldn’t have at the beginning of the back-test.\footnote{As with the standard handcrafted weights it's possible to back-test this by doing the SR adjustment on an \textbf{expanding window}. For the first ten years of data you shouldn't adjust the weights at all. After that you should use only past data to estimate the SR at each point in the back-test. But again this is much more work than using the \textbf{bootstrapping} method.}
 
-Again this is a fair criticism, but the problem is not that serious. The weights are still not extreme, so the effect on back-tested SR you get is modest compared to in-sample \textbf{single} period optimisation. However you should still be cautious of assuming that you’d be able to achieve the back-test SR in live trading. Table 14 shows you roughly how much you should degrade back-tested returns to get realistic achievable Sharpe ratios given a particular fitting technique for a system like the one I describe in chapter fifteen.
+Again this is a fair criticism, but the problem is not that serious. The weights are still not extreme, so the effect on back-tested SR you get is modest compared to in-sample \textbf{single period} optimisation. However you should still be cautious of assuming that you’d be able to achieve the back-test SR in live trading. Table 14 shows you roughly how much you should degrade back-tested returns to get realistic achievable Sharpe ratios given a particular fitting technique for a system like the one I describe in chapter fifteen.
 
 \rawtablecaption{WITH HOW MANY PINCHES OF SALT SHOULD WE TREAT BACK-TESTED SHARPE RATIOS?}
 \begingroup
 \small
 \centering
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.54\textwidth} >{\centering\arraybackslash}p{0.16\textwidth}@{}}
+\begin{tabular}{@{} >{\raggedright\arraybackslash}p{0.64\textwidth} >{\centering\arraybackslash}p{0.2\textwidth}@{}}
 \toprule
-& \textbf{\shortstack{Pessimism\\factor}} \\
+& \textbf{\shortstack{Pessimism factor}} \\
 \midrule
 Single period optimisation, uses SR, in sample & 25\% \\
 Single period optimisation, uses SR, out of sample & 75\% \\
@@ -445,5 +505,3 @@ Handcrafted, uses SR, in sample & 65\% \\
 The table shows what proportion of back-tested returns are likely to be available in the future. Numbers shown are for the trading system in chapter fifteen, which has four trading rule variations and six instruments. More complicated trading systems will require larger corrections for overstated in sample performance. I assume 25\% of past performance was due to unrepeatable secular trends in asset prices, as I discussed in chapter two (page 46).
 
 Now you should be able to use fitting and optimisation safely we can move on to part three: my \textbf{framework} for trading systems.
-
-PART THREE.

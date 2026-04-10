@@ -24,7 +24,9 @@ Profit target when When currently short you would generate a profit taking trade
 
 Stop loss when You will generate a stop loss trade when a price rises by more than B short deviations from its low, and then reverse your position by going long.
 
-Notice that this is a complete \textbf{trading system}, not just a \textbf{trading rule}, since it tells you exactly what size positions to take. If you've read part three of the book you can probably see that the system does position sizing correctly, but for an arbitrary \textbf{volatility target} on a single \textbf{instrument}. Here are some interesting characteristics of the A and B system.
+Notice that this is a complete \textbf{trading system}, not just a \textbf{trading rule}, since it tells you exactly what size positions to take. If you've read part three of the book you can probably see that the system does position sizing correctly, but for an arbitrary \textbf{volatility target} on a single \textbf{instrument}.
+
+Here are some interesting characteristics of the A and B system.
 
 If A is larger than B The system will tend to hit stop losses more frequently, but when trends occur it will exploit them. This is the case for the early loss taker.
 
@@ -39,7 +41,6 @@ The stop loss rule defined for \textbf{semi-automatic traders} in part four of t
 \section*{The exponentially weighted moving average crossover (EWMAC) rule} \phantomsection \addcontentsline{toc}{section}{The exponentially weighted moving average crossover (EWMAC) rule}
 
 The \textbf{EWMAC} trading rule was briefly introduced in chapter seven. The forecast is the difference, or crossover, between two \textbf{exponentially weighted moving averages} (EWMA) of the price, one fast and one slow. The difference is then standardised by the recent \textbf{standard deviation} of prices, and a \textbf{forecast scalar} applied to ensure we get an average absolute value of 10 for our forecasts.
-
 In this version of the rule I assume you are working with daily prices for the relevant instrument, with no weekends in the price series. It is possible to work with intra-day prices, but this is slightly more involved.
 
 Look-back To pick up trends over different time periods you're going to want EWMAC windows, variations which work over different horizons. For each variation you need to fast and specify two look-back windows, in days: a shorter window for the fast EWMA slow Lfast, and a larger one Lslow for the slow EWMA. Lfast should be larger than 1, or you will only have one price in your average. For reasons I discuss below, I use the following pairs of look-back values for Lfast and Lslow 2:8, 4:16, 8:32, 16:64, 32: 128 and 64:256.
@@ -68,7 +69,9 @@ What ratio of fast and slow look-backs to use? To reduce the set of parameters t
 
 \subsection*{Which pairs of look-backs to use?}
 
-Different look-back pairs will capture different length trends. Since we don't know what length trends will occur in reality, I advise using a reasonable number of pairs. However it turns out that using the series of look-backs 2:8, 4:16, 8:32... gives enough coverage. As table 57 in appendix C (page 295) shows, the adjacent look-backs in this set have correlations of 0.90. Any intervening values that are added would have correlations above the cutoff of 0.95 which I recommend using to prune trading rule variations in chapter six, ‘Forecasts'. Beyond the pair 64:256 \textbf{turnover} the holding period gets excessively long, and as the \textbf{law of active management} suggests performance will be poor, it isn't worth adding any more pairs beyond this.
+Different look-back pairs will capture different length trends. Since we don't know what length trends will occur in reality, I advise using a reasonable number of pairs. However it turns out that using the series of look-backs 2:8, 4:16, 8:32... gives enough coverage. As table 57 in appendix C (page 295) shows, the adjacent look-backs in this set have correlations of 0.90. Any intervening values that are added would have correlations above the cutoff of 0.95 which I recommend using to prune trading rule variations in chapter six, ‘Forecasts'.
+
+Beyond the pair 64:256 \textbf{turnover} the holding period gets excessively long, and as the \textbf{law of active management} suggests performance will be poor, it isn't worth adding any more pairs beyond this.
 
 \subsection*{Which forecast scalars to use?}
 

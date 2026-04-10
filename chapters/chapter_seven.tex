@@ -2,7 +2,7 @@
 
 WHAT DO THESE TERMS ALL HAVE IN COMMON: BREAKOUTS, Elliott waves, Fibonacci waves, \textbf{exponentially weighted moving average crossover} and Bollinger bands? Answer: They can all form the basis of \textbf{trading rules}. These rules give you \textbf{forecasts} of what they think will happen to the prices of \textbf{instruments} you are trading or investing in.
 
-Staunch systems traders use multiple systematic rules like these. But rules can also be extremely simple, like the single rule used by \textbf{asset allocating investors}. It's also possible to use my \textbf{framework} without any systematic rules at all, as a \textbf{semi-automatic trader} making your own discretionary forecasts.
+\textbf{Staunch systems traders} use multiple systematic rules like these. But rules can also be extremely simple, like the single rule used by \textbf{asset allocating investors}. It's also possible to use my \textbf{framework} without any systematic rules at all, as a \textbf{semi-automatic trader} making your own discretionary forecasts.
 
 \section*{Chapter overview} \phantomsection \addcontentsline{toc}{section}{Chapter overview}
 
@@ -17,7 +17,7 @@ Staunch systems traders use multiple systematic rules like these. But rules can 
 
 \section*{What makes a good forecast} \phantomsection \addcontentsline{toc}{section}{What makes a good forecast}
 
-Parts of this section are quite technical; \textbf{semi-automatic} \textbf{traders} and \textbf{asset} allocating \textbf{investors} should read it but need only skim the content. However, staunch systems traders who will design their own trading rules need to understand it in detail.
+Parts of this section are quite technical; \textbf{semi-automatic} \textbf{traders} and \textbf{asset} allocating \textbf{investors} should read it but need only skim the content. However, \textbf{staunch systems traders} who will design their own trading rules need to understand it in detail.
 
 \subsection*{A forecast is a scaled quantity}
 
@@ -26,7 +26,11 @@ When I started trading options at a large investment bank I was encouraged to pu
 Once I graduated beyond one contract I was faced with a dilemma. How big should my position be for a purchase of German 10 year bond futures (Bunds)? Should I stick to one contract, or increase my size? I asked for advice from a more experienced trader, Sergei.\footnote{Not his real name.} He sighed, exasperated at the ignorance of youth, and turned towards me.
 
 \begin{quote}
-"You need to know three things. First, how much do you like this trade? That comes from here," Sergei replied, pointing to his heart. "Second thing, how much can you afford to lose? That is down here, in your gut," and he patted his extensive stomach. "Last thing, how risky is it? You calculate that here." said Sergei, tapping his forehead.
+"You need to know three things. First, how much do you like this trade? That comes from here," Sergei replied, pointing to his heart. 
+
+"Second thing, how much can you afford to lose? That is down here, in your gut," and he patted his extensive stomach. 
+
+"Last thing, how risky is it? You calculate that here." said Sergei, tapping his forehead.
 \end{quote}
 
 His answer was unhelpful, completely lacking in any detail, but totally correct.
@@ -37,7 +41,7 @@ A forecast is a number: a positive value means you want to buy the asset because
 
 There are three reasons why scaled forecasts make sense. Firstly, if you were to examine the returns made by a trading rule given the size of its forecasts, you'd normally find that forecasts closer to zero aren't as profitable as those further away. Secondly, binary systems cost more to trade, since to go from long to short you'd need to sell twice a full size position immediately. Finally, the rest of the framework assumes that the forecasts you get are not binary or lumpy in other ways.\footnote{Technical notes: There are two main reasons for this. Firstly, forecasts should have well defined and relatively stable \textbf{standard deviations}, otherwise the risk properties of the trading system will not be well defined or stable. Secondly, as we'll see subsequently I recommend limiting absolute forecast values to twice their average. Forecast distributions which are more extreme than \textbf{Gaussian normal distributions} will see an undesirable level of forecast capping. Note that there is a special case where lumpy or even binary forecasts will work just fine. If we have a large number of relatively uncorrelated binary forecasts then once combined these will approach a desirable Gaussian normal.} It's better to see forecasts changing continuously rather than jumping around.
 
-It's relatively easy to design or adapt a trading rule to produce scaled forecasts, if you're a staunch systems trader. If you're a \textbf{semi-automatic trader} generating forecasts in a more discretionary way then you need to be able to quantify the strength of your convictions and I'll return to that problem later in this chapter. \textbf{Asset allocating investors} have it easy since they use a fixed forecast value.
+It's relatively easy to design or adapt a trading rule to produce scaled forecasts, if you're a \textbf{staunch systems trader}. If you're a \textbf{semi-automatic trader} generating forecasts in a more discretionary way then you need to be able to quantify the strength of your convictions and I'll return to that problem later in this chapter. \textbf{Asset allocating investors} have it easy since they use a fixed forecast value.
 
 \subsection*{Forecasts proportional to risk adjusted return}
 
@@ -51,11 +55,13 @@ Secondly, what if the \textbf{standard deviation} of Bund prices were to double?
 
 Finally, you'd normally want to use the same trading rule across different \textbf{instruments}, because it's simpler and it allows you to pool data if you're \textbf{fitting}. However 50 Bunds expose you to much less risk than 50 Japanese government ten year bond futures, but to much more than 50 German Schatz (two year) bond futures. The rule can't cope with instruments which don't have the same risk.
 
-The solution is to use my favourite technique, \textbf{volatility standardisation}. So in my framework forecasts are proportional to expected risk adjusted returns. For example suppose that the Bund has expected returns of 2\% a year and an expected annualised standard deviation of 8\%. Schatz futures have an expected return of 1\% a year, but you only expect volatility of 2\% a year. After adjusting for risk the expected return on Schatz (1\% ÷ 2\% = 0.5) is twice as much as on Bunds (2\% ÷ 8\% = 0.25).
+The solution is to use my favourite technique, \textbf{volatility standardisation}. So in my framework forecasts are proportional to expected risk adjusted returns. For example suppose that the Bund has expected returns of 2\% a year and an expected annualised standard deviation of 8\%. Schatz futures have an expected return of 1\% a year, but you only expect \textbf{volatility} of 2\% a year. After adjusting for risk the expected return on Schatz (1\% ÷ 2\% = 0.5) is twice as much as on Bunds (2\% ÷ 8\% = 0.25).
 
 That implies the forecast for Schatz should be twice the forecast for Bunds. This deals with instruments that have different risks. It also means any trading rule can be used without modification on all instruments and that if you fit trading rules you can do so with pooled data from multiple assets. If you continuously adjust your estimate of expected volatility then you also cope with risk changing over time.
 
-Finally with forecasts like these different investors can use the same trading rules, but then scale positions depending on the size of their accounts and their appetite for risk. I show how this is done in chapter nine, ‘Volatility targeting', and chapter ten, ‘Position sizing'. You've seen before that the ratio of average return to standard deviation of returns is the \textbf{Sharpe ratio}. So expected Sharpe ratios make good forecasts, which makes creating trading rules very intuitive.
+Finally with forecasts like these different investors can use the same trading rules, but then scale positions depending on the size of their accounts and their appetite for risk. I show how this is done in chapter nine, ‘Volatility targeting', and chapter ten, ‘Position sizing'. 
+
+You've seen before that the ratio of average return to standard deviation of returns is the \textbf{Sharpe ratio}. So expected Sharpe ratios make good forecasts, which makes creating trading rules very intuitive.
 
 \subsection*{Forecasts should have a consistent scale}
 
@@ -67,17 +73,36 @@ My recommendation is to create forecasts which have an expected absolute value o
 
 If you're a \textbf{semi-automatic trader} using discretionary forecasts, it's straightforward to have the right scaling, as I will show you below. The rule used by \textbf{asset allocating investors} also has the appropriate scale. The example rules I provide for \textbf{staunch systems} traders later in the chapter are also correctly scaled. But if you're making your own rules, or adapting others, you will need to standardise their natural scaling, as I'll explain later in the chapter.
 
-Should we allow forecasts to be as large as possible? With an expected absolute value of 10, a forecast of +10 is bullish, and one of +20 is really bullish. What if you're confident that this is the chance of a lifetime, like the 2009 Barclays trade which I told you about in the introduction. Should you allow your rule to have a forecast of +100? I think not. Forecasts should be capped at a maximum absolute value and I recommend a limit of 20. Here's why:
+\subsection*{Should we allow forecasts to be as large as possible?}
 
-Risk control Diversification is the investor's best friend. But it's pointless diversifying if you then allow one part of your system to dominate your returns. You need to limit the risk that any trading rule variation can contribute to the overall system.
+With an expected absolute value of 10, a forecast of +10 is bullish, and one of +20 is really bullish. What if you're confident that this is the chance of a lifetime, like the 2009 Barclays trade which I told you about in the introduction. Should you allow your rule to have a forecast of +100? I think not. Forecasts should be capped at a maximum absolute value and I recommend a limit of 20. Here's why:
 
-Limited data When I back-test a profitable trading rule I normally find that positive forecasts are associated with price rises, and larger values mean larger rises. However for a properly scaled rule very large forecast values will appear rarely in a back-test. So there is a lot of uncertainty around whether extremely large forecasts translate into proportionally larger price movements, as I don't usually have enough data to support this finding. If a forecast had a Gaussian normal distribution you'd only see absolute forecast values over 20 around 5\% of the time, so there is only limited evidence that forecasts of this magnitude are actually correct.
-
-Extremes are Normally markets trend with falls followed by further falls, but after very often different sharp drops subsequent one day rises are more likely; the so called ‘dead cat bounce'. Similarly high yielding stocks do well, but those with dividend yields above 50\% are probably going bankrupt, or at the very least about to cut their dividend. Many other patterns also reverse at extremes. These effects are not often strong or common enough to exploit directly, but they should give you concern about betting too much when you have very strong forecasts.
-
-Higher realised A high forecast could mean that you expect large returns, but equally return volatility might be due to very low standard deviation of returns. Unfortunately periods of subdued volatility are usually followed by jumps to much higher levels, often combined with reversals in price. I had very strong positive forecasts in the Japanese Bond markets in January 2013, mainly due to relatively low volatility. When Prime Minister Abe unveiled his latest set of economic reforms volatility spiked rapidly as prices dropped fast. Fortunately because my forecasts were capped the damage was contained.
-
-Limited If forecasts have a Gaussian normal distribution then it's rare, again around downside 5\% of the time, that you'll see values bigger than 20. So the reduction in your returns from capping is quite small compared to the potential risk control benefits.
+\begingroup
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\noindent\begin{breakabletabularx}{\textwidth}{@{} L{0.21\textwidth} Y@{}}
+\toprule
+\endfirsthead
+\toprule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\shortstack[l]{\textbf{Risk control}} & Diversification is the investor's best friend. But it's pointless diversifying if you then allow one part of your system to dominate your returns. You need to limit the risk that any trading rule variation can contribute to the overall system. \\
+\midrule
+\shortstack[l]{\textbf{Limited data}} & When I back-test a profitable trading rule I normally find that positive forecasts are associated with price rises, and larger values mean larger rises. However for a properly scaled rule very large forecast values will appear rarely in a back-test. So there is a lot of uncertainty around whether extremely large forecasts translate into proportionally larger price movements, as I don't usually have enough data to support this finding.\par
+If a forecast had a Gaussian normal distribution you'd only see absolute forecast values over 20 around 5\% of the time, so there is only limited evidence that forecasts of this magnitude are actually correct. \\
+\midrule
+\shortstack[l]{\textbf{Extremes are}\\ \textbf{often different}} & Normally markets trend with falls followed by further falls, but after very sharp drops subsequent one day rises are more likely; the so called ``dead cat bounce''. Similarly high yielding stocks do well, but those with dividend yields above 50\% are probably going bankrupt, or at the very least about to cut their dividend. Many other patterns also reverse at extremes. These effects are not often strong or common enough to exploit directly, but they should give you concern about betting too much when you have very strong forecasts. \\
+\midrule
+\shortstack[l]{\textbf{Higher realised}\\ \textbf{return volatility}} & A high forecast could mean that you expect large returns, but equally it might be due to very low standard deviation of returns. Unfortunately periods of subdued volatility are usually followed by jumps to much higher levels, often combined with reversals in price.\par
+I had very strong positive forecasts in the Japanese Bond markets in January 2013, mainly due to relatively low volatility. When Prime Minister Abe unveiled his latest set of economic reforms volatility spiked rapidly as prices dropped fast. Fortunately because my forecasts were capped the damage was contained. \\
+\midrule
+\shortstack[l]{\textbf{Limited}\\ \textbf{downside}} & If forecasts have a Gaussian normal distribution then it's rare, again around 5\% of the time, that you'll see values bigger than 20. So the reduction in your returns from capping is quite small compared to the potential risk control benefits. \\
+\end{breakabletabularx}
+\endgroup
 
 Staunch systems traders shouldn't ignore forecasts that are outside of the range -20 to+20, but cap them. A forecast of +25 from your trading rule should be reduced to +20. Increase any forecast lower than -20 to that level. All your forecasts will then be in the range -20 to +20.
 

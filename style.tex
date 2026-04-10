@@ -187,7 +187,7 @@ ItalicFeatures={AutoFakeSlant=0.2}
 \newcommand{\bookminorornament}{%
 {\color{bookrule}\rule{0.16\textwidth}{0.7pt}}%
 }
-\fancyhead[LE]{{\bookrunningheadfont\thepage}} \fancyhead[RO]{{\bookrunningheadfont\thepage}} \fancyhead[RE]{{\bookrunningheadfont\nouppercase{\leftmark}}} \fancyhead[LO]{{\bookrunningheadfont\nouppercase{\rightmark}}} \renewcommand{\headrulewidth}{0.45pt} \renewcommand{\headrule}{\hbox to\headwidth{\color{bookrule}\leaders\hrule height \headrulewidth\hfill}} \renewcommand{\footrulewidth}{0pt} \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}} \renewcommand{\sectionmark}[1]{\markright{#1}}
+\fancyhead[LE]{{\bookrunningheadfont\thepage}} \fancyhead[RO]{{\bookrunningheadfont\thepage}} \fancyhead[RE]{{\bookrunningheadfont\nouppercase{\leftmark}}} \ifbilinguallayout \fancyhead[LO]{{\bookrunningheadfont\nouppercase{\rightmark}}} \else \fancyhead[LO]{{\bookrunningheadfont\nouppercase{\leftmark}}} \fi \renewcommand{\headrulewidth}{0.45pt} \renewcommand{\headrule}{\hbox to\headwidth{\color{bookrule}\leaders\hrule height \headrulewidth\hfill}} \renewcommand{\footrulewidth}{0pt} \makeatletter \ifbilinguallayout \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}} \else \renewcommand{\chaptermark}[1]{\markboth{\@chapapp\ \thechapter.\ #1}{\@chapapp\ \thechapter.\ #1}} \fi \makeatother \renewcommand{\sectionmark}[1]{\markright{#1}}
 \fancypagestyle{plain}{%
 \fancyhf{}%
 \fancyfoot[C]{{\bookrunningheadfont\thepage}}%

@@ -100,7 +100,9 @@ Figure 20 shows this effect for two uncorrelated forecasts A and B, which I've c
 
 The table shows the approximate diversification multiplier given the number of assets in a portfolio (rows) and the average correlation between them (columns). Beware of using very high multipliers.
 
-I'll now explain how to calculate the \textbf{forecast diversification multiplier}. If you don't have \textbf{back-tested} forecast values then you can estimate likely correlations from tables 56 and 57 in appendix C (from page 294). Correlation between selected variations of the same rule tends to be high; up to 0.9 but averaging around 0.7. Across different trading rules within the same style it is around 0.5. Using different styles of rules, correlations for trading rules within an instrument are around 0.25. For the simple example with four rule variations from earlier in the chapter I populated a correlation matrix using the information in appendix C, which is shown in table 19.
+I'll now explain how to calculate the \textbf{forecast diversification multiplier}. If you don't have \textbf{back-tested} forecast values then you can estimate likely correlations from tables 56 and 57 in appendix C (from page 294). Correlation between selected variations of the same rule tends to be high; up to 0.9 but averaging around 0.7. Across different trading rules within the same style it is around 0.5. Using different styles of rules, correlations for trading rules within an instrument are around 0.25.
+
+For the simple example with four rule variations from earlier in the chapter I populated a correlation matrix using the information in appendix C, which is shown in table 19.
 
 \rawtablecaption{CORRELATION OF TRADING RULE FORECASTS IN SIMPLE EXAMPLE} \begingroup \small \centering \begin{tabular}{@{} lcccc@{}}
 \toprule
@@ -131,11 +133,11 @@ All the reasons cited in the previous chapter for limiting individual forecasts 
 \section*{Summary for combining forecasts} \phantomsection \addcontentsline{toc}{section}{Summary for combining forecasts}
 
 \noindent{\small \setlength{\tabcolsep}{2pt} \renewcommand{\arraystretch}{1.1} \begin{tabularx}{\textwidth}{@{} p{0.24\textwidth} Y@{}}
-\textbf{Instrument forecasts for each trading rule and variation} & You start with the forecasts for each trading rule variation for an instrument. So if you have two rules, each with three variations, then you'd have six possible forecast values per instrument. I recommended in the previous chapter that each individual forecast has an expected average absolute value of around 10 and should be limited to between -20 and +20. \\
+\textbf{Instrument forecasts for each trading rule and variation} & You start with the forecasts for each trading rule variation for an instrument. So if you have two rules, each with three variations, then you'd have six possible forecast values per instrument. \par I recommended in the previous chapter that each individual forecast has an expected average absolute value of around 10 and should be limited to between -20 and +20. \\
 \textbf{Forecast weights} & Each rule variation should have a positive forecast weight. The weights must add up to 100\%. These weights can be the same across instruments, or different. \\
 \textbf{Raw combined forecast} & Using the forecast weights, take a weighted average of the forecasts from each rule variation. \\
-\textbf{Forecast diversification multiplier} & This is needed to get the expected absolute value of the combined forecast up to the recommended value of 10. Estimated correlations are needed; from back-test results, or the rule of thumb tables in appendix C. You can then calculate the multiplier approximately from table 18 or precisely using the equation on page 297. The multiplier is at least 1.0 and I recommend a maximum of 2.5. \\
-\textbf{Rescaled combined forecast} & This is the raw combined forecast multiplied by the forecast diversification multiplier. Because of the diversification multiplier it will have an expected average absolute value equal to the expected variability of the individual forecasts, which I recommend to be 10. \\
+\textbf{Forecast diversification multiplier} & This is needed to get the expected absolute value of the combined forecast up to the recommended value of 10. \par Estimated correlations are needed; from back-test results, or the rule of thumb tables in appendix C. You can then calculate the multiplier approximately from table 18 or precisely using the equation on page 297. The multiplier is at least 1.0 and I recommend a maximum of 2.5. \\
+\textbf{Rescaled combined forecast} & This is the raw combined forecast multiplied by the forecast diversification multiplier. \par Because of the diversification multiplier it will have an expected average absolute value equal to the expected variability of the individual forecasts, which I recommend to be 10. \\
 \textbf{Final combined forecast} & I recommend you cap the rescaled combined forecasts within the range -20 to +20, as for individual forecasts. \\
 \end{tabularx}
 }

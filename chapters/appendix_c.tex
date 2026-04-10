@@ -16,11 +16,17 @@ BRIEFLY, YOU SHOULD TAKE THE FOLLOWING STEPS, ASSUMING returns have already been
 
 \subsection*{How should you select return periods?}
 
-In the simple example in chapter four I drew individual daily returns at random; 30 August 2002 could easily have been followed by 1 February 2000 in a particular subset. This makes life easier and is usually a reasonable approximation to reality. But sometimes this arbitrary selection might not make sense. Poor returns in one asset might often be followed by good returns in another. This time series correlation will be lost unless adjacent days are kept together. In this case you need to do ‘block' bootstrapping. Each subset will consist of an appropriate number of consecutive returns. The only randomness is in the choice of the starting date for the block. The length of the block needs to be long enough to capture any time dependence.
+In the simple example in chapter four I drew individual daily returns at random; 30 August 2002 could easily have been followed by 1 February 2000 in a particular subset. This makes life easier and is usually a reasonable approximation to reality. But sometimes this arbitrary selection might not make sense. Poor returns in one asset might often be followed by good returns in another. This time series correlation will be lost unless adjacent days are kept together.
+
+In this case you need to do ‘block' bootstrapping. Each subset will consist of an appropriate number of consecutive returns. The only randomness is in the choice of the starting date for the block. The length of the block needs to be long enough to capture any time dependence.
 
 \subsection*{How long should each period be?}
 
-How many returns should be in each sample? A month of daily returns, a year or longer? Shorter periods mean that each optimisation will be more extreme. Their distribution will be wider and confidence intervals larger. With longer periods the results will be more sensible, but that doesn't mean the average will perform better. This subject has been examined in some depth by academic researchers. My own analysis suggests that there is a small benefit from using longer periods; perhaps a 0.05 \textbf{Sharpe ratio} improvement from using multiple years versus only a month, assuming a couple of decades' worth of data in total. A good rule of thumb is to use samples of returns equal in length to 10\% of the period of history available. So if you had 30 years of data then you should use three year-long samples for each optimisation.
+How many returns should be in each sample? A month of daily returns, a year or longer? Shorter periods mean that each optimisation will be more extreme. Their distribution will be wider and confidence intervals larger. With longer periods the results will be more sensible, but that doesn't mean the average will perform better.
+
+This subject has been examined in some depth by academic researchers. My own analysis suggests that there is a small benefit from using longer periods; perhaps a 0.05 \textbf{Sharpe ratio} improvement from using multiple years versus only a month, assuming a couple of decades' worth of data in total.
+
+A good rule of thumb is to use samples of returns equal in length to 10\% of the period of history available. So if you had 30 years of data then you should use three year-long samples for each optimisation.
 
 \subsection*{How many times to repeat?}
 
@@ -140,7 +146,9 @@ The final table of instrument return correlations covers bonds within the same c
 }
 \endgroup
 
-In my \textbf{framework} you will be optimising the weights of \textbf{trading subsystems}, each taking positions in one \textbf{instrument}, rather than looking at portfolios of positions in instruments. Because \textbf{asset allocating investors} have \textbf{static} portfolios they can use the correlation of the underlying instrument returns from tables 50 to 55 without any adjustment. For \textbf{staunch systems traders} with \textbf{dynamic} forecasts a good rule of thumb is that the correlation between instrument subsystem returns will be around 0.70 multiplied by the correlation of instrument price returns.
+In my \textbf{framework} you will be optimising the weights of \textbf{trading subsystems}, each taking positions in one \textbf{instrument}, rather than looking at portfolios of positions in instruments. Because \textbf{asset allocating investors} have \textbf{static} portfolios they can use the correlation of the underlying instrument returns from tables 50 to 55 without any adjustment.
+
+For \textbf{staunch systems traders} with \textbf{dynamic} forecasts a good rule of thumb is that the correlation between instrument subsystem returns will be around 0.70 multiplied by the correlation of instrument price returns.
 
 We now turn to the correlations of different \textbf{trading rules} applied to the same instrument, which are used to find \textbf{forecast weights}. Let’s begin with the correlation between different trading rules, rather than \textbf{variations} on a single rule.
 

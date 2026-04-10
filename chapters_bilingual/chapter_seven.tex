@@ -76,33 +76,32 @@
 
 \bipairgap
 
-\begin{englishblock} Risk control Diversification is the investor's best friend. But it's pointless diversifying if you then allow one part of your system to dominate your returns. You need to limit the risk that any trading rule variation can contribute to the overall system. \end{englishblock}
-
-\begin{chineseblock}风险控制 分散化是投资者最好的朋友。但如果你一边做分散化，一边却允许系统中的某个部分支配你的整体收益，那么分散化就失去了意义。你必须限制任何单一交易规则变体对整个系统所能贡献的风险。\end{chineseblock}
-
-\bipairgap
-
-\begin{englishblock} Limited data When I back-test a profitable trading rule I normally find that positive forecasts are associated with price rises, and larger values mean larger rises. However for a properly scaled rule very large forecast values will appear rarely in a back-test. So there is a lot of uncertainty around whether extremely large forecasts translate into proportionally larger price movements, as I don't usually have enough data to support this finding. If a forecast had a Gaussian normal distribution you'd only see absolute forecast values over 20 around 5\% of the time, so there is only limited evidence that forecasts of this magnitude are actually correct. \end{englishblock}
-
-\begin{chineseblock}数据有限 当我回测一条有盈利能力的交易规则时，通常会发现：正的预测值往往伴随着价格上涨，而且预测值越大，上涨幅度通常也越大。然而，对于一条已经正确缩放过的规则来说，特别大的预测值在回测中其实很少出现。因此，我们并没有足够多的数据去支持这样一个结论：极端大的预测值是否真的对应按比例更大的价格波动。如果预测值服从高斯正态分布，那么绝对值超过 20 的情况只会在大约 5\% 的时间里出现，所以我们对于这种量级预测值的正确性，实际上只有非常有限的证据。\end{chineseblock}
-
-\bipairgap
-
-\begin{englishblock} Extremes are Normally markets trend with falls followed by further falls, but after very often different sharp drops subsequent one day rises are more likely; the so called ‘dead cat bounce'. Similarly high yielding stocks do well, but those with dividend yields above 50\% are probably going bankrupt, or at the very least about to cut their dividend. Many other patterns also reverse at extremes. These effects are not often strong or common enough to exploit directly, but they should give you concern about betting too much when you have very strong forecasts. \end{englishblock}
-
-\begin{chineseblock}极端值经常并不一样 一般来说，市场下跌之后往往会继续下跌，但在某些非常剧烈的暴跌之后，次日上涨的概率反而更大，这就是所谓的“死猫反弹”。类似地，高股息率股票通常表现不错，但那些股息率高到超过 50\% 的股票，很可能已经快要破产，至少也很可能马上要削减分红。很多其他模式，在极端位置时也会反转。虽然这些效应往往既不够强也不够常见，不足以被直接拿来利用，但它们至少应当提醒你：当预测值非常强时，你不该贸然下过重的赌注。\end{chineseblock}
-
-\bipairgap
-
-\begin{englishblock} Higher realised A high forecast could mean that you expect large returns, but equally return volatility might be due to very low standard deviation of returns. Unfortunately periods of subdued volatility are usually followed by jumps to much higher levels, often combined with reversals in price. I had very strong positive forecasts in the Japanese Bond markets in January 2013, mainly due to relatively low volatility. When Prime Minister Abe unveiled his latest set of economic reforms volatility spiked rapidly as prices dropped fast. Fortunately because my forecasts were capped the damage was contained. \end{englishblock}
-
-\begin{chineseblock}更高的实际收益波动 高预测值可能意味着你预期会有很大收益，但它同样也可能只是因为收益标准差暂时特别低。遗憾的是，低波动时期之后往往会突然出现更高波动，而且这种波动上升常常伴随着价格反转。2013 年 1 月，我在日本债券市场上就曾出现过很强的正向预测值，而主要原因正是当时波动率比较低。后来安倍首相公布了一套新的经济改革方案，波动率迅速飙升，价格也快速下跌。幸运的是，由于我的预测值早已设置了上限，所以损失被控制住了。\end{chineseblock}
-
-\bipairgap
-
-\begin{englishblock} Limited If forecasts have a Gaussian normal distribution then it's rare, again around downside 5\% of the time, that you'll see values bigger than 20. So the reduction in your returns from capping is quite small compared to the potential risk control benefits. \end{englishblock}
-
-\begin{chineseblock}下行代价有限 如果预测值服从高斯正态分布，那么超过 20 的情况本来就很少见，大约只占 5\% 的时间。因此，相比于它所带来的风险控制好处，把预测值封顶对收益的拖累其实是很小的。\end{chineseblock}
+\begin{bilingualtableblock}
+\begingroup
+\small
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.12}
+\noindent\begin{breakabletabularx}{\textwidth}{@{} L{0.21\textwidth} Y@{}}
+\toprule
+\endfirsthead
+\toprule
+\endhead
+\bottomrule
+\endfoot
+\bottomrule
+\endlastfoot
+\shortstack[l]{\textbf{Risk control}\\[0.35ex] \textbf{风险控制}} & Diversification is the investor's best friend. But it's pointless diversifying if you then allow one part of your system to dominate your returns. You need to limit the risk that any trading rule variation can contribute to the overall system.\par\medskip 分散化是投资者最好的朋友。但如果你一边做分散化，一边却允许系统中的某个部分支配你的整体收益，那么分散化就失去了意义。你必须限制任何单一交易规则变体对整个系统所能贡献的风险。 \\
+\midrule
+\shortstack[l]{\textbf{Limited data}\\[0.35ex] \textbf{数据有限}} & When I back-test a profitable trading rule I normally find that positive forecasts are associated with price rises, and larger values mean larger rises. However for a properly scaled rule very large forecast values will appear rarely in a back-test. So there is a lot of uncertainty around whether extremely large forecasts translate into proportionally larger price movements, as I don't usually have enough data to support this finding.\par If a forecast had a Gaussian normal distribution you'd only see absolute forecast values over 20 around 5\% of the time, so there is only limited evidence that forecasts of this magnitude are actually correct.\par\medskip 当我回测一条有盈利能力的交易规则时，通常会发现：正的预测值往往伴随着价格上涨，而且预测值越大，上涨幅度通常也越大。然而，对于一条已经正确缩放过的规则来说，特别大的预测值在回测中其实很少出现。因此，我们并没有足够多的数据去支持这样一个结论：极端大的预测值是否真的对应按比例更大的价格波动。\par 如果预测值服从高斯正态分布，那么绝对值超过 20 的情况只会在大约 5\% 的时间里出现，所以我们对于这种量级预测值的正确性，实际上只有非常有限的证据。 \\
+\midrule
+\shortstack[l]{\textbf{Extremes are}\\ \textbf{often different}\\[0.35ex] \textbf{极端情况}\\ \textbf{往往不同}} & Normally markets trend with falls followed by further falls, but after very sharp drops subsequent one day rises are more likely; the so called ``dead cat bounce''. Similarly high yielding stocks do well, but those with dividend yields above 50\% are probably going bankrupt, or at the very least about to cut their dividend. Many other patterns also reverse at extremes. These effects are not often strong or common enough to exploit directly, but they should give you concern about betting too much when you have very strong forecasts.\par\medskip 一般来说，市场下跌之后往往会继续下跌，但在某些非常剧烈的暴跌之后，次日上涨的概率反而更大，这就是所谓的“死猫反弹”。类似地，高股息率股票通常表现不错，但那些股息率高到超过 50\% 的股票，很可能已经快要破产，至少也很可能马上要削减分红。很多其他模式，在极端位置时也会反转。虽然这些效应往往既不够强也不够常见，不足以被直接拿来利用，但它们至少应当提醒你：当预测值非常强时，你不该贸然下过重的赌注。 \\
+\midrule
+\shortstack[l]{\textbf{Higher realised}\\ \textbf{return volatility}\\[0.35ex] \textbf{实际收益波动率}\\ \textbf{可能更高}} & A high forecast could mean that you expect large returns, but equally it might be due to very low standard deviation of returns. Unfortunately periods of subdued volatility are usually followed by jumps to much higher levels, often combined with reversals in price.\par I had very strong positive forecasts in the Japanese Bond markets in January 2013, mainly due to relatively low volatility. When Prime Minister Abe unveiled his latest set of economic reforms volatility spiked rapidly as prices dropped fast. Fortunately because my forecasts were capped the damage was contained.\par\medskip 高预测值可能意味着你预期会有很大收益，但它同样也可能只是因为收益标准差暂时特别低。遗憾的是，低波动时期之后往往会突然出现更高波动，而且这种波动上升常常伴随着价格反转。\par 2013 年 1 月，我在日本债券市场上就曾出现过很强的正向预测值，而主要原因正是当时波动率比较低。后来安倍首相公布了一套新的经济改革方案，波动率迅速飙升，价格也快速下跌。幸运的是，由于我的预测值早已设置了上限，所以损失被控制住了。 \\
+\midrule
+\shortstack[l]{\textbf{Limited}\\ \textbf{downside}\\[0.35ex] \textbf{下行代价有限}} & If forecasts have a Gaussian normal distribution then it's rare, again around 5\% of the time, that you'll see values bigger than 20. So the reduction in your returns from capping is quite small compared to the potential risk control benefits.\par\medskip 如果预测值服从高斯正态分布，那么超过 20 的情况本来就很少见，大约只占 5\% 的时间。因此，相比于它所带来的风险控制好处，把预测值封顶对收益的拖累其实是很小的。 \\
+\end{breakabletabularx}
+\endgroup
+\end{bilingualtableblock}
 
 \bipairgap
 

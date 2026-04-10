@@ -37,12 +37,13 @@ You can then calculate the price volatility from row 26 onwards, using the defau
 \end{quote}
 
 The alternative is to use an \textbf{exponentially weighted moving average (EWMA)} of volatility. In general for some variable X if you have yesterday's EWMA Et-1 then today's
-
 EWMA given a smoothing parameter A is:
 
 \[E_t = (A \times X_t) + \left[E_{t-1}(1-A)\right] \]
 
-First of all you need to calculate the A parameter, based on your \textbf{volatility look-back}, using the formula A = 2 ÷ (1 + L). For my suggested default look-back of 36 days, equivalent to a simple moving average of 25 days, we get A = 0.054.\footnote{This is set to give the same half-life as the default look-back of 25 days for a standard moving average.} Assuming you've put 0.054 into cell AA1, and the returns are in column B, in column C we get the squared returns:
+First of all you need to calculate the A parameter, based on your \textbf{volatility look-back}, using the formula A = 2 ÷ (1 + L). For my suggested default look-back of 36 days, equivalent to a simple moving average of 25 days, we get A = 0.054.\footnote{This is set to give the same half-life as the default look-back of 25 days for a standard moving average.}
+
+Assuming you've put 0.054 into cell AA1, and the returns are in column B, in column C we get the squared returns:
 
 \begin{quote}
 \ttfamily\detokenize{C2 = B2 ^ 2, C3 = B3 ^ 2, ...}
